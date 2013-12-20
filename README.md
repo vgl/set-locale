@@ -1,7 +1,7 @@
 set-locale
 ==========
 
-set-locale is a localization string provider as a service.
+set-locale is a localization string provider as a service...
 
 ## api request examples
 
