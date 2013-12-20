@@ -1,18 +1,21 @@
 Feature: User Management
-  Scenario:Login
+  Scenario: Visitor wants to sign up
+    Given a visitor views "/user/login"
+    When clicks "Sign up"  button
+    Then system reditects to "/user/new"
 
+  Scenario: Users wants to reset password
+    Given a user views "/user/login"
+    When clicks "Forget your password?"  button
+    Then system reditects to "/user/reset"
 
-    When user views "/user/login"
-	
-	    if clicks "Forget your password?"  button
-		   redirect to "/user/newpassword"
-		if clicks "Sign up"  button
-           redirect to "/user/newuser"
-		   
-        if Not 
-		    user must fill "E-Mail" and "Password"
-            And clicks "Sign In"
-            And user has an account with this "E-mail" and "Password"
-       		
+  Scenario: Users wants to login
+    Given a user views "/user/login"  
+
+    When fills "E-Mail" and "Password" fields
+    And clicks "Sign up" button
+    And "Email" is valid email
+    And user has an account with this "E-mail"
+    And email, password authenticates this user    
 
     Then user should be directed to the main page
