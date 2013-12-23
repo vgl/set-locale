@@ -14,7 +14,7 @@
 
         <div class="row">
             <strong>@ViewBag.Txt["UserName"]</strong>
-            <input type="text" class="form-control input-lg" name="email" id="email" value="@Model.UserName" />
+            <input type="text" class="form-control input-lg" name="username" id="username" value="@Model.UserName" />
         </div>
 
         <div class="row">
@@ -54,14 +54,18 @@
                     email: {
                         required: true,
                         email: true
-                    }
+                    },
+                    username: {
+                        required: true,
+                      }
                 },
                 messages: {
                     password: {
                         required: "*",
                         minlength: "*"
                     },
-                    email: "*"
+                    email: "*",
+                    username: "*"
                 }
             });
         });
