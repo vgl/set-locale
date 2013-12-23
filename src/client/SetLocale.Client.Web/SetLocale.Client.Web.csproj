@@ -110,6 +110,8 @@
     <Content Include="Views\User\Reset.cshtml" />
     <Content Include="Views\Key\New.cshtml" />
     <Content Include="Views\Key\Edit.cshtml" />
+    <Content Include="Views\App\Index.cshtml" />
+    <Content Include="Views\App\New.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -137,10 +139,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GravatarHelper.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\..\core\SetLocale.Util\SetLocale.Util.csproj">
+      <Project>{b0a733c6-3013-4a27-87e6-f5a15713f56b}</Project>
+      <Name>SetLocale.Util</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

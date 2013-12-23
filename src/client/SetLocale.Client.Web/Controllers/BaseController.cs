@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace SetLocale.Client.Web.Controllers
 {
@@ -9,5 +10,18 @@ namespace SetLocale.Client.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            //temp usage...
+            var dictionary = new Dictionary<string, string>();
+            dictionary.Add("Login", "Login");
+            dictionary.Add("Email", "Email");
+            dictionary.Add("Password", "Password");
+
+
+
+            ViewBag.Txt = dictionary;
+            base.OnActionExecuting(filterContext);
+        }
     }
 }
