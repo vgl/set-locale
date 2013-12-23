@@ -18,4 +18,6 @@ Feature: User Management
     And user has an account with this "Email"
     And "EMail", "Password" authenticates this user    
 
-    Then user should be directed to the main page
+	Then a user should be created 
+    And user should be in developer role
+    And redirected to "/user/index/{id}"
