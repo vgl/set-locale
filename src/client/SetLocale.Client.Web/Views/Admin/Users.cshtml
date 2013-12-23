@@ -1,6 +1,53 @@
-﻿<table>
-    <tr>
-        <td></td>
-    </tr>
-   <tr></tr> 
-</table>
+﻿@model List<SetLocale.Client.Web.Models.UserModel>
+
+@{
+    ViewBag.Title = ViewBag.Txt["Users"];
+}
+
+<h3>@ViewBag.Title</h3>
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>@ViewBag.Txt["Name"]</th>
+                <th>@ViewBag.Txt["Email"]</th>
+                <th>@ViewBag.Txt["Role"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var val = item.IsActive ? ViewBag.Txt["Deactivate"] : ViewBag.Txt["Activate"];
+                <tr>
+                    <td>
+                        <input type="button" class="btn btn-sm btn-warning btnAction" value="@val" data-id="@item.Id" data-isactive="@item.IsActive" />
+                    </td>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.Role</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+@section script
+{
+    <script>
+        $(function () {
+            $("input.btnAction").click(function () {
+                var userId = $(this).data("id");
+                var isActive = $(this).data("isactive");
+
+                console.log(userId);
+                console.log(isActive);
+
+            });
+        });
+    </script>
+}

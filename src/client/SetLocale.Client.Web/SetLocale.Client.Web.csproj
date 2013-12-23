@@ -113,6 +113,7 @@
     <Content Include="Views\App\Index.cshtml" />
     <Content Include="Views\App\New.cshtml" />
     <Content Include="Views\Admin\NewTranslator.cshtml" />
+    <Content Include="Views\Admin\Users.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -144,6 +145,7 @@
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\TranslatorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

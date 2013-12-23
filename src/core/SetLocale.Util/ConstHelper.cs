@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
 
 namespace SetLocale.Util
 {
@@ -15,6 +16,12 @@ namespace SetLocale.Util
         {
             get { return _cultureEN ?? (_cultureEN = new CultureInfo("en-US")); }
         }
+
+        public const string Admin = "Admin";
+        public const string Developer = "Developer";
+        public const string User = "User";
+
+        static List<string> BasicRoles = new List<string> { Admin, Developer, User };
 
         public const string tr_txt = "tr_txt";
         public const string en_txt = "en_txt";

@@ -22,6 +22,10 @@ namespace SetLocale.Client.Web.Controllers
             dictionary.Add("Name", "Name");
             dictionary.Add("Save", "Save");
 
+            dictionary.Add("Users", "Users");
+            dictionary.Add("Role", "Role");
+            dictionary.Add("Deactivate", "Deactivate");
+            dictionary.Add("Activate", "Activate");
 
             ViewBag.Txt = dictionary;
             base.OnActionExecuting(filterContext);
