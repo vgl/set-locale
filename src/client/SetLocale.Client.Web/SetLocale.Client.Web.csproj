@@ -142,6 +142,7 @@
     <Compile Include="Helpers\GravatarHelper.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\NewUserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,8 +17,9 @@ namespace SetLocale.Client.Web.Controllers
             dictionary.Add("Login", "Login");
             dictionary.Add("Email", "Email");
             dictionary.Add("Password", "Password");
-
-
+            dictionary.Add("NewUser", "NewUser");
+            dictionary.Add("UserName", "UserName");
+            dictionary.Add("Sign Up", "Sign Up");
 
             ViewBag.Txt = dictionary;
             base.OnActionExecuting(filterContext);

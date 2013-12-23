@@ -14,7 +14,14 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult New()
         {
-            return View();
+            var model = new NewUserModel
+            {
+                UserName = "UserName",
+                Email = "dev@test.com",
+                Password = "password" 
+            };
+
+            return View(model);
         }
 
         [HttpGet]
