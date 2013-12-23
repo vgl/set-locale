@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using SetLocale.Client.Web.Models;
 
 namespace SetLocale.Client.Web.Controllers
 {
@@ -25,7 +26,13 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            return View();
+            var model = new LoginModel()
+            {
+                Email = "dev@test.com",
+                Password = "password"
+            };
+
+            return View(model);
         }
     }
 }

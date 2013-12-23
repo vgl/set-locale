@@ -1,2 +1,8 @@
-﻿body {
+﻿.row {
+    margin: 10px;
+}
+
+.row strong {
+    display: block;
+
 }
