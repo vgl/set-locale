@@ -20,7 +20,12 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult Reset()
         {
-            return View();
+            var model = new ResetModel()
+            {
+                Email = "dev@test.com"
+            };
+
+            return View(model);
         }
 
         [HttpGet]

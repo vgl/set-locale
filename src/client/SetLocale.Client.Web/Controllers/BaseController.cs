@@ -16,7 +16,10 @@ namespace SetLocale.Client.Web.Controllers
             var dictionary = new Dictionary<string, string>();
             dictionary.Add("Login", "Login");
             dictionary.Add("Email", "Email");
+            dictionary.Add("Reset", "Send Reset Password Link");
+            dictionary.Add("ResetTitle", "Reset Password");
             dictionary.Add("Password", "Password");
+            
 
 
 
