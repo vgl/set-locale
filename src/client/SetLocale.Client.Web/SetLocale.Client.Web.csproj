@@ -98,7 +98,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Public\img\tr.png" />
-    <Content Include="Public\img\us.png" />
+    <Content Include="Public\img\en.png" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
