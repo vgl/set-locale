@@ -146,6 +146,7 @@
     <Compile Include="Models\TranslatorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\NewUserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
