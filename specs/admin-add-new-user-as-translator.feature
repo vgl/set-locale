@@ -1,4 +1,4 @@
-Feature: Admin Panel Bahviours
+Feature: Admin Panel Behaviours
   Scenario: Admin adds a new user as translator
 
   	Given user with email "admin@test.com" exists 

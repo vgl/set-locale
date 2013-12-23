@@ -1,4 +1,4 @@
-Feature: Admin Panel Bahviours
+Feature: Admin Panel Behaviours
   Scenario: Admin lists users first page
   	Given user with email "admin@test.com" exists 
     	And user should be logged in
