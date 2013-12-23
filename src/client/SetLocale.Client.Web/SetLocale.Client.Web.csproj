@@ -143,6 +143,7 @@
     </Compile>
     <Compile Include="Helpers\GravatarHelper.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\NewAppModel.cs" />
     <Compile Include="Models\TranslatorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\UserModel.cs" />
