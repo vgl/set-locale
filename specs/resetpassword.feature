@@ -3,9 +3,9 @@ Feature: User Management
 
 
     When user views "/user/newpassword" 
-            And must fill "E-Mail"
+            And must fill "EMail"
             And clicks "Send Reset Password Link" button
-            And checks if this e-mail has an account
+            And checks if this "EMail" has an account
 
 
-    Then new password link should be send to this e-mail
+    Then new password link should be send to this "EMail"
