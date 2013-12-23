@@ -147,6 +147,7 @@
     <Compile Include="Helpers\IdentityHelper.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\NewAppModel.cs" />
+    <Compile Include="Models\NewKeyModel.cs" />
     <Compile Include="Models\TranslatorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\UserModel.cs" />

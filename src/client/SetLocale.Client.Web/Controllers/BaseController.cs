@@ -15,11 +15,11 @@ namespace SetLocale.Client.Web.Controllers
             //temp usage...
             var dictionary = new Dictionary<string, string>();
             dictionary.Add("Login", "Login");
-            dictionary.Add("Email", "Email");
+            dictionary.Add("Email", "Email"); 
+            dictionary.Add("Password", "Password");
+
             dictionary.Add("Reset", "Send Reset Password Link");
             dictionary.Add("ResetTitle", "Reset Password");
-            dictionary.Add("Password", "Password");
-            
 
             dictionary.Add("NewTranslator", "New Translator User");
             dictionary.Add("Name", "Name");
@@ -38,6 +38,10 @@ namespace SetLocale.Client.Web.Controllers
             dictionary.Add("AppName", "AppName");
             dictionary.Add("Url", "Url");
             dictionary.Add("Description", "Description");
+
+            dictionary.Add("NewKey", "NewKey");
+            dictionary.Add("Key", "Key");
+            dictionary.Add("Tag", "Tag"); 
 
             ViewBag.Txt = dictionary;
             base.OnActionExecuting(filterContext);
