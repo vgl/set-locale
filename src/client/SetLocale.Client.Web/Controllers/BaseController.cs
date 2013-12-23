@@ -34,6 +34,11 @@ namespace SetLocale.Client.Web.Controllers
             dictionary.Add("UserName", "UserName");
             dictionary.Add("Sign Up", "Sign Up");
 
+            dictionary.Add("NewApp", "NewApp");
+            dictionary.Add("AppName", "AppName");
+            dictionary.Add("Url", "Url");
+            dictionary.Add("Description", "Description");
+
             ViewBag.Txt = dictionary;
             base.OnActionExecuting(filterContext);
         }
