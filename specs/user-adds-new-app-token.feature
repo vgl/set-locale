@@ -1,4 +1,4 @@
-Feature: delete-token
+Feature: new-token
   Scenario: application deactivate
 
     Given user with email "dev@test.com" exists 

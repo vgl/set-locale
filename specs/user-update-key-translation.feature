@@ -1,7 +1,4 @@
-Feature Update Key Translation
-
-
-
+Feature: Update Key Translation 
 Scenario: List TranslationKeys
 
 	Given user logged in
@@ -10,10 +7,7 @@ Scenario: List TranslationKeys
 	When user clikcs "Keys" buttons
 
 	Then screen lists translation keys descending ordering by last modification date
-
-
-
-
+	 
 Scenario:  View a Key
 
 	Given user logged in
@@ -25,10 +19,7 @@ Scenario:  View a Key
 	And  system binds translation key
 	And  system binds description
 	And  system binds value
-
-
-
-
+	 
 Scenario: Update
 
 	Given user logged in
