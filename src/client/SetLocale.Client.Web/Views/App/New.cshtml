@@ -47,10 +47,10 @@
         $(function () {
             $("form").validate({
                 rules: {
-                    appName: {
+                    key: {
                         required: true,
                     },
-                    url: {
+                    tag: {
                         required: true,
                     },
                     description: {
@@ -58,10 +58,10 @@
                       }
                 },
                 messages: {
-                    appName: {
+                    key: {
                         required: "*"
                     },
-                    url: "*",
+                    tag: "*",
                     description: "*"
                 }
             });
