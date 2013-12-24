@@ -154,6 +154,7 @@
     <Compile Include="Models\LanguageModel.cs" />
     <Compile Include="Models\NewAppModel.cs" />
     <Compile Include="Models\NewKeyModel.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Models\TranslatorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
