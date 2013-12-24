@@ -150,6 +150,8 @@
     <Compile Include="Helpers\IdentityHelper.cs" />
     <Compile Include="Models\AppModel.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\KeyModel.cs" />
+    <Compile Include="Models\LanguageModel.cs" />
     <Compile Include="Models\NewAppModel.cs" />
     <Compile Include="Models\NewKeyModel.cs" />
     <Compile Include="Models\TokenModel.cs" />

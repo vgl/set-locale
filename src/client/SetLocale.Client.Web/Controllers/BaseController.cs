@@ -14,6 +14,9 @@ namespace SetLocale.Client.Web.Controllers
         {
             //temp usage...
             var dictionary = new Dictionary<string, string>();
+            dictionary.Add("Edit", "Edit");
+            dictionary.Add("Delete", "Delete");
+
             dictionary.Add("Login", "Login");
             dictionary.Add("Email", "Email"); 
             dictionary.Add("Password", "Password");
@@ -40,14 +43,17 @@ namespace SetLocale.Client.Web.Controllers
             dictionary.Add("Description", "Description");
 
             dictionary.Add("NewKey", "NewKey");
+            dictionary.Add("KeyListing", "KeyListing");
             dictionary.Add("Key", "Key");
             dictionary.Add("Tag", "Tag");
+            dictionary.Add("Translated", "Translated");
+            dictionary.Add("NotTranslated", "NotTranslated");
+            dictionary.Add("TranslatedLang", "TranslatedLang");
 
             dictionary.Add("Apps", "Applications");
             dictionary.Add("App", "Application");
             dictionary.Add("Token", "Token");
             dictionary.Add("CreationDate", "Creation Date");
-            dictionary.Add("Delete", "Delete");
             dictionary.Add("CreateNewToken", "Create New Token"); 
 
 
