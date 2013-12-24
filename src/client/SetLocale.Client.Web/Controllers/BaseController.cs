@@ -54,7 +54,11 @@ namespace SetLocale.Client.Web.Controllers
             dictionary.Add("App", "Application");
             dictionary.Add("Token", "Token");
             dictionary.Add("CreationDate", "Creation Date");
-            dictionary.Add("CreateNewToken", "Create New Token"); 
+            dictionary.Add("CreateNewToken", "Create New Token");
+            dictionary.Add("Cancel", "Hayır");
+            dictionary.Add("Ok", "Evet");
+            dictionary.Add("ModalBody", "Silmek İstediğinize Eminmisiniz ?");
+            dictionary.Add("ModalTitle", "Token Sil");
 
 
 
