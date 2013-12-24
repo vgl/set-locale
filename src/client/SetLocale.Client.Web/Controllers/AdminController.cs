@@ -90,7 +90,7 @@ namespace SetLocale.Client.Web.Controllers
                 AppName = "SetCrm",
                 AppDescription = "an application desc.",
                 Url = "setcrm.com",
-                UsageCount = 1356,
+                UsageCount = 64212,
                 IsActive = true
             });
           

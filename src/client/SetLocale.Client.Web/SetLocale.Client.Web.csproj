@@ -117,6 +117,7 @@
     <Content Include="Views\Admin\NewTranslator.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Admin\Apps.cshtml" />
+    <Content Include="Views\User\Apps.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -150,6 +151,7 @@
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\NewAppModel.cs" />
     <Compile Include="Models\NewKeyModel.cs" />
+    <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Models\TranslatorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\UserModel.cs" />

@@ -1,4 +1,6 @@
-﻿namespace SetLocale.Client.Web.Models
+﻿using System.Collections.Generic;
+
+namespace SetLocale.Client.Web.Models
 {
     public class AppModel
     {
@@ -9,5 +11,7 @@
         public string Url { get; set; }
         public int UsageCount { get; set; }
         public bool IsActive { get; set; }
+
+        public List<TokenModel> Tokens { get; set; }
     }
 }
