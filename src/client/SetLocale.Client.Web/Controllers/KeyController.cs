@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using SetLocale.Client.Web.Models;
+using System.Web.Mvc;
 
 namespace SetLocale.Client.Web.Controllers
 {
@@ -13,7 +14,14 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult New()
         {
-            return View();
+            var model = new NewKeyModel
+            {
+                Key = "",
+                Tag = "",
+                Description = "Description"
+            };
+
+            return View(model);
         }
 
         [HttpGet]

@@ -97,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Public\img\tr.png" />
+    <Content Include="Public\img\en.png" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -114,6 +116,8 @@
     <Content Include="Views\App\New.cshtml" />
     <Content Include="Views\Admin\NewTranslator.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
+    <Content Include="Views\Admin\Apps.cshtml" />
+    <Content Include="Views\User\Apps.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -133,6 +137,7 @@
     <Compile Include="Configurations\IocConfig.cs" />
     <Compile Include="Configurations\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AjaxController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -142,8 +147,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GravatarHelper.cs" />
+    <Compile Include="Helpers\IdentityHelper.cs" />
+    <Compile Include="Models\AppModel.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\NewAppModel.cs" />
+    <Compile Include="Models\NewKeyModel.cs" />
+    <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Models\TranslatorModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\UserModel.cs" />

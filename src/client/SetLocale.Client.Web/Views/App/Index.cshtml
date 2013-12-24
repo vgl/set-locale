@@ -1,1 +1,85 @@
-﻿
+﻿@model SetLocale.Client.Web.Models.AppModel
+
+@{
+    ViewBag.Title = string.Format("{0} - {1}", ViewBag.Txt["App"], Model.AppName);
+}
+
+<h3>@ViewBag.Title</h3>
+<hr />
+<div class="row">
+
+    <input type="button" class="btn btn-sm btn-primary btnNewToken pull-right" value="@ViewBag.Txt["CreateNewToken"]" data-id="@Model.Id" />
+    @Html.AntiForgeryToken()
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>@ViewBag.Txt["Token"]</th>
+                <th>@ViewBag.Txt["CreationDate"]</th>
+                <th>@ViewBag.Txt["UsageCount"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Tokens)
+            {
+                <tr>
+                    <td>
+                        <input type="button" class="btn btn-sm btn-warning btnAction" value="@ViewBag.Txt["Delete"]" data-id="@item.Token" />
+                    </td>
+                    <td>@item.Token</td>
+                    <td>@item.CreationDate.ToString("f")</td>
+                    <td>@item.UsageCount</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+@section script
+{
+    <script>
+    $(function () {
+        $("input.btnAction").click(function () {
+            var tokenId = $(this).data("id");
+
+            console.log(tokenId);
+        });
+
+
+        $("input.btnNewToken").click(function () {
+            
+            var appId = $(this).data("id");
+
+            $.ajax({
+                url: "/ajax/newtoken",
+                type: "POST",
+                data: "appId=" + appId + "&__RequestVerificationToken=" +  $('input[name="__RequestVerificationToken"]').val(),
+            }).done(function (r) {
+
+                if (r) {
+                    $('table tbody').append('<tr><td><input type="button" class="btn btn-sm btn-warning btnAction" value="@ViewBag.Txt["Delete"]" data-id="'
+                    + r.Token + '" /></td><td>'
+                    + r.Token + '</td><td>'
+                    + r.CreationDateStr + '</td><td>'
+                    + r.UsageCount + '</td></tr>');
+                } else {
+                    //warning
+                }
+
+               
+               
+
+            });
+
+
+
+
+        });
+    });
+    </script>
+}

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+
 using SetLocale.Client.Web.Models;
 using SetLocale.Util;
 
@@ -21,6 +22,18 @@ namespace SetLocale.Client.Web.Controllers
                 Email = "user@test.com",
                 Name = "Translator"
             };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult NewTranslator(TranslatorModel model)
+        {
+            if (model.IsValid())
+            {
+                return Redirect("/users");
+            }
+
+            model.Msg = "bir sorun oluştu...";
             return View(model);
         }
 
@@ -53,6 +66,34 @@ namespace SetLocale.Client.Web.Controllers
                 IsActive = true
             });
 
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Apps()
+        {
+            var model = new List<AppModel>();
+            model.Add(new AppModel
+            {
+                Id = 1,
+                UserEmail = "dev@test.com",
+                AppName = "SetLocale",
+                AppDescription = "an application desc.",
+                Url = "setlocale.com",
+                UsageCount = 1356,
+                IsActive = true
+            });
+            model.Add(new AppModel
+            {
+                Id = 1,
+                UserEmail = "dev@test.com",
+                AppName = "SetCrm",
+                AppDescription = "an application desc.",
+                Url = "setcrm.com",
+                UsageCount = 64212,
+                IsActive = true
+            });
+          
             return View(model);
         }
     }

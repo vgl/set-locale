@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using SetLocale.Client.Web.Models;
 
 namespace SetLocale.Client.Web.Controllers
@@ -9,6 +10,32 @@ namespace SetLocale.Client.Web.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Apps()
+        {
+            var model = new List<AppModel>();
+            model.Add(new AppModel
+            {
+                Id = 1,
+                AppName = "SetLocale",
+                AppDescription = "an application desc.",
+                Url = "setlocale.com",
+                UsageCount = 1356,
+                IsActive = true
+            });
+            model.Add(new AppModel
+            {
+                Id = 2,
+                AppName = "SetCrm",
+                AppDescription = "an application desc.",
+                Url = "setcrm.com",
+                UsageCount = 64212,
+                IsActive = true
+            });
+
+            return View(model);
         }
 
         [HttpGet]

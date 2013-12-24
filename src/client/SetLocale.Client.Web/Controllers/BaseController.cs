@@ -15,11 +15,11 @@ namespace SetLocale.Client.Web.Controllers
             //temp usage...
             var dictionary = new Dictionary<string, string>();
             dictionary.Add("Login", "Login");
-            dictionary.Add("Email", "Email");
+            dictionary.Add("Email", "Email"); 
+            dictionary.Add("Password", "Password");
+
             dictionary.Add("Reset", "Send Reset Password Link");
             dictionary.Add("ResetTitle", "Reset Password");
-            dictionary.Add("Password", "Password");
-            
 
             dictionary.Add("NewTranslator", "New Translator User");
             dictionary.Add("Name", "Name");
@@ -35,9 +35,28 @@ namespace SetLocale.Client.Web.Controllers
             dictionary.Add("Sign Up", "Sign Up");
 
             dictionary.Add("NewApp", "NewApp");
-            dictionary.Add("AppName", "AppName");
+            dictionary.Add("AppName", "Application Name");
             dictionary.Add("Url", "Url");
             dictionary.Add("Description", "Description");
+
+            dictionary.Add("NewKey", "NewKey");
+            dictionary.Add("Key", "Key");
+            dictionary.Add("Tag", "Tag");
+
+            dictionary.Add("Apps", "Applications");
+            dictionary.Add("App", "Application");
+            dictionary.Add("Token", "Token");
+            dictionary.Add("CreationDate", "Creation Date");
+            dictionary.Add("Delete", "Delete");
+            dictionary.Add("CreateNewToken", "Create New Token"); 
+
+
+
+
+
+
+            dictionary.Add("UsageCount", "Usage Count"); 
+
 
             ViewBag.Txt = dictionary;
             base.OnActionExecuting(filterContext);
