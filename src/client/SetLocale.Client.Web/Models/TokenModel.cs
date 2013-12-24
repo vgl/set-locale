@@ -6,6 +6,8 @@ namespace SetLocale.Client.Web.Models
     {
         public string Token { get; set; }
         public DateTime CreationDate { get; set; }
+        public string CreationDateStr { get; set; }
+
         public int UsageCount { get; set; }
     }
 }
