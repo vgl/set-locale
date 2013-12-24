@@ -43,11 +43,23 @@ namespace SetLocale.Client.Web.Controllers
         {
             var model = new NewUserModel
             {
-                UserName = "UserName",
+                Name = "Ali Gel",
                 Email = "dev@test.com",
-                Password = "password" 
+                Password = "password"
             };
 
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult New(NewUserModel model)
+        {
+            if (model.IsValid())
+            {
+                return Redirect("/user/apps");
+            }
+
+            model.Msg = "bir sorun oluştu";
             return View(model);
         }
 
@@ -71,6 +83,18 @@ namespace SetLocale.Client.Web.Controllers
                 Password = "password"
             };
 
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Login(LoginModel model)
+        {
+            if (model.IsValid())
+            {
+                return Redirect("/user/apps");
+            }
+
+            model.Msg = "bir sorun oluştu";
             return View(model);
         }
     }

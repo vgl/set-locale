@@ -35,7 +35,7 @@ namespace SetLocale.Client.Web.Controllers
 
             dictionary.Add("NewUser", "NewUser");
             dictionary.Add("UserName", "UserName");
-            dictionary.Add("Sign Up", "Sign Up");
+            dictionary.Add("SignUp", "Sign Up");
 
             dictionary.Add("NewApp", "NewApp");
             dictionary.Add("AppName", "Application Name");

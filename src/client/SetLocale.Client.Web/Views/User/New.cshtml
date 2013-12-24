@@ -13,8 +13,8 @@
 
 
         <div class="row">
-            <strong>@ViewBag.Txt["UserName"]</strong>
-            <input type="text" class="form-control input-lg" name="username" id="username" value="@Model.UserName" />
+            <strong>@ViewBag.Txt["Name"]</strong>
+            <input type="text" class="form-control input-lg" name="name" id="name" value="@Model.Name" />
         </div>
 
         <div class="row">
@@ -30,7 +30,7 @@
         @Html.AntiForgeryToken()
 
         <div class="row">
-            <input type="submit" value="@ViewBag.Txt["Sign Up"]" class="btn btn-primary btn-lg" />
+            <input type="submit" value="@ViewBag.Txt["SignUp"]" class="btn btn-primary btn-lg" />
         </div>
 
         <div class="error">
