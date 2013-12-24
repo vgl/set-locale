@@ -1,1 +1,48 @@
-﻿
+﻿@model List<SetLocale.Client.Web.Models.KeyModel>
+
+@{
+    ViewBag.Title = ViewBag.Txt["KeyListing"];
+}
+
+<h3>@ViewBag.Title</h3>
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>@ViewBag.Txt["Key"]</th>
+                <th>@ViewBag.Txt["Tag"]</th>
+                <th>@ViewBag.Txt["TranslatedLang"]</th> 
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            { 
+                <tr>
+                    <td>
+                        <input type="button" class="btn btn-sm btn-warning btnAction" value="@ViewBag.Txt["Edit"]" data-id="@item.Key"   />
+                    </td> 
+                    <td>@item.Key</td>
+                    <td>@foreach (var tags in item.Tag) { @tags.ToString(); }</td>
+                    <td>@foreach (var langs in item.Languages){ <img src="@langs.FlagImageUrl.ToString()" alt="Türkçe" />  }</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+@section script
+{
+    <script>
+        $(function () {
+            $("input.btnAction").click(function () {
+                var userId = $(this).data("id");
+                
+            });
+        });
+    </script>
+}

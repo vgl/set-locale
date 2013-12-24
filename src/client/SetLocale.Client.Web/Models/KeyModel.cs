@@ -5,18 +5,15 @@ using System.Web;
 
 namespace SetLocale.Client.Web.Models
 {
-    public class NewKeyModel : BaseModel
+    public class KeyModel : BaseModel
     {
 
         public string Key { get; set; }
         public string[] Tag { get; set; }
         public string Description { get; set; }
+        public List<LanguageModel> Languages {get; set;}
+        public bool IsTranslated { get; set; }
 
-        public bool IsValid()
-        {
-            return !string.IsNullOrEmpty(Key) 
-                   && !string.IsNullOrEmpty(Description);
-        }
-
+         
     }
 }
