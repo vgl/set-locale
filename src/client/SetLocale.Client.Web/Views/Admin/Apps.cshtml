@@ -1,0 +1,57 @@
+﻿@model List<SetLocale.Client.Web.Models.AppModel>
+
+@{
+    ViewBag.Title = ViewBag.Txt["Apps"];
+}
+
+<h3>@ViewBag.Title</h3>
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>@ViewBag.Txt["Email"]</th>
+                <th>@ViewBag.Txt["AppName"]</th>
+                <th>@ViewBag.Txt["Description"]</th>
+                <th>@ViewBag.Txt["Url"]</th>
+                <th>@ViewBag.Txt["UsageCount"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var val = item.IsActive ? ViewBag.Txt["Deactivate"] : ViewBag.Txt["Activate"];
+                <tr>
+                    <td>
+                        <input type="button" class="btn btn-sm btn-warning btnAction" value="@val" data-id="@item.Id" data-isactive="@item.IsActive" />
+                    </td>
+                    <td>@item.UserEmail</td>
+                    <td>@item.AppName</td>
+                    <td>@item.AppDescription</td>
+                    <td>@item.Url</td>
+                    <td>@item.UsageCount</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+@section script
+{
+    <script>
+        $(function () {
+            $("input.btnAction").click(function () {
+                var userId = $(this).data("id");
+                var isActive = $(this).data("isactive");
+
+                console.log(userId);
+                console.log(isActive);
+
+            });
+        });
+    </script>
+}
