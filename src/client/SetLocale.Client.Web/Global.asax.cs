@@ -69,7 +69,9 @@ namespace SetLocale.Client.Web
             enTexts.Add("ModalTitle", "Token Sil");
             enTexts.Add("ModalBodyUsers", "Deactivate Etmek İstediğinize Eminmisiniz ?");
             enTexts.Add("ModalTitleUsers", "User Deactivate");
+            enTexts.Add("ModalTitleApps", "App Deactivate");
             enTexts.Add("UsageCount", "Usage Count");
+            
 
             var trTexts = new Dictionary<string, string>();
             trTexts.Add("Edit", "Düzenle");
@@ -111,6 +113,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("ModalTitle", "Token Sil");
             trTexts.Add("ModalBodyUsers", "Deactivate Etmek İstediğinize Eminmisiniz ?");
             trTexts.Add("ModalTitleUsers", "User Deactivate");
+            trTexts.Add("ModalTitleApps", "App Deactivate");
             trTexts.Add("UsageCount", "Usage Count");
 
 
