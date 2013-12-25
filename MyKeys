@@ -1,0 +1,13 @@
+Feature: My Keys
+
+    Scenario: View My Keys
+
+    Given user should be logged in
+        And user is in "Developer" or "Translator" role
+	      And user views "setLocale"
+
+    When user clicks "Kelimelerim" button
+
+    Then List "Edit" button, Keys, Tag, Translated Languages 
+	      And  List only keys that are only created by user is logged in.
+        
