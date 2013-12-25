@@ -43,6 +43,18 @@ namespace SetLocale.Client.Web.Controllers
 
             return Json(model, JsonRequestBehavior.DenyGet);
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public JsonResult ChangeAppStatus(int id, bool isActive)
+        {
+            var model = new ResponseModel
+            {
+                Msg = "ok...",
+                Ok = true
+            };
+
+            return Json(model, JsonRequestBehavior.DenyGet);
+        }
     }
 
 }

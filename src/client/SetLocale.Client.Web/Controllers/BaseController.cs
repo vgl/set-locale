@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Web.Mvc;
 
 using SetLocale.Client.Web.Models;
@@ -50,6 +49,13 @@ namespace SetLocale.Client.Web.Controllers
             catch { }
         }
 
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            SetLanguage();
+
+            base.OnActionExecuting(filterContext);
+        }
+
         private UserModel _currentUser;
         public UserModel CurrentUser
         {
@@ -79,14 +85,5 @@ namespace SetLocale.Client.Web.Controllers
                 return _currentUser;
             }
         }
-
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            SetLanguage();
-            
-            base.OnActionExecuting(filterContext);
-        }
     }
-
-
 }
