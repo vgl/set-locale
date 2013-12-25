@@ -1,0 +1,41 @@
+﻿@model SetLocale.Client.Web.Models.KeyModel
+
+@{
+    ViewBag.Title = Model.Key;
+}
+
+<h3>@ViewBag.Title</h3>
+<hr />
+
+<div class="row">
+    @foreach (var tag in Model.Tag)
+    {
+        <a class="label label-info" href="/tag/index/@tag.UrlName">@tag.Name</a>
+    }
+</div>
+
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>@ViewBag.Txt["Language"]</th>
+                    <th>@ViewBag.Txt["Translation"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Languages)
+                {
+                    <tr>
+                        <td>
+                            <a type="button" class="btn btn-sm btn-warning" href="/key/edit/@Model.Key">@ViewBag.Txt["Edit"]</a>
+                        </td>
+                        <td> <img src="@item.FlagImageUrl" alt="@item.Language flag" /> @item.Language</td>
+                        <td>@item.Value</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

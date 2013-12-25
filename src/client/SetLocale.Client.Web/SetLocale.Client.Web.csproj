@@ -122,6 +122,7 @@
     <Content Include="Views\Key\All.cshtml" />
     <Content Include="Views\Key\My.cshtml" />
     <Content Include="Views\Key\NotTranslated.cshtml" />
+    <Content Include="Views\Key\Detail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
