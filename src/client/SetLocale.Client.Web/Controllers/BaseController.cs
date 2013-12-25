@@ -59,9 +59,8 @@ namespace SetLocale.Client.Web.Controllers
             dictionary.Add("Ok", "Evet");
             dictionary.Add("ModalBody", "Silmek İstediğinize Eminmisiniz ?");
             dictionary.Add("ModalTitle", "Token Sil");
-
-
-
+            dictionary.Add("ModalBodyUsers", "Deactivate Etmek İstediğinize Eminmisiniz ?");
+            dictionary.Add("ModalTitleUsers", "User Deactivate");
 
 
 

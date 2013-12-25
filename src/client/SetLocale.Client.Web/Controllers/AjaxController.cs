@@ -31,5 +31,18 @@ namespace SetLocale.Client.Web.Controllers
 
             return Json(model, JsonRequestBehavior.DenyGet);
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public JsonResult deactivateusers(int id)
+        {
+            var model = new ResponseModel
+            {
+                Msg = "ok...",
+                Ok = true
+            };
+
+            return Json(model, JsonRequestBehavior.DenyGet);
+        }
     }
+
 }
