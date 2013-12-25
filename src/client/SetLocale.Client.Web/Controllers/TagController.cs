@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using Castle.Core.Resource;
+
 using SetLocale.Client.Web.Models;
 
 namespace SetLocale.Client.Web.Controllers
