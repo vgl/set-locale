@@ -33,7 +33,7 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult deactivateusers(int id)
+        public JsonResult ChangeUserStatus(int id, bool isActive)
         {
             var model = new ResponseModel
             {

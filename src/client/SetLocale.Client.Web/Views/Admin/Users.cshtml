@@ -23,7 +23,7 @@
                 var val = item.IsActive ? ViewBag.Txt["Deactivate"] : ViewBag.Txt["Activate"];
                 <tr>
                     <td>
-                       <a type="button" class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeactivateModal" value="@val" data-id="@item.Id" data-isactive="@item.IsActive" ></a>
+                        <a type="button" class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
                     </td>
                     <td>@item.Name</td>
                     <td>@item.Email</td>
@@ -33,6 +33,7 @@
 
         </tbody>
     </table>
+    @Html.AntiForgeryToken()
 </div>
 <div class="modal fade" id="DeactivateModal" tabindex="-1" role="dialog" aria-labelledby="lblDeactivateModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -46,7 +47,7 @@
             </div>
             <div class="modal-footer">
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="@ViewBag.Txt["Cancel"]" />
-                <input type="button" class="btn btn-primary" value="@ViewBag.Txt["Ok"]" id="btnDeactivate" data-id="" />
+                <input type="button" class="btn btn-primary" value="@ViewBag.Txt["Ok"]" id="btnDeactivate" data-id="" data-isactive="" />
             </div>
         </div>
     </div>
@@ -56,36 +57,35 @@
 {
     <script>
         $(function () {
+            
+            var textActivate = "@ViewBag.Txt["Activate"]";
+            var textDeactivate = "@ViewBag.Txt["Deactivate"]";
+
             $("a.btnAction").click(function () {
                 var id = $(this).data("id");
                 var isActive = $(this).data("isactive");
-                $("input#btnDeactivate").data("value", id);
-                console.log(id);
-                console.log(isActive);
 
+                $("input#btnDeactivate").data("id", id)
+                                        .data("isactive", isActive);
             });
             $("input#btnDeactivate").click(function () {
-
                 var id = $(this).data("id");
-
+                var isActive = $(this).data("isactive");
 
                 $.ajax({
-                    url: "/ajax/deactivateusers",
+                    url: "/Ajax/ChangeUserStatus",
                     type: "POST",
-                    data: "id=" + id + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                    data: "id=" + id + "&isActive=" + isActive + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
                 }).done(function (r) {
-
-
                     if (r && r.Ok) {
 
-                        console.log($("a[id='" + id + "']"));
-                        if ($("a.btnAction").isActive = true) {
-                            $("a[data-id='" + id + "']");
+                        if (isActive) {
+                            $("a[data-id='" + id + "']").removeClass("btn-warning").addClass("btn-success").data("isactive", false).html(textActivate);
                         }
                         else {
-                           
+                            $("a[data-id='" + id + "']").removeClass("btn-success").addClass("btn-warning").data("isactive", true).html(textDeactivate);
                         }
-                        
+
                         $("#DeactivateModal").modal('hide');
 
                     } else {
