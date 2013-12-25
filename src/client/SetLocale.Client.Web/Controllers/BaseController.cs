@@ -61,6 +61,7 @@ namespace SetLocale.Client.Web.Controllers
             dictionary.Add("ModalTitle", "Token Sil");
             dictionary.Add("ModalBodyUsers", "Deactivate Etmek İstediğinize Eminmisiniz ?");
             dictionary.Add("ModalTitleUsers", "User Deactivate");
+            dictionary.Add("ModalTitleApps", "App Deactivate");
 
 
 
