@@ -30,7 +30,7 @@ namespace SetLocale.Client.Web.Controllers
         {
             if (model.IsValid())
             {
-                return Redirect("/users");
+                return Redirect("/admin/users");
             }
 
             model.Msg = "bir sorun oluştu...";

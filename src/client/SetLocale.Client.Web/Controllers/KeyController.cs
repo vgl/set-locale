@@ -9,14 +9,13 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            string[] tags = { "genel" };
 
             var langs = new List<LanguageModel>();
 
             langs.Add(new LanguageModel
                 {
-                    Value="Kayıt Ol",
-                    Language="tr",
+                    Value = "Kayıt Ol",
+                    Language = "tr",
                     FlagImageUrl = "/lang/tr"
                 });
 
@@ -26,15 +25,18 @@ namespace SetLocale.Client.Web.Controllers
                 Language = "en",
                 FlagImageUrl = "/lang/en"
             });
- 
+
             var model = new List<KeyModel>();
             model.Add(new KeyModel
             {
                 Key = "sign_up",
                 Description = "Kullanıcı üyelik açması için kullanılır.",
                 IsTranslated = true,
-                Tag = new[] { "genel" },
-                Languages = langs  
+                Tag = new List<TagModel>()
+                {
+                    new TagModel{ Name = "Membership", UrlName = "membership"}
+                },
+                Languages = langs
             });
 
 
@@ -42,8 +44,8 @@ namespace SetLocale.Client.Web.Controllers
 
             langs.Add(new LanguageModel
             {
-                Value="Giriş",
-                Language="tr",
+                Value = "Giriş",
+                Language = "tr",
                 FlagImageUrl = "/Public/img/tr.png"
             });
 
@@ -59,10 +61,13 @@ namespace SetLocale.Client.Web.Controllers
                 Key = "sign_in",
                 Description = "Kullanıcı girişi için kullanılır.",
                 IsTranslated = true,
-                Tag = tags,
-                Languages = langs 
+                Tag = new List<TagModel>()
+                {
+                    new TagModel{ Name = "Membership", UrlName = "membership"}
+                },
+                Languages = langs
             });
-  
+
             return View(model);
         }
 
@@ -77,7 +82,7 @@ namespace SetLocale.Client.Web.Controllers
                 Tag = tags,
                 Description = "Description"
             };
-             
+
             return View(model);
         }
 

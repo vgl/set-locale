@@ -1,4 +1,5 @@
-﻿@model List<SetLocale.Client.Web.Models.KeyModel>
+﻿@using System.Diagnostics
+@model List<SetLocale.Client.Web.Models.KeyModel>
 
 @{
     ViewBag.Title = ViewBag.Txt["KeyListing"];
@@ -24,9 +25,12 @@
                     <td>
                         <input type="button" class="btn btn-sm btn-warning btnAction" value="@ViewBag.Txt["Edit"]" data-id="@item.Key"   />
                     </td> 
-                    <td>@item.Key</td>
-                    <td>@foreach (var tags in item.Tag) { @tags.ToString(); }</td>
-                    <td>@foreach (var langs in item.Languages){ <img src="@langs.FlagImageUrl.ToString()" alt="Türkçe" />  }</td>
+                    <td><a href="/key/index/@item.Key">@item.Key</a></td>
+                    <td>@foreach (var tag in item.Tag)
+                        {
+                            <a href="/tag/index/@tag.UrlName">@tag.Name</a>
+                        }</td>
+                    <td>@foreach (var langs in item.Languages){ <img src="@langs.FlagImageUrl" alt="Türkçe" />  }</td>
                 </tr>
             }
 
@@ -40,7 +44,7 @@
     <script>
         $(function () {
             $("input.btnAction").click(function () {
-                var userId = $(this).data("id");
+                var keyId = $(this).data("id");
                 
             });
         });

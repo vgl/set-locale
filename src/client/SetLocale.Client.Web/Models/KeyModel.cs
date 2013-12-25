@@ -9,7 +9,7 @@ namespace SetLocale.Client.Web.Models
     {
 
         public string Key { get; set; }
-        public string[] Tag { get; set; }
+        public List<TagModel> Tag { get; set; }
         public string Description { get; set; }
         public List<LanguageModel> Languages {get; set;}
         public bool IsTranslated { get; set; }

@@ -97,5 +97,13 @@ namespace SetLocale.Client.Web.Controllers
             model.Msg = "bir sorun oluştu";
             return View(model);
         }
+
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            
+
+            return RedirectToHome();
+        }
     }
 }
