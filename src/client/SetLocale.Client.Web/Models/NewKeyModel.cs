@@ -9,13 +9,12 @@ namespace SetLocale.Client.Web.Models
     {
 
         public string Key { get; set; }
-        public string Tag { get; set; }
+        public string[] Tag { get; set; }
         public string Description { get; set; }
 
         public bool IsValid()
         {
-            return !string.IsNullOrEmpty(Key)
-                   && !string.IsNullOrEmpty(Tag)
+            return !string.IsNullOrEmpty(Key) 
                    && !string.IsNullOrEmpty(Description);
         }
 

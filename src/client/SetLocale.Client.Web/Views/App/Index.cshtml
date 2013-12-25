@@ -7,7 +7,6 @@
 <h3>@ViewBag.Title</h3>
 <hr />
 <div class="row">
-
     <input type="button" class="btn btn-sm btn-primary btnNewToken pull-right" value="@ViewBag.Txt["CreateNewToken"]" data-id="@Model.Id" />
     @Html.AntiForgeryToken()
 </div>
@@ -27,7 +26,7 @@
             {
                 <tr>
                     <td>
-                        <input type="button" class="btn btn-sm btn-warning btnAction" value="@ViewBag.Txt["Delete"]" data-id="@item.Token" />
+                        <a type="button" class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@ViewBag.Txt["Delete"]</a>
                     </td>
                     <td>@item.Token</td>
                     <td>@item.CreationDate.ToString("f")</td>
@@ -38,48 +37,71 @@
         </tbody>
     </table>
 </div>
-
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="lblDeleteModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">@ViewBag.Txt["ModalTitle"]</h4>
+            </div>
+            <div class="modal-body">
+                @ViewBag.Txt["ModalBody"]
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="@ViewBag.Txt["Cancel"]" />
+                <input type="button" class="btn btn-primary" value="@ViewBag.Txt["Ok"]" id="btnDelete" data-id="" />
+            </div>
+        </div>
+    </div>
+</div>
 
 @section script
 {
     <script>
-    $(function () {
-        $("input.btnAction").click(function () {
-            var tokenId = $(this).data("id");
-
-            console.log(tokenId);
-        });
-
-
-        $("input.btnNewToken").click(function () {
+        $(function () {
+            $("a.btnAction").click(function () {
+                var tokenId = $(this).data("id");
+                $("input#btnDelete").data("id", tokenId);
+            });
             
-            var appId = $(this).data("id");
+            $("input.btnNewToken").click(function () {
+                var appId = $(this).data("id");
 
-            $.ajax({
-                url: "/ajax/newtoken",
-                type: "POST",
-                data: "appId=" + appId + "&__RequestVerificationToken=" +  $('input[name="__RequestVerificationToken"]').val(),
-            }).done(function (r) {
-
-                if (r) {
-                    $('table tbody').append('<tr><td><input type="button" class="btn btn-sm btn-warning btnAction" value="@ViewBag.Txt["Delete"]" data-id="'
-                    + r.Token + '" /></td><td>'
-                    + r.Token + '</td><td>'
-                    + r.CreationDateStr + '</td><td>'
-                    + r.UsageCount + '</td></tr>');
-                } else {
-                    //warning
-                }
-
-               
-               
-
+                $.ajax({
+                    url: "/ajax/newtoken",
+                    type: "POST",
+                    data: "appId=" + appId + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                }).done(function (r) {
+                    if (r) {
+                        $('table tbody').append('<tr><td><input type="button" class="btn btn-sm btn-warning btnAction" value="@ViewBag.Txt["Delete"]" data-id="'
+                                                + r.Token + '" /></td><td>'
+                                                + r.Token + '</td><td>'
+                                                + r.CreationDateStr + '</td><td>'
+                                                + r.UsageCount + '</td></tr>');
+                    } else {
+                        //warning
+                    }
+                });
             });
 
 
+            $("input#btnDelete").click(function () {
+                var token = $(this).data("id");
 
+                $.ajax({
+                    url: "/ajax/deletetoken",
+                    type: "POST",
+                    data: "token=" + token + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                }).done(function (r) {
+                    if (r && r.Ok) {
+                        $("a[data-id='" + token + "']").parent().parent().remove();
+                        $("#DeleteModal").modal('hide');
 
+                    } else {
+                        //warning
+                    }
+                });
+            });
         });
-    });
     </script>
 }

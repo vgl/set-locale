@@ -19,5 +19,42 @@ namespace SetLocale.Client.Web.Controllers
 
             return Json(token, JsonRequestBehavior.DenyGet);
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public JsonResult DeleteToken(string token)
+        {
+            var model = new ResponseModel
+            {
+                Msg = "ok...",
+                Ok = true
+            };
+
+            return Json(model, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public JsonResult ChangeUserStatus(int id, bool isActive)
+        {
+            var model = new ResponseModel
+            {
+                Msg = "ok...",
+                Ok = true
+            };
+
+            return Json(model, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public JsonResult ChangeAppStatus(int id, bool isActive)
+        {
+            var model = new ResponseModel
+            {
+                Msg = "ok...",
+                Ok = true
+            };
+
+            return Json(model, JsonRequestBehavior.DenyGet);
+        }
     }
+
 }

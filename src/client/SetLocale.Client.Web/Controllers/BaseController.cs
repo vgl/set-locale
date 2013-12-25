@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading;
 using System.Web.Mvc;
+
+using SetLocale.Client.Web.Models;
+using SetLocale.Util;
 
 namespace SetLocale.Client.Web.Controllers
 {
@@ -10,56 +13,77 @@ namespace SetLocale.Client.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public void SetLanguage()
+        {
+            try
+            {
+                Thread.CurrentThread.CurrentCulture = ConstHelper.CultureEN;
+                Thread.CurrentThread.CurrentUICulture = ConstHelper.CultureEN;
+
+                ViewBag.Txt = HttpContext.Application[ConstHelper.en_txt];
+
+                var langCookie = Request.Cookies[ConstHelper.__Lang];
+                if (langCookie != null)
+                {
+                    var lang = langCookie.Value;
+                    if (lang == ConstHelper.tr)
+                    {
+                        ViewBag.Txt = HttpContext.Application[ConstHelper.tr_txt];
+
+                        Thread.CurrentThread.CurrentCulture = ConstHelper.CultureTR;
+                        Thread.CurrentThread.CurrentUICulture = ConstHelper.CultureTR;
+                    }
+                }
+                else
+                {
+                    if (!User.Identity.IsAuthenticated) return;
+                    if (CurrentUser.Language == ConstHelper.tr)
+                    {
+                        ViewBag.Txt = HttpContext.Application[ConstHelper.tr_txt];
+
+                        Thread.CurrentThread.CurrentCulture = ConstHelper.CultureTR;
+                        Thread.CurrentThread.CurrentUICulture = ConstHelper.CultureTR;
+                    }
+                }
+            }
+            catch { }
+        }
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            //temp usage...
-            var dictionary = new Dictionary<string, string>();
-            dictionary.Add("Login", "Login");
-            dictionary.Add("Email", "Email"); 
-            dictionary.Add("Password", "Password");
+            SetLanguage();
 
-            dictionary.Add("Reset", "Send Reset Password Link");
-            dictionary.Add("ResetTitle", "Reset Password");
-
-            dictionary.Add("NewTranslator", "New Translator User");
-            dictionary.Add("Name", "Name");
-            dictionary.Add("Save", "Save");
-
-            dictionary.Add("Users", "Users");
-            dictionary.Add("Role", "Role");
-            dictionary.Add("Deactivate", "Deactivate");
-            dictionary.Add("Activate", "Activate");
-
-            dictionary.Add("NewUser", "NewUser");
-            dictionary.Add("UserName", "UserName");
-            dictionary.Add("Sign Up", "Sign Up");
-
-            dictionary.Add("NewApp", "NewApp");
-            dictionary.Add("AppName", "Application Name");
-            dictionary.Add("Url", "Url");
-            dictionary.Add("Description", "Description");
-
-            dictionary.Add("NewKey", "NewKey");
-            dictionary.Add("Key", "Key");
-            dictionary.Add("Tag", "Tag");
-
-            dictionary.Add("Apps", "Applications");
-            dictionary.Add("App", "Application");
-            dictionary.Add("Token", "Token");
-            dictionary.Add("CreationDate", "Creation Date");
-            dictionary.Add("Delete", "Delete");
-            dictionary.Add("CreateNewToken", "Create New Token"); 
-
-
-
-
-
-
-            dictionary.Add("UsageCount", "Usage Count"); 
-
-
-            ViewBag.Txt = dictionary;
             base.OnActionExecuting(filterContext);
+        }
+
+        private UserModel _currentUser;
+        public UserModel CurrentUser
+        {
+            get
+            {
+                if (_currentUser != null) return _currentUser;
+
+                if (User.Identity.IsAuthenticated)
+                {
+                    _currentUser = new UserModel
+                    {
+                        Language = ConstHelper.en,
+                        Id = 1,
+                        IsActive = true,
+                        Email = "test@test.com",
+                        Name = "Translator X",
+                        Role = ConstHelper.User
+                    };
+
+                    // _currentUser = _userService.GetUserSync(User.Identity.GetUserId());
+                }
+                else
+                {
+                    // _formsAuthenticationService.SignOut();
+                }
+
+                return _currentUser;
+            }
         }
     }
 }

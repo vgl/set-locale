@@ -16,10 +16,10 @@
             <strong>@ViewBag.Txt["Key"]</strong>
             <input type="text" class="form-control input-lg" name="key" id="key" value="@Model.Key" />
         </div>
-
+         
         <div class="row">
             <strong>@ViewBag.Txt["Tag"]</strong>
-            <input type="text" class="form-control input-lg" name="tag" id="tag" value="@Model.Tag" />
+            <input type="text" class="form-control input-lg" name="tag" id="tag" value="@foreach (var item in Model.Tag){ @item.ToString()}" />
         </div>
 
         <div class="row">

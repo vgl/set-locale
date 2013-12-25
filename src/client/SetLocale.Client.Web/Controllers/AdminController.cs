@@ -30,7 +30,7 @@ namespace SetLocale.Client.Web.Controllers
         {
             if (model.IsValid())
             {
-                return Redirect("/users");
+                return Redirect("/admin/users");
             }
 
             model.Msg = "bir sorun oluştu...";
@@ -85,7 +85,7 @@ namespace SetLocale.Client.Web.Controllers
             });
             model.Add(new AppModel
             {
-                Id = 1,
+                Id = 2,
                 UserEmail = "dev@test.com",
                 AppName = "SetCrm",
                 AppDescription = "an application desc.",
