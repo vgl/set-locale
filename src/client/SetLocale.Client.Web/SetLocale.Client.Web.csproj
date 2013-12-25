@@ -119,6 +119,9 @@
     <Content Include="Views\Admin\Apps.cshtml" />
     <Content Include="Views\User\Apps.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
+    <Content Include="Views\Key\All.cshtml" />
+    <Content Include="Views\Key\My.cshtml" />
+    <Content Include="Views\Key\NotTranslated.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
