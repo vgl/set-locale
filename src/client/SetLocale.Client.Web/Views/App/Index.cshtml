@@ -1,13 +1,13 @@
 ﻿@model SetLocale.Client.Web.Models.AppModel
 
 @{
-    ViewBag.Title = string.Format("{0} - {1}", ViewBag.Txt["App"], Model.AppName);
+    ViewBag.Title = string.Format("{0} - {1}", ViewBag.Txt["menu_apps_apps"], Model.AppName);
 }
 
 <h3>@ViewBag.Title</h3>
 <hr />
 <div class="row">
-    <input type="button" class="btn btn-sm btn-primary btnNewToken pull-right" value="@ViewBag.Txt["CreateNewToken"]" data-id="@Model.Id" />
+    <input type="button" class="btn btn-sm btn-primary btnNewToken pull-right" value="@ViewBag.Txt["btn_menu_apps_apps_create_new_token"]" data-id="@Model.Id" />
     @Html.AntiForgeryToken()
 </div>
 
@@ -16,9 +16,9 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@ViewBag.Txt["Token"]</th>
-                <th>@ViewBag.Txt["CreationDate"]</th>
-                <th>@ViewBag.Txt["UsageCount"]</th>
+                <th>@ViewBag.Txt["menu_apps_apps_token"]</th>
+                <th>@ViewBag.Txt["menu_apps_apps_creation_date"]</th>
+                <th>@ViewBag.Txt["menu_apps_apps_usage_count"]</th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +26,7 @@
             {
                 <tr>
                     <td>
-                        <a  class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@ViewBag.Txt["Delete"]</a>
+                        <a  class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@ViewBag.Txt["menu_apps_apps_delete"]</a>
                     </td>
                     <td>@item.Token</td>
                     <td>@item.CreationDate.ToString("f")</td>
