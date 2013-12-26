@@ -222,9 +222,27 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit()
+        public ActionResult Edit(string id, string lang)
         {
-            return View();
+            var model = new TranslationModel
+            {
+                Key = "sign_up",
+                Language = "Türkçe",
+                LanguageImageUrl = "/public/img/tr.png"
+            };
+
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Edit(TranslationModel model)
+        {
+            if (model.IsValid())
+            {
+                
+            }
+
+            return View(model);
         }
     }
 }

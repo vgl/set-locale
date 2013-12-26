@@ -1,1 +1,79 @@
-﻿
+﻿@model SetLocale.Client.Web.Models.TranslationModel
+
+@{
+    ViewBag.Title = ViewBag.Txt["updating_key_view_title"];
+}
+
+
+<div class="row col-lg-5">
+    <h3>@ViewBag.Title : @Model.Key</h3>
+    <hr />
+    
+    <div class="row">
+        <img src="@Model.LanguageImageUrl" alt="@Model.Language" /> @Model.Language
+    </div>
+
+    <div class="row">
+        @foreach (var tag in Model.Tags)
+        {
+            <a class="label label-info" href="/tag/index/@tag.UrlName">@tag.Name</a>
+        }
+    </div>
+
+    <form action="/key/edit" method="post">
+        
+        <input type="hidden" name="key" value="@Model.Key" />
+        <input type="hidden" name="languagekey" value="@Model.LanguageKey" />
+
+        <div class="row">
+            <strong>@ViewBag.Txt["translation"]</strong>
+            <input type="text" class="form-control input-lg" name="value" id="value" value="@Model.Value" />
+        </div>
+
+        <div class="row">
+            <strong>@ViewBag.Txt["description"]</strong>
+            <input type="text" class="form-control input-lg" name="description" id="description" value="@Model.Description" />
+        </div>
+
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <input type="submit" value="@ViewBag.Txt["save"]" class="btn btn-primary btn-lg" />
+            <input type="submit" value="@ViewBag.Txt["save_and_close"]" class="btn btn-primary btn-lg" />
+        </div>
+
+        <div class="error">
+            @Model.Msg
+        </div>
+    </form>
+</div>
+
+
+@section script
+{
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js" type="text/javascript"></script>
+    <script>
+        $(function () {
+            $("form").validate({
+                rules: {
+                    appName: {
+                        required: true,
+                    },
+                    url: {
+                        required: true,
+                    },
+                    description: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    appName: {
+                        required: "*"
+                    },
+                    url: "*",
+                    description: "*"
+                }
+            });
+        });
+    </script>
+}
