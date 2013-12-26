@@ -2,7 +2,20 @@
     margin: 10px;
 }
 
-.row strong {
-    display: block;
+    .row strong {
+        display: block;
+    }
 
+#dvHome {
+    font-size: 35px;
 }
+
+    #dvHome h3 {
+        color: orangered;
+        font-size: 45px;
+    }
+
+    #dvHome strong {
+        display: inline !important;
+        color: red;
+    }

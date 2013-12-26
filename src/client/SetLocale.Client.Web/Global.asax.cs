@@ -231,9 +231,9 @@ namespace SetLocale.Client.Web
             enTexts.Add("Logout", "Logout");
             enTexts.Add("updating_key_view_title", "Updating Key");
             enTexts.Add("save_and_close", "Save & Close");
-            
 
-
+            enTexts.Add("home_summary", "set-locale's <strong>{2}</strong> translator provides <strong>{4}</strong> translation for <strong>{3}</strong> keys and <strong>{0}</strong> developer is consuming this service with  <strong>{1}</strong> application");
+            enTexts.Add("home_title", "welcome to set-locale");
 
 
             var trTexts = new Dictionary<string, string>();
@@ -439,6 +439,9 @@ namespace SetLocale.Client.Web
             trTexts.Add("Logout", "Çıkış");
             trTexts.Add("updating_key_view_title", "Kelime Çevirisi Güncelleme Ekranı");
             trTexts.Add("save_and_close", "Kaydet & Kapat");
+
+            trTexts.Add("home_summary", "set-locale <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong>{3}</strong> farklı kelime için <strong>{4}</strong> adet çeviri sunmaktadır");
+            trTexts.Add("home_title","set-locale servisine hoş geldiniz");
 
             Application.Add(ConstHelper.en_txt, enTexts);
             Application.Add(ConstHelper.tr_txt, trTexts);

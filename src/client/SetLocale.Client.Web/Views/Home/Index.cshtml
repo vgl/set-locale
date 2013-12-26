@@ -1,1 +1,13 @@
-﻿ana sayfa
+﻿@model SetLocale.Client.Web.Models.HomeStatsModel
+@{
+    ViewBag.Title = ViewBag.Txt["home_title"];
+}
+
+<div id="dvHome" class="row">
+    
+    <h3>@ViewBag.Title</h3>
+    <hr />
+
+    @Html.Raw(Model.Summary)
+
+</div>
