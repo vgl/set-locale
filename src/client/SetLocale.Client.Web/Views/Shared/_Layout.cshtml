@@ -30,37 +30,37 @@
                     <li><a href="/">Set Locale</a></li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kelimeler <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@ViewBag.Txt["Words"]<b class="caret"></b></a>
                         <ul class="dropdown-menu">
 
 
-                            <li><a href="/key/my">Kelimelerim</a></li>
+                            <li><a href="/key/my">@ViewBag.Txt["MyWords"]</a></li>
                             <li class="divider"></li>
 
-                            <li><a href="/key">Kelimeler</a></li>
-                            <li><a href="/key/nottranslated">Çevirilmeyen Kelimeler</a></li>
+                            <li><a href="/key">@ViewBag.Txt["Words"]</a></li>
+                            <li><a href="/key/nottranslated">@ViewBag.Txt["NotTranslated"]</a></li>
                             <li class="divider"></li>
 
-                            <li><a href="/key/new">Yeni Kelime</a></li>
+                            <li><a href="/key/new">@ViewBag.Txt["NewWord"]</a></li>
                         </ul>
                     </li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Uygulamalar <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@ViewBag.Txt["Apps"] <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/user/apps">Uygulamalar</a></li>
-                            <li><a href="/app/new">Yeni Uygulama</a></li>
+                            <li><a href="/user/apps">@ViewBag.Txt["Apps"]</a></li>
+                            <li><a href="/app/new">@ViewBag.Txt["NewApp"]</a></li>
                         </ul>
                     </li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ayarlar <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@ViewBag.Txt["Settings"] <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/admin/users">Kullanıcılar</a></li>
-                            <li><a href="/admin/apps">Uygulamalar</a></li>
+                            <li><a href="/admin/users">@ViewBag.Txt["Users"]</a></li>
+                            <li><a href="/admin/apps">@ViewBag.Txt["Apps"]</a></li>
                             <li class="divider"></li>
 
-                            <li><a href="/admin/newtranslator">Yeni Çevirmen</a></li>
+                            <li><a href="/admin/newtranslator">@ViewBag.Txt["NewTranslator"]</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -70,10 +70,10 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Current User Name <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/user/login">Giriş</a></li>
-                            <li><a href="/user/logout">Çıkış</a></li>
-                            <li><a href="/user/new">Üye ol</a></li>
-                            <li><a href="/user/reset">Şifre Sıfırla</a></li>
+                            <li><a href="/user/login">@ViewBag.Txt["Login"]</a></li>
+                            <li><a href="/user/logout">@ViewBag.Txt["Logout"]</a></li>
+                            <li><a href="/user/new">@ViewBag.Txt["SignUp"]</a></li>
+                            <li><a href="/user/reset">@ViewBag.Txt["ResetTitle"]</a></li>
                         </ul>
                     </li>
 
