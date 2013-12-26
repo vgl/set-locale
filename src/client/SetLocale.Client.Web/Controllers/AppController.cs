@@ -49,7 +49,7 @@ namespace SetLocale.Client.Web.Controllers
             {
                 AppName = "AppName",
                 Url = "app.com",
-                Description = "Description"
+                Description = "description"
             };
 
             return View(model);

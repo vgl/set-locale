@@ -10,6 +10,7 @@ namespace SetLocale.Client.Web.Services
         List<AppModel> GetUsersApps();
         List<AppModel> GetAllApps();
 
+        List<TagModel> GetSomeTag();
     }
     public class DemoDataService : IDemoDataService
     {
@@ -75,6 +76,29 @@ namespace SetLocale.Client.Web.Services
             });
 
             return result;
+        }
+
+        public List<TagModel> GetSomeTag()
+        {
+            var tags = new List<TagModel>();
+
+            tags.Add(new TagModel
+            {
+                Name = "Membership",
+                UrlName = "membership"
+            });
+            tags.Add(new TagModel
+            {
+                Name = "SetLocale",
+                UrlName = "setlocale"
+            });
+            tags.Add(new TagModel
+            {
+                Name = "SetCrm",
+                UrlName = "setcrm"
+            });
+
+            return tags;
         }
     }
 }

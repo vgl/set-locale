@@ -215,7 +215,7 @@ namespace SetLocale.Client.Web.Controllers
             {
                 Key = "Key",
                 Tag = tags,
-                Description = "Description"
+                Description = "description"
             };
 
             return View(model);
@@ -228,7 +228,8 @@ namespace SetLocale.Client.Web.Controllers
             {
                 Key = "sign_up",
                 Language = "Türkçe",
-                LanguageImageUrl = "/public/img/tr.png"
+                LanguageImageUrl = "/public/img/tr.png",
+                Tags = _demoDataService.GetSomeTag()
             };
 
             return View(model);

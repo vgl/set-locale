@@ -29,6 +29,28 @@ namespace SetLocale.Client.Web
         private void PrepareLocalizationStrings()
         {
             var enTexts = new Dictionary<string, string>();
+
+            enTexts.Add("app_name", "Set Locale");
+
+
+            #region Menu
+
+            #endregion
+
+
+            #region Login EN
+
+            enTexts.Add("login_view_title", "Login to System");
+            enTexts.Add("btn_login", "Login");
+            enTexts.Add("email", "Email");
+            enTexts.Add("password", "Password");
+
+            #endregion
+
+
+
+
+
             enTexts.Add("Edit", "Edit");
             enTexts.Add("Delete", "Delete");
             enTexts.Add("Login", "Login");
@@ -38,7 +60,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("ResetTitle", "Reset Password");
             enTexts.Add("NewTranslator", "New Translator User");
             enTexts.Add("Name", "Name");
-            enTexts.Add("Save", "Save");
+            enTexts.Add("save", "Save");
             enTexts.Add("Users", "Users");
             enTexts.Add("Role", "Role");
             enTexts.Add("Deactivate", "Deactivate");
@@ -49,7 +71,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("NewApp", "New App");
             enTexts.Add("AppName", "Application Name");
             enTexts.Add("Url", "Url");
-            enTexts.Add("Description", "Description");
+            enTexts.Add("description", "Description");
             enTexts.Add("NewKey", "New Key");
             enTexts.Add("KeyListing", "Key Listing");
             enTexts.Add("Key", "Key");
@@ -72,16 +94,30 @@ namespace SetLocale.Client.Web
             enTexts.Add("UsageCount", "Usage Count");
             enTexts.Add("Search", "Search");
             enTexts.Add("Language", "Language");
-            enTexts.Add("Translation", "Translation");
+            enTexts.Add("translation", "Translation");
             enTexts.Add("Words", "Words");
             enTexts.Add("MyWords", "My Words");
             enTexts.Add("NewWord", "New Word");
             enTexts.Add("Settings", "Settings");
             enTexts.Add("Logout", "Logout");
-
+            enTexts.Add("updating_key_view_title", "Updating Key");
+            enTexts.Add("save_and_close", "Save & Close");
             
 
             var trTexts = new Dictionary<string, string>();
+
+            trTexts.Add("app_name", "Set Locale");
+
+
+            #region Login TR
+
+            trTexts.Add("login_view_title", "Sisteme Giriş");
+            trTexts.Add("btn_login", "Giriş");
+            trTexts.Add("email", "Eposta Adresiniz");
+            trTexts.Add("password", "Şifreniz");
+
+            #endregion
+
             trTexts.Add("Edit", "Düzenle");
             trTexts.Add("Delete", "Sil");
             trTexts.Add("Login", "Giriş");
@@ -91,7 +127,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("ResetTitle", "Şifre Sıfırla");
             trTexts.Add("NewTranslator", "Yeni Çevirmen");
             trTexts.Add("Name", "İsim");
-            trTexts.Add("Save", "Kaydet");
+            trTexts.Add("save", "Kaydet");
             trTexts.Add("Users", "Kullanıcılar");
             trTexts.Add("Role", "Yetki Grubu");
             trTexts.Add("Deactivate", "Pasif");
@@ -102,7 +138,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("NewApp", "Yeni Uygulama");
             trTexts.Add("AppName", "Uygulama İsmi");
             trTexts.Add("Url", "Url");
-            trTexts.Add("Description", "Açıklama");
+            trTexts.Add("description", "Açıklama");
             trTexts.Add("NewKey", "Yeni Anahtar");
             trTexts.Add("KeyListing", "Anahtar Listesi");
             trTexts.Add("Key", "Anahtar");
@@ -125,12 +161,14 @@ namespace SetLocale.Client.Web
             trTexts.Add("UsageCount", "Kullanım Sayısı");
             trTexts.Add("Search", "Ara");
             trTexts.Add("Language", "Dil");
-            trTexts.Add("Translation", "Çeviri");
+            trTexts.Add("translation", "Çeviri");
             trTexts.Add("Words", "Kelimeler");
             trTexts.Add("MyWords", "Kelimelerim");
             trTexts.Add("NewWord", "Yeni Kelime");
             trTexts.Add("Settings", "Ayarlar");
             trTexts.Add("Logout", "Çıkış");
+            trTexts.Add("updating_key_view_title", "Kelime Çevirisi Güncelleme Ekranı");
+            trTexts.Add("save_and_close", "Kaydet & Kapat");
 
             Application.Add(ConstHelper.en_txt, enTexts);
             Application.Add(ConstHelper.tr_txt, trTexts);
