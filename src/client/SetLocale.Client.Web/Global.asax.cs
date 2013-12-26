@@ -73,6 +73,12 @@ namespace SetLocale.Client.Web
             enTexts.Add("Search", "Search");
             enTexts.Add("Language", "Language");
             enTexts.Add("Translation", "Translation");
+            enTexts.Add("Words", "Words");
+            enTexts.Add("MyWords", "My Words");
+            enTexts.Add("NewWord", "New Word");
+            enTexts.Add("Settings", "Settings");
+            enTexts.Add("Logout", "Logout");
+
             
 
             var trTexts = new Dictionary<string, string>();
@@ -120,6 +126,11 @@ namespace SetLocale.Client.Web
             trTexts.Add("Search", "Ara");
             trTexts.Add("Language", "Dil");
             trTexts.Add("Translation", "Çeviri");
+            trTexts.Add("Words", "Kelimeler");
+            trTexts.Add("MyWords", "Kelimelerim");
+            trTexts.Add("NewWord", "Yeni Kelime");
+            trTexts.Add("Settings", "Ayarlar");
+            trTexts.Add("Logout", "Çıkış");
 
             Application.Add(ConstHelper.en_txt, enTexts);
             Application.Add(ConstHelper.tr_txt, trTexts);
