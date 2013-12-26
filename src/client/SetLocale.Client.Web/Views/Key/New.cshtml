@@ -1,7 +1,7 @@
 ﻿@model SetLocale.Client.Web.Models.NewKeyModel
 
 @{
-    ViewBag.Title = ViewBag.Txt["NewKey"];
+    ViewBag.Title = ViewBag.Txt["menu_words_new_word_new_key"];
 }
 
 
@@ -13,24 +13,24 @@
 
 
         <div class="row">
-            <strong>@ViewBag.Txt["Key"]</strong>
+            <strong>@ViewBag.Txt["menu_words_new_word_key"]</strong>
             <input type="text" class="form-control input-lg" name="key" id="key" value="@Model.Key" />
         </div>
          
         <div class="row">
-            <strong>@ViewBag.Txt["Tag"]</strong>
+            <strong>@ViewBag.Txt["menu_words_new_word_tag"]</strong>
             <input type="text" class="form-control input-lg" name="tag" id="tag" value="@foreach (var item in Model.Tag){ @item.ToString()}" />
         </div>
 
         <div class="row">
-            <strong>@ViewBag.Txt["description"]</strong>
+            <strong>@ViewBag.Txt["menu_words_new_word_description"]</strong>
             <input type="text" class="form-control input-lg" name="description" id="description" value="@Model.Description" />
         </div>
 
         @Html.AntiForgeryToken()
 
         <div class="row">
-            <input type="submit" value="@ViewBag.Txt["save"]" class="btn btn-primary btn-lg" />
+            <input type="submit" value="@ViewBag.Txt["btn_menu_words_new_word_save"]" class="btn btn-primary btn-lg" />
         </div>
 
         <div class="error">

@@ -1,7 +1,7 @@
 ﻿@model List<SetLocale.Client.Web.Models.UserModel>
 
 @{
-    ViewBag.Title = ViewBag.Txt["Users"];
+    ViewBag.Title = ViewBag.Txt["menu_settings_users"];
 }
 
 <h3>@ViewBag.Title</h3>
@@ -12,15 +12,15 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@ViewBag.Txt["Name"]</th>
-                <th>@ViewBag.Txt["Email"]</th>
-                <th>@ViewBag.Txt["Role"]</th>
+                <th>@ViewBag.Txt["menu_settings_users_name"]</th>
+                <th>@ViewBag.Txt["menu_settings_users_email"]</th>
+                <th>@ViewBag.Txt["menu_settings_users_role"]</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                var val = item.IsActive ? ViewBag.Txt["Deactivate"] : ViewBag.Txt["Activate"];
+                var val = item.IsActive ? ViewBag.Txt["menu_settings_users_deactivate"] : ViewBag.Txt["menu_settings_users_activate"];
                 <tr>
                     <td>
                         <a type="button" class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
