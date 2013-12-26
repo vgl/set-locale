@@ -2,12 +2,17 @@
 using System.Web.Mvc;
 
 using SetLocale.Client.Web.Models;
+using SetLocale.Client.Web.Services;
 using SetLocale.Util;
 
 namespace SetLocale.Client.Web.Controllers
 {
     public class AdminController : BaseController
     {
+        public AdminController(IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
+        {
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -72,28 +77,7 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult Apps()
         {
-            var model = new List<AppModel>();
-            model.Add(new AppModel
-            {
-                Id = 1,
-                UserEmail = "dev@test.com",
-                AppName = "SetLocale",
-                AppDescription = "an application desc.",
-                Url = "setlocale.com",
-                UsageCount = 1356,
-                IsActive = true
-            });
-            model.Add(new AppModel
-            {
-                Id = 2,
-                UserEmail = "dev@test.com",
-                AppName = "SetCrm",
-                AppDescription = "an application desc.",
-                Url = "setcrm.com",
-                UsageCount = 64212,
-                IsActive = true
-            });
-          
+            var model = _demoDataService.GetAllApps();
             return View(model);
         }
     }

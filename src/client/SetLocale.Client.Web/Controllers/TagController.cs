@@ -2,11 +2,16 @@
 using System.Web.Mvc;
 
 using SetLocale.Client.Web.Models;
+using SetLocale.Client.Web.Services;
 
 namespace SetLocale.Client.Web.Controllers
 {
     public class TagController : BaseController
     {
+        public TagController(IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
+        {
+        }
+
         [HttpGet]
         public ActionResult Index(string id)
         {

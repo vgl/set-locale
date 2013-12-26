@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using SetLocale.Client.Web.Models;
 using System.Web.Mvc;
+using SetLocale.Client.Web.Services;
 
 namespace SetLocale.Client.Web.Controllers
 {
     public class AppController : BaseController
     {
+        public AppController(IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
+        {
+        }
+
         [HttpGet]
         public ActionResult Index()
         {

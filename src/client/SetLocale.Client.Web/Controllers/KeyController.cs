@@ -1,11 +1,16 @@
 ﻿using SetLocale.Client.Web.Models;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using SetLocale.Client.Web.Services;
 
 namespace SetLocale.Client.Web.Controllers
 {
     public class KeyController : BaseController
     {
+        public KeyController(IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
+        {
+        }
+
         [HttpGet]
         public ActionResult Index()
         {

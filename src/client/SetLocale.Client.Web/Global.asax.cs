@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -71,6 +70,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("ModalTitleUsers", "User Status");
             enTexts.Add("ModalTitleApps", "App Status");
             enTexts.Add("UsageCount", "Usage Count");
+            enTexts.Add("Search", "Search");
             
 
             var trTexts = new Dictionary<string, string>();
@@ -115,6 +115,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("ModalTitleUsers", "Kullanıcı Durumu");
             trTexts.Add("ModalTitleApps", "Uygulama Durumu");
             trTexts.Add("UsageCount", "Kullanım Sayısı");
+            trTexts.Add("Search", "Ara");
 
 
             Application.Add(ConstHelper.en_txt, enTexts);

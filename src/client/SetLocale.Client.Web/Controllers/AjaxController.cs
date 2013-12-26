@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Web.Mvc;
 using SetLocale.Client.Web.Models;
+using SetLocale.Client.Web.Services;
 
 namespace SetLocale.Client.Web.Controllers
 {
     public class AjaxController : BaseController
     {
+        public AjaxController(IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
+        {
+        }
+
         [HttpPost, ValidateAntiForgeryToken]
         public JsonResult NewToken(int appId)
         {
