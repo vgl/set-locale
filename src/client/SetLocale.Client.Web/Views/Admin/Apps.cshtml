@@ -1,7 +1,7 @@
 ﻿@model List<SetLocale.Client.Web.Models.AppModel>
 
 @{
-    ViewBag.Title = ViewBag.Txt["Apps"];
+    ViewBag.Title = ViewBag.Txt["menu_settings_apps"];
 }
 
 <h3>@ViewBag.Title</h3>
@@ -12,17 +12,17 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@ViewBag.Txt["Email"]</th>
-                <th>@ViewBag.Txt["AppName"]</th>
-                <th>@ViewBag.Txt["description"]</th>
-                <th>@ViewBag.Txt["Url"]</th>
-                <th>@ViewBag.Txt["UsageCount"]</th>
+                <th>@ViewBag.Txt["menu_settings_apps_email"]</th>
+                <th>@ViewBag.Txt["menu_settings_apps_app_name"]</th>
+                <th>@ViewBag.Txt["menu_settings_apps_description"]</th>
+                <th>@ViewBag.Txt["menu_settings_apps_url"]</th>
+                <th>@ViewBag.Txt["menu_settings_apps_usage_count"]</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                var val = item.IsActive ? ViewBag.Txt["Deactivate"] : ViewBag.Txt["Activate"];
+                var val = item.IsActive ? ViewBag.Txt["menu_settings_apps_deactivate"] : ViewBag.Txt["menu_settings_apps_activate"];
                 <tr>
                     <td>
                          <a type="button" class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
