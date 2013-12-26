@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SetLocale.Client.Test")]
+[assembly: AssemblyTitle("SetLocale.Client.Web.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SetLocale.Client.Test")]
+[assembly: AssemblyProduct("SetLocale.Client.Web.Test")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("45ef4d34-cf00-446e-93f3-eb35d77080fc")]
+[assembly: Guid("25af4a97-2a1d-48d9-b37b-9197ff57cd26")]
 
 // Version information for an assembly consists of the following four values:
 //

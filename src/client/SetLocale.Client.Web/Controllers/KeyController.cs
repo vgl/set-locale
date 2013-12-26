@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using SetLocale.Client.Web.Services;
+using SetLocale.Util;
 
 namespace SetLocale.Client.Web.Controllers
 {
@@ -222,7 +223,7 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(string id, string lang)
+        public ActionResult Edit(string id, string lang = ConstHelper.tr)
         {
             var model = new TranslationModel
             {
