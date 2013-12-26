@@ -30,37 +30,37 @@
                     <li><a href="/">@ViewBag.Txt["app_name"]</a></li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@ViewBag.Txt["Words"]<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@ViewBag.Txt["menu_words"]<b class="caret"></b></a>
                         <ul class="dropdown-menu">
 
 
-                            <li><a href="/key/my">@ViewBag.Txt["MyWords"]</a></li>
+                            <li><a href="/key/my">@ViewBag.Txt["menu_words_mywords"]</a></li>
                             <li class="divider"></li>
 
-                            <li><a href="/key">@ViewBag.Txt["Words"]</a></li>
-                            <li><a href="/key/nottranslated">@ViewBag.Txt["NotTranslated"]</a></li>
+                            <li><a href="/key">@ViewBag.Txt["menu_words_words"]</a></li>
+                            <li><a href="/key/nottranslated">@ViewBag.Txt["menu_words_nottranslated"]</a></li>
                             <li class="divider"></li>
 
-                            <li><a href="/key/new">@ViewBag.Txt["NewWord"]</a></li>
+                            <li><a href="/key/new">@ViewBag.Txt["menu_words_newword"]</a></li>
                         </ul>
                     </li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@ViewBag.Txt["Apps"] <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@ViewBag.Txt["menu_apps"] <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/user/apps">@ViewBag.Txt["Apps"]</a></li>
-                            <li><a href="/app/new">@ViewBag.Txt["NewApp"]</a></li>
+                            <li><a href="/user/apps">@ViewBag.Txt["menu_apps_apps"]</a></li>
+                            <li><a href="/app/new">@ViewBag.Txt["menu_apps_newapp"]</a></li>
                         </ul>
                     </li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@ViewBag.Txt["Settings"] <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@ViewBag.Txt["menu_settings"] <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/admin/users">@ViewBag.Txt["Users"]</a></li>
-                            <li><a href="/admin/apps">@ViewBag.Txt["Apps"]</a></li>
+                            <li><a href="/admin/users">@ViewBag.Txt["menu_settings_users"]</a></li>
+                            <li><a href="/admin/apps">@ViewBag.Txt["menu_settings_apps"]</a></li>
                             <li class="divider"></li>
 
-                            <li><a href="/admin/newtranslator">@ViewBag.Txt["NewTranslator"]</a></li>
+                            <li><a href="/admin/newtranslator">@ViewBag.Txt["menu_settings_newtranslator"]</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -70,10 +70,10 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Current User Name <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/user/login">@ViewBag.Txt["Login"]</a></li>
-                            <li><a href="/user/logout">@ViewBag.Txt["Logout"]</a></li>
-                            <li><a href="/user/new">@ViewBag.Txt["SignUp"]</a></li>
-                            <li><a href="/user/reset">@ViewBag.Txt["ResetTitle"]</a></li>
+                            <li><a href="/user/login">@ViewBag.Txt["menu_user_login"]</a></li>
+                            <li><a href="/user/logout">@ViewBag.Txt["menu_user_logout"]</a></li>
+                            <li><a href="/user/new">@ViewBag.Txt["menu_user_signup"]</a></li>
+                            <li><a href="/user/reset">@ViewBag.Txt["menu_user_reset"]</a></li>
                         </ul>
                     </li>
 
@@ -82,7 +82,7 @@
                 </ul>
 
                 <form class="navbar-form navbar-right">
-                    <input id="search" type="text" class="form-control col-lg-8" placeholder="@ViewBag.Txt["Search"]">
+                    <input id="search" type="text" class="form-control col-lg-8" placeholder="@ViewBag.Txt["menu_search"]">
                 </form>
 
             </div>

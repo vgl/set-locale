@@ -35,6 +35,28 @@ namespace SetLocale.Client.Web
 
             #region Menu
 
+            enTexts.Add("menu_words", "Words");
+            enTexts.Add("menu_words_words", "Words");
+            enTexts.Add("menu_words_mywords", "My Words");
+            enTexts.Add("menu_words_newword", "New Word");
+            enTexts.Add("menu_words_nottranslated", "NotTranslated");
+
+            enTexts.Add("menu_apps", "Applications");
+            enTexts.Add("menu_apps_apps", "Applications");
+            enTexts.Add("menu_apps_newapp", "New App");
+
+            enTexts.Add("menu_settings", "Settings");
+            enTexts.Add("menu_settings_apps", "Applications Settings");
+            enTexts.Add("menu_settings_users", "Users Settings");
+            enTexts.Add("menu_settings_newtranslator", "New Translator User");
+
+            enTexts.Add("menu_user_login", "Login");
+            enTexts.Add("menu_user_logout", "Logout");
+            enTexts.Add("menu_user_signup", "Sign Up");
+            enTexts.Add("menu_user_reset", "Reset Password");
+
+            enTexts.Add("menu_search", "Search");
+
             #endregion
 
 
@@ -107,7 +129,31 @@ namespace SetLocale.Client.Web
             var trTexts = new Dictionary<string, string>();
 
             trTexts.Add("app_name", "Set Locale");
+            #region Menü
 
+            trTexts.Add("menu_words", "Kelimeler");
+            trTexts.Add("menu_words_words", "Kelimeler");
+            trTexts.Add("menu_words_mywords", "Kelimelerim");
+            trTexts.Add("menu_words_newword", "Yeni Kelime");
+            trTexts.Add("menu_words_nottranslated", "Çevrilmeyen Kelimeler");
+
+            trTexts.Add("menu_apps", "Uygulamalar");
+            trTexts.Add("menu_apps_apps", "Uygulamalar");
+            trTexts.Add("menu_apps_newapp", "Yeni Uygulama");
+
+            trTexts.Add("menu_settings", "Ayarlar");
+            trTexts.Add("menu_settings_apps", "Uygulama Ayarları");
+            trTexts.Add("menu_settings_users", "Kullanıcı Ayarları");
+            trTexts.Add("menu_settings_newtranslator", "Yeni Çevirmen");
+
+            trTexts.Add("menu_user_login", "Giriş");
+            trTexts.Add("menu_user_logout", "Çıkış");
+            trTexts.Add("menu_user_signup", "Kayıt Ol");
+            trTexts.Add("menu_user_reset", "Şifre Sıfırla");
+
+            trTexts.Add("menu_search", "Ara");
+
+            #endregion
 
             #region Login TR
 
