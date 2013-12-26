@@ -26,7 +26,7 @@
             {
                 <tr>
                     <td>
-                        <a type="button" class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@ViewBag.Txt["Delete"]</a>
+                        <a  class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@ViewBag.Txt["Delete"]</a>
                     </td>
                     <td>@item.Token</td>
                     <td>@item.CreationDate.ToString("f")</td>
@@ -59,25 +59,59 @@
 {
     <script>
         $(function () {
-            $("a.btnAction").click(function () {
+            var fnBtnActionClick = function () {
                 var tokenId = $(this).data("id");
                 $("input#btnDelete").data("id", tokenId);
-            });
+                console.log(tokenId);
+            };
+
+            $("a.btnAction").click(fnBtnActionClick);
             
             $("input.btnNewToken").click(function () {
                 var appId = $(this).data("id");
-
+                $("input#btnDelete").data("id", appId);
                 $.ajax({
                     url: "/ajax/newtoken",
                     type: "POST",
                     data: "appId=" + appId + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
                 }).done(function (r) {
                     if (r) {
-                        $('table tbody').append('<tr><td><input type="button" class="btn btn-sm btn-warning btnAction" value="@ViewBag.Txt["Delete"]" data-id="'
-                                                + r.Token + '" /></td><td>'
-                                                + r.Token + '</td><td>'
-                                                + r.CreationDateStr + '</td><td>'
-                                                + r.UsageCount + '</td></tr>');
+                        
+                        var row = $("<tr />");
+                        var url = "#DeleteModal";
+                        var aDeleteButton = $("<a />");
+                        //aDeleteButton.addClass("btn").addClass("btn-sm").addClass("btn-warning").addClass("btnAction");
+                        aDeleteButton.addClass("btn btn-sm btn-warning btnAction");
+                        aDeleteButton.attr("data-toggle", "modal");
+                        aDeleteButton.attr("data-id", r.Token);
+                        aDeleteButton.attr("href", url);
+                        aDeleteButton.html('@ViewBag.Txt["Delete"]');
+                        aDeleteButton.click(fnBtnActionClick);
+
+                        var tdDeleteButton = $("<td />");
+                        tdDeleteButton.append(aDeleteButton);
+                        row.append(tdDeleteButton);
+                
+                        var tdToken = $("<td />");
+                        tdToken.html(r.Token);
+                        row.append(tdToken);
+                        var tdCreationDateStr = $("<td />");
+                        tdCreationDateStr.html(r.CreationDateStr);
+                        row.append(tdCreationDateStr);
+
+                        var tdUsageCount = $("<td />");
+                        tdUsageCount.html(r.UsageCount);
+                        row.append(tdUsageCount);
+ 
+                        $('table tbody').append(row);
+
+
+
+                        //$('table tbody').append('<tr><td><a  class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="'
+                        //                        + r.Token + '" >@ViewBag.Txt["Delete"]</a></td><td>'
+                        //                        + r.Token + '</td><td>'
+                        //                        + r.CreationDateStr + '</td><td>'
+                        //                        + r.UsageCount + '</td></tr>');
                     } else {
                         //warning
                     }
