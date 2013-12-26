@@ -12,41 +12,9 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Detail()
         {
-
             var langs = new List<LanguageModel>();
-
-            langs.Add(new LanguageModel
-                {
-                    Value = "Kayıt Ol",
-                    Language = "tr",
-                    FlagImageUrl = "/lang/tr"
-                });
-
-            langs.Add(new LanguageModel
-            {
-                Value = "Sign Up",
-                Language = "en",
-                FlagImageUrl = "/lang/en"
-            });
-
-            var model = new List<KeyModel>();
-            model.Add(new KeyModel
-            {
-                Key = "sign_up",
-                Description = "Kullanıcı üyelik açması için kullanılır.",
-                IsTranslated = true,
-                Tag = new List<TagModel>()
-                {
-                    new TagModel{ Name = "Membership", UrlName = "membership"}
-                },
-                Languages = langs
-            });
-
-
-            langs.Clear();
-
             langs.Add(new LanguageModel
             {
                 Value = "Giriş",
@@ -61,7 +29,7 @@ namespace SetLocale.Client.Web.Controllers
                 FlagImageUrl = "/Public/img/en.png"
             });
 
-            model.Add(new KeyModel
+            return View(new KeyModel
             {
                 Key = "sign_in",
                 Description = "Kullanıcı girişi için kullanılır.",
@@ -72,8 +40,6 @@ namespace SetLocale.Client.Web.Controllers
                 },
                 Languages = langs
             });
-
-            return View(model);
         }
 
         [HttpGet]

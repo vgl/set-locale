@@ -71,6 +71,8 @@ namespace SetLocale.Client.Web
             enTexts.Add("ModalTitleApps", "App Status");
             enTexts.Add("UsageCount", "Usage Count");
             enTexts.Add("Search", "Search");
+            enTexts.Add("Language", "Language");
+            enTexts.Add("Translation", "Translation");
             
 
             var trTexts = new Dictionary<string, string>();
@@ -116,7 +118,8 @@ namespace SetLocale.Client.Web
             trTexts.Add("ModalTitleApps", "Uygulama Durumu");
             trTexts.Add("UsageCount", "Kullanım Sayısı");
             trTexts.Add("Search", "Ara");
-
+            trTexts.Add("Language", "Dil");
+            trTexts.Add("Translation", "Çeviri");
 
             Application.Add(ConstHelper.en_txt, enTexts);
             Application.Add(ConstHelper.tr_txt, trTexts);
