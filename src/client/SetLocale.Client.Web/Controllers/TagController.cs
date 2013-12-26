@@ -13,7 +13,7 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index(string id)
+        public ActionResult Index(string id = "set-locale")
         {
             var langs = new List<LanguageModel>();
 

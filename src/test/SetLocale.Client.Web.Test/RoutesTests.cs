@@ -29,14 +29,18 @@ namespace SetLocale.Client.Web.Test
         }
 
         [Test]
+        public void TagControllerRoutes()
+        {
+            "~/tag/index/deneme".WithMethod(HttpVerbs.Get).ShouldMapTo<TagController>(action => action.Index("deneme"));
+        }
+
+        [Test]
         public void AdminControllerRoutes()
         {
             "~/admin/newtranslator".ShouldMapTo<AdminController>(action => action.NewTranslator());
 
             "~/admin/users".ShouldMapTo<AdminController>(action => action.Users());
             "~/admin/apps".ShouldMapTo<AdminController>(action => action.Apps());
-
-
         }
 
         [Test]
