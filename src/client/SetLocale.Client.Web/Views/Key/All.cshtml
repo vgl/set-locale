@@ -1,7 +1,7 @@
 ﻿@model List<SetLocale.Client.Web.Models.KeyModel>
 
 @{
-    ViewBag.Title = ViewBag.Txt["KeyListing"];
+    ViewBag.Title = ViewBag.Txt["menu_words_words_key_listing"];
 }
 
 <h3>@ViewBag.Title</h3>
@@ -12,10 +12,10 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@ViewBag.Txt["Key"]</th>
-                <th>@ViewBag.Txt["description"]</th>
-                <th>@ViewBag.Txt["Tag"]</th>
-                <th>@ViewBag.Txt["TranslatedLang"]</th>
+                <th>@ViewBag.Txt["menu_words_words_key"]</th>
+                <th>@ViewBag.Txt["menu_words_words_description"]</th>
+                <th>@ViewBag.Txt["menu_words_words_tag"]</th>
+                <th>@ViewBag.Txt["menu_words_words_translated_lang"]</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
             {
                 <tr>
                     <td>
-                        <a type="button" class="btn btn-sm btn-warning" href="/key/edit/@item.Key">@ViewBag.Txt["Edit"]</a>
+                        <a type="button" class="btn btn-sm btn-warning" href="/key/edit/@item.Key">@ViewBag.Txt["btn_menu_words_words_edit"]</a>
                     </td>
                     <td><a href="/key/detail/@item.Key">@item.Key</a></td>
                     <td>@item.Description</td>

@@ -144,6 +144,17 @@ namespace SetLocale.Client.Web
 
             #region WORDS
 
+            #region WORDS_Words
+
+            enTexts.Add("menu_words_words_key_listing", "Key Listing");
+            enTexts.Add("menu_words_words_key", "Key");
+            enTexts.Add("menu_words_words_description", "Description");
+            enTexts.Add("menu_words_words_tag", "Tag");
+            enTexts.Add("menu_words_words_translated_lang", "TranslatedLang");
+            enTexts.Add("btn_menu_words_words_edit", "Edit");
+
+            #endregion
+
             #region WORDS_My_Word
 
             enTexts.Add("menu_words_my_words_key_listing", "Key Listing");
@@ -349,6 +360,17 @@ namespace SetLocale.Client.Web
             #endregion
 
             #region KELİMELER
+
+            #region KELİMELER_Kelimeler
+
+            trTexts.Add("menu_words_words_key_listing", "Anahtar Listesi");
+            trTexts.Add("menu_words_words_key", "Anahtar");
+            trTexts.Add("menu_words_words_description", "Açıklama");
+            trTexts.Add("menu_words_words_tag", "Etiket");
+            trTexts.Add("menu_words_words_translated_lang", "Çevrilmiş Dil");
+            trTexts.Add("btn_menu_words_words_edit", "Düzenle");
+
+            #endregion
 
             #region KELİMELER_Kelimelerim
 
