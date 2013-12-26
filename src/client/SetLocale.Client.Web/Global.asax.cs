@@ -37,29 +37,26 @@ namespace SetLocale.Client.Web
 
             enTexts.Add("menu_words", "Words");
             enTexts.Add("menu_words_words", "Words");
-            enTexts.Add("menu_words_mywords", "My Words");
-            enTexts.Add("menu_words_newword", "New Word");
-            enTexts.Add("menu_words_nottranslated", "NotTranslated");
+            enTexts.Add("menu_words_my_words", "My Words");
+            enTexts.Add("menu_words_new_word", "New Word");
+            enTexts.Add("menu_words_not_translated", "NotTranslated");
 
             enTexts.Add("menu_apps", "Applications");
             enTexts.Add("menu_apps_apps", "Applications");
-            enTexts.Add("menu_apps_newapp", "New App");
+            enTexts.Add("menu_apps_new_app", "New App");
 
             enTexts.Add("menu_settings", "Settings");
             enTexts.Add("menu_settings_apps", "Applications Settings");
             enTexts.Add("menu_settings_users", "Users Settings");
-            enTexts.Add("menu_settings_newtranslator", "New Translator User");
+            enTexts.Add("menu_settings_new_translator", "New Translator User");
 
             enTexts.Add("menu_user_login", "Login");
             enTexts.Add("menu_user_logout", "Logout");
-            enTexts.Add("menu_user_signup", "Sign Up");
+            enTexts.Add("menu_user_sign_up", "Sign Up");
             enTexts.Add("menu_user_reset", "Reset Password");
 
             enTexts.Add("menu_search", "Search");
-
-            #endregion
-
-
+            #region USER
             #region Login EN
 
             enTexts.Add("login_view_title", "Login to System");
@@ -69,6 +66,28 @@ namespace SetLocale.Client.Web
 
             #endregion
 
+            #region Sign UP
+            enTexts.Add("sign_up_new_user", "New User");
+            enTexts.Add("btn_sign_up", "Sign Up");
+            enTexts.Add("sign_up_email", "Email");
+            enTexts.Add("sign_up_password", "Password");
+            enTexts.Add("sign_up_name", "Name");
+
+
+
+            #endregion
+
+            #region Reset Password
+            enTexts.Add("user_password_reset_title", "Reset Password");
+            enTexts.Add("user_password_reset_email", "Email");
+            enTexts.Add("btn_user_password_reset", "Send Reset Password Link");
+
+
+            #endregion
+
+            #endregion
+
+            #endregion
 
 
 
@@ -133,29 +152,30 @@ namespace SetLocale.Client.Web
 
             trTexts.Add("menu_words", "Kelimeler");
             trTexts.Add("menu_words_words", "Kelimeler");
-            trTexts.Add("menu_words_mywords", "Kelimelerim");
-            trTexts.Add("menu_words_newword", "Yeni Kelime");
-            trTexts.Add("menu_words_nottranslated", "Çevrilmeyen Kelimeler");
+            trTexts.Add("menu_words_my_words", "Kelimelerim");
+            trTexts.Add("menu_words_new_word", "Yeni Kelime");
+            trTexts.Add("menu_words_not_translated", "Çevrilmeyen Kelimeler");
 
             trTexts.Add("menu_apps", "Uygulamalar");
             trTexts.Add("menu_apps_apps", "Uygulamalar");
-            trTexts.Add("menu_apps_newapp", "Yeni Uygulama");
+            trTexts.Add("menu_apps_new_app", "Yeni Uygulama");
 
             trTexts.Add("menu_settings", "Ayarlar");
             trTexts.Add("menu_settings_apps", "Uygulama Ayarları");
             trTexts.Add("menu_settings_users", "Kullanıcı Ayarları");
-            trTexts.Add("menu_settings_newtranslator", "Yeni Çevirmen");
+            trTexts.Add("menu_settings_new_translator", "Yeni Çevirmen");
 
             trTexts.Add("menu_user_login", "Giriş");
             trTexts.Add("menu_user_logout", "Çıkış");
-            trTexts.Add("menu_user_signup", "Kayıt Ol");
+            trTexts.Add("menu_user_sign_up", "Kayıt Ol");
             trTexts.Add("menu_user_reset", "Şifre Sıfırla");
 
             trTexts.Add("menu_search", "Ara");
 
             #endregion
 
-            #region Login TR
+            #region Kullanıcılar
+            #region Giriş TR
 
             trTexts.Add("login_view_title", "Sisteme Giriş");
             trTexts.Add("btn_login", "Giriş");
@@ -163,6 +183,26 @@ namespace SetLocale.Client.Web
             trTexts.Add("password", "Şifreniz");
 
             #endregion
+
+            #region Kayıt Ol
+            trTexts.Add("sign_up_new_user", "Yeni Kullanıcı");
+            trTexts.Add("btn_sign_up", "Kayıt Ol");
+            trTexts.Add("sign_up_email", "E-Posta");
+            trTexts.Add("sign_up_password", "Şifreniz");
+            trTexts.Add("sign_up_name", "İsminiz");
+
+            #endregion
+
+            #region Şifre Sıfırla
+            trTexts.Add("user_password_reset_title", "Şifre Sıfırla");
+            trTexts.Add("user_password_reset_email", "E-Posta");
+            trTexts.Add("btn_user_password_reset", "Şifre Sıfırlama Linki Gönder");
+
+
+            #endregion
+
+            #endregion
+
 
             trTexts.Add("Edit", "Düzenle");
             trTexts.Add("Delete", "Sil");
