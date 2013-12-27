@@ -34,8 +34,8 @@
                         }
                     </td>
                     <td>
-                        @foreach (var langs in item.Languages)
-                        { <img src="@langs.FlagImageUrl" alt="Türkçe" />  }
+                        @foreach (var lang in item.Languages)
+                        { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
                     </td>
                 </tr>
             }
