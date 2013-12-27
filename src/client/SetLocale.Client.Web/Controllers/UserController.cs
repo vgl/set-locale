@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 
@@ -81,8 +81,7 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-            
-
+            _formsAuthenticationService.SignOut();
             return RedirectToHome();
         }
     }
