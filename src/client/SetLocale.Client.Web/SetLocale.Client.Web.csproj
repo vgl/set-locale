@@ -161,7 +161,6 @@
     <Compile Include="Models\HomeStatsModel.cs" />
     <Compile Include="Models\KeyModel.cs" />
     <Compile Include="Models\LanguageModel.cs" />
-    <Compile Include="Models\NewAppModel.cs" />
     <Compile Include="Models\NewKeyModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\TagModel.cs" />

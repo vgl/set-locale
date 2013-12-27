@@ -1,5 +1,5 @@
 ﻿@using SetLocale.Client.Web.Helpers
-@model SetLocale.Client.Web.Models.NewAppModel
+@model SetLocale.Client.Web.Models.AppModel
 
 @{
     ViewBag.Title = Html.LocalizationString("menu_apps_new_app");
@@ -15,7 +15,7 @@
 
         <div class="row">
             <strong>@Html.LocalizationString("menu_apps_new_app_app_name")</strong>
-            <input type="text" class="form-control input-lg" name="appName" id="appName" value="@Model.AppName" />
+            <input type="text" class="form-control input-lg" name="Name" id="Name" value="@Model.Name" />
         </div>
 
         <div class="row">
