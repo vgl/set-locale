@@ -52,30 +52,44 @@
         $(function () {
                      
             $("input.btnNewTranslate").click(function () {
-                var keyId = $(this).data("id");
-                
-               
-
+                var keyId = $(this).data("id");               
                         var row = $("<tr />");
                         var url = "#";
-                        var aSaveButton = $("<a />");
+                        var inputSaveButton = $("<input />");
                         
-                        aSaveButton.addClass("btn btn-sm btn-warning btnAction");
-                        aSaveButton.attr("data-toggle", "modal");
-                        aSaveButton.attr("data-id", keyId);
-                        aSaveButton.attr("href", url);
-                        aSaveButton.html('@Html.LocalizationString("btn_menu_settings_new_translator_save")');
+                        inputSaveButton.attr("class","btn btn-sm btn-primary btnAction");
                         
+                        inputSaveButton.attr("data-id", keyId);                       
+                        inputSaveButton.attr("value",'@Html.LocalizationString("btn_menu_settings_new_translator_save")');
+                        inputSaveButton.click(function () {
+                           
+                            inputSaveButton.remove();
+                            url = "/key/edit/@Model.Key";
+                            var aEditButton = $("<a />");
+                            aEditButton.addClass("btn btn-sm btn-warning btnEdit");
+                            aEditButton.attr("data-id", keyId);
+                            aEditButton.attr("href", url);
+                            aEditButton.html('@Html.LocalizationString("btn_menu_settings_new_translator_edit")');
+                            tdSaveButton.append(aEditButton);
+                          
+                            tdLanguage.html("Turkish");
+                            var asd = $('input[name="tbCeviri"]').val();
+                            
+                            
+                            tdTranslation.html(asd);
+
+                        });
 
                         var tdSaveButton = $("<td />");
-                        tdSaveButton.append(aSaveButton);
+                        tdSaveButton.append(inputSaveButton);
                         row.append(tdSaveButton);
 
                         var tdLanguage = $("<td />");
                         var ddLanguage = $("<select />");
                         var ddOption = $("<option />");
-                         ddOption.attr("value","tr-TR");
-                        ddOption.html("Turkish");
+                         ddOption.attr("value","1");
+                         ddOption.html("Turkish");
+                         
                         ddLanguage.append(ddOption);
                         tdLanguage.append(ddLanguage);
                         row.append(tdLanguage);
@@ -83,13 +97,16 @@
                         var tdTranslation = $("<td />");
                         var tbTranslation = $("<input />");
                         tbTranslation.attr("type", "Text");
-                        tbTranslation.attr("name", "xxx");
+                        tbTranslation.attr("name", "tbCeviri");
                         tdTranslation.append(tbTranslation);
                         row.append(tdTranslation);
 
                         $('table tbody').append(row);
          
               
+            });
+            $("a.btnEdit").click(function () {
+                url = "/key/edit/@Model.Key";
             });
 
         });
