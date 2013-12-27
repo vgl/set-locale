@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+
 using SetLocale.Client.Web.Entities;
 
 namespace SetLocale.Client.Web.Repositories
