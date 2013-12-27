@@ -12,8 +12,8 @@ namespace SetLocale.Client.Web.Repositories
         TEntity Create(TEntity entity);
         TEntity Update(TEntity entity);
 
-        void SoftDelete(int id);
-        void SoftDelete(Expression<Func<TEntity, bool>> where);
+        void SoftDelete(int id, int deletedBy);
+        void SoftDelete(Expression<Func<TEntity, bool>> where, int deletedBy);
 
         void Delete(long id);
         void Delete(Expression<Func<TEntity, bool>> where);
