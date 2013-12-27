@@ -23,13 +23,14 @@
         <tbody>
             @foreach (var item in Model)
             {
-                var val = item.IsActive ? Html.LocalizationString("menu_settings_apps_deactivate") : Html.LocalizationString("menu_settings_apps_activate");
+                 var val = item.IsActive ? Html.LocalizationString("menu_settings_apps_deactivate") : Html.LocalizationString("menu_settings_apps_activate");
+                 var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
                 <tr>
                     <td>
-                         <a type="button" class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
+                         <a type="button" class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
                     </td>
                     <td>@item.Email</td>
-                    <td>@item.Name</td>
+                    <td><a href="/app/index">@item.Name</td>
                     <td>@item.Description</td>
                     <td>@item.Url</td>
                     <td>@item.UsageCount</td>
