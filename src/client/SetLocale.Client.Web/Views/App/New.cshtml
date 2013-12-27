@@ -1,7 +1,8 @@
-﻿@model SetLocale.Client.Web.Models.NewAppModel
+﻿@using SetLocale.Client.Web.Helpers
+@model SetLocale.Client.Web.Models.AppModel
 
 @{
-    ViewBag.Title = ViewBag.Txt["NewApp"];
+    ViewBag.Title = Html.LocalizationString("menu_apps_new_app");
 }
 
 
@@ -13,24 +14,24 @@
 
 
         <div class="row">
-            <strong>@ViewBag.Txt["AppName"]</strong>
-            <input type="text" class="form-control input-lg" name="appName" id="appName" value="@Model.AppName" />
+            <strong>@Html.LocalizationString("menu_apps_new_app_app_name")</strong>
+            <input type="text" class="form-control input-lg" name="Name" id="Name" value="@Model.Name" />
         </div>
 
         <div class="row">
-            <strong>@ViewBag.Txt["Url"]</strong>
+            <strong>@Html.LocalizationString("menu_apps_new_app_url")</strong>
             <input type="text" class="form-control input-lg" name="url" id="url" value="@Model.Url" />
         </div>
 
         <div class="row">
-            <strong>@ViewBag.Txt["Description"]</strong>
+            <strong>@Html.LocalizationString("menu_apps_new_app_description")</strong>
             <input type="text" class="form-control input-lg" name="description" id="description" value="@Model.Description" />
         </div>
 
         @Html.AntiForgeryToken()
 
         <div class="row">
-            <input type="submit" value="@ViewBag.Txt["Save"]" class="btn btn-primary btn-lg" />
+            <input type="submit" value="@Html.LocalizationString("btn_menu_apps_new_app_save")" class="btn btn-primary btn-lg" />
         </div>
 
         <div class="error">

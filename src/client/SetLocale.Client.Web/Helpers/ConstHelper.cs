@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 
-namespace SetLocale.Util
+namespace SetLocale.Client.Web.Helpers
 {
     public static class ConstHelper
     {

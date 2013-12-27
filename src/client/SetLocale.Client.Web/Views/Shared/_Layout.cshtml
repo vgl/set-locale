@@ -1,11 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using SetLocale.Client.Web.Helpers
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>Set Locale - @ViewBag.Title</title>
+    <title>@ViewBag.Title - @Html.LocalizationString("app_name")</title>
 
     <link rel="shortcut icon" href="/public/img/favicon.ico" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
@@ -26,40 +27,40 @@
 
                 <ul class="nav navbar-nav">
 
-                    <li><a href="/">Set Locale</a></li>
+                    <li><a href="/">@Html.LocalizationString("app_name")</a></li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kelimeler <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_words")<b class="caret"></b></a>
                         <ul class="dropdown-menu">
 
 
-                            <li><a href="/key/my">Kelimelerim</a></li>
+                            <li><a href="/key/my">@Html.LocalizationString("menu_words_my_words")</a></li>
                             <li class="divider"></li>
 
-                            <li><a href="/key">Kelimeler</a></li>
-                            <li><a href="/key/nottranslated">Çevirilmeyen Kelimeler</a></li>
+                            <li><a href="/key/all">@Html.LocalizationString("menu_words_words")</a></li>
+                            <li><a href="/key/nottranslated">@Html.LocalizationString("menu_words_not_translated")</a></li>
                             <li class="divider"></li>
 
-                            <li><a href="/key/new">Yeni Kelime</a></li>
+                            <li><a href="/key/new">@Html.LocalizationString("menu_words_new_word")</a></li>
                         </ul>
                     </li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Uygulamalar <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_apps") <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/user/apps">Uygulamalar</a></li>
-                            <li><a href="/app/new">Yeni Uygulama</a></li>
+                            <li><a href="/user/apps">@Html.LocalizationString("menu_apps_apps")</a></li>
+                            <li><a href="/app/new">@Html.LocalizationString("menu_apps_new_app")</a></li>
                         </ul>
                     </li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ayarlar <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_settings") <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/admin/users">Kullanıcılar</a></li>
-                            <li><a href="/admin/apps">Uygulamalar</a></li>
+                            <li><a href="/admin/users">@Html.LocalizationString("menu_settings_users")</a></li>
+                            <li><a href="/admin/apps">@Html.LocalizationString("menu_settings_apps")</a></li>
                             <li class="divider"></li>
 
-                            <li><a href="/admin/newtranslator">Yeni Çevirmen</a></li>
+                            <li><a href="/admin/newtranslator">@Html.LocalizationString("menu_settings_new_translator")</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -67,12 +68,12 @@
                 <ul class="nav navbar-nav navbar-right">
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Translator X <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Current User Name <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/user/login">Giriş</a></li>
-                            <li><a href="/user/logout">Çıkış</a></li>
-                            <li><a href="/user/new">Üye ol</a></li>
-                            <li><a href="/user/reset">Şifre Sıfırla</a></li>
+                            <li><a href="/user/login">@Html.LocalizationString("menu_user_login")</a></li>
+                            <li><a href="/user/logout">@Html.LocalizationString("menu_user_logout")</a></li>
+                            <li><a href="/user/new">@Html.LocalizationString("menu_user_sign_up")</a></li>
+                            <li><a href="/user/reset">@Html.LocalizationString("menu_user_reset")</a></li>
                         </ul>
                     </li>
 
@@ -81,7 +82,7 @@
                 </ul>
 
                 <form class="navbar-form navbar-right">
-                    <input id="search" type="text" class="form-control col-lg-8" placeholder="Ara">
+                    <input id="search" type="text" class="form-control col-lg-8" placeholder="@Html.LocalizationString("menu_search")">
                 </form>
 
             </div>

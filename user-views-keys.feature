@@ -15,9 +15,10 @@ Feature: My Keys
     
     Given user should be logged in 
         And user is in "Developer" or "Translator" role
-        And user views "/mykeys"
+        And user views "/key/my" 
         
-    When user clicks "Edit" button and system enables true Keys, Tag, and Translated Languages in the "Edit" button's row
+    When user clicks "Edit" button
+        And update-able fields turns to inputs in tables row 
         And system shows up save button just next to edit button on the row
         And user can fill fields
         And Click save button

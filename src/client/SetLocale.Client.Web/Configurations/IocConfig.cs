@@ -8,6 +8,8 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 
+using SetLocale.Client.Web.Services;
+
 namespace SetLocale.Client.Web.Configurations
 {
     public class WindsorControllerFactory : DefaultControllerFactory
@@ -47,13 +49,17 @@ namespace SetLocale.Client.Web.Configurations
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            //container.Register(
-            //    Component.For(typeof(IRepository<>)).ImplementedBy(typeof(Repository<>)).LifestyleTransient(),
+            container.Register(
+                Component.For<IFormsAuthenticationService>().ImplementedBy<FormsAuthenticationService>().LifestylePerWebRequest(),
 
-            //    Component.For<IFormsAuthenticationService>().ImplementedBy<FormsAuthenticationService>().LifestylePerWebRequest(),
+                Component.For<IUserService>().ImplementedBy<UserService>().LifestylePerWebRequest(),
 
-            //    Component.For<ILocalizationStringService>().ImplementedBy<LocalizationStringService>().LifestylePerWebRequest(),
-            //    Component.For<IUserService>().ImplementedBy<UserService>().LifestylePerWebRequest());
+                Component.For<IDemoDataService>().ImplementedBy<DemoDataService>().LifestylePerWebRequest());
+            
+            
+            //Component.For(typeof(IRepository<>)).ImplementedBy(typeof(Repository<>)).LifestyleTransient(),
+            //Component.For<ILocalizationStringService>().ImplementedBy<LocalizationStringService>().LifestylePerWebRequest(),
+            //Component.For<IUserService>().ImplementedBy<UserService>().LifestylePerWebRequest()
 
 
 

@@ -1,1 +1,14 @@
-﻿ana sayfa
+﻿@using SetLocale.Client.Web.Helpers
+@model SetLocale.Client.Web.Models.HomeStatsModel
+@{
+    ViewBag.Title = Html.LocalizationString("home_title");
+}
+
+<div id="dvHome" class="row">
+    
+    <h3>@ViewBag.Title</h3>
+    <hr />
+
+    @Html.Raw(Model.Summary)
+
+</div>

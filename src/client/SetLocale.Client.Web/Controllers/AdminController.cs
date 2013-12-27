@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 using SetLocale.Client.Web.Models;
-using SetLocale.Util;
+using SetLocale.Client.Web.Services;
 
 namespace SetLocale.Client.Web.Controllers
 {
     public class AdminController : BaseController
     {
+        public AdminController(IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
+        {
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -17,19 +20,16 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult NewTranslator()
         {
-            var model = new TranslatorModel()
-            {
-                Email = "user@test.com",
-                Name = "Translator"
-            };
+            var model = _demoDataService.GetAUser();
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult NewTranslator(TranslatorModel model)
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult NewTranslator(UserModel model)
         {
-            if (model.IsValid())
+            if (model.IsValidForNewTranslator())
             {
+
                 return Redirect("/admin/users");
             }
 
@@ -40,60 +40,14 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult Users()
         {
-            var model = new List<UserModel>();
-            model.Add(new UserModel
-            {
-                Id = 1,
-                Email = "admin@test.com",
-                Name = "Admin",
-                Role = ConstHelper.Admin,
-                IsActive = true
-            });
-            model.Add(new UserModel
-            {
-                Id = 2,
-                Email = "dev@test.com",
-                Name = "Developer",
-                Role = ConstHelper.Developer,
-                IsActive = true
-            });
-            model.Add(new UserModel
-            {
-                Id = 3,
-                Email = "user@test.com",
-                Name = "Translator",
-                Role = ConstHelper.User,
-                IsActive = true
-            });
-
+            var model = _demoDataService.GetAllUsers();
             return View(model);
         }
 
         [HttpGet]
         public ActionResult Apps()
         {
-            var model = new List<AppModel>();
-            model.Add(new AppModel
-            {
-                Id = 1,
-                UserEmail = "dev@test.com",
-                AppName = "SetLocale",
-                AppDescription = "an application desc.",
-                Url = "setlocale.com",
-                UsageCount = 1356,
-                IsActive = true
-            });
-            model.Add(new AppModel
-            {
-                Id = 2,
-                UserEmail = "dev@test.com",
-                AppName = "SetCrm",
-                AppDescription = "an application desc.",
-                Url = "setcrm.com",
-                UsageCount = 64212,
-                IsActive = true
-            });
-          
+            var model = _demoDataService.GetAllApps();
             return View(model);
         }
     }

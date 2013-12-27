@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E8A035BE-8D9A-4A5E-B36D-69CB6906A9DE}</ProjectGuid>
+    <ProjectGuid>{CD000AC8-91A4-4D4D-A851-557CDE2ACBFE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SetLocale.Client.Test</RootNamespace>
-    <AssemblyName>SetLocale.Client.Test</AssemblyName>
+    <RootNamespace>SetLocale.Client.Web.Test</RootNamespace>
+    <AssemblyName>SetLocale.Client.Web.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
@@ -36,14 +36,16 @@
       <Private>True</Private>
       <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.Mvc">
-      <HintPath>..\..\..\packages\Mvc2Futures.2.0.50217.0\lib\Microsoft.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="MvcContrib">
-      <HintPath>..\..\..\packages\MvcContrib.2.0.95.0\lib\MvcContrib.dll</HintPath>
+    <Reference Include="MvcContrib.TestHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\MvcContrib.Mvc3.TestHelper-ci.3.0.100.0\lib\MvcContrib.TestHelper.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -79,10 +81,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RouteTests.cs" />
+    <Compile Include="RoutesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

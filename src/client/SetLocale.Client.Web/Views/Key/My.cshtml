@@ -1,7 +1,8 @@
-﻿@model List<SetLocale.Client.Web.Models.KeyModel>
+﻿@using SetLocale.Client.Web.Helpers
+@model List<SetLocale.Client.Web.Models.KeyModel>
 
 @{
-    ViewBag.Title = ViewBag.Txt["KeyListing"];
+    ViewBag.Title = Html.LocalizationString("menu_words_my_words_key_listing");
 }
 
 <h3>@ViewBag.Title</h3>
@@ -12,10 +13,10 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@ViewBag.Txt["Key"]</th>
-                <th>@ViewBag.Txt["Description"]</th>
-                <th>@ViewBag.Txt["Tag"]</th>
-                <th>@ViewBag.Txt["TranslatedLang"]</th>
+                <th>@Html.LocalizationString("menu_words_my_words_key")</th>
+                <th>@Html.LocalizationString("menu_words_my_words_description")</th>
+                <th>@Html.LocalizationString("menu_words_my_words_tag")</th>
+                <th>@Html.LocalizationString("menu_words_my_words_translated_lang")</th>
             </tr>
         </thead>
         <tbody>
@@ -23,21 +24,21 @@
             {
                 <tr>
                     <td>
-                        <a type="button" class="btn btn-sm btn-warning" href="/key/edit/@item.Key">@ViewBag.Txt["Edit"]</a>
+                        <a type="button" class="btn btn-sm btn-warning" href="/key/edit/@item.Key">@Html.LocalizationString("btn_menu_words_my_words_edit")</a>
                     </td>
-                    <td><a href="/key/index/@item.Key">@item.Key</a></td>
+                    <td><a href="/key/detail/@item.Key">@item.Key</a></td>
                     <td>@item.Description</td>
                     <td>
-                        @foreach (var tag in item.Tag)
+                        @foreach (var tag in item.Tags)
                         {
-                            <a href="/tag/index/@tag.UrlName">@tag.Name</a>
+                            <a class="label label-info" href="/tag/index/@tag.UrlName">@tag.Name</a>
                         }
                     </td>
                     <td>
-                        @foreach (var langs in item.Languages)
-                        { <img src="@langs.FlagImageUrl" alt="Türkçe" />  }
-                </td>
-            </tr>
+                        @foreach (var lang in item.Languages)
+                        { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
+                    </td>
+                </tr>
             }
 
         </tbody>

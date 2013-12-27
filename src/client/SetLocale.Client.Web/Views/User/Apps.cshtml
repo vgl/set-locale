@@ -1,7 +1,8 @@
-﻿@model List<SetLocale.Client.Web.Models.AppModel>
+﻿@using SetLocale.Client.Web.Helpers
+@model List<SetLocale.Client.Web.Models.AppModel>
 
 @{
-    ViewBag.Title = ViewBag.Txt["Apps"];
+    ViewBag.Title = Html.LocalizationString("user_apps");
 }
 
 <h3>@ViewBag.Title</h3>
@@ -12,22 +13,22 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@ViewBag.Txt["AppName"]</th>
-                <th>@ViewBag.Txt["Description"]</th>
-                <th>@ViewBag.Txt["Url"]</th>
-                <th>@ViewBag.Txt["UsageCount"]</th>
+                <th>@Html.LocalizationString("user_apps_name")</th>
+                <th>@Html.LocalizationString("user_apps_description")</th>
+                <th>@Html.LocalizationString("user_apps_url")</th>
+                <th>@Html.LocalizationString("user_apps_usage_count")</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                var val = item.IsActive ? ViewBag.Txt["Deactivate"] : ViewBag.Txt["Activate"];
+                var val = item.IsActive ? Html.LocalizationString("user_apps_deactivate") : Html.LocalizationString("user_apps_activate");
                 <tr>
                     <td>
                          <a type="button" class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
                     </td>
-                    <td><a href="/app/index">@item.AppName</a></td>
-                    <td>@item.AppDescription</td>
+                    <td><a href="/app/index">@item.Name</a></td>
+                    <td>@item.Description</td>
                     <td>@item.Url</td>
                     <td>@item.UsageCount</td>
                 </tr>
@@ -42,14 +43,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">@ViewBag.Txt["ModalTitleApps"]</h4>
+                <h4 class="modal-title">@Html.LocalizationString("modal_title_apps")</h4>
             </div>
             <div class="modal-body">
-                @ViewBag.Txt["ModalBodyUsers"]
+                @Html.LocalizationString("modal_body_users")
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-default" data-dismiss="modal" value="@ViewBag.Txt["Cancel"]" />
-                <input type="button" class="btn btn-primary" value="@ViewBag.Txt["Ok"]" id="btnDeactivate" data-id="" data-isactive="" />
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("Cancel")" />
+                <input type="button" class="btn btn-primary" value="@Html.LocalizationString("Ok")" id="btnDeactivate" data-id="" data-isactive="" />
             </div>
         </div>
     </div>
@@ -59,8 +60,8 @@
 {
     <script>
         $(function () {
-            var textActivate = "@ViewBag.Txt["Activate"]";
-            var textDeactivate = "@ViewBag.Txt["Deactivate"]";
+            var textActivate = "@Html.LocalizationString("user_apps_activate")";
+            var textDeactivate = "@Html.LocalizationString("user_apps_deactivate")";
 
             $("a.btnAction").click(function () {
                 var id = $(this).data("id");

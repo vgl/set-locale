@@ -2,12 +2,24 @@
 using System.Web.Mvc;
 
 using SetLocale.Client.Web.Models;
-using SetLocale.Util;
+using SetLocale.Client.Web.Services;
+using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Controllers
 {
     public class BaseController : Controller
     {
+        public readonly IFormsAuthenticationService _formsAuthenticationService;
+        public readonly IDemoDataService _demoDataService;
+        
+        public BaseController(
+            IFormsAuthenticationService formsAuthenticationService,
+            IDemoDataService demoDataService)
+        {
+            _formsAuthenticationService = formsAuthenticationService;
+            _demoDataService = demoDataService;
+        }
+
         public ActionResult RedirectToHome()
         {
             return RedirectToAction("Index", "Home");
@@ -65,21 +77,11 @@ namespace SetLocale.Client.Web.Controllers
 
                 if (User.Identity.IsAuthenticated)
                 {
-                    _currentUser = new UserModel
-                    {
-                        Language = ConstHelper.en,
-                        Id = 1,
-                        IsActive = true,
-                        Email = "test@test.com",
-                        Name = "Translator X",
-                        Role = ConstHelper.User
-                    };
-
-                    // _currentUser = _userService.GetUserSync(User.Identity.GetUserId());
+                    _currentUser = _demoDataService.GetAUser();
                 }
                 else
                 {
-                    // _formsAuthenticationService.SignOut();
+                    _formsAuthenticationService.SignOut();
                 }
 
                 return _currentUser;
