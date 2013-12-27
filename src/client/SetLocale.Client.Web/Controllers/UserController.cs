@@ -7,8 +7,15 @@ namespace SetLocale.Client.Web.Controllers
 {
     public class UserController : BaseController
     {
-        public UserController(IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
+        private readonly IUserService _userService;
+
+        public UserController(
+            IUserService userService,
+            IFormsAuthenticationService formsAuthenticationService,
+            IDemoDataService demoDataService)
+            : base(formsAuthenticationService, demoDataService)
         {
+            _userService = userService;
         }
 
         [HttpGet]
@@ -34,13 +41,20 @@ namespace SetLocale.Client.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult New(UserModel model)
         {
-            if (model.IsValidForNewDeveloper())
+            if (!model.IsValidForNewDeveloper())
             {
-                return Redirect("/user/apps");
+                model.Msg = "bir sorun oluştu";
+                return View(model);
             }
 
-            model.Msg = "bir sorun oluştu";
-            return View(model);
+            var userId = _userService.Create(model);
+            if (userId == null)
+            {
+                model.Msg = "bir sorun oluştu";
+                return View(model);
+            }
+
+            return Redirect("/user/apps");
         }
 
         [HttpGet]

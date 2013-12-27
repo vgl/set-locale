@@ -11,7 +11,7 @@ namespace SetLocale.Client.Web.Controllers
     {
         public readonly IFormsAuthenticationService _formsAuthenticationService;
         public readonly IDemoDataService _demoDataService;
-
+        
         public BaseController(
             IFormsAuthenticationService formsAuthenticationService,
             IDemoDataService demoDataService)
