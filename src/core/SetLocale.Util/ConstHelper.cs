@@ -11,8 +11,8 @@ namespace SetLocale.Util
         public const string tr = "tr";
         public const string en = "en";
 
-        public const string tr_txt = "tr_txt";
-        public const string en_txt = "en_txt";
+        public const string tr_txt = "tr-TR_txt";
+        public const string en_txt = "en-US_txt";
 
         public const string __Lang = "__Lang";
 

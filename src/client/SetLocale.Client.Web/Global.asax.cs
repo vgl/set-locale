@@ -204,8 +204,9 @@ namespace SetLocale.Client.Web
             #region Shared
             enTexts.Add("Cancel", "Cancel");
             enTexts.Add("Ok", "Ok");
+            enTexts.Add("delete", "Delete");
             enTexts.Add("modal_body", "Are you sure  want to delete ?");
-            enTexts.Add("modal_title", "Token Delete");
+            enTexts.Add("modal_title_delete_token", "Token Delete");
             enTexts.Add("modal_body_users", "Are you sure  want to change the status ?");
             enTexts.Add("modal_title_users", "User Status");
             enTexts.Add("modal_title_apps", "App Status");
@@ -393,8 +394,9 @@ namespace SetLocale.Client.Web
             #region Paylaşılan
             trTexts.Add("Cancel", "Hayır");
             trTexts.Add("Ok", "Evet");
+            trTexts.Add("delete", "Sil");
             trTexts.Add("modal_body", "Silmek İstediğinize Eminmisiniz ?");
-            trTexts.Add("modal_title", "Token Sil");
+            trTexts.Add("modal_title_delete_token", "Token Sil");
             trTexts.Add("modal_body_users", "Durumu Değiştirmek İstediğinize Eminmisiniz ?");
             trTexts.Add("modal_title_users", "Kullanıcı Durumu");
             trTexts.Add("modal_title_apps", "Uygulama Durumu");

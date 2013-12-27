@@ -1,4 +1,6 @@
-﻿@model SetLocale.Client.Web.Models.AppModel
+﻿@using SetLocale.Client.Web.Helpers
+
+@model SetLocale.Client.Web.Models.AppModel
 
 @{
     ViewBag.Title = string.Format("{0} - {1}", ViewBag.Txt["menu_apps_apps"], Model.AppName);
@@ -26,7 +28,7 @@
             {
                 <tr>
                     <td>
-                        <a  class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@ViewBag.Txt["menu_apps_apps_delete"]</a>
+                        <a class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@ViewBag.Txt["menu_apps_apps_delete"]</a>
                     </td>
                     <td>@item.Token</td>
                     <td>@item.CreationDate.ToString("f")</td>
@@ -42,10 +44,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">@ViewBag.Txt["ModalTitle"]</h4>
+                <h4 class="modal-title">@Html.LocalizationString("modal_title_delete_token")</h4>
             </div>
             <div class="modal-body">
-                @ViewBag.Txt["ModalBody"]
+                @Html.LocalizationString("ModalBody")
             </div>
             <div class="modal-footer">
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="@ViewBag.Txt["Cancel"]" />
@@ -66,7 +68,7 @@
             };
 
             $("a.btnAction").click(fnBtnActionClick);
-            
+
             $("input.btnNewToken").click(function () {
                 var appId = $(this).data("id");
                 $("input#btnDelete").data("id", appId);
@@ -76,7 +78,7 @@
                     data: "appId=" + appId + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
                 }).done(function (r) {
                     if (r) {
-                        
+
                         var row = $("<tr />");
                         var url = "#DeleteModal";
                         var aDeleteButton = $("<a />");
@@ -85,13 +87,13 @@
                         aDeleteButton.attr("data-toggle", "modal");
                         aDeleteButton.attr("data-id", r.Token);
                         aDeleteButton.attr("href", url);
-                        aDeleteButton.html('@ViewBag.Txt["Delete"]');
+                        aDeleteButton.html('@ViewBag.Txt["delete"]');
                         aDeleteButton.click(fnBtnActionClick);
 
                         var tdDeleteButton = $("<td />");
                         tdDeleteButton.append(aDeleteButton);
                         row.append(tdDeleteButton);
-                
+
                         var tdToken = $("<td />");
                         tdToken.html(r.Token);
                         row.append(tdToken);
@@ -102,16 +104,10 @@
                         var tdUsageCount = $("<td />");
                         tdUsageCount.html(r.UsageCount);
                         row.append(tdUsageCount);
- 
+
                         $('table tbody').append(row);
 
 
-
-                        //$('table tbody').append('<tr><td><a  class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="'
-                        //                        + r.Token + '" >@ViewBag.Txt["Delete"]</a></td><td>'
-                        //                        + r.Token + '</td><td>'
-                        //                        + r.CreationDateStr + '</td><td>'
-                        //                        + r.UsageCount + '</td></tr>');
                     } else {
                         //warning
                     }

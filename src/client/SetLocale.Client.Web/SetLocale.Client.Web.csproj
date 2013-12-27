@@ -123,6 +123,7 @@
     <Content Include="Views\Key\My.cshtml" />
     <Content Include="Views\Key\NotTranslated.cshtml" />
     <Content Include="Views\Key\Detail.cshtml" />
+    <Content Include="Views\Shared\_LocalizationString.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -155,6 +156,7 @@
     </Compile>
     <Compile Include="Helpers\GravatarHelper.cs" />
     <Compile Include="Helpers\IdentityHelper.cs" />
+    <Compile Include="Helpers\LocalizationStringHtmlHelper.cs" />
     <Compile Include="Models\AppModel.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\HomeStatsModel.cs" />
