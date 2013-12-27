@@ -214,7 +214,8 @@ namespace SetLocale.Client.Web
             enTexts.Add("home_summary", "set-locale's <strong>{2}</strong> translator provides <strong>{4}</strong> translation for <strong>{3}</strong> keys and <strong>{0}</strong> developer is consuming this service with  <strong>{1}</strong> application");
             enTexts.Add("home_title", "welcome to set-locale");
             #endregion
-#endregion
+
+            #endregion
 
             var trTexts = new Dictionary<string, string>();
             #region TR

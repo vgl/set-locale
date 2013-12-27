@@ -30,12 +30,12 @@
                     <td>
                         @foreach (var tag in item.Tags)
                         {
-                            <a href="/tag/index/@tag.UrlName">@tag.Name</a>
+                            <a class="label label-info" href="/tag/index/@tag.UrlName">@tag.Name</a>
                         }
                     </td>
                     <td>
                         @foreach (var langs in item.Languages)
-                        { <img src="@langs.FlagImageUrl" alt="Türkçe" />  }
+                        { <img src="@langs.ImageUrl" alt="Türkçe" />  }
                     </td>
                 </tr>
             }

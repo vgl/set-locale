@@ -53,13 +53,7 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult Edit(string id, string lang = ConstHelper.tr)
         {
-            var model = new TranslationModel
-            {
-                Key = "sign_up",
-                LanguageImageUrl = "/public/img/tr.png",
-                Tags = _demoDataService.GetSomeTag()
-            };
-
+            var model = _demoDataService.GetATranslation();
             return View(model);
         }
 

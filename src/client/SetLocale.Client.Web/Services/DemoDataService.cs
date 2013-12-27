@@ -19,6 +19,7 @@ namespace SetLocale.Client.Web.Services
 
         List<KeyModel> GetAllKeys();
         List<KeyModel> GetNotTranslatedKeys();
+        TranslationModel GetATranslation();
     }
 
     public class DemoDataService : IDemoDataService
@@ -252,6 +253,22 @@ namespace SetLocale.Client.Web.Services
             });
 
             return result;
+        }
+
+        public TranslationModel GetATranslation()
+        {
+            return new TranslationModel
+            {
+                Key = "sign_up",
+                Value = "Üye Ol",
+                Language = new LanguageModel
+                {
+                    Key = "tr",
+                    Name = "Türkçe",
+                    ImageUrl = "/public/img/tr.png"
+                },
+                Tags = GetSomeTag()
+            };
         }
 
         public List<LanguageModel> GetSomeLanguage()
