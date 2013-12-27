@@ -25,6 +25,8 @@ namespace SetLocale.Client.Web.Controllers
             return Json(token, JsonRequestBehavior.DenyGet);
         }
 
+       
+
         [HttpPost, ValidateAntiForgeryToken]
         public JsonResult DeleteToken(string token)
         {

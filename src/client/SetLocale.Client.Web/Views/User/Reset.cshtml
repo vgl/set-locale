@@ -1,7 +1,8 @@
-﻿@model SetLocale.Client.Web.Models.ResetModel
+﻿@using SetLocale.Client.Web.Helpers
+@model SetLocale.Client.Web.Models.ResetModel
 
 @{
-    ViewBag.Title = ViewBag.Txt["user_password_reset_title"];;
+    ViewBag.Title = Html.LocalizationString("user_password_reset_title");;
 }
 
 
@@ -12,12 +13,12 @@
     <form action="/user/reset" method="post">
 
         <div class="row">
-            <strong>@ViewBag.Txt["user_password_reset_email"]</strong>
+            <strong>@Html.LocalizationString("user_password_reset_email")</strong>
             <input type="text" class="form-control input-lg" name="email" id="email" value="@Model.Email" />
         </div>
            @Html.AntiForgeryToken()
          <div class="row">
-            <input type="submit" value="@ViewBag.Txt["btn_user_password_reset"]" class="btn btn-primary btn-lg" />
+            <input type="submit" value="@Html.LocalizationString("btn_user_password_reset")" class="btn btn-primary btn-lg" />
         </div>
 
         <div class="error">

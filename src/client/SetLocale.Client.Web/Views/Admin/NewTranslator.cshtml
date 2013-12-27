@@ -1,7 +1,8 @@
-﻿@model SetLocale.Client.Web.Models.TranslatorModel
+﻿@using SetLocale.Client.Web.Helpers
+@model SetLocale.Client.Web.Models.UserModel
 
 @{
-    ViewBag.Title = ViewBag.Txt["menu_settings_new_translator"];
+    ViewBag.Title = Html.LocalizationString("menu_settings_new_translator");
 }
 
 <div class="row col-lg-5">
@@ -11,19 +12,19 @@
     <form action="/admin/newtranslator" method="post">
         
         <div class="row">
-            <strong>@ViewBag.Txt["menu_settings_new_translator_name"]</strong>
+            <strong>@Html.LocalizationString("menu_settings_new_translator_name")</strong>
             <input type="text" class="form-control input-lg" name="name" id="name" value="@Model.Name" />
         </div>
 
         <div class="row">
-            <strong>@ViewBag.Txt["menu_settings_new_translator_email"]</strong>
+            <strong>@Html.LocalizationString("menu_settings_new_translator_email")</strong>
             <input type="text" class="form-control input-lg" name="email" id="email" value="@Model.Email" />
         </div>
 
         @Html.AntiForgeryToken()
 
         <div class="row">
-            <input type="submit" value="@ViewBag.Txt["btn_menu_settings_new_translator_save"]" class="btn btn-primary btn-lg" />
+            <input type="submit" value="@Html.LocalizationString("btn_menu_settings_new_translator_save")" class="btn btn-primary btn-lg" />
         </div>
 
         <div class="error">

@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+
 using SetLocale.Client.Web.Models;
-using SetLocale.Util;
+using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Services
 {
@@ -20,6 +21,7 @@ namespace SetLocale.Client.Web.Services
         List<KeyModel> GetAllKeys();
         List<KeyModel> GetNotTranslatedKeys();
         TranslationModel GetATranslation();
+        AppModel GetAnApp();
     }
 
     public class DemoDataService : IDemoDataService
@@ -60,7 +62,7 @@ namespace SetLocale.Client.Web.Services
                     },
                     new TranslationModel
                     {
-                        Value = "Kaydet",
+                        Value = "Save",
                         Language = new LanguageModel
                         {
                             Key = "en",
@@ -78,8 +80,9 @@ namespace SetLocale.Client.Web.Services
             result.Add(new AppModel
             {
                 Id = 1,
-                AppName = "SetLocale",
-                AppDescription = "a localization management application.",
+                Email = "setlocale@test.com",
+                Name = "SetLocale",
+                Description = "a localization management application.",
                 Url = "setlocale.com",
                 UsageCount = 1356,
                 IsActive = true
@@ -87,11 +90,12 @@ namespace SetLocale.Client.Web.Services
             result.Add(new AppModel
             {
                 Id = 2,
-                AppName = "SetCrm",
-                AppDescription = "a brand new crm application.",
+                Email = "setcrm@test.com",
+                Name = "SetCrm",
+                Description = "a brand new crm application.",
                 Url = "setcrm.com",
                 UsageCount = 64212,
-                IsActive = true
+                IsActive = false
             });
 
             return result;
@@ -103,8 +107,9 @@ namespace SetLocale.Client.Web.Services
             result.Add(new AppModel
             {
                 Id = 2,
-                AppName = "Marmara Drone",
-                AppDescription = "a wireless control dashboard for humanless flying planes.",
+                Email = "drone@test.com",
+                Name = "Marmara Drone",
+                Description = "a wireless control dashboard for humanless flying planes.",
                 Url = "marmaradrone.github.io",
                 UsageCount = 125493,
                 IsActive = true
@@ -113,8 +118,9 @@ namespace SetLocale.Client.Web.Services
             result.Add(new AppModel
             {
                 Id = 2,
-                AppName = "Collade",
-                AppDescription = "a task management and team collaboration application.",
+                Email = "collade@test.com",
+                Name = "Collade",
+                Description = "a task management and team collaboration application.",
                 Url = "marmaradrone.github.io",
                 UsageCount = 9852,
                 IsActive = true
@@ -268,6 +274,37 @@ namespace SetLocale.Client.Web.Services
                     ImageUrl = "/public/img/tr.png"
                 },
                 Tags = GetSomeTag()
+            };
+        }
+
+        public AppModel GetAnApp()
+        {
+            return new AppModel
+            {
+                Id = 1,
+                Email = "setlocale@test.com",
+                Name = "SetLocale",
+                Description = "a localization management application.",
+                Url = "setlocale.com",
+                UsageCount = 1356,
+                IsActive = true,
+                Tokens = new List<TokenModel>
+                {
+                    new TokenModel
+                    {
+                        CreationDate = DateTime.Now,
+                        CreationDateStr = DateTime.Now.ToString("f"),
+                        Token = Guid.NewGuid().ToString().Replace("-", ""),
+                        UsageCount = new Random().Next(3, 5555)
+                    },
+                    new TokenModel
+                    {
+                        CreationDate = DateTime.Now,
+                        CreationDateStr = DateTime.Now.ToString("f"),
+                        Token = Guid.NewGuid().ToString().Replace("-", ""),
+                        UsageCount = new Random().Next(3, 5555)
+                    }
+                }
             };
         }
 

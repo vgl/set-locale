@@ -3,13 +3,13 @@
 @model SetLocale.Client.Web.Models.AppModel
 
 @{
-    ViewBag.Title = string.Format("{0} - {1}", ViewBag.Txt["menu_apps_apps"], Model.AppName);
+    ViewBag.Title = string.Format("{0} - {1}", Html.LocalizationString("menu_apps_apps"), Model.Name);
 }
 
 <h3>@ViewBag.Title</h3>
 <hr />
 <div class="row">
-    <input type="button" class="btn btn-sm btn-primary btnNewToken pull-right" value="@ViewBag.Txt["btn_menu_apps_apps_create_new_token"]" data-id="@Model.Id" />
+    <input type="button" class="btn btn-sm btn-primary btnNewToken pull-right" value="@Html.LocalizationString("btn_menu_apps_apps_create_new_token")" data-id="@Model.Id" />
     @Html.AntiForgeryToken()
 </div>
 
@@ -18,9 +18,9 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@ViewBag.Txt["menu_apps_apps_token"]</th>
-                <th>@ViewBag.Txt["menu_apps_apps_creation_date"]</th>
-                <th>@ViewBag.Txt["menu_apps_apps_usage_count"]</th>
+                <th>@Html.LocalizationString("menu_apps_apps_token")</th>
+                <th>@Html.LocalizationString("menu_apps_apps_creation_date")</th>
+                <th>@Html.LocalizationString("menu_apps_apps_usage_count")</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
             {
                 <tr>
                     <td>
-                        <a class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@ViewBag.Txt["menu_apps_apps_delete"]</a>
+                        <a class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@Html.LocalizationString("menu_apps_apps_delete")</a>
                     </td>
                     <td>@item.Token</td>
                     <td>@item.CreationDate.ToString("f")</td>
@@ -47,11 +47,11 @@
                 <h4 class="modal-title">@Html.LocalizationString("modal_title_delete_token")</h4>
             </div>
             <div class="modal-body">
-                @Html.LocalizationString("ModalBody")
+                @Html.LocalizationString("modal_body")
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-default" data-dismiss="modal" value="@ViewBag.Txt["Cancel"]" />
-                <input type="button" class="btn btn-primary" value="@ViewBag.Txt["Ok"]" id="btnDelete" data-id="" />
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("Cancel")" />
+                <input type="button" class="btn btn-primary" value="@Html.LocalizationString("Ok")" id="btnDelete" data-id="" />
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
                         aDeleteButton.attr("data-toggle", "modal");
                         aDeleteButton.attr("data-id", r.Token);
                         aDeleteButton.attr("href", url);
-                        aDeleteButton.html('@ViewBag.Txt["delete"]');
+                        aDeleteButton.html('@Html.LocalizationString("delete")');
                         aDeleteButton.click(fnBtnActionClick);
 
                         var tdDeleteButton = $("<td />");
