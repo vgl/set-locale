@@ -97,6 +97,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Public\img\flag\az.png" />
+    <Content Include="Public\img\flag\cn.png" />
+    <Content Include="Public\img\flag\en.png" />
+    <Content Include="Public\img\flag\fr.png" />
+    <Content Include="Public\img\flag\gr.png" />
+    <Content Include="Public\img\flag\it.png" />
+    <Content Include="Public\img\flag\kz.png" />
+    <Content Include="Public\img\flag\ru.png" />
+    <Content Include="Public\img\flag\sp.png" />
+    <Content Include="Public\img\flag\tr.png" />
+    <Content Include="Public\img\flag\tk.png" />
     <Content Include="Public\img\tr.png" />
     <Content Include="Public\img\en.png" />
     <Content Include="Views\Home\Index.cshtml" />
