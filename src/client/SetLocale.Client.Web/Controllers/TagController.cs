@@ -37,7 +37,7 @@ namespace SetLocale.Client.Web.Controllers
                 Key = "sign_up",
                 Description = "Kullanıcı üyelik açması için kullanılır.",
                 IsTranslated = true,
-                Tag = new List<TagModel>()
+                Tags = new List<TagModel>()
                 {
                     new TagModel{ Name = "Membership", UrlName = "membership"}
                 },
@@ -66,7 +66,7 @@ namespace SetLocale.Client.Web.Controllers
                 Key = "sign_in",
                 Description = "Kullanıcı girişi için kullanılır.",
                 IsTranslated = true,
-                Tag = new List<TagModel>()
+                Tags = new List<TagModel>()
                 {
                     new TagModel{ Name = "Membership", UrlName = "membership"}
                 },

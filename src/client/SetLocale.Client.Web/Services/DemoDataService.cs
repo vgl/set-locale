@@ -40,7 +40,7 @@ namespace SetLocale.Client.Web.Services
             {
                 Key = "btn_save",
                 Description = "kaydet butonu için",
-                Tag = GetSomeTag(),
+                Tags = GetSomeTag(),
                 Languages = GetSomeLanguage(),
                 IsTranslated = true,
                 Translations = new List<TranslationModel>()
@@ -149,7 +149,7 @@ namespace SetLocale.Client.Web.Services
             {
                 Key = "btn_save",
                 Description = "kaydet butonu için",
-                Tag = GetSomeTag(),
+                Tags = GetSomeTag(),
                 Languages = GetSomeLanguage(),
                 IsTranslated = true
             });
@@ -158,7 +158,7 @@ namespace SetLocale.Client.Web.Services
             {
                 Key = "btn_update",
                 Description = "güncelle butonu için",
-                Tag = GetSomeTag(),
+                Tags = GetSomeTag(),
                 Languages = GetSomeLanguage(),
                 IsTranslated = true
             });
@@ -167,7 +167,7 @@ namespace SetLocale.Client.Web.Services
             {
                 Key = "btn_delete",
                 Description = "sil butonu için",
-                Tag = GetSomeTag(),
+                Tags = GetSomeTag(),
                 Languages = GetSomeLanguage(),
                 IsTranslated = true
             });
@@ -182,7 +182,7 @@ namespace SetLocale.Client.Web.Services
             {
                 Key = "menu_home",
                 Description = "menüde anasayfa'ya git düğmesi için",
-                Tag = GetSomeTag(),
+                Tags = GetSomeTag(),
                 Languages = GetSomeLanguage(),
                 IsTranslated = true
             });
@@ -190,7 +190,7 @@ namespace SetLocale.Client.Web.Services
             {
                 Key = "home_welcome",
                 Description = "sisteme hoşgeldiniz mesajı, ana sayfada büyükçe gözüken bir yerde kullanılıyor",
-                Tag = GetSomeTag(),
+                Tags = GetSomeTag(),
                 Languages = GetSomeLanguage(),
                 IsTranslated = true
             });
@@ -205,7 +205,7 @@ namespace SetLocale.Client.Web.Services
             {
                 Key = "btn_search",
                 Description = "arama butonu için",
-                Tag = GetSomeTag(),
+                Tags = GetSomeTag(),
                 Languages = GetSomeLanguage(),
                 IsTranslated = true
             });

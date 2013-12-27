@@ -1,4 +1,4 @@
-﻿@model SetLocale.Client.Web.Models.NewKeyModel
+﻿@model SetLocale.Client.Web.Models.KeyModel
 
 @{
     ViewBag.Title = ViewBag.Txt["menu_words_new_word_new_key"];
@@ -19,7 +19,7 @@
          
         <div class="row">
             <strong>@ViewBag.Txt["menu_words_new_word_tag"]</strong>
-            <input type="text" class="form-control input-lg" name="tag" id="tag" value="@foreach (var item in Model.Tag){ @item.ToString()}" />
+            <input type="text" class="form-control input-lg" name="tag" id="tag" value="@foreach (var item in Model.Tags){ @item.ToString()}" />
         </div>
 
         <div class="row">
