@@ -116,6 +116,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("menu_settings_new_translator_name", "Name");
             enTexts.Add("menu_settings_new_translator_email", "Email");
             enTexts.Add("btn_menu_settings_new_translator_save", "Save");
+            enTexts.Add("btn_menu_settings_new_translator_edit", "Edit");
 
             #endregion
 
@@ -302,6 +303,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("menu_settings_new_translator_name", "İsmi");
             trTexts.Add("menu_settings_new_translator_email", "E-Posta");
             trTexts.Add("btn_menu_settings_new_translator_save", "Kaydet");
+            trTexts.Add("btn_menu_settings_new_translator_edit", "Düzenle");
 
             #endregion
 
@@ -351,6 +353,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("menu_words_words_translated_lang", "Çevrilmiş Dil");
             trTexts.Add("btn_menu_words_words_edit", "Düzenle");
             trTexts.Add("btn_words_new_word", "Yeni Çeviri Ekle");
+            
 
             #endregion
 
