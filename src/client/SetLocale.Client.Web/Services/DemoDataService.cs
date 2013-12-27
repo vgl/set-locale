@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using SetLocale.Client.Web.Models;
 using SetLocale.Util;
 
@@ -11,14 +12,15 @@ namespace SetLocale.Client.Web.Services
         KeyModel GetAKey();
         List<AppModel> GetUsersApps();
         List<AppModel> GetAllApps();
+        List<UserModel> GetAllUsers();
         List<TagModel> GetSomeTag();
         List<LanguageModel> GetSomeLanguage();
         List<KeyModel> GetMyKeys();
 
         List<KeyModel> GetAllKeys();
         List<KeyModel> GetNotTranslatedKeys();
-
     }
+
     public class DemoDataService : IDemoDataService
     {
         public UserModel GetAUser()
@@ -115,6 +117,45 @@ namespace SetLocale.Client.Web.Services
                 Url = "marmaradrone.github.io",
                 UsageCount = 9852,
                 IsActive = true
+            });
+
+            return result;
+        }
+
+        public List<UserModel> GetAllUsers()
+        {
+            var result = new List<UserModel>();
+            result.Add(new UserModel
+            {
+                Id = 1,
+                Email = "admin@test.com",
+                Name = "Admin",
+                Role = ConstHelper.Admin,
+                IsActive = true
+            });
+            result.Add(new UserModel
+            {
+                Id = 2,
+                Email = "dev@test.com",
+                Name = "Developer",
+                Role = ConstHelper.Developer,
+                IsActive = true
+            });
+            result.Add(new UserModel
+            {
+                Id = 3,
+                Email = "user@test.com",
+                Name = "Translator",
+                Role = ConstHelper.User,
+                IsActive = true
+            });
+            result.Add(new UserModel
+            {
+                Id = 4,
+                Email = "user2@test.com",
+                Name = "Another Translator",
+                Role = ConstHelper.User,
+                IsActive = false
             });
 
             return result;

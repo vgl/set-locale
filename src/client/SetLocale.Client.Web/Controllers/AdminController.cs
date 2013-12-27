@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
-using SetLocale.Util;
 
 namespace SetLocale.Client.Web.Controllers
 {
@@ -45,32 +43,7 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult Users()
         {
-            var model = new List<UserModel>();
-            model.Add(new UserModel
-            {
-                Id = 1,
-                Email = "admin@test.com",
-                Name = "Admin",
-                Role = ConstHelper.Admin,
-                IsActive = true
-            });
-            model.Add(new UserModel
-            {
-                Id = 2,
-                Email = "dev@test.com",
-                Name = "Developer",
-                Role = ConstHelper.Developer,
-                IsActive = true
-            });
-            model.Add(new UserModel
-            {
-                Id = 3,
-                Email = "user@test.com",
-                Name = "Translator",
-                Role = ConstHelper.User,
-                IsActive = true
-            });
-
+            var model = _demoDataService.GetAllUsers();
             return View(model);
         }
 

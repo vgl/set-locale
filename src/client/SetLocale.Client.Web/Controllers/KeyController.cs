@@ -1,6 +1,6 @@
-﻿using SetLocale.Client.Web.Models;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
+using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 using SetLocale.Util;
 
