@@ -27,20 +27,14 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult New()
         {
-            var model = new NewUserModel
-            {
-                Name = "Ali Gel",
-                Email = "dev@test.com",
-                Password = "password"
-            };
-
+            var model = _demoDataService.GetAUser();
             return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult New(NewUserModel model)
+        public ActionResult New(UserModel model)
         {
-            if (model.IsValid())
+            if (model.IsValidForNewDeveloper())
             {
                 return Redirect("/user/apps");
             }

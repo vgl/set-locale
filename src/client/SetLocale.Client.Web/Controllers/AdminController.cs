@@ -27,9 +27,9 @@ namespace SetLocale.Client.Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult NewTranslator(UserModel model)
         {
-            if (model.IsValidForAddingNewTranslator())
+            if (model.IsValidForNewTranslator())
             {
-                //todo: create new user with translator role...
+
                 return Redirect("/admin/users");
             }
 

@@ -2,7 +2,7 @@
 
 namespace SetLocale.Client.Web.Models
 {
-    public class TokenModel
+    public class TokenModel: BaseModel
     {
         public string Token { get; set; }
         public DateTime CreationDate { get; set; }

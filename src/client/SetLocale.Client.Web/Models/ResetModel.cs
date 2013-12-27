@@ -11,9 +11,5 @@ namespace SetLocale.Client.Web.Models
             return !string.IsNullOrEmpty(Email)
                    && Email.IsEmail();
         }
-
-
     }
-
-   
 }
