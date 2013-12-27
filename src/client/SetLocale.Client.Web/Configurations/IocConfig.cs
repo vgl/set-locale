@@ -51,6 +51,9 @@ namespace SetLocale.Client.Web.Configurations
         {
             container.Register(
                 Component.For<IFormsAuthenticationService>().ImplementedBy<FormsAuthenticationService>().LifestylePerWebRequest(),
+
+                Component.For<IUserService>().ImplementedBy<UserService>().LifestylePerWebRequest(),
+
                 Component.For<IDemoDataService>().ImplementedBy<DemoDataService>().LifestylePerWebRequest());
             
             

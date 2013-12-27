@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
-using SetLocale.Util;
+using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Controllers
 {
@@ -11,7 +11,7 @@ namespace SetLocale.Client.Web.Controllers
     {
         public readonly IFormsAuthenticationService _formsAuthenticationService;
         public readonly IDemoDataService _demoDataService;
-
+        
         public BaseController(
             IFormsAuthenticationService formsAuthenticationService,
             IDemoDataService demoDataService)

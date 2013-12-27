@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using SetLocale.Client.Web.Services;
-using SetLocale.Util;
+using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Controllers
 {

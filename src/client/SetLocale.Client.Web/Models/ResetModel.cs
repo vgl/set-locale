@@ -1,4 +1,4 @@
-﻿using SetLocale.Util;
+﻿using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Models
 {
@@ -11,9 +11,5 @@ namespace SetLocale.Client.Web.Models
             return !string.IsNullOrEmpty(Email)
                    && Email.IsEmail();
         }
-
-
     }
-
-   
 }

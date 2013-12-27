@@ -31,7 +31,6 @@ namespace SetLocale.Client.Web.Controllers
         {
             if (model.IsValidForNew())
             {
-                //todo: add new app to db
 
                 return Redirect("/user/apps");
             }

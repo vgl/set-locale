@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 using SetLocale.Client.Web.Models;
-using SetLocale.Util;
+using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Services
 {

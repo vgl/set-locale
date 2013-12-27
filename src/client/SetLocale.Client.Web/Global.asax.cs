@@ -8,7 +8,7 @@ using Castle.Windsor;
 using Castle.Windsor.Installer;
 
 using SetLocale.Client.Web.Configurations;
-using SetLocale.Util;
+using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web
 {
