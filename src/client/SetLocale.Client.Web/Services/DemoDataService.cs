@@ -60,7 +60,7 @@ namespace SetLocale.Client.Web.Services
                     },
                     new TranslationModel
                     {
-                        Value = "Kaydet",
+                        Value = "Save",
                         Language = new LanguageModel
                         {
                             Key = "en",
@@ -78,6 +78,7 @@ namespace SetLocale.Client.Web.Services
             result.Add(new AppModel
             {
                 Id = 1,
+                UserEmail = "setlocale@test.com",
                 AppName = "SetLocale",
                 AppDescription = "a localization management application.",
                 Url = "setlocale.com",
@@ -87,11 +88,12 @@ namespace SetLocale.Client.Web.Services
             result.Add(new AppModel
             {
                 Id = 2,
+                UserEmail = "setcrm@test.com",
                 AppName = "SetCrm",
                 AppDescription = "a brand new crm application.",
                 Url = "setcrm.com",
                 UsageCount = 64212,
-                IsActive = true
+                IsActive = false
             });
 
             return result;
@@ -103,6 +105,7 @@ namespace SetLocale.Client.Web.Services
             result.Add(new AppModel
             {
                 Id = 2,
+                UserEmail = "drone@test.com",
                 AppName = "Marmara Drone",
                 AppDescription = "a wireless control dashboard for humanless flying planes.",
                 Url = "marmaradrone.github.io",
@@ -113,6 +116,7 @@ namespace SetLocale.Client.Web.Services
             result.Add(new AppModel
             {
                 Id = 2,
+                UserEmail = "collade@test.com",
                 AppName = "Collade",
                 AppDescription = "a task management and team collaboration application.",
                 Url = "marmaradrone.github.io",

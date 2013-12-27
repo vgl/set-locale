@@ -21,19 +21,19 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>@Html.Partial("_LocalizationString", "language")</th>
+                    <th>@Html.LocalizationString("language")</th>
                     <th>@Html.LocalizationString("translation")</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var lang in Model.Languages)
+                @foreach (var item in Model.Translations)
                 {
                     <tr>
                         <td>
-                            <a type="button" class="btn btn-sm btn-warning" href="/key/edit/@Model.Key">@Html.Partial("_LocalizationString", "edit")</a>
+                            <a type="button" class="btn btn-sm btn-warning" href="/key/edit/@Model.Key">@Html.LocalizationString("edit")</a>
                         </td>
-                        <td> <img src="@lang.ImageUrl" alt="@lang.Name" /> @lang.Name</td>
-                        <td>@lang.Name</td>
+                        <td> <img src="@item.Language.ImageUrl" alt="@item.Language.Name" /> @item.Language.Name</td>
+                        <td>@item.Value</td>
                     </tr>
                 }
             </tbody>
