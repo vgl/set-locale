@@ -1,4 +1,5 @@
 ﻿@using SetLocale.Client.Web.Helpers
+
 @model SetLocale.Client.Web.Models.KeyModel
 
 @{
@@ -12,8 +13,12 @@
     @foreach (var tag in Model.Tags)
     {
         <a class="label label-info" href="/tag/index/@tag.UrlName">@tag.Name</a>
-    }
+
+       }
+<input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" value="@Html.LocalizationString("btn_words_new_word")" data-id="@Model.Key" />
+    @Html.AntiForgeryToken()
 </div>
+
 
 <div class="row">
     <div class="table-responsive">
@@ -40,3 +45,53 @@
         </table>
     </div>
 </div>
+
+@section script
+{
+    <script>
+        $(function () {
+                     
+            $("input.btnNewTranslate").click(function () {
+                var keyId = $(this).data("id");
+                
+               
+
+                        var row = $("<tr />");
+                        var url = "#";
+                        var aSaveButton = $("<a />");
+                        
+                        aSaveButton.addClass("btn btn-sm btn-warning btnAction");
+                        aSaveButton.attr("data-toggle", "modal");
+                        aSaveButton.attr("data-id", keyId);
+                        aSaveButton.attr("href", url);
+                        aSaveButton.html('@Html.LocalizationString("btn_menu_settings_new_translator_save")');
+                        
+
+                        var tdSaveButton = $("<td />");
+                        tdSaveButton.append(aSaveButton);
+                        row.append(tdSaveButton);
+
+                        var tdLanguage = $("<td />");
+                        var ddLanguage = $("<select />");
+                        var ddOption = $("<option />");
+                         ddOption.attr("value","tr-TR");
+                        ddOption.html("Turkish");
+                        ddLanguage.append(ddOption);
+                        tdLanguage.append(ddLanguage);
+                        row.append(tdLanguage);
+                        
+                        var tdTranslation = $("<td />");
+                        var tbTranslation = $("<input />");
+                        tbTranslation.attr("type", "Text");
+                        tbTranslation.attr("name", "xxx");
+                        tdTranslation.append(tbTranslation);
+                        row.append(tdTranslation);
+
+                        $('table tbody').append(row);
+         
+              
+            });
+
+        });
+    </script>
+}

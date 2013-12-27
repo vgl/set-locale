@@ -162,7 +162,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("menu_words_words_tag", "Tag");
             enTexts.Add("menu_words_words_translated_lang", "TranslatedLang");
             enTexts.Add("btn_menu_words_words_edit", "Edit");
-
+            enTexts.Add("btn_words_new_word", "Add New Translate");
             #endregion
 
             #region WORDS_My_Word
@@ -350,6 +350,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("menu_words_words_tag", "Etiket");
             trTexts.Add("menu_words_words_translated_lang", "Çevrilmiş Dil");
             trTexts.Add("btn_menu_words_words_edit", "Düzenle");
+            trTexts.Add("btn_words_new_word", "Yeni Çeviri Ekle");
 
             #endregion
 
