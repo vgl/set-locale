@@ -93,10 +93,6 @@
       <Project>{34b4ccfd-27b1-4638-b49a-7ebe78252e83}</Project>
       <Name>SetLocale.Client.Web</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\core\SetLocale.Util\SetLocale.Util.csproj">
-      <Project>{b0a733c6-3013-4a27-87e6-f5a15713f56b}</Project>
-      <Name>SetLocale.Util</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

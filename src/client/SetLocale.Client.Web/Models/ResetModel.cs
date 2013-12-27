@@ -1,4 +1,4 @@
-﻿using SetLocale.Util;
+﻿using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Models
 {

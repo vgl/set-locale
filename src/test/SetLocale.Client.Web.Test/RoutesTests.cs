@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 using SetLocale.Client.Web.Configurations;
 using SetLocale.Client.Web.Controllers;
-using SetLocale.Util;
+using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Test
 {
