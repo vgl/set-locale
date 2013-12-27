@@ -20,19 +20,16 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult NewTranslator()
         {
-            var model = new TranslatorModel()
-            {
-                Email = "user@test.com",
-                Name = "Translator"
-            };
+            var model = _demoDataService.GetAUser();
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult NewTranslator(TranslatorModel model)
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult NewTranslator(UserModel model)
         {
-            if (model.IsValid())
+            if (model.IsValidForAddingNewTranslator())
             {
+                //todo: create new user with translator role...
                 return Redirect("/admin/users");
             }
 
