@@ -1,7 +1,7 @@
 ﻿@model SetLocale.Client.Web.Models.TranslationModel
 
 @{
-    ViewBag.Title = ViewBag.Txt["updating_key_view_title"];
+    ViewBag.Title = Html.LocalizationString("updating_key_view_title");
 }
 
 
@@ -26,20 +26,20 @@
         <input type="hidden" name="languagekey" value="@Model.LanguageKey" />
 
         <div class="row">
-            <strong>@ViewBag.Txt["translation"]</strong>
+            <strong>@Html.LocalizationString("translation")</strong>
             <input type="text" class="form-control input-lg" name="value" id="value" value="@Model.Value" />
         </div>
 
         <div class="row">
-            <strong>@ViewBag.Txt["description"]</strong>
+            <strong>@Html.LocalizationString("description")</strong>
             <input type="text" class="form-control input-lg" name="description" id="description" value="@Model.Description" />
         </div>
 
         @Html.AntiForgeryToken()
 
         <div class="row">
-            <input type="submit" value="@ViewBag.Txt["save"]" class="btn btn-primary btn-lg" />
-            <input type="submit" value="@ViewBag.Txt["save_and_close"]" class="btn btn-primary btn-lg" />
+            <input type="submit" value="@Html.LocalizationString("save")" class="btn btn-primary btn-lg" />
+            <input type="submit" value="@Html.LocalizationString("save_and_close")" class="btn btn-primary btn-lg" />
         </div>
 
         <div class="error">
