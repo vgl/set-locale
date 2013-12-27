@@ -1,7 +1,7 @@
 ﻿@model List<SetLocale.Client.Web.Models.AppModel>
 
 @{
-    ViewBag.Title = ViewBag.Txt["Apps"];
+    ViewBag.Title = ViewBag.Txt["user_apps"];
 }
 
 <h3>@ViewBag.Title</h3>
@@ -12,16 +12,16 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@ViewBag.Txt["AppName"]</th>
-                <th>@ViewBag.Txt["description"]</th>
-                <th>@ViewBag.Txt["Url"]</th>
-                <th>@ViewBag.Txt["UsageCount"]</th>
+                <th>@ViewBag.Txt["user_apps_name"]</th>
+                <th>@ViewBag.Txt["user_apps_description"]</th>
+                <th>@ViewBag.Txt["user_apps_url"]</th>
+                <th>@ViewBag.Txt["user_apps_usage_count"]</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                var val = item.IsActive ? ViewBag.Txt["Deactivate"] : ViewBag.Txt["Activate"];
+                var val = item.IsActive ? ViewBag.Txt["user_apps_deactivate"] : ViewBag.Txt["user_apps_activate"];
                 <tr>
                     <td>
                          <a type="button" class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
@@ -42,10 +42,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">@ViewBag.Txt["ModalTitleApps"]</h4>
+                <h4 class="modal-title">@ViewBag.Txt["modal_title_apps"]</h4>
             </div>
             <div class="modal-body">
-                @ViewBag.Txt["ModalBodyUsers"]
+                @ViewBag.Txt["modal_body_users"]
             </div>
             <div class="modal-footer">
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="@ViewBag.Txt["Cancel"]" />
@@ -59,8 +59,8 @@
 {
     <script>
         $(function () {
-            var textActivate = "@ViewBag.Txt["Activate"]";
-            var textDeactivate = "@ViewBag.Txt["Deactivate"]";
+            var textActivate = "@ViewBag.Txt["user_apps_activate"]";
+            var textDeactivate = "@ViewBag.Txt["user_apps_deactivate"]";
 
             $("a.btnAction").click(function () {
                 var id = $(this).data("id");
