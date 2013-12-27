@@ -7,10 +7,17 @@ namespace SetLocale.Client.Web.Services
     public interface IDemoDataService
     {
         UserModel GetAUser();
+
+        KeyModel GetAKey();
         List<AppModel> GetUsersApps();
         List<AppModel> GetAllApps();
-
         List<TagModel> GetSomeTag();
+        List<LanguageModel> GetSomeLanguage();
+        List<KeyModel> GetMyKeys();
+
+        List<KeyModel> GetAllKeys();
+        List<KeyModel> GetNotTranslatedKeys();
+
     }
     public class DemoDataService : IDemoDataService
     {
@@ -25,6 +32,41 @@ namespace SetLocale.Client.Web.Services
                  Name = "Serdar Büyüktemiz",
                  Role = ConstHelper.User
              };
+        }
+
+        public KeyModel GetAKey()
+        {
+            return new KeyModel
+            {
+                Key = "btn_save",
+                Description = "kaydet butonu için",
+                Tag = GetSomeTag(),
+                Languages = GetSomeLanguage(),
+                IsTranslated = true,
+                Translations = new List<TranslationModel>()
+                {
+                    new TranslationModel
+                    {
+                        Value = "Kaydet",
+                        Language = new LanguageModel
+                        {
+                            Key = "tr",
+                            Name = "Türkçe",
+                            ImageUrl = "/public/img/tr.png"
+                        }
+                    },
+                    new TranslationModel
+                    {
+                        Value = "Kaydet",
+                        Language = new LanguageModel
+                        {
+                            Key = "en",
+                            Name = "English",
+                            ImageUrl = "/public/img/en.png"
+                        }
+                    },
+                }
+            };
         }
 
         public List<AppModel> GetUsersApps()
@@ -84,21 +126,110 @@ namespace SetLocale.Client.Web.Services
 
             tags.Add(new TagModel
             {
-                Name = "Membership",
-                UrlName = "membership"
+                Name = "SetMembership",
+                UrlName = "set-membership"
             });
             tags.Add(new TagModel
             {
                 Name = "SetLocale",
-                UrlName = "setlocale"
+                UrlName = "set-locale"
             });
             tags.Add(new TagModel
             {
                 Name = "SetCrm",
-                UrlName = "setcrm"
+                UrlName = "set-crm"
             });
 
             return tags;
+        }
+        public List<KeyModel> GetMyKeys()
+        {
+            var result = new List<KeyModel>();
+            result.Add(new KeyModel
+            {
+                Key = "btn_save",
+                Description = "kaydet butonu için",
+                Tag = GetSomeTag(),
+                Languages = GetSomeLanguage(),
+                IsTranslated = true
+            });
+
+            result.Add(new KeyModel
+            {
+                Key = "btn_update",
+                Description = "güncelle butonu için",
+                Tag = GetSomeTag(),
+                Languages = GetSomeLanguage(),
+                IsTranslated = true
+            });
+
+            result.Add(new KeyModel
+            {
+                Key = "btn_delete",
+                Description = "sil butonu için",
+                Tag = GetSomeTag(),
+                Languages = GetSomeLanguage(),
+                IsTranslated = true
+            });
+
+            return result;
+        }
+
+        public List<KeyModel> GetAllKeys()
+        {
+            var result = GetMyKeys();
+            result.Add(new KeyModel
+            {
+                Key = "menu_home",
+                Description = "menüde anasayfa'ya git düğmesi için",
+                Tag = GetSomeTag(),
+                Languages = GetSomeLanguage(),
+                IsTranslated = true
+            });
+            result.Add(new KeyModel
+            {
+                Key = "home_welcome",
+                Description = "sisteme hoşgeldiniz mesajı, ana sayfada büyükçe gözüken bir yerde kullanılıyor",
+                Tag = GetSomeTag(),
+                Languages = GetSomeLanguage(),
+                IsTranslated = true
+            });
+
+            return result;
+        }
+
+        public List<KeyModel> GetNotTranslatedKeys()
+        {
+            var result = new List<KeyModel>();
+            result.Add(new KeyModel
+            {
+                Key = "btn_search",
+                Description = "arama butonu için",
+                Tag = GetSomeTag(),
+                Languages = GetSomeLanguage(),
+                IsTranslated = true
+            });
+
+            return result;
+        }
+
+        public List<LanguageModel> GetSomeLanguage()
+        {
+            var result = new List<LanguageModel>();
+            result.Add(new LanguageModel
+            {
+                Key = "tr",
+                Name = "Türkçe",
+                ImageUrl = "/public/img/tr.png"
+            });
+            result.Add(new LanguageModel
+            {
+                Key = "en",
+                Name = "English",
+                ImageUrl = "/public/img/en.png"
+            });
+
+            return result;
         }
     }
 }
