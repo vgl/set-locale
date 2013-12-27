@@ -18,7 +18,7 @@ namespace SetLocale.Client.Web.Entities
         public int CreatedBy { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public string DeletedBy { get; set; }
+        public int DeletedBy { get; set; }
         public DateTime? DeletedAt { get; set; }
 
         public bool IsDeleted { get; set; }
