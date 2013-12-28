@@ -36,10 +36,11 @@
 <script src="/public/js/select2.js"></script>
 
 <script>
-
+   
     function format(state) {
+        var temptext = "&nbsp;&nbsp;&nbsp;";
         if (!state.id) return state.text; // optgroup
-        return "<img class='flag' src='public/img/flag/" + state.id.toLowerCase() + ".png'/>" + state.text;
+        return "<img class='flag' src='public/img/flag/" + state.id.toLowerCase() + ".png'/>" + temptext + state.text;
     }
 
     $("#e1").select2({
