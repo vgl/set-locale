@@ -11,7 +11,7 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index(string id = "set-locale")
+        public ViewResult Index(string id = "set-locale")
         {
             var model = _demoDataService.GetMyKeys();
             return View(model);

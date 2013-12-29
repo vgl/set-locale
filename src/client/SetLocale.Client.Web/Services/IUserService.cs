@@ -12,7 +12,6 @@ namespace SetLocale.Client.Web.Services
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepo;
-
         public UserService(IRepository<User> userRepo)
         {
             _userRepo = userRepo;
