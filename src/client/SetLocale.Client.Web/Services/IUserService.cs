@@ -20,16 +20,15 @@ namespace SetLocale.Client.Web.Services
 
         public int? Create(UserModel model)
         {
-            var user = new User
-            {
-                Email = model.Email,
-                PasswordHash = model.Password
-            };
+            var user = new User { Email = model.Email, PasswordHash = model.Password };
             _userRepo.Create(user);
-            _userRepo.SaveChanges();
 
-            return user.Id;
+            if (_userRepo.SaveChanges())
+            {
+                return user.Id;
+            }
 
+            return null;
         }
     }
 }

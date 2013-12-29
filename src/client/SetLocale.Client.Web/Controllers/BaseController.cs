@@ -9,6 +9,8 @@ namespace SetLocale.Client.Web.Controllers
 {
     public class BaseController : Controller
     {
+        public HtmlHelper _htmlHelper;
+
         public readonly IFormsAuthenticationService _formsAuthenticationService;
         public readonly IDemoDataService _demoDataService;
         
@@ -18,6 +20,8 @@ namespace SetLocale.Client.Web.Controllers
         {
             _formsAuthenticationService = formsAuthenticationService;
             _demoDataService = demoDataService;
+
+            _htmlHelper = new HtmlHelper(new ViewContext(), new ViewPage());
         }
 
         public ActionResult RedirectToHome()

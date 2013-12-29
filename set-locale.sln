@@ -16,27 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C2A93E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{444EE809-1F51-4311-9CA9-4E5C11F769B5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "specs", "specs", "{4B06AEED-6A87-4082-BEDA-D45CCD5E6FD7}"
-	ProjectSection(SolutionItems) = preProject
-		specs\admin-add-new-user-as-translator.feature = specs\admin-add-new-user-as-translator.feature
-		specs\admin-deactivates-apps.feature = specs\admin-deactivates-apps.feature
-		specs\admin-deactivates-users.feature = specs\admin-deactivates-users.feature
-		specs\admin-lists-apps-paging.feature = specs\admin-lists-apps-paging.feature
-		specs\admin-lists-apps.feature = specs\admin-lists-apps.feature
-		specs\admin-lists-users-paging.feature = specs\admin-lists-users-paging.feature
-		specs\admin-lists-users.feature = specs\admin-lists-users.feature
-		specs\user-add-new-translation-key.feature = specs\user-add-new-translation-key.feature
-		specs\user-adds-new-app-token.feature = specs\user-adds-new-app-token.feature
-		specs\user-adds-new-app.feature = specs\user-adds-new-app.feature
-		specs\user-deactivates-apps.feature = specs\user-deactivates-apps.feature
-		specs\user-deletes-app-token.feature = specs\user-deletes-app-token.feature
-		specs\user-lists-apps-paging.feature = specs\user-lists-apps-paging.feature
-		specs\user-lists-apps.feature = specs\user-lists-apps.feature
-		specs\user-reset-password.feature = specs\user-reset-password.feature
-		specs\user-signup-as-developer.feature = specs\user-signup-as-developer.feature
-		specs\user-update-key-translation.feature = specs\user-update-key-translation.feature
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetLocale.Client.Web.Test", "src\test\SetLocale.Client.Web.Test\SetLocale.Client.Web.Test.csproj", "{CD000AC8-91A4-4D4D-A851-557CDE2ACBFE}"
 EndProject
 Global
@@ -59,7 +38,9 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{34B4CCFD-27B1-4638-B49A-7EBE78252E83} = {5594EBF0-5EA5-45F2-8DD8-1CEC256C1EE2}
-		{4B06AEED-6A87-4082-BEDA-D45CCD5E6FD7} = {444EE809-1F51-4311-9CA9-4E5C11F769B5}
 		{CD000AC8-91A4-4D4D-A851-557CDE2ACBFE} = {444EE809-1F51-4311-9CA9-4E5C11F769B5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 	EndGlobalSection
 EndGlobal
