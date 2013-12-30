@@ -1,7 +1,9 @@
 ﻿using System.Web.Mvc;
+
 using Moq;
 using NUnit.Framework;
 using Rhino.Mocks;
+
 using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
