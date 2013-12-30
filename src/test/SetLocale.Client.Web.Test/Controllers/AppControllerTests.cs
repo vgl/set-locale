@@ -25,8 +25,8 @@ namespace SetLocale.Client.Web.Test.Controllers
             var view = controller.Index();
 
             // Assert
-            Assert.IsTrue(controller.HasGetAttribute("Index"), "HttpGet attribute not found on AppController's Index() action method");
             Assert.NotNull(view);
+            Assert.IsTrue(controller.HasGetAttribute("Index"), "HttpGet attribute not found on AppController's Index() action method");
             demoService.Verify(x => x.GetAnApp(), Times.Once);
 
         }
