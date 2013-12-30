@@ -16,42 +16,42 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Detail()
+        public ViewResult Detail()
         {
             var model = _demoDataService.GetAKey();
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult My()
+        public ViewResult My()
         {
             var model = _demoDataService.GetMyKeys();
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult All()
+        public ViewResult All()
         {
             var model = _demoDataService.GetAllKeys();
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult NotTranslated()
+        public ViewResult NotTranslated()
         {
             var model = _demoDataService.GetNotTranslatedKeys();
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult New()
+        public ViewResult New()
         {
             var model = _demoDataService.GetAKey();
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult Edit(string id, string lang = ConstHelper.tr)
+        public ViewResult Edit(string id, string lang = ConstHelper.tr)
         {
             var model = _demoDataService.GetATranslation();
             return View(model);
