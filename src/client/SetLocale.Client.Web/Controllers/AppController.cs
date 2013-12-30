@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Web.Mvc;
+
 using SetLocale.Client.Web.Models;
-using System.Web.Mvc;
 using SetLocale.Client.Web.Services;
 
 namespace SetLocale.Client.Web.Controllers
@@ -26,7 +25,7 @@ namespace SetLocale.Client.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         public ActionResult New(AppModel model)
         {
             if (model.IsValidForNew())

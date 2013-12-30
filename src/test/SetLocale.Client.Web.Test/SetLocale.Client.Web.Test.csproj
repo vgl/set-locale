@@ -97,6 +97,7 @@
     <Compile Include="RoutesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\UserServiceTests.cs" />
+    <Compile Include="TestHelpers\ControllerTestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
