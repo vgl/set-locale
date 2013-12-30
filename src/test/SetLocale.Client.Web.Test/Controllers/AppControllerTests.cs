@@ -26,9 +26,8 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             // Assert
             Assert.NotNull(view);
-//            Assert.IsTrue(controller.HasGetAttribute("Index"), "HttpGet attribute not found on AppController's Index() action method");
+            controller.HasGetAttribute("Index");
             demoService.Verify(x => x.GetAnApp(), Times.Once);
-
         }
 
         [Test]
@@ -42,8 +41,8 @@ namespace SetLocale.Client.Web.Test.Controllers
             var view = controller.New();
 
             // Assert
-          //  Assert.IsTrue(controller.HasGetAttribute("New"), "HttpGet attribute not found on AppController's New() action method");
             Assert.NotNull(view);
+            controller.HasGetAttribute("New");
             demoService.Verify(x => x.GetAnApp(), Times.Once);
         }
 
@@ -76,8 +75,8 @@ namespace SetLocale.Client.Web.Test.Controllers
             // Assert
             Assert.NotNull(view);
             Assert.NotNull(view.Model);
-            
             var model = view.Model as AppModel;
+
             Assert.NotNull(model);
 
             controller.HasPostAttribute("New", new[] { typeof(AppModel) });

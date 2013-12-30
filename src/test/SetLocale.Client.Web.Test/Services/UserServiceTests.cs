@@ -1,10 +1,11 @@
 ﻿using Moq;
 using NUnit.Framework;
-
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Repositories;
 using SetLocale.Client.Web.Services;
+using System;
+using System.Linq.Expressions;
 
 namespace SetLocale.Client.Web.Test.Services
 {
@@ -39,7 +40,7 @@ namespace SetLocale.Client.Web.Test.Services
             const string email = "test@test.com";
 
             var userRepository = new Mock<IRepository<User>>();
-            userRepository.Setup(x => x.FindOne(y => y.Email == email)).Returns(new User { Email = email });
+            userRepository.Setup(x => x.FindOne(It.IsAny<Expression<Func<User, bool>>>())).Returns(new User { Email = email });
 
             // Act
             var userService = new UserService(userRepository.Object);
@@ -48,7 +49,7 @@ namespace SetLocale.Client.Web.Test.Services
             // Assert
             Assert.NotNull(user);
             Assert.AreEqual(user.Email, email);
-            userRepository.Verify(x => x.FindOne(y => y.Email == email), Times.Once);
+            userRepository.Verify(x => x.FindOne(It.IsAny<Expression<Func<User, bool>>>()), Times.Once);
         }
 
         [Test]

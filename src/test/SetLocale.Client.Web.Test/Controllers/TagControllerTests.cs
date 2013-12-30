@@ -26,18 +26,19 @@ namespace SetLocale.Client.Web.Test.Controllers
             // Act
             var controller = new TagController(null, demoService.Object);
             var view = controller.Index();
+            
 
             // Assert
             Assert.NotNull(view);
-
             var model = view.Model as List<KeyModel>;
-            Assert.NotNull(model);
 
-            demoService.Verify(x => x.GetMyKeys(), Times.Once);
+            Assert.NotNull(model);
 
             CollectionAssert.AllItemsAreUnique(model);
             Assert.AreEqual(model.Count, list.Count);
-           // Assert.IsTrue(controller.HasGetAttribute("Index", new[] { typeof(List<KeyModel>) }), "HttpGet attribute not found on TagController's Index() action method");
+
+            demoService.Verify(x => x.GetMyKeys(), Times.Once);
+            controller.HasGetAttribute("Index", new[] { typeof(string) });
         }
     }
 }

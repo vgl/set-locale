@@ -27,21 +27,20 @@ namespace SetLocale.Client.Web.Test.Controllers
             var key = new KeyModel { Key = "my-key" };
             demoService.Setup(x => x.GetAKey()).Returns(key);
 
-
             // Act
             var controller = new KeyController(null, demoService.Object);
             var view = controller.New();
+            
 
             // Assert
             Assert.NotNull(view);
-
             var model = view.Model as KeyModel;
-           // Assert.IsTrue(controller.HasGetAttribute("New"), "HttpGet attribute not found on KeyController's New() action method");
+
             Assert.NotNull(model);
-
+            controller.HasGetAttribute("New");
             demoService.Verify(x => x.GetAKey(), Times.Once);
-
         }
+
         [Test]
         public void detail_should_return_key_model()
         {
@@ -59,7 +58,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(view);
 
             var model = view.Model as KeyModel;
-            //Assert.IsTrue(controller.HasGetAttribute("Detail"), "HttpGet attribute not found on KeyController's Detail() action method");
+            controller.HasGetAttribute("Detail");
             Assert.NotNull(model);
 
             demoService.Verify(x => x.GetAKey(), Times.Once);
@@ -83,7 +82,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(view);
 
             var model = view.Model as List<KeyModel>;
-           // Assert.IsTrue(controller.HasGetAttribute("My"), "HttpGet attribute not found on KeyController's My() action method");
+            controller.HasGetAttribute("My");
             Assert.NotNull(model);
 
             demoService.Verify(x => x.GetMyKeys(), Times.Once);
@@ -106,8 +105,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             var model = view.Model as List<KeyModel>;
             Assert.NotNull(model);
-
-           // Assert.IsTrue(controller.HasGetAttribute("All"), "HttpGet attribute not found on KeyController's All() action method");
+            controller.HasGetAttribute("All");
             demoService.Verify(x => x.GetAllKeys(), Times.Once);
         }
 
@@ -129,11 +127,10 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(view);
 
             var model = view.Model as List<KeyModel>;
-          //  Assert.IsTrue(controller.HasGetAttribute("NotTranslated"), "HttpGet attribute not found on KeyController's NotTranslated() action method");
+            controller.HasGetAttribute("NotTranslated");
             Assert.NotNull(model);
 
             demoService.Verify(x => x.GetNotTranslatedKeys(), Times.Once);
-
         }
 
         [Test]

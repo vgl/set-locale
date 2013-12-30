@@ -21,24 +21,21 @@ namespace SetLocale.Client.Web.Test.Controllers
             var httpContext = new Mock<HttpContextBase>();
             var httpRequest = new Mock<HttpRequestBase>();
             var httpResponse = new Mock<HttpResponseBase>();
-            
-            controllerContext.Setup(x => x.HttpContext).Returns(httpContext.Object); 
+
+            controllerContext.Setup(x => x.HttpContext).Returns(httpContext.Object);
             httpContext.Setup(x => x.Request).Returns(httpRequest.Object);
             httpContext.Setup(x => x.Response).Returns(httpResponse.Object);
             httpResponse.Setup(x => x.SetCookie(It.IsAny<HttpCookie>()));
-            
+
             // Act
             var controller = new LangController(null, null);
             controller.ControllerContext = controllerContext.Object;
-
             var view = controller.Change("tr");
 
             // Assert
-
             Assert.NotNull(view);
-           // Assert.IsTrue(controller.HasGetAttribute("Change"));
+            controller.HasGetAttribute("Change", new[] { typeof(string) });
             httpResponse.Verify(x => x.SetCookie(It.IsAny<HttpCookie>()), Times.AtLeastOnce);
-
         }
     }
 }
