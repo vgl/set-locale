@@ -36,6 +36,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             var view = controller.Change("tr");
 
             // Assert
+
             Assert.NotNull(view);
         }
     }

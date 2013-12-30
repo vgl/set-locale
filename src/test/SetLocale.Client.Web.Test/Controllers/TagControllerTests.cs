@@ -8,6 +8,7 @@ using NUnit.Framework;
 using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
+using SetLocale.Client.Web.Test.TestHelpers;
 
 namespace SetLocale.Client.Web.Test.Controllers
 {
@@ -36,6 +37,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             CollectionAssert.AllItemsAreUnique(model);
             Assert.AreEqual(model.Count, list.Count);
+            Assert.IsTrue(controller.HasGetAttribute("Index", new[] { typeof(List<KeyModel>) }), "HttpGet attribute not found on TagController's Index() action method");
         }
     }
 }
