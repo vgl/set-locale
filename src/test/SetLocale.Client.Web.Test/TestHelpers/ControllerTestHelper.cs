@@ -1,28 +1,30 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using NUnit.Framework;
 
 namespace SetLocale.Client.Web.Test.TestHelpers
 {
     public static class ControllerTestHelper
     {
-        public static bool HasGetAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
+        public static void HasGetAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
         {
             var type = controller.GetType();
             var methodInfo = type.GetMethod(actionMethodName, parameterTypes ?? new Type[0]);
             var attributes = methodInfo.GetCustomAttributes(typeof(HttpGetAttribute), true);
-            return attributes.Any();
+
+            Assert.IsTrue(attributes.Any(), "HttpGet attribute not found");
         }
 
-        public static bool HasPostAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
+        public static void HasPostAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
         {
             var type = controller.GetType();
             var methodInfo = type.GetMethod(actionMethodName, parameterTypes ?? new Type[0]);
             var postAttributes = methodInfo.GetCustomAttributes(typeof(HttpPostAttribute), true);
             var validateTokenAttributes = methodInfo.GetCustomAttributes(typeof(ValidateAntiForgeryTokenAttribute), true);
 
-            return postAttributes.Any()
-                   && validateTokenAttributes.Any();
+            Assert.IsTrue(postAttributes.Any(), "HttpGet attribute not found");
+            Assert.IsTrue(validateTokenAttributes.Any(), "ValidateAntiForgeryToken attribute not found");
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Web.Mvc;
-
+using System.Web.Mvc.Filters;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 using SetLocale.Client.Web.Helpers;
