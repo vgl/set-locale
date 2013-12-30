@@ -22,7 +22,6 @@ namespace SetLocale.Client.Web.Test.Controllers
         public void new_should_return_key_model()
         {
             // Arrange
-            var authService = new Mock<IFormsAuthenticationService>();
             var demoService = new Mock<IDemoDataService>();
 
             var key = new KeyModel { Key = "my-key" };
@@ -30,14 +29,14 @@ namespace SetLocale.Client.Web.Test.Controllers
 
 
             // Act
-            var controller = new KeyController(authService.Object, demoService.Object);
+            var controller = new KeyController(null, demoService.Object);
             var view = controller.New();
 
             // Assert
             Assert.NotNull(view);
 
             var model = view.Model as KeyModel;
-            Assert.IsTrue(controller.HasGetAttribute("New", new[] { typeof(KeyModel) }), "HttpGet attribute not found on KeyController's New() action method");
+            Assert.IsTrue(controller.HasGetAttribute("New"), "HttpGet attribute not found on KeyController's New() action method");
             Assert.NotNull(model);
 
             demoService.Verify(x => x.GetAKey(), Times.Once);
@@ -47,21 +46,20 @@ namespace SetLocale.Client.Web.Test.Controllers
         public void detail_should_return_key_model()
         {
             // Arrange
-            var authService = new Mock<IFormsAuthenticationService>();
             var demoService = new Mock<IDemoDataService>();
 
             var key = new KeyModel { Key = "my-key" };
             demoService.Setup(x => x.GetAKey()).Returns(key);
 
             // Act
-            var controller = new KeyController(authService.Object, demoService.Object);
+            var controller = new KeyController(null, demoService.Object);
             var view = controller.Detail();
 
             // Assert
             Assert.NotNull(view);
 
             var model = view.Model as KeyModel;
-            Assert.IsTrue(controller.HasGetAttribute("Detail", new[] { typeof(KeyModel) }), "HttpGet attribute not found on KeyController's Detail() action method");
+            Assert.IsTrue(controller.HasGetAttribute("Detail"), "HttpGet attribute not found on KeyController's Detail() action method");
             Assert.NotNull(model);
 
             demoService.Verify(x => x.GetAKey(), Times.Once);
@@ -71,7 +69,6 @@ namespace SetLocale.Client.Web.Test.Controllers
         public void my_should_return_key_model_list()
         {
             // Arrange
-            var authService = new Mock<IFormsAuthenticationService>();
             var demoService = new Mock<IDemoDataService>();
 
             var list = new List<KeyModel> { new KeyModel { Key = "my-key" } };
@@ -79,17 +76,17 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Setup(x => x.GetMyKeys()).Returns(list);
 
             // Act
-            var controller = new KeyController(authService.Object, demoService.Object);
+            var controller = new KeyController(null, demoService.Object);
             var view = controller.My();
 
             // Assert
             Assert.NotNull(view);
 
             var model = view.Model as List<KeyModel>;
-            Assert.IsTrue(controller.HasGetAttribute("My", new[] { typeof(List<KeyModel>) }), "HttpGet attribute not found on KeyController's My() action method");
+            Assert.IsTrue(controller.HasGetAttribute("My"), "HttpGet attribute not found on KeyController's My() action method");
             Assert.NotNull(model);
 
-            demoService.Verify(x => x.GetAKey(), Times.Once);
+            demoService.Verify(x => x.GetMyKeys(), Times.Once);
 
         }
         [Test]
@@ -118,7 +115,6 @@ namespace SetLocale.Client.Web.Test.Controllers
         public void notTranslated_should_return_key_model_list()
         {
             // Arrange
-            var authService = new Mock<IFormsAuthenticationService>();
             var demoService = new Mock<IDemoDataService>();
 
             var list = new List<KeyModel> { new KeyModel { Key = "my-key" } };
@@ -126,17 +122,17 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Setup(x => x.GetNotTranslatedKeys()).Returns(list);
 
             // Act
-            var controller = new KeyController(authService.Object, demoService.Object);
+            var controller = new KeyController(null, demoService.Object);
             var view = controller.NotTranslated();
 
             // Assert
             Assert.NotNull(view);
 
             var model = view.Model as List<KeyModel>;
-            Assert.IsTrue(controller.HasGetAttribute("NotTranslated", new[] { typeof(List<KeyModel>) }), "HttpGet attribute not found on KeyController's NotTranslated() action method");
+            Assert.IsTrue(controller.HasGetAttribute("NotTranslated"), "HttpGet attribute not found on KeyController's NotTranslated() action method");
             Assert.NotNull(model);
 
-            demoService.Verify(x => x.GetAKey(), Times.Once);
+            demoService.Verify(x => x.GetNotTranslatedKeys(), Times.Once);
 
         }
 
@@ -144,7 +140,6 @@ namespace SetLocale.Client.Web.Test.Controllers
         public void edit_should_return_translation_model()
         {
             // Arrange
-            var authService = new Mock<IFormsAuthenticationService>();
             var demoService = new Mock<IDemoDataService>();
 
             var translated = new TranslationModel { Key = "my-key" };
@@ -152,7 +147,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
 
             // Act
-            var controller = new KeyController(authService.Object, demoService.Object);
+            var controller = new KeyController(null, demoService.Object);
             var view = controller.Edit("id",ConstHelper.tr);
 
             // Assert
@@ -162,8 +157,8 @@ namespace SetLocale.Client.Web.Test.Controllers
             
             Assert.NotNull(model);
 
-            demoService.Verify(x => x.GetAKey(), Times.Once);
-            Assert.IsTrue(controller.HasGetAttribute("Edit", new[] { typeof(TranslationModel) }), "HttpGet attribute not found on KeyController's Edit() action method");
+            demoService.Verify(x => x.GetATranslation(), Times.Once);
+            Assert.IsTrue(controller.HasPostAttribute("Edit", new[] { typeof(TranslationModel) }), "HttpPost attribute not found or ValidateAntiForgeryToken attribute not added on KeyController's Edit() action method");
 
         }
  
