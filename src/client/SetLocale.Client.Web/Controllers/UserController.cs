@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 
 using SetLocale.Client.Web.Models;
@@ -33,15 +32,17 @@ namespace SetLocale.Client.Web.Controllers
             return View(model);
         }
 
+
+        #region Membership
         [HttpGet]
         public ActionResult New()
         {
-            var model = _demoDataService.GetAUser();
+            var model = new UserModel();
             return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult New(UserModel model)
+        public async Task<ActionResult> New(UserModel model)
         {
             if (!model.IsValidForNewDeveloper())
             {
@@ -49,7 +50,7 @@ namespace SetLocale.Client.Web.Controllers
                 return View(model);
             }
 
-            var userId = _userService.Create(model);
+            var userId = await _userService.Create(model);
             if (userId == null)
             {
                 model.Msg = "bir sorun oluştu";
@@ -85,7 +86,7 @@ namespace SetLocale.Client.Web.Controllers
                 model.Msg = "bir sorun oluştu";
                 return View(model);
             }
-            
+
             var authenticated = await _userService.Authenticate(model.Email, model.Password);
             if (!authenticated)
             {
@@ -94,8 +95,8 @@ namespace SetLocale.Client.Web.Controllers
             }
 
             var user = await _userService.GetByEmail(model.Email);
-            _formsAuthenticationService.SignIn(string.Format("{0}|{1}", user.Id, user.Name),true);
-            
+            _formsAuthenticationService.SignIn(string.Format("{0}|{1}", user.Id, user.Name), true);
+
             return Redirect("/user/apps");
         }
 
@@ -105,5 +106,6 @@ namespace SetLocale.Client.Web.Controllers
             _formsAuthenticationService.SignOut();
             return RedirectToHome();
         }
+        #endregion
     }
 }
