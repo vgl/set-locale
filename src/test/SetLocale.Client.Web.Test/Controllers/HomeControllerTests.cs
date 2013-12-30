@@ -28,7 +28,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             
             var model = view.Model as HomeStatsModel;
             Assert.NotNull(model);
-            Assert.IsTrue(controller.HasGetAttribute("Index", new[] { typeof(HomeController) }), "HttpGet attribute not found on AppController's Index() action method");
+            Assert.IsTrue(controller.HasGetAttribute("Index"), "HttpGet attribute not found on HomeController's Index() action method");
 
         }
 
