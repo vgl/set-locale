@@ -96,26 +96,22 @@ namespace SetLocale.Client.Web.Test.Controllers
         public void all_should_return_key_model_list()
         {
             // Arrange
-            var authService = new Mock<IFormsAuthenticationService>();
             var demoService = new Mock<IDemoDataService>();
-
             var list = new List<KeyModel> { new KeyModel { Key = "my-key" } };
-
             demoService.Setup(x => x.GetAllKeys()).Returns(list);
 
             // Act
-            var controller = new KeyController(authService.Object, demoService.Object);
+            var controller = new KeyController(null, demoService.Object);
             var view = controller.All();
 
             // Assert
             Assert.NotNull(view);
 
             var model = view.Model as List<KeyModel>;
-            Assert.IsTrue(controller.HasGetAttribute("All", new[] { typeof(List<KeyModel>) }), "HttpGet attribute not found on KeyController's All() action method");
             Assert.NotNull(model);
 
-            demoService.Verify(x => x.GetAKey(), Times.Once);
-
+            Assert.IsTrue(controller.HasGetAttribute("All"), "HttpGet attribute not found on KeyController's All() action method");
+            demoService.Verify(x => x.GetAllKeys(), Times.Once);
         }
 
         [Test]
