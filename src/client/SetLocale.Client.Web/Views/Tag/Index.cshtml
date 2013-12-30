@@ -12,7 +12,6 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th></th>
                 <th>@Html.LocalizationString("Key")</th>
                 <th>@Html.LocalizationString("description")</th>
                 <th>@Html.LocalizationString("Tag")</th>
@@ -23,9 +22,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        <a type="button" class="btn btn-sm btn-warning" href="/key/edit/@item.Key">@Html.LocalizationString("Edit")</a>
-                    </td>
                     <td><a href="/key/detail/@item.Key">@item.Key</a></td>
                     <td>@item.Description</td>
                     <td>

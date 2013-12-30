@@ -62,7 +62,9 @@ namespace SetLocale.Client.Web.Controllers
         {
             if (model.IsValid())
             {
-                
+
+
+                return RedirectToAction("Index", "Tag");
             }
 
             return View(model);
