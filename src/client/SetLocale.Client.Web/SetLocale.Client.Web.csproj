@@ -206,7 +206,7 @@
     <Compile Include="Repositories\SetLocaleDbInitializer.cs" />
     <Compile Include="Services\DemoDataService.cs" />
     <Compile Include="Services\FormsAuthenticationService.cs" />
-    <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
