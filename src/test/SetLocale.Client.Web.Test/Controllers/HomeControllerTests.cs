@@ -4,6 +4,7 @@ using NUnit.Framework;
 using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
+using SetLocale.Client.Web.Test.TestHelpers;
 
 namespace SetLocale.Client.Web.Test.Controllers
 {
@@ -27,6 +28,8 @@ namespace SetLocale.Client.Web.Test.Controllers
             
             var model = view.Model as HomeStatsModel;
             Assert.NotNull(model);
+            Assert.IsTrue(controller.HasGetAttribute("Index", new[] { typeof(HomeController) }), "HttpGet attribute not found on AppController's Index() action method");
+
         }
 
     }
