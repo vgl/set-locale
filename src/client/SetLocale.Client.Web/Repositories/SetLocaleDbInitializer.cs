@@ -10,18 +10,17 @@ namespace SetLocale.Client.Web.Repositories
     {
         protected override void Seed(SetLocaleDbContext context)
         {
-            AddAdmin(context, "Serdar", "Büyüktemiz", "hserdarb@gmail.com");
+            AddAdmin(context, "Serdar Büyüktemiz", "hserdarb@gmail.com");
 
             context.SaveChanges();
         }
 
-        private static void AddAdmin(SetLocaleDbContext context, string firstName, string lastName, string email)
+        private static void AddAdmin(SetLocaleDbContext context, string name, string email)
         {
             var user = new User
             {
                 Email = email,
-                FirstName = firstName,
-                LastName = lastName,
+                Name = name,
                 RoleId = SetLocaleRole.Admin.Value,
                 RoleName = SetLocaleRole.Admin.ToString(),
                 ImageUrl = GravatarHelper.GetGravatarURL(email, 35, "mm"),

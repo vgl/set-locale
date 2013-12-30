@@ -12,11 +12,11 @@ namespace SetLocale.Client.Web.Entities
         public DateTime? LastLoginAt { get; set; }
         public int LoginTryCount { get; set; }
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        
         public string ImageUrl { get; set; }
         
         public int RoleId { get; set; }
         public string RoleName { get; set; }
+        public string Name { get; set; }
     }
 }

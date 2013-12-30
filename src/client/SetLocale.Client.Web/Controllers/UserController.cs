@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
@@ -71,25 +73,30 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            var model = new LoginModel()
-            {
-                Email = "dev@test.com",
-                Password = "password"
-            };
-
+            var model = new LoginModel();
             return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model)
+        public async Task<ActionResult> Login(LoginModel model)
         {
-            if (model.IsValid())
+            if (!model.IsValid())
             {
-                return Redirect("/user/apps");
+                model.Msg = "bir sorun oluştu";
+                return View(model);
+            }
+            
+            var authenticated = await _userService.Authenticate(model.Email, model.Password);
+            if (!authenticated)
+            {
+                model.Msg = "bir sorun oluştu";
+                return View(model);
             }
 
-            model.Msg = "bir sorun oluştu";
-            return View(model);
+            var user = await _userService.GetByEmail(model.Email);
+            _formsAuthenticationService.SignIn(string.Format("{0}|{1}", user.Id, user.Name),true);
+            
+            return Redirect("/user/apps");
         }
 
         [HttpGet]
