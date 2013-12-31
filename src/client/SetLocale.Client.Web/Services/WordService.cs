@@ -1,7 +1,11 @@
 ﻿using System.Threading.Tasks;
+using System.Linq;
+
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Repositories;
+using System.Collections.Generic;
+
 
 namespace SetLocale.Client.Web.Services
 {
@@ -45,6 +49,12 @@ namespace SetLocale.Client.Web.Services
             }
 
             return Task.FromResult(word.Key);
+        }
+        public Task<List<KeyModel>> GetKeysByUserId(int createdby)
+        {
+            var Mywords = _wordRepository.GetMyKeys(x => x.CreatedBy == createdby).ToList();
+
+            return Task.FromResult(Mywords);
         }
     }
 }
