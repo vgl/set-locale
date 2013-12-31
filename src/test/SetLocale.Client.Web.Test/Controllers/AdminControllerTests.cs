@@ -31,13 +31,11 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Verify(x => x.GetAllApps(), Times.Once);
             demoService.Verify(x => x.GetAllUsers(), Times.Once);
             demoService.Verify(x => x.GetAUser(), Times.Once);
+
             // Assert
             Assert.NotNull(view);
             Assert.NotNull(view2);
             Assert.NotNull(view3);
         }
-
     }
-
-
 }
