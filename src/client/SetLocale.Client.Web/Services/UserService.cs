@@ -43,7 +43,9 @@ namespace SetLocale.Client.Web.Services
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(Guid.NewGuid().ToString(), BCrypt.Net.BCrypt.GenerateSalt(12)),
                 ImageUrl = img,
                 RoleId = roleId,
-                RoleName = SetLocaleRole.GetString(roleId)
+                RoleName = SetLocaleRole.GetString(roleId),
+                IsActive = true,
+                Language = model.Language
             };
             _userRepo.Create(user);
 

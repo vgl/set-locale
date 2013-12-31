@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 using SetLocale.Client.Web.Models;
@@ -57,6 +58,7 @@ namespace SetLocale.Client.Web.Controllers
                 return View(model);
             }
 
+            model.Language = Thread.CurrentThread.CurrentUICulture.Name;
             var userId = await _userService.Create(model);
             if (userId == null)
             {

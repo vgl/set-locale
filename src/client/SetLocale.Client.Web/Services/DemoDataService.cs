@@ -35,7 +35,7 @@ namespace SetLocale.Client.Web.Services
                  IsActive = true,
                  Email = "hserdarb@gmail.com",
                  Name = "Serdar Büyüktemiz",
-                 Role = ConstHelper.User
+                 RoleName = ConstHelper.User
              };
         }
 
@@ -137,7 +137,7 @@ namespace SetLocale.Client.Web.Services
                 Id = 1,
                 Email = "admin@test.com",
                 Name = "Admin",
-                Role = ConstHelper.Admin,
+                RoleName = ConstHelper.Admin,
                 IsActive = true
             });
             result.Add(new UserModel
@@ -145,7 +145,7 @@ namespace SetLocale.Client.Web.Services
                 Id = 2,
                 Email = "dev@test.com",
                 Name = "Developer",
-                Role = ConstHelper.Developer,
+                RoleName = ConstHelper.Developer,
                 IsActive = true
             });
             result.Add(new UserModel
@@ -153,7 +153,7 @@ namespace SetLocale.Client.Web.Services
                 Id = 3,
                 Email = "user@test.com",
                 Name = "Translator",
-                Role = ConstHelper.User,
+                RoleName = ConstHelper.User,
                 IsActive = true
             });
             result.Add(new UserModel
@@ -161,7 +161,7 @@ namespace SetLocale.Client.Web.Services
                 Id = 4,
                 Email = "user2@test.com",
                 Name = "Another Translator",
-                Role = ConstHelper.User,
+                RoleName = ConstHelper.User,
                 IsActive = false
             });
 

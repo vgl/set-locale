@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 using SetLocale.Client.Web.Entities;
@@ -42,6 +44,7 @@ namespace SetLocale.Client.Web.Controllers
                 return View(model);
             }
 
+            model.Language = Thread.CurrentThread.CurrentUICulture.Name;
             var userId = await _userService.Create(model, SetLocaleRole.Translator.Value);
             if (userId == null)
             {
@@ -56,7 +59,8 @@ namespace SetLocale.Client.Web.Controllers
         public async Task<ActionResult> Users()
         {
             var users = await _userService.GetAll();
-            return View(users);
+            var model = UserModel.MapUserToUserModel(users);
+            return View(model);
         }
 
         [HttpGet]

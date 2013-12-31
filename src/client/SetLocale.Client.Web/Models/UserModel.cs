@@ -1,4 +1,8 @@
-﻿using SetLocale.Client.Web.Helpers;
+﻿using System;
+using System.Collections.Generic;
+
+using SetLocale.Client.Web.Entities;
+using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Models
 {
@@ -8,23 +12,41 @@ namespace SetLocale.Client.Web.Models
         public string Email { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
-        public string Role { get; set; }
+        public string RoleName { get; set; }
         public bool IsActive { get; set; }
         public string Language { get; set; }
 
         public bool IsValidForNewTranslator()
         {
-            return !string.IsNullOrEmpty(Name)
-                   && !string.IsNullOrEmpty(Email)
+            return !String.IsNullOrEmpty(Name)
+                   && !String.IsNullOrEmpty(Email)
                    && Email.IsEmail();
         }
 
         public bool IsValidForNewDeveloper()
         {
-            return !string.IsNullOrEmpty(Password)
-                   && !string.IsNullOrEmpty(Email)
-                   && !string.IsNullOrEmpty(Name)
+            return !String.IsNullOrEmpty(Password)
+                   && !String.IsNullOrEmpty(Email)
+                   && !String.IsNullOrEmpty(Name)
                    && Email.IsEmail();
+        }
+
+        public static List<UserModel> MapUserToUserModel(IEnumerable<User> users)
+        {
+            var model = new List<UserModel>();
+            foreach (var user in users)
+            {
+                model.Add(new UserModel
+                {
+                    Email = user.Email,
+                    Id = user.Id,
+                    Name = user.Name,
+                    RoleName = user.RoleName,
+                    Language = user.Language,
+                    IsActive = user.IsActive
+                });
+            }
+            return model;
         }
     }
 }

@@ -123,7 +123,7 @@ namespace SetLocale.Client.Web
             #region SETTINGS_Users
             enTexts.Add("menu_settings_users_name", "Name");
             enTexts.Add("menu_settings_users_email", "Email");
-            enTexts.Add("menu_settings_users_role", "Role");
+            enTexts.Add("menu_settings_users_role", "RoleName");
             enTexts.Add("menu_settings_users_deactivate", "Deactivate");
             enTexts.Add("menu_settings_users_activate", "Activate");
 
