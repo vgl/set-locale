@@ -52,5 +52,9 @@ namespace SetLocale.Client.Web.Repositories
             };
             context.Users.Add(user);
         }
+
+
+        // AddApp()
+        // AddWord()
     }
 }

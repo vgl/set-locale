@@ -110,7 +110,7 @@ namespace SetLocale.Client.Web.Services
                 Email = "drone@test.com",
                 Name = "Marmara Drone",
                 Description = "a wireless control dashboard for humanless flying planes.",
-                Url = "marmaradrone.github.io",
+                Url = "github.com/jupre/marmaradrone",
                 UsageCount = 125493,
                 IsActive = true
             });
