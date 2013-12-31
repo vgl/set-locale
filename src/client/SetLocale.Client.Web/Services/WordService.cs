@@ -6,7 +6,6 @@ using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Repositories;
 using System.Collections.Generic;
 
-
 namespace SetLocale.Client.Web.Services
 {
     public interface IWordService

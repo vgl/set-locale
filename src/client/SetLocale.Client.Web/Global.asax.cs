@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Dispatcher;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -22,8 +23,8 @@ namespace SetLocale.Client.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             WebApiConfig.Register(GlobalConfiguration.Configuration);
-            GlobalConfiguration.Configuration.EnsureInitialized(); 
-
+            GlobalConfiguration.Configuration.EnsureInitialized();
+            
             PrepareIocContainer();
 
             PrepareLocalizationStrings();
@@ -422,8 +423,8 @@ namespace SetLocale.Client.Web
         private static void PrepareIocContainer()
         {
             var container = new WindsorContainer().Install(FromAssembly.This());
-            var controllerFactory = new WindsorControllerFactory(container.Kernel);
-            ControllerBuilder.Current.SetControllerFactory(controllerFactory);
+            ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(container.Kernel));
+            GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator), new WindsorCompositionRoot(container));
         }
 
         protected void Application_PreSendRequestHeaders(object sender, EventArgs e)

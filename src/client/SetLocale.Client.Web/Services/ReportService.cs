@@ -15,13 +15,16 @@ namespace SetLocale.Client.Web.Services
     {
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<Word> _wordRepository;
+        private readonly IRepository<App> _appRepository;
 
         public ReportService(
             IRepository<User> userRepository,
-            IRepository<Word> wordRepository)
+            IRepository<Word> wordRepository,
+            IRepository<App> appRepository)
         {
             _userRepository = userRepository;
             _wordRepository = wordRepository;
+            _appRepository = appRepository;
         }
 
         public Task<HomeStatsModel> GetHomeStats()
@@ -29,7 +32,7 @@ namespace SetLocale.Client.Web.Services
             var developerCount = _userRepository.FindAll(x => x.RoleId != SetLocaleRole.Translator.Value).Count();
             var translatorCount = _userRepository.FindAll(x => x.RoleId == SetLocaleRole.Translator.Value).Count();
             var keyCount = _wordRepository.FindAll().Count();
-            var appCount = 0;
+            var appCount = _appRepository.FindAll().Count();
             var translationCount = 0;
 
             var model = new HomeStatsModel
