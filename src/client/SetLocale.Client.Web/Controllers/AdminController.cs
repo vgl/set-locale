@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
@@ -52,10 +53,10 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Users()
+        public async Task<ActionResult> Users()
         {
-            var model = _demoDataService.GetAllUsers();
-            return View(model);
+            var users = await _userService.GetAll();
+            return View(users);
         }
 
         [HttpGet]
