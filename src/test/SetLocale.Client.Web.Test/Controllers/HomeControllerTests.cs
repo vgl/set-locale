@@ -22,7 +22,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(view.Model);
             var model = view.Model as HomeStatsModel;
             Assert.NotNull(model);
-            controller.HasGetAttribute("Index");
+            controller.AssertGetAttribute("Index");
         }
     }
 }

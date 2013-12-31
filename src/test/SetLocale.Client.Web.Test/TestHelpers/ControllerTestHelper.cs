@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+
 using NUnit.Framework;
 
 namespace SetLocale.Client.Web.Test.TestHelpers
 {
     public static class ControllerTestHelper
     {
-        public static void HasGetAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
+        public static void AssertGetAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
         {
             var type = controller.GetType();
             var methodInfo = type.GetMethod(actionMethodName, parameterTypes ?? new Type[0]);
@@ -16,7 +17,7 @@ namespace SetLocale.Client.Web.Test.TestHelpers
             Assert.IsTrue(attributes.Any(), "HttpGet attribute not found");
         }
 
-        public static void HasPostAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
+        public static void AssertPostAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
         {
             var type = controller.GetType();
             var methodInfo = type.GetMethod(actionMethodName, parameterTypes ?? new Type[0]);

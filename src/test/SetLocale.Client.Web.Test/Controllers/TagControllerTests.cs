@@ -38,7 +38,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.AreEqual(model.Count, list.Count);
 
             demoService.Verify(x => x.GetMyKeys(), Times.Once);
-            controller.HasGetAttribute("Index", new[] { typeof(string) });
+            controller.AssertGetAttribute("Index", new[] { typeof(string) });
         }
     }
 }

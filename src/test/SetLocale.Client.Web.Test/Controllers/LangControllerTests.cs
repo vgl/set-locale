@@ -34,7 +34,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             // Assert
             Assert.NotNull(view);
-            controller.HasGetAttribute("Change", new[] { typeof(string) });
+            controller.AssertGetAttribute("Change", new[] { typeof(string) });
             httpResponse.Verify(x => x.SetCookie(It.IsAny<HttpCookie>()), Times.AtLeastOnce);
         }
     }

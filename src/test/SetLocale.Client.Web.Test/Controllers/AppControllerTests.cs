@@ -26,7 +26,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             // Assert
             Assert.NotNull(view);
-            controller.HasGetAttribute("Index");
+            controller.AssertGetAttribute("Index");
             demoService.Verify(x => x.GetAnApp(), Times.Once);
         }
 
@@ -42,7 +42,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             // Assert
             Assert.NotNull(view);
-            controller.HasGetAttribute("New");
+            controller.AssertGetAttribute("New");
             demoService.Verify(x => x.GetAnApp(), Times.Once);
         }
 
@@ -59,7 +59,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             // Assert
             Assert.NotNull(view);
             Assert.AreEqual(view.Url, "/user/apps");
-            controller.HasPostAttribute("New", new[] {typeof (AppModel)});
+            controller.AssertPostAttribute("New", new[] {typeof (AppModel)});
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             Assert.NotNull(model);
 
-            controller.HasPostAttribute("New", new[] { typeof(AppModel) });
+            controller.AssertPostAttribute("New", new[] { typeof(AppModel) });
         }
     }
 }

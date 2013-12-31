@@ -37,7 +37,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             var model = view.Model as KeyModel;
 
             Assert.NotNull(model);
-            controller.HasGetAttribute("New");
+            controller.AssertGetAttribute("New");
             demoService.Verify(x => x.GetAKey(), Times.Once);
         }
 
@@ -58,7 +58,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(view);
 
             var model = view.Model as KeyModel;
-            controller.HasGetAttribute("Detail");
+            controller.AssertGetAttribute("Detail");
             Assert.NotNull(model);
 
             demoService.Verify(x => x.GetAKey(), Times.Once);
@@ -82,7 +82,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(view);
 
             var model = view.Model as List<KeyModel>;
-            controller.HasGetAttribute("My");
+            controller.AssertGetAttribute("My");
             Assert.NotNull(model);
 
             demoService.Verify(x => x.GetMyKeys(), Times.Once);
@@ -105,7 +105,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             var model = view.Model as List<KeyModel>;
             Assert.NotNull(model);
-            controller.HasGetAttribute("All");
+            controller.AssertGetAttribute("All");
             demoService.Verify(x => x.GetAllKeys(), Times.Once);
         }
 
@@ -127,7 +127,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(view);
 
             var model = view.Model as List<KeyModel>;
-            controller.HasGetAttribute("NotTranslated");
+            controller.AssertGetAttribute("NotTranslated");
             Assert.NotNull(model);
 
             demoService.Verify(x => x.GetNotTranslatedKeys(), Times.Once);
@@ -155,7 +155,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(model);
 
             demoService.Verify(x => x.GetATranslation(), Times.Once);
-            controller.HasPostAttribute("Edit", new[] { typeof(TranslationModel) });
+            controller.AssertPostAttribute("Edit", new[] { typeof(TranslationModel) });
         }
     }
 }
