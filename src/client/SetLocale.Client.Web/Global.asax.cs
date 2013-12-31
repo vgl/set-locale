@@ -46,8 +46,8 @@ namespace SetLocale.Client.Web
             enTexts.Add("menu_apps_new_app", "New App");
 
             enTexts.Add("menu_settings", "Settings");
-            enTexts.Add("menu_settings_apps", "Applications Settings");
-            enTexts.Add("menu_settings_users", "User Settings");
+            enTexts.Add("menu_settings_apps", "Applications");
+            enTexts.Add("menu_settings_users", "Users");
             enTexts.Add("menu_settings_new_translator", "New Translator User");
 
             enTexts.Add("menu_user_login", "Login");
