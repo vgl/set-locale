@@ -28,12 +28,16 @@ namespace SetLocale.Client.Web.Services
             var word = new Word
             {
                 Key = model.Key,
-                Description = model.Description,
+                Description = model.Description ?? string.Empty,
                 IsTranslated = false,
                 CreatedBy = model.CreatedBy,
                 UpdatedBy = model.CreatedBy
             };
+
+            //todo:tags...
+
             _wordRepository.Create(word);
+            _wordRepository.SaveChanges();
 
             if (word.Id < 1)
             {

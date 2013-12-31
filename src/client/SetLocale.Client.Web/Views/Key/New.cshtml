@@ -10,17 +10,17 @@
     <h3>@ViewBag.Title</h3>
     <hr />
 
-    <form action="/app/new" method="post">
+    <form action="/key/new" method="post">
 
 
         <div class="row">
             <strong>@Html.LocalizationString("menu_words_new_word_key")</strong>
             <input type="text" class="form-control input-lg" name="key" id="key" value="@Model.Key" />
         </div>
-         
+
         <div class="row">
             <strong>@Html.LocalizationString("menu_words_new_word_tag")</strong>
-            <input type="text" class="form-control input-lg" name="tag" id="tag" value="@foreach (var item in Model.Tags){ @item.ToString()}" />
+            <input type="text" class="form-control input-lg" name="tag" id="tag" value="@foreach (var item in Model.Tags){ @Html.Raw(string.Format("{0},",item)) }"  />
         </div>
 
         <div class="row">
@@ -48,22 +48,12 @@
         $(function () {
             $("form").validate({
                 rules: {
-                    appName: {
-                        required: true,
-                    },
-                    url: {
-                        required: true,
-                    },
-                    description: {
-                        required: true,
-                    }
+                    appName: { required: true },
+                    url: { required: true }
                 },
                 messages: {
-                    appName: {
-                        required: "*"
-                    },
-                    url: "*",
-                    description: "*"
+                    appName: "*",
+                    url: "*"
                 }
             });
         });

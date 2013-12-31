@@ -65,7 +65,7 @@ namespace SetLocale.Client.Web.Controllers
                 return View(model);
             }
 
-            return Redirect("/user/key/" + key);
+            return Redirect("/key/" + key);
         }
 
         [HttpGet]

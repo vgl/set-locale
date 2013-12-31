@@ -19,5 +19,6 @@ namespace SetLocale.Client.Web.Repositories
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Word> Words { get; set; }
     }
 }

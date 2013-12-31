@@ -40,6 +40,7 @@ namespace SetLocale.Client.Web.Services
             var user = new User
             {
                 Email = model.Email,
+                Name = model.Name,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(Guid.NewGuid().ToString(), BCrypt.Net.BCrypt.GenerateSalt(12)),
                 ImageUrl = img,
                 RoleId = roleId,

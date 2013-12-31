@@ -14,6 +14,11 @@ namespace SetLocale.Client.Web.Models
 
         public List<TokenModel> Tokens { get; set; }
 
+        public AppModel()
+        {
+            Tokens = new List<TokenModel>();
+        }
+
         public bool IsValidForNew()
         {
             return !string.IsNullOrEmpty(Name)

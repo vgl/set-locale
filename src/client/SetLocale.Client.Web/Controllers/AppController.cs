@@ -21,7 +21,7 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult New()
         {
-            var model = _demoDataService.GetAnApp();
+            var model = new AppModel();
             return View(model);
         }
 

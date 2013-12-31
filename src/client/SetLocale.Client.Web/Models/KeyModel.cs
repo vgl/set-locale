@@ -9,14 +9,20 @@ namespace SetLocale.Client.Web.Models
         public string Tag { get; set; }
         public bool IsTranslated { get; set; }
         public List<TagModel> Tags { get; set; }
-        public List<LanguageModel> Languages {get; set;}
+        public List<LanguageModel> Languages { get; set; }
         public List<TranslationModel> Translations { get; set; }
         public int CreatedBy { get; set; }
+
+        public KeyModel()
+        {
+            Tags = new List<TagModel>();
+            Languages = new List<LanguageModel>();
+            Translations = new List<TranslationModel>();
+        }
 
         public bool IsValidForNew()
         {
             return !string.IsNullOrEmpty(Key)
-                   && !string.IsNullOrEmpty(Description)
                    && !string.IsNullOrEmpty(Tag);
         }
     }
