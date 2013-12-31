@@ -12,6 +12,7 @@ namespace SetLocale.Client.Web.Services
     public interface IWordService
     {
         Task<string> Create(KeyModel model);
+        Task<List<KeyModel>> GetKeysByUserId(int userId);
     }
 
     public class WordService : IWordService
@@ -50,11 +51,12 @@ namespace SetLocale.Client.Web.Services
 
             return Task.FromResult(word.Key);
         }
-        public Task<List<KeyModel>> GetKeysByUserId(int createdby)
-        {
-            var Mywords = _wordRepository.GetMyKeys(x => x.CreatedBy == createdby).ToList();
 
-            return Task.FromResult(Mywords);
+        public Task<List<KeyModel>> GetKeysByUserId(int userId)
+        {
+            var words = _wordRepository.FindAll(x => x.CreatedBy == userId).ToList();
+            var model = KeyModel.MapWordToKeyModel(words);
+            return Task.FromResult(model);
         }
     }
 }

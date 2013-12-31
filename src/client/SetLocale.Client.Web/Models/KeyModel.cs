@@ -26,10 +26,10 @@ namespace SetLocale.Client.Web.Models
             return !string.IsNullOrEmpty(Key)
                    && !string.IsNullOrEmpty(Tag);
         }
-        public static List<KeyModel> MapUserToKeyModel(IEnumerable<Word> keys)
+        public static List<KeyModel> MapWordToKeyModel(IEnumerable<Word> words)
         {
             var model = new List<KeyModel>();
-            foreach (var key in keys)
+            foreach (var key in words)
             {
                 model.Add(new KeyModel
                 {
