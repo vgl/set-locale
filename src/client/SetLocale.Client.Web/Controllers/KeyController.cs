@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
 
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
@@ -8,24 +9,21 @@ namespace SetLocale.Client.Web.Controllers
 {
     public class KeyController : BaseController
     {
+        private readonly IWordService _wordService;
+
         public KeyController(
-            IFormsAuthenticationService formsAuthenticationService, 
-            IDemoDataService demoDataService) 
+            IWordService wordService,
+            IFormsAuthenticationService formsAuthenticationService,
+            IDemoDataService demoDataService)
             : base(formsAuthenticationService, demoDataService)
         {
+            _wordService = wordService;
         }
 
         [HttpGet]
         public ViewResult Detail()
         {
             var model = _demoDataService.GetAKey();
-            return View(model);
-        }
-
-        [HttpGet]
-        public ViewResult My()
-        {
-            var model = _demoDataService.GetMyKeys();
             return View(model);
         }
 
@@ -46,8 +44,28 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ViewResult New()
         {
-            var model = _demoDataService.GetAKey();
+            var model = new KeyModel();
             return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> New(KeyModel model)
+        {
+            if (!model.IsValidForNew())
+            {
+                model.Msg = "bir sorun oluştu";
+                return View(model);
+            }
+
+            model.CreatedBy = User.Identity.GetUserId();
+            var key = await _wordService.Create(model);
+            if (key == null)
+            {
+                model.Msg = "bir sorun oluştu, daha önce eklenmiş olabilir";
+                return View(model);
+            }
+
+            return Redirect("/user/key/" + key);
         }
 
         [HttpGet]

@@ -32,6 +32,13 @@ namespace SetLocale.Client.Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public ActionResult Keys()
+        {
+            var model = _demoDataService.GetMyKeys();
+            return View(model);
+        }
+
 
         #region Membership
         [HttpGet]

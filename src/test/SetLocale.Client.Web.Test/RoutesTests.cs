@@ -46,7 +46,6 @@ namespace SetLocale.Client.Web.Test
         public void KeyControllerRoutes()
         {
             "~/key/all".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.All());
-            "~/key/my".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.My());
             "~/key/nottranslated".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.NotTranslated());
 
             "~/key/new".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.New());

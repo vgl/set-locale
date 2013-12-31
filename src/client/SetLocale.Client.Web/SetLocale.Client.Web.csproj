@@ -146,6 +146,7 @@
     <Content Include="Views\Key\My.cshtml" />
     <Content Include="Views\Key\NotTranslated.cshtml" />
     <Content Include="Views\Key\Detail.cshtml" />
+    <Content Include="Views\User\Keys.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -174,6 +175,7 @@
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\Word.cs" />
     <Compile Include="Entities\SetLocaleRole.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Global.asax.cs">
@@ -204,6 +206,7 @@
     <Compile Include="Repositories\SetLocaleDbInitializer.cs" />
     <Compile Include="Services\DemoDataService.cs" />
     <Compile Include="Services\FormsAuthenticationService.cs" />
+    <Compile Include="Services\WordService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

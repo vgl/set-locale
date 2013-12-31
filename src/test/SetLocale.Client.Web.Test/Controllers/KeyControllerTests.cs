@@ -24,9 +24,9 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Setup(x => x.GetAKey()).Returns(key);
 
             // Act
-            var controller = new KeyController(null, demoService.Object);
+            var controller = new KeyController(null, null, demoService.Object);
             var view = controller.New();
-            
+
 
             // Assert
             Assert.NotNull(view);
@@ -47,7 +47,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Setup(x => x.GetAKey()).Returns(key);
 
             // Act
-            var controller = new KeyController(null, demoService.Object);
+            var controller = new KeyController(null, null, demoService.Object);
             var view = controller.Detail();
 
             // Assert
@@ -60,30 +60,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Verify(x => x.GetAKey(), Times.Once);
 
         }
-        [Test]
-        public void my_should_return_key_model_list()
-        {
-            // Arrange
-            var demoService = new Mock<IDemoDataService>();
 
-            var list = new List<KeyModel> { new KeyModel { Key = "my-key" } };
-
-            demoService.Setup(x => x.GetMyKeys()).Returns(list);
-
-            // Act
-            var controller = new KeyController(null, demoService.Object);
-            var view = controller.My();
-
-            // Assert
-            Assert.NotNull(view);
-
-            var model = view.Model as List<KeyModel>;
-            controller.AssertGetAttribute("My");
-            Assert.NotNull(model);
-
-            demoService.Verify(x => x.GetMyKeys(), Times.Once);
-
-        }
         [Test]
         public void all_should_return_key_model_list()
         {
@@ -93,7 +70,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Setup(x => x.GetAllKeys()).Returns(list);
 
             // Act
-            var controller = new KeyController(null, demoService.Object);
+            var controller = new KeyController(null,null, demoService.Object);
             var view = controller.All();
 
             // Assert
@@ -116,7 +93,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Setup(x => x.GetNotTranslatedKeys()).Returns(list);
 
             // Act
-            var controller = new KeyController(null, demoService.Object);
+            var controller = new KeyController(null, null, demoService.Object);
             var view = controller.NotTranslated();
 
             // Assert
@@ -140,14 +117,14 @@ namespace SetLocale.Client.Web.Test.Controllers
 
 
             // Act
-            var controller = new KeyController(null, demoService.Object);
-            var view = controller.Edit("id",ConstHelper.tr);
+            var controller = new KeyController(null, null, demoService.Object);
+            var view = controller.Edit("id", ConstHelper.tr);
 
             // Assert
             Assert.NotNull(view);
 
             var model = view.Model as TranslationModel;
-            
+
             Assert.NotNull(model);
 
             demoService.Verify(x => x.GetATranslation(), Times.Once);
