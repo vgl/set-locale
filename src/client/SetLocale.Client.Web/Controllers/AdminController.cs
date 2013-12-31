@@ -1,5 +1,6 @@
-﻿using System.Web.Mvc;
-
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
+using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 
@@ -7,8 +8,15 @@ namespace SetLocale.Client.Web.Controllers
 {
     public class AdminController : BaseController
     {
-        public AdminController(IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
+        private readonly IUserService _userService;
+
+        public AdminController(
+            IUserService userService,
+            IFormsAuthenticationService formsAuthenticationService,
+            IDemoDataService demoDataService)
+            : base(formsAuthenticationService, demoDataService)
         {
+            _userService = userService;
         }
 
         [HttpGet]
@@ -20,21 +28,27 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult NewTranslator()
         {
-            var model = _demoDataService.GetAUser();
+            var model = new UserModel();
             return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult NewTranslator(UserModel model)
+        public async Task<ActionResult> NewTranslator(UserModel model)
         {
-            if (model.IsValidForNewTranslator())
+            if (!model.IsValidForNewTranslator())
             {
-
-                return Redirect("/admin/users");
+                model.Msg = "bir sorun oluştu...";
+                return View(model);
             }
 
-            model.Msg = "bir sorun oluştu...";
-            return View(model);
+            var userId = await _userService.Create(model, SetLocaleRole.Translator.Value);
+            if (userId == null)
+            {
+                model.Msg = "bir sorun oluştu...";
+                return View(model);
+            }
+
+            return Redirect("/admin/users");
         }
 
         [HttpGet]

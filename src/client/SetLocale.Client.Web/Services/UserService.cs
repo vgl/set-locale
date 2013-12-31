@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Helpers;
@@ -9,7 +10,7 @@ namespace SetLocale.Client.Web.Services
 {
     public interface IUserService
     {
-        Task<int?> Create(UserModel model);
+        Task<int?> Create(UserModel model, int roleId = 3);
         Task<User> GetByEmail(string email);
         Task<bool> Authenticate(string email, string password);
     }
@@ -22,9 +23,23 @@ namespace SetLocale.Client.Web.Services
             _userRepo = userRepo;
         }
 
-        public async Task<int?> Create(UserModel model)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="roleId">default is 3 - SetLocaleRole.Developer.Value </param>
+        /// <returns></returns>
+        public async Task<int?> Create(UserModel model, int roleId = 3)
         {
-            var user = new User { Email = model.Email, PasswordHash = model.Password };
+            var img = GravatarHelper.GetGravatarURL(model.Email, 55, "mm");
+            var user = new User
+            {
+                Email = model.Email,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(Guid.NewGuid().ToString(), BCrypt.Net.BCrypt.GenerateSalt(12)),
+                ImageUrl = img,
+                RoleId = roleId,
+                RoleName = SetLocaleRole.GetString(roleId)
+            };
             _userRepo.Create(user);
 
             if (!_userRepo.SaveChanges()) return null;
@@ -40,17 +55,32 @@ namespace SetLocale.Client.Web.Services
             }
 
             var user = _userRepo.FindOne(x => x.Email == email);
-            if (user == null)
-            {
-                return null;
-            }
-
             return Task.FromResult(user);
         }
 
         public Task<bool> Authenticate(string email, string password)
         {
-            throw new System.NotImplementedException();
+            var user = _userRepo.FindOne(x => x.Email == email && x.PasswordHash != null);
+            if (user == null) return Task.FromResult(false);
+
+            var result = false;
+
+            if (BCrypt.Net.BCrypt.Verify(password, user.PasswordHash)
+                && user.LoginTryCount < 5)
+            {
+                user.LastLoginAt = DateTime.Now;
+                user.LoginTryCount = 0;
+                result = true;
+            }
+            else
+            {
+                user.LoginTryCount += 1;
+            }
+
+            _userRepo.Update(user);
+            _userRepo.SaveChanges();
+
+            return Task.FromResult(result);
         }
     }
 }

@@ -1,11 +1,13 @@
-﻿using Moq;
+﻿using System;
+using System.Linq.Expressions;
+
+using Moq;
 using NUnit.Framework;
+
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Repositories;
 using SetLocale.Client.Web.Services;
-using System;
-using System.Linq.Expressions;
 
 namespace SetLocale.Client.Web.Test.Services
 {
@@ -57,9 +59,7 @@ namespace SetLocale.Client.Web.Test.Services
         {
             // Arrange
             var userModel = new UserModel { Email = "test@test.com", Password = "password" };
-
             var userRepository = new Mock<IRepository<User>>();
-
 
             // Act
             var userService = new UserService(userRepository.Object);
