@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Repositories;
+
 
 namespace SetLocale.Client.Web.Services
 {
@@ -65,7 +67,6 @@ namespace SetLocale.Client.Web.Services
         {
             var user = _userRepo.FindOne(x => x.Email == email && x.PasswordHash != null);
             if (user == null) return Task.FromResult(false);
-
             var result = false;
 
             if (BCrypt.Net.BCrypt.Verify(password, user.PasswordHash)
@@ -88,12 +89,14 @@ namespace SetLocale.Client.Web.Services
 
         public Task<List<User>> GetAll()
         {
-            throw new NotImplementedException();
+            var users = _userRepo.FindAll().ToList();
+            return Task.FromResult(users);          
         }
 
         public Task<List<User>> GetAllByRoleId(int roleId)
         {
-            throw new NotImplementedException();
+            var users = _userRepo.FindAll(x => x.RoleId == roleId).ToList();
+            return Task.FromResult(users);
         }
     }
 }
