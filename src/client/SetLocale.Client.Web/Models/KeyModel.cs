@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SetLocale.Client.Web.Entities;
+using System.Collections.Generic;
 
 namespace SetLocale.Client.Web.Models
 {
@@ -24,6 +25,21 @@ namespace SetLocale.Client.Web.Models
         {
             return !string.IsNullOrEmpty(Key)
                    && !string.IsNullOrEmpty(Tag);
+        }
+        public static List<KeyModel> MapUserToKeyModel(IEnumerable<Word> keys)
+        {
+            var model = new List<KeyModel>();
+            foreach (var key in keys)
+            {
+                model.Add(new KeyModel
+                {
+                    Key = key.Key,
+                    Description = key.Description,
+                    IsTranslated = key.IsTranslated,
+                    CreatedBy = key.CreatedBy
+                });
+            }
+            return model;
         }
     }
 }

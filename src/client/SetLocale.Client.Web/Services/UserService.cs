@@ -101,5 +101,6 @@ namespace SetLocale.Client.Web.Services
             var users = _userRepo.FindAll(x => x.RoleId == roleId).ToList();
             return Task.FromResult(users);
         }
+
     }
 }
