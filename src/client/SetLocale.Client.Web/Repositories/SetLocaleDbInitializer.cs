@@ -6,7 +6,7 @@ using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Repositories
 {
-    public class SetLocaleDbInitializer : CreateDatabaseIfNotExists<SetLocaleDbContext>
+    public class SetLocaleDbInitializer : DropCreateDatabaseAlways<SetLocaleDbContext>
     {
         protected override void Seed(SetLocaleDbContext context)
         {
@@ -17,7 +17,7 @@ namespace SetLocale.Client.Web.Repositories
             AddAdmin(context, "Cihan Çoşkun", "cihancoskun@gmail.com");
 
             AddTranslator(context, "Kemal Çolak", "kml.colak@gmail.com");
-            AddTranslator(context, "deneme kullanıcı", "deneme.deneme@gmail.com");
+            AddTranslator(context, "deneme kullanıcı", "deneme@gmail.com");
 
             context.SaveChanges();
         }
@@ -33,7 +33,7 @@ namespace SetLocale.Client.Web.Repositories
                 ImageUrl = GravatarHelper.GetGravatarURL(email, 35, "mm"),
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password"),
                 LastLoginAt = DateTime.Now,
-                IsActive=true
+                IsActive = true
             };
             context.Users.Add(user);
         }
@@ -48,7 +48,7 @@ namespace SetLocale.Client.Web.Repositories
                 ImageUrl = GravatarHelper.GetGravatarURL(email, 35, "mm"),
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password"),
                 LastLoginAt = DateTime.Now,
-                IsActive=true
+                IsActive = true
             };
             context.Users.Add(user);
         }

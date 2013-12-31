@@ -25,14 +25,15 @@ namespace SetLocale.Client.Web.Services
                 return null;
             }
 
-            var word = _wordRepository.Create(new Word
+            var word = new Word
             {
                 Key = model.Key,
                 Description = model.Description,
                 IsTranslated = false,
                 CreatedBy = model.CreatedBy,
                 UpdatedBy = model.CreatedBy
-            });
+            };
+            _wordRepository.Create(word);
 
             if (word.Id < 1)
             {

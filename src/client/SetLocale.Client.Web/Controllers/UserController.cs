@@ -33,7 +33,7 @@ namespace SetLocale.Client.Web.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public ActionResult Keys()
         {
             var model = _demoDataService.GetMyKeys();
@@ -42,7 +42,7 @@ namespace SetLocale.Client.Web.Controllers
 
 
         #region Membership
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public ActionResult New()
         {
             var model = new UserModel();
@@ -69,7 +69,7 @@ namespace SetLocale.Client.Web.Controllers
             return Redirect("/user/apps");
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public ActionResult Reset()
         {
             var model = new ResetModel()
@@ -80,14 +80,14 @@ namespace SetLocale.Client.Web.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public ActionResult Login()
         {
             var model = new LoginModel();
             return View(model);
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous]
         public async Task<ActionResult> Login(LoginModel model)
         {
             if (!model.IsValid())
