@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Threading.Tasks;
+using System.Web.Http;
 using System.Web.Http.Cors;
 using SetLocale.Client.Web.Services;
 
@@ -14,9 +15,9 @@ namespace SetLocale.Client.Web.ApiControllers
         }
 
         [Route("api/locale/{lang}/{key}")]
-        public IHttpActionResult Get(string lang, string key)
+        public async Task<IHttpActionResult> Get(string lang, string key)
         {
-            //var word = await _wordService.GetByKey(key);
+            var word = await _wordService.GetByKey(key);
 
             return Ok(new
             {

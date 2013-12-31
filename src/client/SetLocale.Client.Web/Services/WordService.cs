@@ -13,6 +13,7 @@ namespace SetLocale.Client.Web.Services
     {
         Task<string> Create(KeyModel model);
         Task<List<KeyModel>> GetKeysByUserId(int userId);
+        Task<Word> GetByKey(string key);
     }
 
     public class WordService : IWordService
@@ -57,6 +58,11 @@ namespace SetLocale.Client.Web.Services
             var words = _wordRepository.FindAll(x => x.CreatedBy == userId).ToList();
             var model = KeyModel.MapWordToKeyModel(words);
             return Task.FromResult(model);
+        }
+
+        public Task<Word> GetByKey(string key)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
