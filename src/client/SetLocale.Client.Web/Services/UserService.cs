@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using SetLocale.Client.Web.Entities;
@@ -13,6 +14,8 @@ namespace SetLocale.Client.Web.Services
         Task<int?> Create(UserModel model, int roleId = 3);
         Task<User> GetByEmail(string email);
         Task<bool> Authenticate(string email, string password);
+        Task<List<User>> GetAll();
+        Task<List<User>> GetAllByRoleId(int roleId);
     }
 
     public class UserService : IUserService
@@ -81,6 +84,16 @@ namespace SetLocale.Client.Web.Services
             _userRepo.SaveChanges();
 
             return Task.FromResult(result);
+        }
+
+        public Task<List<User>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<User>> GetAllByRoleId(int roleId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
