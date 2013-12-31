@@ -11,6 +11,10 @@ namespace SetLocale.Client.Web.Repositories
         protected override void Seed(SetLocaleDbContext context)
         {
             AddAdmin(context, "Serdar Büyüktemiz", "hserdarb@gmail.com");
+            AddAdmin(context, "Caner Çavuş", "canercvs@gmail.com");
+            AddAdmin(context, "Ramiz Sümer", "ramiz.sumerr@gmail.com");
+            AddAdmin(context, "Mehmet Sabancıoğlu", "mehmet.sabancioglu@gmail.com");
+            AddAdmin(context, "Cihan Çoşkun", "cihancoskun@gmail.com");
 
             context.SaveChanges();
         }
