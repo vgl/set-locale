@@ -16,6 +16,9 @@ namespace SetLocale.Client.Web.Repositories
             AddAdmin(context, "Mehmet Sabancıoğlu", "mehmet.sabancioglu@gmail.com");
             AddAdmin(context, "Cihan Çoşkun", "cihancoskun@gmail.com");
 
+            AddTranslator(context, "Kemal Çolak", "kml.colak@gmail.com");
+            AddTranslator(context, "deneme kullanıcı", "deneme.deneme@gmail.com");
+
             context.SaveChanges();
         }
 
@@ -29,7 +32,23 @@ namespace SetLocale.Client.Web.Repositories
                 RoleName = SetLocaleRole.Admin.ToString(),
                 ImageUrl = GravatarHelper.GetGravatarURL(email, 35, "mm"),
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password"),
-                LastLoginAt = DateTime.Now
+                LastLoginAt = DateTime.Now,
+                IsActive=true
+            };
+            context.Users.Add(user);
+        }
+        private static void AddTranslator(SetLocaleDbContext context, string name, string email)
+        {
+            var user = new User
+            {
+                Email = email,
+                Name = name,
+                RoleId = SetLocaleRole.Translator.Value,
+                RoleName = SetLocaleRole.Translator.ToString(),
+                ImageUrl = GravatarHelper.GetGravatarURL(email, 35, "mm"),
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword("password"),
+                LastLoginAt = DateTime.Now,
+                IsActive=true
             };
             context.Users.Add(user);
         }
