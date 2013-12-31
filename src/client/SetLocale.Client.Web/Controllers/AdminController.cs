@@ -56,9 +56,19 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Users()
+        public async Task<ActionResult> Users(int id = 0)
         {
-            var users = await _userService.GetAll();
+            List<User> users;
+            if (id > 0 
+                && id < 4)
+            {
+                users = await _userService.GetAllByRoleId(id);
+            }
+            else
+            {
+                users = await _userService.GetAll();
+            }
+            
             var model = UserModel.MapUserToUserModel(users);
             return View(model);
         }

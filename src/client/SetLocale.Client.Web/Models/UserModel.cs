@@ -13,6 +13,7 @@ namespace SetLocale.Client.Web.Models
         public string Name { get; set; }
         public string Password { get; set; }
         public string RoleName { get; set; }
+        public int RoleId { get; set; }
         public bool IsActive { get; set; }
         public string Language { get; set; }
 
@@ -43,7 +44,8 @@ namespace SetLocale.Client.Web.Models
                     Name = user.Name,
                     RoleName = user.RoleName,
                     Language = user.Language,
-                    IsActive = user.IsActive
+                    IsActive = user.IsActive,
+                    RoleId=user.RoleId
                 });
             }
             return model;

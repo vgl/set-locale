@@ -38,7 +38,8 @@ namespace SetLocale.Client.Web.Test
         {
             "~/admin/newtranslator".ShouldMapTo<AdminController>(action => action.NewTranslator());
             "~/admin/index".ShouldMapTo<AdminController>(action => action.Index());
-            "~/admin/users".ShouldMapTo<AdminController>(action => action.Users().Result);
+            "~/admin/users".ShouldMapTo<AdminController>(action => action.Users(0).Result);
+            "~/admin/users/1".ShouldMapTo<AdminController>(action => action.Users(1).Result);
             "~/admin/apps".ShouldMapTo<AdminController>(action => action.Apps());
         }
 
