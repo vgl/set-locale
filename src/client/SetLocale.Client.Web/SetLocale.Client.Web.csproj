@@ -197,6 +197,7 @@
     <Compile Include="Controllers\LangController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Entities\App.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Word.cs" />
     <Compile Include="Entities\SetLocaleRole.cs" />
