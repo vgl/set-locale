@@ -8,24 +8,29 @@ namespace SetLocale.Client.Web.Test.TestHelpers
 {
     public static class ControllerTestHelper
     {
-        public static void AssertGetAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
+        private static void AssertAttribute(Controller controller, string actionMethodName, Type attribute, Type[] parameterTypes)
         {
             var type = controller.GetType();
             var methodInfo = type.GetMethod(actionMethodName, parameterTypes ?? new Type[0]);
-            var attributes = methodInfo.GetCustomAttributes(typeof(HttpGetAttribute), true);
+            var attributes = methodInfo.GetCustomAttributes(attribute, true);
 
-            Assert.IsTrue(attributes.Any(), "HttpGet attribute not found");
+            Assert.IsTrue(attributes.Any(), string.Format("{0} not found on action {1}", attribute.Name, actionMethodName));
+        }
+
+        public static void AssertGetAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
+        {
+            AssertAttribute(controller, actionMethodName, typeof(HttpGetAttribute), parameterTypes);
+        }
+
+        public static void AssertAllowAnonymousAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
+        {
+            AssertAttribute(controller, actionMethodName, typeof(AllowAnonymousAttribute), parameterTypes);
         }
 
         public static void AssertPostAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
         {
-            var type = controller.GetType();
-            var methodInfo = type.GetMethod(actionMethodName, parameterTypes ?? new Type[0]);
-            var postAttributes = methodInfo.GetCustomAttributes(typeof(HttpPostAttribute), true);
-            var validateTokenAttributes = methodInfo.GetCustomAttributes(typeof(ValidateAntiForgeryTokenAttribute), true);
-
-            Assert.IsTrue(postAttributes.Any(), "HttpGet attribute not found");
-            Assert.IsTrue(validateTokenAttributes.Any(), "ValidateAntiForgeryToken attribute not found");
+            AssertAttribute(controller, actionMethodName, typeof(HttpPostAttribute), parameterTypes);
+            AssertAttribute(controller, actionMethodName, typeof(ValidateAntiForgeryTokenAttribute), parameterTypes);
         }
     }
 }
