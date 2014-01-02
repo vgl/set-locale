@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Helpers;
-using SetLocale.Client.Web.Models;
+﻿using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 
 namespace SetLocale.Client.Web.Controllers
@@ -38,10 +38,9 @@ namespace SetLocale.Client.Web.Controllers
             {
                 userId = User.Identity.GetUserId();
             }
-            List<App> apps = await _appService.GetByUserId(userId);
-            
-            var model = AppModel.MapFromEntity(apps);
 
+            var apps = await _appService.GetByUserId(userId);
+            var model = AppModel.MapFromEntity(apps);
             return View(model);
         }
 
@@ -92,16 +91,19 @@ namespace SetLocale.Client.Web.Controllers
             return View(model);
         }
 
+        
         [HttpGet, AllowAnonymous]
         public ActionResult Login()
-        {
+        {  
             var model = new LoginModel();
+  
             return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken, AllowAnonymous]
         public async Task<ActionResult> Login(LoginModel model)
         {
+
             if (!model.IsValid())
             {
                 model.Msg = "bir sorun oluştu";
@@ -116,7 +118,13 @@ namespace SetLocale.Client.Web.Controllers
             }
 
             var user = await _userService.GetByEmail(model.Email);
+ 
             _formsAuthenticationService.SignIn(string.Format("{0}|{1}|{2}", user.Id, user.Name, user.Email), true);
+             
+            if (model.ReturnUrl != "" && model.ReturnUrl != "/")
+            {
+                return Redirect(model.ReturnUrl); 
+            } 
 
             return Redirect("/user/apps");
         }
