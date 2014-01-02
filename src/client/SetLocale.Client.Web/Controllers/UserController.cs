@@ -1,7 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-
+using System.Web.UI.WebControls.Expressions;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 
@@ -80,16 +82,19 @@ namespace SetLocale.Client.Web.Controllers
             return View(model);
         }
 
+        
         [HttpGet, AllowAnonymous]
         public ActionResult Login()
-        {
+        {  
             var model = new LoginModel();
+  
             return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken, AllowAnonymous]
         public async Task<ActionResult> Login(LoginModel model)
         {
+
             if (!model.IsValid())
             {
                 model.Msg = "bir sorun oluştu";
@@ -105,7 +110,11 @@ namespace SetLocale.Client.Web.Controllers
 
             var user = await _userService.GetByEmail(model.Email);
             _formsAuthenticationService.SignIn(string.Format("{0}|{1}", user.Id, user.Name), true);
-
+             
+            if (model.ReturnUrl != "" && model.ReturnUrl != "/")
+            {
+                return Redirect(model.ReturnUrl); 
+            }
             return Redirect("/user/apps");
         }
 
