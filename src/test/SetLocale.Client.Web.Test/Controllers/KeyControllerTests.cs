@@ -24,7 +24,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Setup(x => x.GetAKey()).Returns(key);
 
             // Act
-            var controller = new KeyController(null, null, demoService.Object);
+            var controller = new KeyController(null, null, null);
             var view = controller.New();
 
 
@@ -47,7 +47,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Setup(x => x.GetAKey()).Returns(key);
 
             // Act
-            var controller = new KeyController(null, null, demoService.Object);
+            var controller = new KeyController(null, null, null);
             var view = controller.Detail();
 
             // Assert
@@ -70,7 +70,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Setup(x => x.GetAllKeys()).Returns(list);
 
             // Act
-            var controller = new KeyController(null,null, demoService.Object);
+            var controller = new KeyController(null,null, null);
             var view = controller.All();
 
             // Assert
@@ -93,7 +93,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Setup(x => x.GetNotTranslatedKeys()).Returns(list);
 
             // Act
-            var controller = new KeyController(null, null, demoService.Object);
+            var controller = new KeyController(null, null, null);
             var view = controller.NotTranslated();
 
             // Assert
@@ -117,7 +117,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
 
             // Act
-            var controller = new KeyController(null, null, demoService.Object);
+            var controller = new KeyController(null, null, null);
             var view = controller.Edit("id", ConstHelper.tr);
 
             // Assert

@@ -15,11 +15,7 @@ namespace SetLocale.Client.Web.Controllers
         private readonly IAppService _appService;
         private readonly IUserService _userService;
 
-        public UserController(IAppService appService,
-            IUserService userService,
-            IFormsAuthenticationService formsAuthenticationService,
-            IDemoDataService demoDataService)
-            : base(formsAuthenticationService, demoDataService)
+        public UserController(IUserService userService, IFormsAuthenticationService formsAuthenticationService, IAppService appService) : base(userService, formsAuthenticationService)
         {
             _appService = appService;
             _userService = userService;
@@ -47,8 +43,9 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet, AllowAnonymous]
         public ActionResult Keys()
         {
-            var model = _demoDataService.GetMyKeys();
-            return View(model);
+            //var model = _demoDataService.GetMyKeys();
+            //return View(model);
+            return null;
         }
 
 

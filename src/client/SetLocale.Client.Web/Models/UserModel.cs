@@ -32,22 +32,18 @@ namespace SetLocale.Client.Web.Models
                    && Email.IsEmail();
         }
 
-        public static List<UserModel> MapUserToUserModel(IEnumerable<User> users)
+        public static UserModel MapUserToUserModel(User user)
         {
-            var model = new List<UserModel>();
-            foreach (var user in users)
+            var model = new UserModel
             {
-                model.Add(new UserModel
-                {
-                    Email = user.Email,
-                    Id = user.Id,
-                    Name = user.Name,
-                    RoleName = user.RoleName,
-                    Language = user.Language,
-                    IsActive = user.IsActive,
-                    RoleId=user.RoleId
-                });
-            }
+                Email = user.Email,
+                Id = user.Id,
+                Name = user.Name,
+                RoleName = user.RoleName,
+                Language = user.Language,
+                IsActive = user.IsActive,
+                RoleId = user.RoleId
+            };
             return model;
         }
     }

@@ -16,7 +16,7 @@ namespace SetLocale.Client.Web.Test.Controllers
     public class TagControllerTests
     {
         [Test]
-        public void index_should_return_key_model_list()
+        public void detail_should_return_key_model_list()
         {
             // Arrange
             var demoService = new Mock<IDemoDataService>();
@@ -24,13 +24,13 @@ namespace SetLocale.Client.Web.Test.Controllers
             demoService.Setup(x => x.GetMyKeys()).Returns(list);
 
             // Act
-            var controller = new TagController(null, demoService.Object);
-            var view = controller.Index();
+            var controller = new TagController(null,null,null);
+            var view = controller.Detail();
             
 
             // Assert
             Assert.NotNull(view);
-            var model = view.Model as List<KeyModel>;
+            var model = view.Result.Model as List<KeyModel>;
 
             Assert.NotNull(model);
 
