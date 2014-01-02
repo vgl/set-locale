@@ -11,6 +11,7 @@ namespace SetLocale.Client.Web.Repositories
     {
         protected override void Seed(SetLocaleDbContext context)
         {
+            #region Users
             AddAdmin(context, "Serdar Büyüktemiz", "hserdarb@gmail.com");
             AddAdmin(context, "Caner Çavuş", "canercvs@gmail.com");
             AddAdmin(context, "Ramiz Sümer", "ramiz.sumerr@gmail.com");
@@ -18,34 +19,40 @@ namespace SetLocale.Client.Web.Repositories
             AddAdmin(context, "Cihan Çoşkun", "cihancoskun@gmail.com");
 
             AddTranslator(context, "Kemal Çolak", "kml.colak@gmail.com");
+            #endregion
 
-            AddApplication(context, "setlocale@test.com", "SetLocale", "a localization management application.", "setlocale.com");
-            AddApplication(context, "setcrm@test.com", "SetCrm", "a brand new crm application.", "setcrm.com");
+            #region Apps
+            AddApplication(context, "setlocale@test.com", "set-locale", "a localization management application.", "setlocale.com");
+            AddApplication(context, "setcrm@test.com", "set-crm", "a brand new crm application.", "setcrm.com");
+            AddApplication(context, "setmembership@test.com", "set-membership", "a membership management application.", "setmembership.com");
             AddApplication(context, "drone@test.com", "Marmara Drone", "a wireless control dashboard for humanless flying planes.", "github.com/jupre/marmaradrone");
             AddApplication(context, "collade@test.com", "Collade", "a task management and team collaboration application.", "marmaradrone.github.io");
+            #endregion
 
-            AddWord(context, "app_name", "Uyguluma ismi", "Set Locale", "Set Locale", "SetLocale");
+            #region Menu Words
+            AddWord(context, "app_name", "Uygulama ismi", "Set Locale", "Set Locale", "set-locale");
+            AddWord(context, "search", "Ara textbox için", "Ara", "Search", "set-locale");
 
-            AddWord(context, "menu_words", "Kelimeler Menüsü için.", "Kelimeler", "Words", "SetLocale");
-            AddWord(context, "menu_words_words", "Kelimeler Menüsü için.", "Tüm Kelimeler", "All Words", "SetLocale");
-            AddWord(context, "menu_words_my_words", "Kelimeler Menüsü için.", "Kelimelerim", "My Words", "SetLocale");
-            AddWord(context, "menu_words_new_word", "Kelimeler Menüsü için.", "Yeni Kelime", "New Word", "SetLocale");
-            AddWord(context, "menu_words_not_translated", "Kelimeler Menüsü için.", "Çevrilmeyenler", "Not Translated", "SetLocale");
+            AddWord(context, "menu_words", "Kelimeler Menüsü için.", "Kelimeler", "Words", "set-locale");
+            AddWord(context, "menu_words_new_word", string.Empty, "Yeni Kelime", "New Word", "set-locale");
+            AddWord(context, "menu_words_words", string.Empty, "Tüm Kelimeler", "All Words", "set-locale");
+            AddWord(context, "menu_words_my_words", string.Empty, "Kelimelerim", "My Words", "set-locale");
+            AddWord(context, "menu_words_not_translated", string.Empty, "Çevrilmeyen Kelimeler", "Not Translated", "set-locale");
 
-            AddWord(context, "menu_apps", "Uygulamalar Menüsü için.", "Uygulamalar", "Applications", "SetLocale");
-            AddWord(context, "menu_apps_apps", "Uygulamalar Menüsü için.", "Uygulamalarım", "My Applications", "SetLocale");
-            AddWord(context, "menu_apps_new_app", "Uygulamalar Menüsü için.", "Yeni Uygulama", "New Application", "SetLocale");
+            AddWord(context, "menu_apps", "Uygulamalar Menüsü için.", "Uygulamalar", "Applications", "set-locale");
+            AddWord(context, "menu_apps_new_app", string.Empty, "Yeni Uygulama", "New Application", "set-locale");
+            AddWord(context, "menu_apps_my_apps", string.Empty, "Uygulamalarım", "My Applications", "set-locale");
 
-            AddWord(context, "menu_settings", "Admin İşlemleri Menüsü İçin.", "Admin İşlemleri", "Administrator", "SetLocale");
-            AddWord(context, "menu_settings_apps", "Admin İşlemleri Menüsü İçin.", "Uygulamalar", "All Applications", "SetLocale");
-            AddWord(context, "menu_settings_users", "Admin İşlemleri Menüsü İçin.", "Kullanıcılar", "All Users", "SetLocale");
-            AddWord(context, "menu_settings_new_translator", "Admin İşlemleri Menüsü İçin.", "Yeni Çevirmen", "New Translator", "SetLocale");
+            AddWord(context, "menu_admin", "Admin İşlemleri Menüsü İçin.", "Yönetim", "Admin", "set-locale");
+            AddWord(context, "menu_admin_new_translator", string.Empty, "Yeni Çevirmen", "New Translator", "set-locale");
+            AddWord(context, "menu_admin_apps", string.Empty, "Tüm Uygulamalar", "All Applications", "set-locale");
+            AddWord(context, "menu_admin_users", string.Empty, "Tüm Kullanıcılar", "All Users", "set-locale");
 
-            AddWord(context, "menu_user_login", "Kullanıcı Giriş Menüsü", "Giriş", "Login", "SetLocale");
-            AddWord(context, "menu_user_logout", "Kullanıcı Giriş Menüsü", "Çıkış", "Logout", "SetLocale");
-            AddWord(context, "menu_user_sign_up", "Kullanıcı Giriş Menüsü", "Kayıt Ol", "Signup", "SetLocale");
-            AddWord(context, "menu_user_reset", "Kullanıcı Giriş Menüsü", "Şifre Sıfırla", "Reset Password", "SetLocale");
-
+            AddWord(context, "menu_user_login", string.Empty, "Giriş", "Login", "set-locale");
+            AddWord(context, "menu_user_logout", string.Empty, "Çıkış", "Logout", "set-locale");
+            AddWord(context, "menu_user_sign_up", string.Empty, "Kayıt Ol", "Signup", "set-locale");
+            AddWord(context, "menu_user_reset", string.Empty, "Şifre Sıfırla", "Reset Password", "set-locale");
+            #endregion
 
             context.SaveChanges();
         }
@@ -94,7 +101,7 @@ namespace SetLocale.Client.Web.Repositories
                 {
                     new Token
                     {
-                        Key = Guid.NewGuid().ToString().Replace("-", ""),
+                        Key = Guid.NewGuid().ToString().Replace("-", string.Empty),
                         UsageCount = 0,
                         CreatedBy = 1
                     }
