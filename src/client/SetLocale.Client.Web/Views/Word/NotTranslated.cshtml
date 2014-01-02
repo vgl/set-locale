@@ -1,8 +1,8 @@
 ﻿@using SetLocale.Client.Web.Helpers
-@model List<SetLocale.Client.Web.Models.KeyModel>
+@model List<SetLocale.Client.Web.Models.WordModel>
 
 @{
-    ViewBag.Title = Html.LocalizationString("menu_words_words_key_listing");
+    ViewBag.Title = Html.LocalizationString("menu_words_not_translated_key_listing");
 }
 
 <h3>@ViewBag.Title</h3>
@@ -13,10 +13,10 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@Html.LocalizationString("menu_words_words_key")</th>
-                <th>@Html.LocalizationString("menu_words_words_description")</th>
-                <th>@Html.LocalizationString("menu_words_words_tag")</th>
-                <th>@Html.LocalizationString("menu_words_words_translated_lang")</th>
+                <th>@Html.LocalizationString("menu_words_not_translated_key")</th>
+                <th>@Html.LocalizationString("menu_words_not_translated_description")</th>
+                <th>@Html.LocalizationString("menu_words_not_translated_tag")</th>
+                <th>@Html.LocalizationString("menu_words_not_translated_translated_lang")</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +24,7 @@
             {
                 <tr>
                     <td>
-                        <a type="button" class="btn btn-sm btn-warning" href="/key/edit/@item.Key">@Html.LocalizationString("btn_menu_words_words_edit")</a>
+                        <a type="button" class="btn btn-sm btn-warning" href="/key/edit/@item.Key">@Html.LocalizationString("btn_menu_words_not_translated_edit")</a>
                     </td>
                     <td><a href="/key/detail/@item.Key">@item.Key</a></td>
                     <td>@item.Description</td>
@@ -37,8 +37,8 @@
                     <td>
                         @foreach (var lang in item.Languages)
                         { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
-                </td>
-            </tr>
+                    </td>
+                </tr>
             }
 
         </tbody>

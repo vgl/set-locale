@@ -12,9 +12,10 @@ namespace SetLocale.Client.Web.Services
 {
     public interface IWordService
     {
-        Task<string> Create(KeyModel model);
+        Task<string> Create(WordModel model);
         Task<List<Word>> GetByUserId(int userId);
         Task<Word> GetByKey(string key);
+        Task<List<Word>> GetAll();
     }
 
     public class WordService : IWordService
@@ -25,7 +26,7 @@ namespace SetLocale.Client.Web.Services
             _wordRepository = wordRepository;
         }
 
-        public Task<string> Create(KeyModel model)
+        public Task<string> Create(WordModel model)
         {
             if (!model.IsValidForNew())
             {
@@ -86,5 +87,10 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(word);
         }
 
+        public Task<List<Word>> GetAll()
+        {
+            var words = _wordRepository.FindAll().ToList();
+            return Task.FromResult(words);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 using SetLocale.Client.Web.Models;
@@ -7,10 +8,10 @@ using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Controllers
 {
-    public class KeyController : BaseController
+    public class WordController : BaseController
     {
         private readonly IWordService _wordService;
-        public KeyController(IUserService userService, IFormsAuthenticationService formsAuthenticationService, IWordService wordService) : base(userService, formsAuthenticationService)
+        public WordController(IUserService userService, IFormsAuthenticationService formsAuthenticationService, IWordService wordService) : base(userService, formsAuthenticationService)
         {
             _wordService = wordService;
         }
@@ -29,16 +30,21 @@ namespace SetLocale.Client.Web.Controllers
                 return RedirectToHome();
             }
 
-            var model = KeyModel.MapEntityToModel(entity);
+            var model = WordModel.MapEntityToModel(entity);
             return View(model);
         }
 
         [HttpGet]
-        public ViewResult All()
+        public async Task<ViewResult> All()
         {
-            return null;
-            //var model = _demoDataService.GetAllKeys();
-            //return View(model);
+            var entities = await _wordService.GetAll();
+            var model = new List<WordModel>();
+            foreach (var entity in entities)
+            {
+                model.Add(WordModel.MapEntityToModel(entity));
+            }
+
+            return View(model);
         }
 
         [HttpGet]
@@ -49,15 +55,16 @@ namespace SetLocale.Client.Web.Controllers
             return null;
         }
 
+
         [HttpGet]
         public ViewResult New()
         {
-            var model = new KeyModel();
+            var model = new WordModel();
             return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> New(KeyModel model)
+        public async Task<ActionResult> New(WordModel model)
         {
             if (!model.IsValidForNew())
             {

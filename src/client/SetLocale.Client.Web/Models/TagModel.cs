@@ -8,7 +8,7 @@ namespace SetLocale.Client.Web.Models
         public string Name { get; set; }
         public string UrlName { get; set; }
 
-        public static KeyModel MapEntityToModel(Word entity)
+        public static WordModel MapEntityToModel(Word entity)
         {
             throw new System.NotImplementedException();
         }

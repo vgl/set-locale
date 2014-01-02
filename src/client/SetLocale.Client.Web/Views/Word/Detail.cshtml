@@ -1,6 +1,6 @@
 ﻿@using SetLocale.Client.Web.Helpers
 
-@model SetLocale.Client.Web.Models.KeyModel
+@model SetLocale.Client.Web.Models.WordModel
 
 @{
     ViewBag.Title = Model.Key;
@@ -35,7 +35,7 @@
                 {
                     <tr>
                         <td>
-                            <a type="button" class="btn btn-sm btn-warning" href="/key/edit/@Model.Key">@Html.LocalizationString("edit")</a>
+                            <a type="button" class="btn btn-sm btn-warning" href="/word/edit/@Model.Key">@Html.LocalizationString("edit")</a>
                         </td>
                         <td> <img src="@item.Language.ImageUrl" alt="@item.Language.Name" /> @item.Language.Name</td>
                         <td>@item.Value</td>

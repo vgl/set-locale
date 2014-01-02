@@ -24,7 +24,7 @@ namespace SetLocale.Client.Web.Controllers
         public async Task<ViewResult> Detail(string id = "set-locale")
         {
             var entities = await _tagService.GetWords(id);
-            var model = new List<KeyModel>();
+            var model = new List<WordModel>();
             foreach (var entity in entities)
             {
                 model.Add(TagModel.MapEntityToModel(entity));

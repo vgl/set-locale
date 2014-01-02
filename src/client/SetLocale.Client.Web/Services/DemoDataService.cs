@@ -10,16 +10,16 @@ namespace SetLocale.Client.Web.Services
     {
         UserModel GetAUser();
 
-        KeyModel GetAKey();
+        WordModel GetAKey();
         List<AppModel> GetUsersApps();
         List<AppModel> GetAllApps();
         List<UserModel> GetAllUsers();
         List<TagModel> GetSomeTag();
         List<LanguageModel> GetSomeLanguage();
-        List<KeyModel> GetMyKeys();
+        List<WordModel> GetMyKeys();
 
-        List<KeyModel> GetAllKeys();
-        List<KeyModel> GetNotTranslatedKeys();
+        List<WordModel> GetAllKeys();
+        List<WordModel> GetNotTranslatedKeys();
         TranslationModel GetATranslation();
         AppModel GetAnApp();
     }
@@ -39,9 +39,9 @@ namespace SetLocale.Client.Web.Services
              };
         }
 
-        public KeyModel GetAKey()
+        public WordModel GetAKey()
         {
-            return new KeyModel
+            return new WordModel
             {
                 Key = "btn_save",
                 Description = "kaydet butonu için",
@@ -190,10 +190,10 @@ namespace SetLocale.Client.Web.Services
 
             return tags;
         }
-        public List<KeyModel> GetMyKeys()
+        public List<WordModel> GetMyKeys()
         {
-            var result = new List<KeyModel>();
-            result.Add(new KeyModel
+            var result = new List<WordModel>();
+            result.Add(new WordModel
             {
                 Key = "btn_save",
                 Description = "kaydet butonu için",
@@ -202,7 +202,7 @@ namespace SetLocale.Client.Web.Services
                 IsTranslated = true
             });
 
-            result.Add(new KeyModel
+            result.Add(new WordModel
             {
                 Key = "btn_update",
                 Description = "güncelle butonu için",
@@ -211,7 +211,7 @@ namespace SetLocale.Client.Web.Services
                 IsTranslated = true
             });
 
-            result.Add(new KeyModel
+            result.Add(new WordModel
             {
                 Key = "btn_delete",
                 Description = "sil butonu için",
@@ -223,10 +223,10 @@ namespace SetLocale.Client.Web.Services
             return result;
         }
 
-        public List<KeyModel> GetAllKeys()
+        public List<WordModel> GetAllKeys()
         {
             var result = GetMyKeys();
-            result.Add(new KeyModel
+            result.Add(new WordModel
             {
                 Key = "menu_home",
                 Description = "menüde anasayfa'ya git düğmesi için",
@@ -234,7 +234,7 @@ namespace SetLocale.Client.Web.Services
                 Languages = GetSomeLanguage(),
                 IsTranslated = true
             });
-            result.Add(new KeyModel
+            result.Add(new WordModel
             {
                 Key = "home_welcome",
                 Description = "sisteme hoşgeldiniz mesajı, ana sayfada büyükçe gözüken bir yerde kullanılıyor",
@@ -246,10 +246,10 @@ namespace SetLocale.Client.Web.Services
             return result;
         }
 
-        public List<KeyModel> GetNotTranslatedKeys()
+        public List<WordModel> GetNotTranslatedKeys()
         {
-            var result = new List<KeyModel>();
-            result.Add(new KeyModel
+            var result = new List<WordModel>();
+            result.Add(new WordModel
             {
                 Key = "btn_search",
                 Description = "arama butonu için",
@@ -272,8 +272,8 @@ namespace SetLocale.Client.Web.Services
                     Key = "tr",
                     Name = "Türkçe",
                     ImageUrl = "/public/img/tr.png"
-                },
-                Tags = GetSomeTag()
+                }
+                
             };
         }
 

@@ -115,32 +115,5 @@
                 ImageUrl = "/public/img/flag/tk.png"
             };
         }
-
-        //private List<Language> _languages;
-        //public List<Language> Languages
-        //{
-        //    get
-        //    {
-        //        if (_languages != null)
-        //        {
-        //            return _languages;
-        //        }
-        //        _languages = new List<Language>();
-
-        //        if (IsTranslated)
-        //        {
-
-        //            if (!string.IsNullOrEmpty(Translation_TR))
-        //            {
-        //                _languages.Add(new Language
-        //                {
-
-        //                });
-        //            }
-        //        }
-
-        //        return _languages;
-        //    }
-        //}
     }
 }
