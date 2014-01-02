@@ -1,5 +1,6 @@
-﻿using System.Web.Mvc;
-
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
+using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 
@@ -7,14 +8,19 @@ namespace SetLocale.Client.Web.Controllers
 {
     public class AppController : BaseController
     {
-        public AppController(IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
+        private readonly IAppService _appService;
+
+        public AppController(IAppService appService, IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService)
+            : base(formsAuthenticationService, demoDataService)
         {
+            _appService = appService;
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ViewResult> Detail(int id)
         {
-            var model = _demoDataService.GetAnApp();
+            var entity = await _appService.Get(id);
+            var model = AppModel.MapFromEntity(entity);
             return View(model);
         }
 
@@ -26,18 +32,25 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult New(AppModel model)
+        public async Task<ActionResult> New(AppModel model)
         {
-            if (model.IsValidForNew())
+            if (!model.IsValidForNew())
             {
-
-                return Redirect("/user/apps");
+                model.Msg = "bir sorun oluştu...";
+                return View(model);
             }
 
-            model.Msg = "bir sorun oluştu...";
-            return View(model);
+            model.CreatedBy = User.Identity.GetUserId();
+            model.Email = User.Identity.GetUserEmail();
+
+            var appId = await _appService.Create(model);
+            if (appId == 0)
+            {
+                model.Msg = "bir sorun oluştu...";
+                return View(model);
+            }
+
+            return Redirect("/app/detail/" + appId);
         }
-
-
     }
 }

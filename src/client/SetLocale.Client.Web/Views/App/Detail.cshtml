@@ -1,0 +1,142 @@
+﻿@using SetLocale.Client.Web.Helpers
+
+@model SetLocale.Client.Web.Models.AppModel
+
+@{
+    ViewBag.Title = string.Format("{0} - {1}", Html.LocalizationString("menu_apps_app"), Model.Name);
+}
+
+<h3>@ViewBag.Title</h3>
+<hr />
+<div class="row">
+    <p>
+        @Model.Description
+    </p>
+</div>
+<div class="row">
+    <input type="button" class="btn btn-sm btn-primary btnNewToken pull-right" value="@Html.LocalizationString("btn_menu_apps_apps_create_new_token")" data-id="@Model.Id" />
+    @Html.AntiForgeryToken()
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>@Html.LocalizationString("menu_apps_apps_token")</th>
+                <th>@Html.LocalizationString("menu_apps_apps_creation_date")</th>
+                <th>@Html.LocalizationString("menu_apps_apps_usage_count")</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Tokens)
+            {
+                <tr>
+                    <td>
+                        <a class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@Html.LocalizationString("menu_apps_apps_delete")</a>
+                    </td>
+                    <td>@item.Token</td>
+                    <td>@item.CreationDate.ToString("f")</td>
+                    <td>@item.UsageCount</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="lblDeleteModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">@Html.LocalizationString("modal_title_delete_token")</h4>
+            </div>
+            <div class="modal-body">
+                @Html.LocalizationString("modal_body")
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("Cancel")" />
+                <input type="button" class="btn btn-primary" value="@Html.LocalizationString("Ok")" id="btnDelete" data-id="" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $(function () {
+            var fnBtnActionClick = function () {
+                var tokenId = $(this).data("id");
+                $("input#btnDelete").data("id", tokenId);
+                console.log(tokenId);
+            };
+
+            $("a.btnAction").click(fnBtnActionClick);
+
+            $("input.btnNewToken").click(function () {
+                var appId = $(this).data("id");
+                $("input#btnDelete").data("id", appId);
+                $.ajax({
+                    url: "/ajax/newtoken",
+                    type: "POST",
+                    data: "appId=" + appId + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                }).done(function (r) {
+                    if (r) {
+
+                        var row = $("<tr />");
+                        var url = "#DeleteModal";
+                        var aDeleteButton = $("<a />");
+                        //aDeleteButton.addClass("btn").addClass("btn-sm").addClass("btn-warning").addClass("btnAction");
+                        aDeleteButton.addClass("btn btn-sm btn-warning btnAction");
+                        aDeleteButton.attr("data-toggle", "modal");
+                        aDeleteButton.attr("data-id", r.Token);
+                        aDeleteButton.attr("href", url);
+                        aDeleteButton.html('@Html.LocalizationString("delete")');
+                        aDeleteButton.click(fnBtnActionClick);
+
+                        var tdDeleteButton = $("<td />");
+                        tdDeleteButton.append(aDeleteButton);
+                        row.append(tdDeleteButton);
+
+                        var tdToken = $("<td />");
+                        tdToken.html(r.Token);
+                        row.append(tdToken);
+                        var tdCreationDateStr = $("<td />");
+                        tdCreationDateStr.html(r.CreationDateStr);
+                        row.append(tdCreationDateStr);
+
+                        var tdUsageCount = $("<td />");
+                        tdUsageCount.html(r.UsageCount);
+                        row.append(tdUsageCount);
+
+                        $('table tbody').append(row);
+
+
+                    } else {
+                        //warning
+                    }
+                });
+            });
+
+
+            $("input#btnDelete").click(function () {
+                var token = $(this).data("id");
+
+                $.ajax({
+                    url: "/ajax/deletetoken",
+                    type: "POST",
+                    data: "token=" + token + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                }).done(function (r) {
+                    if (r && r.Ok) {
+                        $("a[data-id='" + token + "']").parent().parent().remove();
+                        $("#DeleteModal").modal('hide');
+
+                    } else {
+                        //warning
+                    }
+                });
+            });
+        });
+    </script>
+}

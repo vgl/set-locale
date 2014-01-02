@@ -109,12 +109,17 @@ namespace SetLocale.Client.Web.Controllers
             }
 
             var user = await _userService.GetByEmail(model.Email);
+<<<<<<< HEAD
             _formsAuthenticationService.SignIn(string.Format("{0}|{1}", user.Id, user.Name), true);
              
             if (model.ReturnUrl != "" && model.ReturnUrl != "/")
             {
                 return Redirect(model.ReturnUrl); 
             }
+=======
+            _formsAuthenticationService.SignIn(string.Format("{0}|{1}|{2}", user.Id, user.Name, user.Email), true);
+
+>>>>>>> a940b75041650297f6a5a3ec758068fd036f4a94
             return Redirect("/user/apps");
         }
 
