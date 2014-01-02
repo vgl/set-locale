@@ -8,7 +8,6 @@ using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Repositories;
 
-
 namespace SetLocale.Client.Web.Services
 {
     public interface IAppService
@@ -43,7 +42,10 @@ namespace SetLocale.Client.Web.Services
                 IsActive = true,
                 CreatedBy = model.CreatedBy,
                 Description = model.Description ?? string.Empty,
-                Tokens = new List<Token> { new Token { CreatedBy = model.CreatedBy, Key = Guid.NewGuid().ToString().Replace("-", ""), UsageCount = 0 } }
+                Tokens = new List<Token>
+                {
+                    new Token { CreatedBy = model.CreatedBy, Key = Guid.NewGuid().ToString().Replace("-", string.Empty), UsageCount = 0 }
+                }
             };
 
             _appRepository.Create(app);
@@ -92,8 +94,8 @@ namespace SetLocale.Client.Web.Services
                 return null;
             }
 
-            var apps = _appRepository.FindById(appId);
-            return Task.FromResult(apps);
+            var app = _appRepository.FindOne(x => x.Id == appId, x => x.Tokens);
+            return Task.FromResult(app);
         }
     }
 }

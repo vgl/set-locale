@@ -59,24 +59,29 @@ namespace SetLocale.Client.Web.Repositories
                 item.IsDeleted = true;
             }
         }
-        public virtual TEntity FindById(long id)
-        {
-            return Context.Set<TEntity>().Find(id);
-        }
-
-        public virtual TEntity FindOne(Expression<Func<TEntity, bool>> where = null)
-        {
-            return FindAll(where).FirstOrDefault();
-        }
 
         public IQueryable<T> Set<T>() where T : class
         {
             return Context.Set<T>();
         }
 
-        public virtual IQueryable<TEntity> FindAll(Expression<Func<TEntity, bool>> where = null)
+        public virtual TEntity FindOne(Expression<Func<TEntity, bool>> where = null, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return null != where ? Context.Set<TEntity>().Where(s => !s.IsDeleted).Where(where) : Context.Set<TEntity>().Where(s => !s.IsDeleted);
+            return FindAll(where, includeProperties).FirstOrDefault();
+        }
+
+        public virtual IQueryable<TEntity> FindAll(Expression<Func<TEntity, bool>> where = null, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            var items = where != null
+                ? Context.Set<TEntity>().Where(s => !s.IsDeleted).Where(where)
+                : Context.Set<TEntity>().Where(s => !s.IsDeleted);
+
+            foreach (var property in includeProperties)
+            {
+                items.Include(property);
+            }
+
+            return items;
         }
 
         public virtual bool SaveChanges()

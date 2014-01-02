@@ -37,6 +37,16 @@ namespace SetLocale.Client.Web.Models
             model.Name = entity.Name;
             model.Description = entity.Description;
 
+            foreach (var token in entity.Tokens)
+            {
+                model.Tokens.Add(new TokenModel
+                {
+                    CreationDate = token.CreatedAt,
+                    CreationDateStr = token.CreatedAt.ToString("f"),
+                    UsageCount = token.UsageCount,
+                    Token = token.Key
+                });
+            }
 
             return model;
 

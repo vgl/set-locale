@@ -6,7 +6,7 @@ using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Repositories
 {
-    public class SetLocaleDbInitializer : DropCreateDatabaseAlways<SetLocaleDbContext>
+    public class SetLocaleDbInitializer : DropCreateDatabaseIfModelChanges<SetLocaleDbContext>
     {
         protected override void Seed(SetLocaleDbContext context)
         {

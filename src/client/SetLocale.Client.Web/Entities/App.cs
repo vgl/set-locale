@@ -10,6 +10,6 @@ namespace SetLocale.Client.Web.Entities
         public string Url { get; set; }
         public bool IsActive { get; set; }
 
-        public ICollection<Token> Tokens { get; set; }
+        public virtual ICollection<Token> Tokens { get; set; }
     }
 }

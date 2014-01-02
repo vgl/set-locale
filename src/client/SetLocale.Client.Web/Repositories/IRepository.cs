@@ -18,9 +18,8 @@ namespace SetLocale.Client.Web.Repositories
         void Delete(long id);
         void Delete(Expression<Func<TEntity, bool>> where);
 
-        TEntity FindOne(Expression<Func<TEntity, bool>> where = null);
-        TEntity FindById(long id);
-        IQueryable<TEntity> FindAll(Expression<Func<TEntity, bool>> where = null);
+        TEntity FindOne(Expression<Func<TEntity, bool>> where = null, params Expression<Func<TEntity, object>>[] includeProperties);
+        IQueryable<TEntity> FindAll(Expression<Func<TEntity, bool>> where = null, params Expression<Func<TEntity, object>>[] includeProperties);
         IQueryable<T> Set<T>() where T : class;
 
         bool SaveChanges();
