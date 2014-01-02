@@ -16,11 +16,16 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ViewResult Detail()
+        public async Task<ActionResult> Detail(int id)
         {
-            //var model = _demoDataService.GetAKey();
-            //return View(model);
-            return null;
+            var entity = await _wordService.GetId(id);
+            if (entity == null)
+            {
+                return Redirect("/key/detail/"+id);
+            }
+
+            var model = KeyModel.MapIdToKeyModel(id);
+            return View(model);
         }
 
         [HttpGet]
