@@ -71,7 +71,7 @@
                         inputSaveButton.click(function () {
                            
                             inputSaveButton.remove();
-                            url = "/key/edit/@Model.Key";
+                            url = "/word/edit/@Model.Key";
                             var aEditButton = $("<a />");
                             aEditButton.addClass("btn btn-sm btn-warning btnEdit");
                             aEditButton.attr("data-id", keyId);
@@ -128,7 +128,7 @@
               
             });
             $("a.btnEdit").click(function () {
-                url = "/key/edit/@Model.Key";
+                url = "/word/edit/@Model.Key";
             });
         
         });

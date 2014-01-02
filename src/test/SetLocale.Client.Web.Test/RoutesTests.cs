@@ -46,17 +46,17 @@ namespace SetLocale.Client.Web.Test
         [Test]
         public void KeyControllerRoutes()
         {
-            "~/key/all".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.All());
-            "~/key/nottranslated".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.NotTranslated());
+            "~/word/all".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.All());
+            "~/word/nottranslated".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.NotTranslated());
 
-            "~/key/new".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.New());
+            "~/word/new".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.New());
            
 
-            var keyEditRoute = "~/key/edit/sign_up".WithMethod(HttpVerbs.Get);
+            var keyEditRoute = "~/word/edit/sign_up".WithMethod(HttpVerbs.Get);
             keyEditRoute.Values["lang"] = ConstHelper.tr;
             keyEditRoute.ShouldMapTo<KeyController>(action => action.Edit("sign_up", ConstHelper.tr));
 
-            "~/key/detail/sign_up".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.Detail());
+            "~/word/detail/sign_up".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.Detail());
         }
 
         [Test]
