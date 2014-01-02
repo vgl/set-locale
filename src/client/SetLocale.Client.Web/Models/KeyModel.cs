@@ -41,21 +41,19 @@ namespace SetLocale.Client.Web.Models
             }
             return model;
         }
-        public static KeyModel MapIdToKeyModel(Word word)
+        
+
+        public static KeyModel MapEntityToModel(Word entity)
         {
             var model = new KeyModel
             {
-                Key = word.Key,
-                Description=word.Description,
-                IsTranslated = word.IsTranslated
+                Key = entity.Key,
+                Description = entity.Description,
+                IsTranslated = entity.IsTranslated,
+
 
             };
             return model;
-        }
-
-        internal static object MapIdToKeyModel(int id)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

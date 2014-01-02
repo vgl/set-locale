@@ -55,7 +55,7 @@ namespace SetLocale.Client.Web.Configurations
             HttpControllerDescriptor controllerDescriptor,
             Type controllerType)
         {
-            var controller =(IHttpController)_container.Resolve(controllerType);
+            var controller = (IHttpController)_container.Resolve(controllerType);
             request.RegisterForDispose(new Release(() => _container.Release(controller)));
             return controller;
         }
@@ -94,8 +94,9 @@ namespace SetLocale.Client.Web.Configurations
                 Component.For<IFormsAuthenticationService>().ImplementedBy<FormsAuthenticationService>().LifestylePerWebRequest(),
                 Component.For<IUserService>().ImplementedBy<UserService>().LifestylePerWebRequest(),
                 Component.For<IAppService>().ImplementedBy<AppService>().LifestylePerWebRequest(),
-                Component.For<IWordService>().ImplementedBy<WordService>().LifestylePerWebRequest(),
-                Component.For<IDemoDataService>().ImplementedBy<DemoDataService>().LifestylePerWebRequest());
+                Component.For<ITagService>().ImplementedBy<TagService>().LifestylePerWebRequest(),
+                Component.For<IReportService>().ImplementedBy<ReportService>().LifestylePerWebRequest(),
+                Component.For<IWordService>().ImplementedBy<WordService>().LifestylePerWebRequest());
         }
     }
 }

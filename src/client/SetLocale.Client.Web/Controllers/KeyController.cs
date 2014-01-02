@@ -16,15 +16,20 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Detail(int id)
+        public async Task<ActionResult> Detail(string id)
         {
-            var entity = await _wordService.GetId(id);
-            if (entity == null)
+            if (string.IsNullOrEmpty(id))
             {
-                return Redirect("/key/detail/"+id);
+                return RedirectToHome();
             }
 
-            var model = KeyModel.MapIdToKeyModel(id);
+            var entity = await _wordService.GetByKey(id);
+            if (entity == null)
+            {
+                return RedirectToHome();
+            }
+
+            var model = KeyModel.MapEntityToModel(entity);
             return View(model);
         }
 

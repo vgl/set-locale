@@ -1,19 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Linq;
+using System.Collections.Generic;
 
 using SetLocale.Client.Web.Entities;
+using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Repositories;
-using System.Collections.Generic;
 
 namespace SetLocale.Client.Web.Services
 {
     public interface IWordService
     {
         Task<string> Create(KeyModel model);
-        Task<List<KeyModel>> GetKeysByUserId(int userId);
+        Task<List<Word>> GetByUserId(int userId);
         Task<Word> GetByKey(string key);
-        Task<KeyModel> GetId(int keyId);
     }
 
     public class WordService : IWordService
@@ -31,17 +32,37 @@ namespace SetLocale.Client.Web.Services
                 return null;
             }
 
+            var slug = model.Key.ToUrlSlug();
+            if (_wordRepository.Set<Word>().Any(x=>x.Key == slug))
+            {
+                return null;
+            }
+
+            var tags = new List<Tag>();
+            if (!string.IsNullOrEmpty(model.Tag))
+            {
+                var items = model.Tag.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var item in items)
+                {
+                    tags.Add(new Tag
+                    {
+                        CreatedBy = model.CreatedBy,
+                        Name = item,
+                        UrlName = item.ToUrlSlug()
+                    });
+                }
+            }
+
             var word = new Word
             {
-                Key = model.Key,
+                Key = slug,
                 Description = model.Description ?? string.Empty,
                 IsTranslated = false,
                 CreatedBy = model.CreatedBy,
-                UpdatedBy = model.CreatedBy
+                UpdatedBy = model.CreatedBy,
+                Tags = tags
             };
-
-            //todo:tags...
-
+            
             _wordRepository.Create(word);
             _wordRepository.SaveChanges();
 
@@ -53,22 +74,16 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(word.Key);
         }
 
-        public Task<List<KeyModel>> GetKeysByUserId(int userId)
+        public Task<List<Word>> GetByUserId(int userId)
         {
             var words = _wordRepository.FindAll(x => x.CreatedBy == userId).ToList();
-            var model = KeyModel.MapWordToKeyModel(words);
-            return Task.FromResult(model);
-        }
-        public Task<KeyModel> GetId(int keyId)
-        {
-            var words = _wordRepository.FindOne(x => x.Id == keyId);
-            var model = KeyModel.MapIdToKeyModel(words);
-            return Task.FromResult(model);
+            return Task.FromResult(words);
         }
 
         public Task<Word> GetByKey(string key)
         {
-            throw new System.NotImplementedException();
+            var word = _wordRepository.FindOne(x => x.Key == key);
+            return Task.FromResult(word);
         }
 
     }
