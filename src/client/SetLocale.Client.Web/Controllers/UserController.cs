@@ -2,7 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+
 using SetLocale.Client.Web.Entities;
+using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 
@@ -32,9 +34,12 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Apps(int userId = 0)
         {
-            List<App> apps;
-            apps = await _appService.GetByUserId(userId);
-
+            if (userId==0)
+            {
+                userId = User.Identity.GetUserId();
+            }
+            List<App> apps = await _appService.GetByUserId(userId);
+            
             var model = AppModel.MapFromEntity(apps);
 
             return View(model);
