@@ -17,13 +17,19 @@ namespace SetLocale.Client.Web.Services
         Task<List<App>> GetByUserEmail(string email);
         Task<List<App>> GetByUserId(int userId);
         Task<App> Get(int appId);
+        Task<bool> CreateToken(TokenModel token);
     }
 
     public class AppService : IAppService
     {
+        private readonly IRepository<Token> _tokenRepository;
         private readonly IRepository<App> _appRepository;
-        public AppService(IRepository<App> appRepository)
+
+        public AppService(
+            IRepository<Token> tokenRepository,
+            IRepository<App> appRepository)
         {
+            _tokenRepository = tokenRepository;
             _appRepository = appRepository;
         }
 
@@ -96,6 +102,36 @@ namespace SetLocale.Client.Web.Services
 
             var app = _appRepository.FindOne(x => x.Id == appId, x => x.Tokens);
             return Task.FromResult(app);
+        }
+
+        public Task<bool> CreateToken(TokenModel model)
+        {
+            if (!model.IsValid())
+            {
+                return Task.FromResult(false);
+            }
+
+            if (!_appRepository.Set<App>().Any(x => x.Id == model.AppId))
+            {
+                return Task.FromResult(false);
+            }
+
+            var entity = new Token
+            {
+                CreatedBy = model.CreatedBy,
+                AppId = model.AppId,
+                Key = model.Token,
+                UsageCount = 0
+            };
+            _tokenRepository.Create(entity);
+            _tokenRepository.SaveChanges();
+
+            if (entity.Id < 0)
+            {
+                return Task.FromResult(false);
+            }
+
+            return Task.FromResult(true);
         }
     }
 }

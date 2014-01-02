@@ -3,7 +3,7 @@
 @model SetLocale.Client.Web.Models.AppModel
 
 @{
-    ViewBag.Title = string.Format("{0} - {1}", Html.LocalizationString("menu_apps_app"), Model.Name);
+    ViewBag.Title = string.Format("{0} - {1}", Html.LocalizationString("menu_apps_my_apps"), Model.Name);
 }
 
 <h3>@ViewBag.Title</h3>
@@ -14,7 +14,7 @@
     </p>
 </div>
 <div class="row">
-    <input type="button" class="btn btn-sm btn-primary btnNewToken pull-right" value="@Html.LocalizationString("btn_menu_apps_apps_create_new_token")" data-id="@Model.Id" />
+    <input type="button" id="btnNewToken" class="btn btn-sm btn-primary pull-right" value="@Html.LocalizationString("btn_create_new_token")" data-id="@Model.Id" />
     @Html.AntiForgeryToken()
 </div>
 
@@ -23,9 +23,9 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@Html.LocalizationString("menu_apps_apps_token")</th>
-                <th>@Html.LocalizationString("menu_apps_apps_creation_date")</th>
-                <th>@Html.LocalizationString("menu_apps_apps_usage_count")</th>
+                <th>@Html.LocalizationString("token")</th>
+                <th>@Html.LocalizationString("creation_date")</th>
+                <th>@Html.LocalizationString("usage_count")</th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +33,7 @@
             {
                 <tr>
                     <td>
-                        <a class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@Html.LocalizationString("menu_apps_apps_delete")</a>
+                        <a class="btn btn-sm btn-warning btnAction" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@Html.LocalizationString("btn_delete")</a>
                     </td>
                     <td>@item.Token</td>
                     <td>@item.CreationDate.ToString("f")</td>
@@ -52,11 +52,11 @@
                 <h4 class="modal-title">@Html.LocalizationString("modal_title_delete_token")</h4>
             </div>
             <div class="modal-body">
-                @Html.LocalizationString("modal_body")
+                @Html.LocalizationString("modal_body_delete_token")
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("Cancel")" />
-                <input type="button" class="btn btn-primary" value="@Html.LocalizationString("Ok")" id="btnDelete" data-id="" />
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("btn_cancel")" />
+                <input type="button" class="btn btn-primary" value="@Html.LocalizationString("btn_ok")" id="btnDelete" data-id="" />
             </div>
         </div>
     </div>
@@ -74,11 +74,15 @@
 
             $("a.btnAction").click(fnBtnActionClick);
 
-            $("input.btnNewToken").click(function () {
+            $("input#btnNewToken").click(function () {
+
+                console.log($(this).data("id"));
+
                 var appId = $(this).data("id");
                 $("input#btnDelete").data("id", appId);
+                
                 $.ajax({
-                    url: "/ajax/newtoken",
+                    url: "/app/newtoken",
                     type: "POST",
                     data: "appId=" + appId + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
                 }).done(function (r) {

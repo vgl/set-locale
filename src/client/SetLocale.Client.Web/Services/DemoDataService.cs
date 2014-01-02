@@ -293,14 +293,13 @@ namespace SetLocale.Client.Web.Services
                     new TokenModel
                     {
                         CreationDate = DateTime.Now,
-                        CreationDateStr = DateTime.Now.ToString("f"),
+                        
                         Token = Guid.NewGuid().ToString().Replace("-", ""),
                         UsageCount = new Random().Next(3, 5555)
                     },
                     new TokenModel
                     {
                         CreationDate = DateTime.Now,
-                        CreationDateStr = DateTime.Now.ToString("f"),
                         Token = Guid.NewGuid().ToString().Replace("-", ""),
                         UsageCount = new Random().Next(3, 5555)
                     }

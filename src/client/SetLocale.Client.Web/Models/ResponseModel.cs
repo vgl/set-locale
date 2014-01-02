@@ -3,6 +3,7 @@
     public class ResponseModel : BaseModel
     {
         public bool Ok { get; set; }
+        public object Result { get; set; }
     }
 
 }

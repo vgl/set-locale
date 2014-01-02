@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 using SetLocale.Client.Web.Helpers;
@@ -10,7 +11,8 @@ namespace SetLocale.Client.Web.Controllers
     public class AppController : BaseController
     {
         private readonly IAppService _appService;
-        public AppController(IUserService userService, IFormsAuthenticationService formsAuthenticationService, IAppService appService) : base(userService, formsAuthenticationService)
+        public AppController(IUserService userService, IFormsAuthenticationService formsAuthenticationService, IAppService appService)
+            : base(userService, formsAuthenticationService)
         {
             _appService = appService;
         }
@@ -55,6 +57,29 @@ namespace SetLocale.Client.Web.Controllers
             }
 
             return Redirect("/app/detail/" + appId);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<JsonResult> NewToken(int appId)
+        {
+            var result = new ResponseModel { Ok = false };
+
+            var token = new TokenModel
+            {
+                CreationDate = DateTime.Now,
+                UsageCount = 0,
+                Token = Guid.NewGuid().ToString().Replace("-", ""),
+                AppId = appId,
+                CreatedBy = User.Identity.GetUserId()
+            };
+
+            var isOk = await _appService.CreateToken(token);
+            if (!isOk) return Json(result, JsonRequestBehavior.DenyGet);
+
+            result.Ok = true;
+            result.Result = token;
+
+            return Json(result, JsonRequestBehavior.DenyGet);
         }
     }
 }

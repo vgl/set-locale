@@ -32,6 +32,7 @@ namespace SetLocale.Client.Web.Models
         public static AppModel MapFromEntity(App entity)
         {
             var model = new AppModel();
+            model.Id = entity.Id;
             model.Email = entity.UserEmail;
             model.IsActive = entity.IsActive;
             model.Name = entity.Name;
@@ -42,7 +43,6 @@ namespace SetLocale.Client.Web.Models
                 model.Tokens.Add(new TokenModel
                 {
                     CreationDate = token.CreatedAt,
-                    CreationDateStr = token.CreatedAt.ToString("f"),
                     UsageCount = token.UsageCount,
                     Token = token.Key
                 });

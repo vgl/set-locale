@@ -11,19 +11,7 @@ namespace SetLocale.Client.Web.Controllers
         {
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
-        public JsonResult NewToken(int appId)
-        {
-            var token = new TokenModel
-            {
-                CreationDate = DateTime.Now,
-                CreationDateStr = DateTime.Now.ToString("f"),
-                UsageCount = 1,
-                Token = Guid.NewGuid().ToString().Replace("-", "")
-            };
-
-            return Json(token, JsonRequestBehavior.DenyGet);
-        }
+       
 
        
 
