@@ -40,6 +40,7 @@ namespace SetLocale.Client.Web.Services
                 UserEmail = model.Email,
                 Name = model.Name,
                 Url = model.Url,
+                IsActive = true,
                 CreatedBy = model.CreatedBy,
                 Description = model.Description ?? string.Empty,
                 Tokens = new List<Token> { new Token { CreatedBy = model.CreatedBy, Key = Guid.NewGuid().ToString().Replace("-", ""), UsageCount = 0 } }
