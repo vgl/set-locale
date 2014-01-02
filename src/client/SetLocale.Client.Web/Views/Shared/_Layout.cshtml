@@ -32,33 +32,37 @@
                         <ul class="dropdown-menu">
 
 
-                            <li><a href="/user/keys">@Html.LocalizationString("menu_words_my_words")</a></li>
+                            <li><a href="/key/new">@Html.LocalizationString("menu_words_new_word")</a></li>
                             <li class="divider"></li>
 
+                            <li><a href="/user/keys">@Html.LocalizationString("menu_words_my_words")</a></li>
                             <li><a href="/key/all">@Html.LocalizationString("menu_words_words")</a></li>
                             <li><a href="/key/nottranslated">@Html.LocalizationString("menu_words_not_translated")</a></li>
-                            <li class="divider"></li>
+                            
 
-                            <li><a href="/key/new">@Html.LocalizationString("menu_words_new_word")</a></li>
+                            
                         </ul>
                     </li>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_apps") <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/user/apps">@Html.LocalizationString("menu_apps_apps")</a></li>
-                            <li><a href="/app/new">@Html.LocalizationString("menu_apps_new_app")</a></li>
+                         <li><a href="/app/new">@Html.LocalizationString("menu_apps_new_app")</a></li>    
+                         <li class="divider"></li>
+                           
+                         <li><a href="/user/apps">@Html.LocalizationString("menu_apps_apps")</a></li>
                         </ul>
                     </li>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_settings") <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/admin/users">@Html.LocalizationString("menu_settings_users")</a></li>
-                            <li><a href="/admin/apps">@Html.LocalizationString("menu_settings_apps")</a></li>
+                            <li><a href="/admin/newtranslator">@Html.LocalizationString("menu_settings_new_translator")</a></li>
                             <li class="divider"></li>
 
-                            <li><a href="/admin/newtranslator">@Html.LocalizationString("menu_settings_new_translator")</a></li>
+                            <li><a href="/admin/apps">@Html.LocalizationString("menu_settings_apps")</a></li>               
+                            <li><a href="/admin/users">@Html.LocalizationString("menu_settings_users")</a></li>
+                            
                         </ul>
                     </li>
                 </ul>

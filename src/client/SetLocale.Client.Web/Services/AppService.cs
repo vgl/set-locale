@@ -18,6 +18,8 @@ namespace SetLocale.Client.Web.Services
         Task<List<App>> GetByUserEmail(string email);
         Task<List<App>> GetByUserId(int userId);
         Task<App> Get(int appId);
+
+        Task<List<App>> GetAll(int id);
     }
 
     public class AppService : IAppService

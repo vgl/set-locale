@@ -11,14 +11,16 @@ namespace SetLocale.Client.Web.Controllers
 {
     public class AdminController : BaseController
     {
+        private readonly IAppService _appService;
         private readonly IUserService _userService;
 
-        public AdminController(
+        public AdminController(IAppService appService,
             IUserService userService,
             IFormsAuthenticationService formsAuthenticationService,
             IDemoDataService demoDataService)
             : base(formsAuthenticationService, demoDataService)
         {
+            _appService = appService;
             _userService = userService;
         }
 
@@ -74,9 +76,13 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Apps()
+        public async Task<ActionResult> Apps()
         {
-            var model = _demoDataService.GetAllApps();
+            List<App> apps;
+            apps = await _appService.GetAll();
+
+            var model = AppModel.MapFromEntity(apps);
+
             return View(model);
         }
     }

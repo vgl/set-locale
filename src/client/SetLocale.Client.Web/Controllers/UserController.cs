@@ -1,7 +1,8 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-
+using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 
@@ -9,14 +10,16 @@ namespace SetLocale.Client.Web.Controllers
 {
     public class UserController : BaseController
     {
+        private readonly IAppService _appService;
         private readonly IUserService _userService;
 
-        public UserController(
+        public UserController(IAppService appService,
             IUserService userService,
             IFormsAuthenticationService formsAuthenticationService,
             IDemoDataService demoDataService)
             : base(formsAuthenticationService, demoDataService)
         {
+            _appService = appService;
             _userService = userService;
         }
 
@@ -27,9 +30,13 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Apps()
+        public async Task<ActionResult> Apps(int userId = 0)
         {
-            var model = _demoDataService.GetUsersApps();
+            List<App> apps;
+            apps = await _appService.GetByUserId(userId);
+
+            var model = AppModel.MapFromEntity(apps);
+
             return View(model);
         }
 
