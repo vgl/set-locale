@@ -52,5 +52,10 @@ namespace SetLocale.Client.Web.Models
             };
             return model;
         }
+
+        internal static object MapIdToKeyModel(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
