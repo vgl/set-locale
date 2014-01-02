@@ -5,7 +5,7 @@ Feature: Key Management
     	And user should be logged in
     	And user is in "developer" role
 
-    When user views "/key/new" 
+    When user views "/word/new" 
     	And must fill "Key" field and may fills "Tag", "Description"
 
     	And clicks "Save"

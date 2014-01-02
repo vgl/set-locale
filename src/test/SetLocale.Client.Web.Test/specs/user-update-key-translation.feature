@@ -25,7 +25,7 @@ Scenario: Update
 	Given user logged in
 	And user is in "Translator" role
 
-	When user views /key/edit/{key_name}
+	When user views /word/edit/{key_name}
 	And  key, value, and language have value
 
 	Then save data to db

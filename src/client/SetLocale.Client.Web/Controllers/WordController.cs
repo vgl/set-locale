@@ -80,7 +80,7 @@ namespace SetLocale.Client.Web.Controllers
                 return View(model);
             }
 
-            return Redirect("/key/detail/" + key);
+            return Redirect("/word/detail/" + key);
         }
 
         [HttpGet]
