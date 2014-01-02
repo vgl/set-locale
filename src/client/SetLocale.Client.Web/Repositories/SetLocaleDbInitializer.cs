@@ -21,6 +21,14 @@ namespace SetLocale.Client.Web.Repositories
             AddTranslator(context, "Kemal Çolak", "kml.colak@gmail.com");
             AddTranslator(context, "deneme kullanıcı", "deneme@gmail.com");
 
+            AddApplication(context, "setlocale@test.com", "SetLocale", "a localization management application.","setlocale.com");
+            AddApplication(context, "setcrm@test.com", "SetCrm", "a brand new crm application.", "setcrm.com");
+
+            AddWord(context, "btn_save", "kaydet butonu için", "tr", "en", "SetMembership", "set-membership");
+            AddWord(context, "btn_save", "kaydet butonu için", "tr", "en", "SetMembership", "set-membership");
+            AddWord(context, "btn_save", "kaydet butonu için", "tr", "en", "SetLocale", "set-locale");
+            AddWord(context, "btn_save", "kaydet butonu için", "tr", "en", "SetLocale", "set-locale");
+
             context.SaveChanges();
         }
 
@@ -79,7 +87,7 @@ namespace SetLocale.Client.Web.Repositories
             context.Apps.Add(app);
         }
 
-        private static void AddWord(SetLocaleDbContext context, string key, string description, string tr, string en)
+        private static void AddWord(SetLocaleDbContext context, string key, string description, string tr, string en, string tagName, string tagUrlName)
         {
             var word = new Word
             {
@@ -87,7 +95,16 @@ namespace SetLocale.Client.Web.Repositories
                 Description = description,
                 IsTranslated = true,
                 Translation_EN = en,
-                Translation_TR = tr
+                Translation_TR = tr,
+                Tags = new List<Tag>
+                {
+                    new Tag
+                    {
+                        Name = tagName,
+                        UrlName = tagUrlName,
+                        CreatedBy = 1
+                    }
+                }
             };
             context.Words.Add(word);
         }
