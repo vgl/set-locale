@@ -40,7 +40,7 @@ namespace SetLocale.Client.Web.Test
             "~/admin/index".ShouldMapTo<AdminController>(action => action.Index());
             "~/admin/users".ShouldMapTo<AdminController>(action => action.Users(0).Result);
             "~/admin/users/1".ShouldMapTo<AdminController>(action => action.Users(1).Result);
-            "~/admin/apps".ShouldMapTo<AdminController>(action => action.Apps());
+            "~/admin/apps".ShouldMapTo<AdminController>(action => action.Apps().Result);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace SetLocale.Client.Web.Test
         public void UserControllerRoutes()
         {
             "~/user/index".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Index());
-            "~/user/apps".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Apps());
+            "~/user/apps".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Apps(1).Result);
             "~/user/new".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.New());
             "~/user/reset".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Reset());
             "~/user/login".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Login());

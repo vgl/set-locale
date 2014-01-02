@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
+
 using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
@@ -17,9 +18,14 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ViewResult> Detail(int id)
+        public async Task<ActionResult> Detail(int id)
         {
             var entity = await _appService.Get(id);
+            if (entity == null)
+            {
+                return Redirect("/user/apps");
+            }
+
             var model = AppModel.MapFromEntity(entity);
             return View(model);
         }
