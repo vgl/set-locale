@@ -25,11 +25,10 @@ namespace SetLocale.Client.Web.Controllers
         {
             if (CurrentUser.RoleId != SetLocaleRole.Admin.Value)
             {
-                RedirectToHome();
-                return;
+                filterContext.Result = RedirectToHome();    
             }
 
-            base.OnActionExecuting(filterContext);
+            base.OnActionExecuting(filterContext); 
         }
 
         [HttpGet]

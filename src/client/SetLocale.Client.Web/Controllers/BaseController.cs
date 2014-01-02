@@ -82,11 +82,10 @@ namespace SetLocale.Client.Web.Controllers
                 if (User.Identity.IsAuthenticated)
                 {
                     var work = _userService.GetByEmail(User.Identity.GetUserEmail());
-                    work.RunSynchronously();
-
-                    var user = work.Result;
+                    var user = work.Result; 
+                    work.Wait();
+                    
                     _currentUser = UserModel.MapUserToUserModel(user);
-
                 }
 
                 return _currentUser;
