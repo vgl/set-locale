@@ -42,8 +42,7 @@ namespace SetLocale.Client.Web.Services
                 Url = model.Url,
                 CreatedBy = model.CreatedBy,
                 Description = model.Description ?? string.Empty,
-                Tokens = new List<Token>() { new Token{ CreatedBy = model.CreatedBy, Key = Guid.NewGuid().ToString().Replace("-",""),  UsageCount  = 0} }
-
+                Tokens = new List<Token> { new Token { CreatedBy = model.CreatedBy, Key = Guid.NewGuid().ToString().Replace("-", ""), UsageCount = 0 } }
             };
 
             _appRepository.Create(app);
