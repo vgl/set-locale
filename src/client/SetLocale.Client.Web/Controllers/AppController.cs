@@ -7,7 +7,7 @@ namespace SetLocale.Client.Web.Controllers
 {
     public class AppController : BaseController
     {
-        public AppController(IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
+        public AppController(IAppService AppService, IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
         {
         }
 
