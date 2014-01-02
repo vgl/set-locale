@@ -10,9 +10,7 @@ namespace SetLocale.Client.Web.Controllers
     public class AppController : BaseController
     {
         private readonly IAppService _appService;
-
-        public AppController(IAppService appService, IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService)
-            : base(formsAuthenticationService, demoDataService)
+        public AppController(IUserService userService, IFormsAuthenticationService formsAuthenticationService, IAppService appService) : base(userService, formsAuthenticationService)
         {
             _appService = appService;
         }

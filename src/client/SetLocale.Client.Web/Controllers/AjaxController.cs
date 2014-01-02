@@ -7,7 +7,7 @@ namespace SetLocale.Client.Web.Controllers
 {
     public class AjaxController : BaseController
     {
-        public AjaxController(IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
+        public AjaxController(IUserService userService, IFormsAuthenticationService formsAuthenticationService) : base(userService, formsAuthenticationService)
         {
         }
 

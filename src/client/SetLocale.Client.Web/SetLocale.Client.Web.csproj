@@ -168,6 +168,7 @@
     <Content Include="Views\Key\Detail.cshtml" />
     <Content Include="Views\User\Keys.cshtml" />
     <Content Include="Views\App\Detail.cshtml" />
+    <Content Include="Views\Tag\Detail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -235,6 +236,7 @@
     <Compile Include="Services\DemoDataService.cs" />
     <Compile Include="Services\FormsAuthenticationService.cs" />
     <Compile Include="Services\ReportService.cs" />
+    <Compile Include="Services\TagService.cs" />
     <Compile Include="Services\WordService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>

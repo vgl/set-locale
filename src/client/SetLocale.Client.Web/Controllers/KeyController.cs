@@ -10,12 +10,7 @@ namespace SetLocale.Client.Web.Controllers
     public class KeyController : BaseController
     {
         private readonly IWordService _wordService;
-
-        public KeyController(
-            IWordService wordService,
-            IFormsAuthenticationService formsAuthenticationService,
-            IDemoDataService demoDataService)
-            : base(formsAuthenticationService, demoDataService)
+        public KeyController(IUserService userService, IFormsAuthenticationService formsAuthenticationService, IWordService wordService) : base(userService, formsAuthenticationService)
         {
             _wordService = wordService;
         }
@@ -23,22 +18,25 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ViewResult Detail()
         {
-            var model = _demoDataService.GetAKey();
-            return View(model);
+            //var model = _demoDataService.GetAKey();
+            //return View(model);
+            return null;
         }
 
         [HttpGet]
         public ViewResult All()
         {
-            var model = _demoDataService.GetAllKeys();
-            return View(model);
+            return null;
+            //var model = _demoDataService.GetAllKeys();
+            //return View(model);
         }
 
         [HttpGet]
         public ViewResult NotTranslated()
         {
-            var model = _demoDataService.GetNotTranslatedKeys();
-            return View(model);
+            //var model = _demoDataService.GetNotTranslatedKeys();
+            //return View(model);
+            return null;
         }
 
         [HttpGet]
@@ -71,8 +69,9 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ViewResult Edit(string id, string lang = ConstHelper.tr)
         {
-            var model = _demoDataService.GetATranslation();
-            return View(model);
+            //var model = _demoDataService.GetATranslation();
+            //return View(model);
+            return null;
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -82,7 +81,7 @@ namespace SetLocale.Client.Web.Controllers
             {
 
 
-                return RedirectToAction("Index", "Tag");
+                return Redirect("/tag/detail/" + model.Key);
             }
 
             return View(model);

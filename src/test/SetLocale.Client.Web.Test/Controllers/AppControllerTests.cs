@@ -21,7 +21,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             var demoService = new Mock<IDemoDataService>();
 
             // Act
-            var controller = new AppController(null,null, demoService.Object);
+            var controller = new AppController(null,null,null);
             var view = controller.Detail(1);
 
             // Assert
@@ -37,7 +37,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             var demoService = new Mock<IDemoDataService>();
 
             // Act
-            var controller = new AppController(null,null, demoService.Object);
+            var controller = new AppController(null,null,null);
             var view = controller.New();
 
             // Assert

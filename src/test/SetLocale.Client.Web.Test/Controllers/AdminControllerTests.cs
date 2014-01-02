@@ -16,7 +16,7 @@ namespace SetLocale.Client.Web.Test.Controllers
         public void index_should_return()
         {
             // Act
-            var controller = new AdminController(null,null,null, null);
+            var controller = new AdminController(null,null,null);
             var view = controller.Index();
 
             // Assert
@@ -31,7 +31,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             var demoService = new Mock<IDemoDataService>();
 
             // Act
-            var controller = new AdminController(null,null, null, demoService.Object);
+            var controller = new AdminController(null,null, null);
             var view = controller.NewTranslator();
 
             // Assert
@@ -47,7 +47,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             var validModel = new UserModel { Name = "test name", Email = "test@test.com" };
 
             // Act
-            var controller = new AdminController(null,null, null, null);
+            var controller = new AdminController(null,null, null);
             var view = await controller.NewTranslator(validModel) as RedirectResult;
 
             // Assert
@@ -63,7 +63,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             var inValidModel = new UserModel { Name = "test name" };
 
             // Act
-            var controller = new AdminController(null, null, null,null);
+            var controller = new AdminController(null, null, null);
             var view = await controller.NewTranslator(inValidModel) as ViewResult;
 
             // Assert
@@ -83,7 +83,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             var demoService = new Mock<IDemoDataService>();
 
             // Act
-            var controller = new AdminController(null,null, null, demoService.Object);
+            var controller = new AdminController(null,null, null);
             var view = controller.Users();
 
             // Assert
@@ -99,7 +99,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             var demoService = new Mock<IDemoDataService>();
 
             // Act
-            var controller = new AdminController(null,null, null, demoService.Object);
+            var controller = new AdminController(null,null, null);
             var view = controller.Apps();
 
             // Assert

@@ -14,14 +14,22 @@ namespace SetLocale.Client.Web.Controllers
         private readonly IAppService _appService;
         private readonly IUserService _userService;
 
-        public AdminController(IAppService appService,
-            IUserService userService,
-            IFormsAuthenticationService formsAuthenticationService,
-            IDemoDataService demoDataService)
-            : base(formsAuthenticationService, demoDataService)
+        public AdminController(IUserService userService, IFormsAuthenticationService formsAuthenticationService, IAppService appService)
+            : base(userService, formsAuthenticationService)
         {
             _appService = appService;
             _userService = userService;
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (CurrentUser.RoleId != SetLocaleRole.Admin.Value)
+            {
+                RedirectToHome();
+                return;
+            }
+
+            base.OnActionExecuting(filterContext);
         }
 
         [HttpGet]
@@ -61,7 +69,7 @@ namespace SetLocale.Client.Web.Controllers
         public async Task<ActionResult> Users(int id = 0)
         {
             List<User> users;
-            if (id > 0 
+            if (id > 0
                 && id < 4)
             {
                 users = await _userService.GetAllByRoleId(id);
@@ -70,8 +78,13 @@ namespace SetLocale.Client.Web.Controllers
             {
                 users = await _userService.GetAll();
             }
-            
-            var model = UserModel.MapUserToUserModel(users);
+
+            var model = new List<UserModel>();
+            foreach (var user in users)
+            {
+                model.Add(UserModel.MapUserToUserModel(user));
+            }
+
             return View(model);
         }
 

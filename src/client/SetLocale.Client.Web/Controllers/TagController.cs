@@ -1,19 +1,34 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
+using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 
 namespace SetLocale.Client.Web.Controllers
 {
     public class TagController : BaseController
     {
-        public TagController(IFormsAuthenticationService formsAuthenticationService, IDemoDataService demoDataService) : base(formsAuthenticationService, demoDataService)
+        private readonly ITagService _tagService;
+
+        public TagController(
+            ITagService tagService,
+            IUserService userService, 
+            IFormsAuthenticationService formsAuthenticationService) 
+            : base(userService, formsAuthenticationService)
         {
+            _tagService = tagService;
         }
 
         [HttpGet]
-        public ViewResult Index(string id = "set-locale")
+        public async Task<ViewResult> Detail(string id = "set-locale")
         {
-            var model = _demoDataService.GetMyKeys();
+            var entities = await _tagService.GetWords(id);
+            var model = new List<KeyModel>();
+            foreach (var entity in entities)
+            {
+                model.Add(TagModel.MapEntityToModel(entity));
+            }
             return View(model);
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Web.Mvc;
-using System.Web.Mvc.Filters;
+
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 using SetLocale.Client.Web.Helpers;
@@ -11,15 +11,15 @@ namespace SetLocale.Client.Web.Controllers
     {
         public HtmlHelper _htmlHelper;
 
+        private readonly IUserService _userService;
         public readonly IFormsAuthenticationService _formsAuthenticationService;
-        public readonly IDemoDataService _demoDataService;
         
         public BaseController(
-            IFormsAuthenticationService formsAuthenticationService,
-            IDemoDataService demoDataService)
+            IUserService userService,
+            IFormsAuthenticationService formsAuthenticationService)
         {
+            _userService = userService;
             _formsAuthenticationService = formsAuthenticationService;
-            _demoDataService = demoDataService;
 
             _htmlHelper = new HtmlHelper(new ViewContext(), new ViewPage());
         }
@@ -81,11 +81,12 @@ namespace SetLocale.Client.Web.Controllers
 
                 if (User.Identity.IsAuthenticated)
                 {
-                    _currentUser = _demoDataService.GetAUser();
-                }
-                else
-                {
-                    _formsAuthenticationService.SignOut();
+                    var work = _userService.GetByEmail(User.Identity.GetUserEmail());
+                    work.RunSynchronously();
+
+                    var user = work.Result;
+                    _currentUser = UserModel.MapUserToUserModel(user);
+
                 }
 
                 return _currentUser;
