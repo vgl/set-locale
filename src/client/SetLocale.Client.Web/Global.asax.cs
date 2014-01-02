@@ -35,24 +35,24 @@ namespace SetLocale.Client.Web
             var enTexts = new Dictionary<string, string>();
             #region EN
             enTexts.Add("app_name", "Set Locale");
-
+            
 
             #region Menu
 
             enTexts.Add("menu_words", "Words");
-            enTexts.Add("menu_words_words", "Words");
+            enTexts.Add("menu_words_words", "All Words");
             enTexts.Add("menu_words_my_words", "My Words");
             enTexts.Add("menu_words_new_word", "New Word");
             enTexts.Add("menu_words_not_translated", "NotTranslated");
 
             enTexts.Add("menu_apps", "Applications");
-            enTexts.Add("menu_apps_apps", "Applications");
+            enTexts.Add("menu_apps_apps", "My Applications");
             enTexts.Add("menu_apps_new_app", "New App");
 
-            enTexts.Add("menu_settings", "Settings");
-            enTexts.Add("menu_settings_apps", "Applications");
-            enTexts.Add("menu_settings_users", "Users");
-            enTexts.Add("menu_settings_new_translator", "New Translator User");
+            enTexts.Add("menu_settings", "Administrator");
+            enTexts.Add("menu_settings_apps", "All Applications");
+            enTexts.Add("menu_settings_users", "All Users");
+            enTexts.Add("menu_settings_new_translator", "New Translator");
 
             enTexts.Add("menu_user_login", "Login");
             enTexts.Add("menu_user_logout", "Logout");
@@ -91,7 +91,7 @@ namespace SetLocale.Client.Web
             #endregion
 
             #region USER_APPS
-            enTexts.Add("user_apps", "Applications");
+            enTexts.Add("user_apps", "My Applications");
             enTexts.Add("user_apps_name", "Application Name");
             enTexts.Add("user_apps_description", "Description");
             enTexts.Add("user_apps_usage_count", "Usage Count");
@@ -102,9 +102,9 @@ namespace SetLocale.Client.Web
 
             #endregion
 
-            #region SETTINGS
+            #region Admin
 
-            #region SETTINGS_Apps
+            #region Admin_Apps
 
             enTexts.Add("menu_settings_apps_email", "Email");
             enTexts.Add("menu_settings_apps_app_name", "Application Name");
@@ -116,7 +116,7 @@ namespace SetLocale.Client.Web
 
             #endregion
 
-            #region SETTINGS_New_Translator_User
+            #region Admin_New_Translator
             enTexts.Add("menu_settings_new_translator_name", "Name");
             enTexts.Add("menu_settings_new_translator_email", "Email");
             enTexts.Add("btn_menu_settings_new_translator_save", "Save");
@@ -124,7 +124,7 @@ namespace SetLocale.Client.Web
 
             #endregion
 
-            #region SETTINGS_Users
+            #region Admin_Users
             enTexts.Add("menu_settings_users_name", "Name");
             enTexts.Add("menu_settings_users_email", "Email");
             enTexts.Add("menu_settings_users_role", "RoleName");
@@ -230,18 +230,18 @@ namespace SetLocale.Client.Web
             #region Menü
 
             trTexts.Add("menu_words", "Kelimeler");
-            trTexts.Add("menu_words_words", "Kelimeler");
+            trTexts.Add("menu_words_words", "Tüm Kelimeler");
             trTexts.Add("menu_words_my_words", "Kelimelerim");
             trTexts.Add("menu_words_new_word", "Yeni Kelime");
             trTexts.Add("menu_words_not_translated", "Çevrilmeyen Kelimeler");
 
             trTexts.Add("menu_apps", "Uygulamalar");
-            trTexts.Add("menu_apps_apps", "Uygulamalar");
+            trTexts.Add("menu_apps_apps", "Uygulamalarım");
             trTexts.Add("menu_apps_new_app", "Yeni Uygulama");
 
-            trTexts.Add("menu_settings", "Ayarlar");
-            trTexts.Add("menu_settings_apps", "Uygulama Ayarları");
-            trTexts.Add("menu_settings_users", "Kullanıcı Ayarları");
+            trTexts.Add("menu_settings", "Yönetim");
+            trTexts.Add("menu_settings_apps", "Tüm Uygulamalar");
+            trTexts.Add("menu_settings_users", "Tüm Kullanıcılar");
             trTexts.Add("menu_settings_new_translator", "Yeni Çevirmen");
 
             trTexts.Add("menu_user_login", "Giriş");
@@ -280,7 +280,7 @@ namespace SetLocale.Client.Web
             #endregion
 
             #region KULLANICILAR_Uygulama
-            trTexts.Add("user_apps", "Uygulamalar");
+            trTexts.Add("user_apps", "Uygulamalarım");
             trTexts.Add("user_apps_name", "Uygulama İsmi");
             trTexts.Add("user_apps_description", "Açıklama");
             trTexts.Add("user_apps_usage_count", "Kullanım Sayısı");
