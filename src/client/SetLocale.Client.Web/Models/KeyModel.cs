@@ -41,5 +41,16 @@ namespace SetLocale.Client.Web.Models
             }
             return model;
         }
+        public static KeyModel MapIdToKeyModel(Word word)
+        {
+            var model = new KeyModel
+            {
+                Key = word.Key,
+                Description=word.Description,
+                IsTranslated = word.IsTranslated
+
+            };
+            return model;
+        }
     }
 }
