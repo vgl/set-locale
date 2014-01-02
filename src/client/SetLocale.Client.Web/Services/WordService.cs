@@ -16,6 +16,8 @@ namespace SetLocale.Client.Web.Services
         Task<List<Word>> GetByUserId(int userId);
         Task<Word> GetByKey(string key);
         Task<List<Word>> GetAll();
+
+        Task<List<Word>>GetNotTranslated();
     }
 
     public class WordService : IWordService
@@ -85,6 +87,12 @@ namespace SetLocale.Client.Web.Services
         {
             var word = _wordRepository.FindOne(x => x.Key == key);
             return Task.FromResult(word);
+        }
+
+        public Task<List<Word>> GetNotTranslated()
+        {
+            var words = _wordRepository.FindAll(x => x.IsTranslated==false).ToList();
+            return Task.FromResult(words);
         }
 
         public Task<List<Word>> GetAll()

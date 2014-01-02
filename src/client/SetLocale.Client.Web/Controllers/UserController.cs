@@ -6,7 +6,8 @@ using System.Web.Mvc;
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Helpers;
 ﻿using SetLocale.Client.Web.Models;
-using SetLocale.Client.Web.Services;
+﻿using SetLocale.Client.Web.Repositories;
+﻿using SetLocale.Client.Web.Services;
 
 namespace SetLocale.Client.Web.Controllers
 {
@@ -14,11 +15,13 @@ namespace SetLocale.Client.Web.Controllers
     {
         private readonly IAppService _appService;
         private readonly IUserService _userService;
+        private readonly IWordService _wordService;
 
-        public UserController(IUserService userService, IFormsAuthenticationService formsAuthenticationService, IAppService appService) : base(userService, formsAuthenticationService)
+        public UserController(IUserService userService,IWordService wordService, IFormsAuthenticationService formsAuthenticationService, IAppService appService) : base(userService, formsAuthenticationService)
         {
             _appService = appService;
             _userService = userService;
+            _wordService = wordService;
         }
 
         [HttpGet]
@@ -41,11 +44,28 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet, AllowAnonymous]
-        public ActionResult Keys()
+        public async Task<ViewResult> Words(int userId = 0)
         {
-            //var model = _demoDataService.GetMyKeys();
+            //if (userId == 0)
+            //{
+            //    userId = User.Identity.GetUserId();
+            //}
+            //var words = await _wordService.GetByUserId(userId);
+            //var model = WordModel.MapEntityToModel(words);
+
             //return View(model);
-            return null;
+            if (userId == 0)
+            {
+                userId = User.Identity.GetUserId();
+            }
+            var entities = await _wordService.GetByUserId(userId);
+            var model = new List<WordModel>();
+            foreach (var entity in entities)
+            {
+                model.Add(WordModel.MapEntityToModel(entity));
+            }
+
+            return View(model);
         }
 
 
