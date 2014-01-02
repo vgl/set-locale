@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Helpers;
+using SetLocale.Client.Web.Models;
 
 namespace SetLocale.Client.Web.Repositories
 {
@@ -53,8 +55,48 @@ namespace SetLocale.Client.Web.Repositories
             context.Users.Add(user);
         }
 
+        private static void AddApplication(SetLocaleDbContext context, string useremail, string name, string description, string url)
+        {
+            var app = new App
+            {
+                UserEmail = useremail,
+                Name = name,
+                Description = description,
+                Url = url,
+                Tokens = new List<Token> 
+                { new Token()
+                    {
+                        AppId = 123,
+                        App = new App(),
+                        Key = Guid.NewGuid().ToString().Replace("-", ""),
+                        UsageCount = new Random().Next(3, 5555)
+                    },
+                 new Token()
+                    {
+                        AppId = 432,
+                        App = new App(),
+                        Key = Guid.NewGuid().ToString().Replace("-", ""),
+                        UsageCount = new Random().Next(3, 5555)
+                    }
+                },
+                IsActive = true
+            };
 
-        // AddApp()
-        // AddWord()
+            context.Apps.Add(app);
+        }
+
+        private static void AddWord(SetLocaleDbContext context, string key, string description, string translation_tr, string translation_en)
+        {
+            var word = new Word
+            {
+                Key = key,
+                Description = description,
+                IsTranslated = true,
+                Translation_EN = translation_en ,
+                Translation_TR = translation_tr
+            };
+            context.Words.Add(word);
+        }
+
     }
 }
