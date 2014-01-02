@@ -55,28 +55,22 @@ namespace SetLocale.Client.Web.Repositories
             context.Users.Add(user);
         }
 
-        private static void AddApplication(SetLocaleDbContext context, string useremail, string name, string description, string url)
+        private static void AddApplication(SetLocaleDbContext context, string email, string name, string description, string url)
         {
             var app = new App
             {
-                UserEmail = useremail,
+                UserEmail = email,
                 Name = name,
                 Description = description,
                 Url = url,
-                Tokens = new List<Token> 
-                { new Token()
+                CreatedBy = 1,
+                Tokens = new List<Token>
+                {
+                    new Token
                     {
-                        AppId = 123,
-                        App = new App(),
                         Key = Guid.NewGuid().ToString().Replace("-", ""),
-                        UsageCount = new Random().Next(3, 5555)
-                    },
-                 new Token()
-                    {
-                        AppId = 432,
-                        App = new App(),
-                        Key = Guid.NewGuid().ToString().Replace("-", ""),
-                        UsageCount = new Random().Next(3, 5555)
+                        UsageCount = new Random().Next(3, 5555),
+                        CreatedBy = 1
                     }
                 },
                 IsActive = true
@@ -85,18 +79,17 @@ namespace SetLocale.Client.Web.Repositories
             context.Apps.Add(app);
         }
 
-        private static void AddWord(SetLocaleDbContext context, string key, string description, string translation_tr, string translation_en)
+        private static void AddWord(SetLocaleDbContext context, string key, string description, string tr, string en)
         {
             var word = new Word
             {
                 Key = key,
                 Description = description,
                 IsTranslated = true,
-                Translation_EN = translation_en ,
-                Translation_TR = translation_tr
+                Translation_EN = en,
+                Translation_TR = tr
             };
             context.Words.Add(word);
         }
-
     }
 }
