@@ -15,14 +15,14 @@ namespace SetLocale.Client.Web.Test.Controllers
     class AppControllerTests
     {
         [Test]
-        public void index_should_return_app_model()
+        public void detail_should_return_app_model()
         {
             // Arrange           
             var demoService = new Mock<IDemoDataService>();
 
             // Act
-            var controller = new AppController(null, demoService.Object);
-            var view = controller.Index();
+            var controller = new AppController(null,null, demoService.Object);
+            var view = controller.Detail(1);
 
             // Assert
             Assert.NotNull(view);
@@ -37,7 +37,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             var demoService = new Mock<IDemoDataService>();
 
             // Act
-            var controller = new AppController(null, demoService.Object);
+            var controller = new AppController(null,null, demoService.Object);
             var view = controller.New();
 
             // Assert
@@ -53,8 +53,8 @@ namespace SetLocale.Client.Web.Test.Controllers
             var validModel = new AppModel { Name = "test name", Url = "test.com", Description = "test description" };
         
             // Act
-            var controller = new AppController(null, null);
-            var view = controller.New(validModel) as RedirectResult;
+            var controller = new AppController(null,null, null);
+            var view = controller.New(validModel).Result as RedirectResult;
 
             // Assert
             Assert.NotNull(view);
@@ -69,8 +69,8 @@ namespace SetLocale.Client.Web.Test.Controllers
             var inValidModel = new AppModel { Name = "test name", Url = "test.com" };
 
             // Act
-            var controller = new AppController(null, null);
-            var view = controller.New(inValidModel) as ViewResult;
+            var controller = new AppController(null,null, null);
+            var view = controller.New(inValidModel).Result as ViewResult;
 
             // Assert
             Assert.NotNull(view);

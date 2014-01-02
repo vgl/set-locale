@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SetLocale.Client.Web.Entities;
 
 namespace SetLocale.Client.Web.Models
 {
@@ -13,6 +14,7 @@ namespace SetLocale.Client.Web.Models
         public bool IsActive { get; set; }
 
         public List<TokenModel> Tokens { get; set; }
+        public int CreatedBy { get; set; }
 
         public AppModel()
         {
@@ -24,6 +26,20 @@ namespace SetLocale.Client.Web.Models
             return !string.IsNullOrEmpty(Name)
                    && !string.IsNullOrEmpty(Url)
                    && !string.IsNullOrEmpty(Description);
+
+        }
+
+        public static AppModel MapFromEntity(App entity)
+        {
+            var model = new AppModel();
+            model.Email = entity.UserEmail;
+            model.IsActive = entity.IsActive;
+            model.Name = entity.Name;
+            model.Description = entity.Description;
+
+
+            return model;
+
 
         }
     }

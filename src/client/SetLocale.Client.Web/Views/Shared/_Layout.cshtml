@@ -22,6 +22,9 @@
 
                 <ul class="nav navbar-nav">
 
+                    <li style="margin-left: -5px; margin-top: -2px;"><a href="/lang/change/tr"><img src="/public/img/flag/tr.png" alt="Türkçe" /></a></li>
+                    <li style="margin-left: -20px; margin-right: -20px; margin-top: -2px;"><a href="/lang/change/en"><img src="/public/img/flag/en.png" alt="English" /></a></li>
+
                     <li><a href="/">@Html.LocalizationString("app_name")</a></li>
 
                     <li class="dropdown">
@@ -29,7 +32,7 @@
                         <ul class="dropdown-menu">
 
 
-                            <li><a href="/key/my">@Html.LocalizationString("menu_words_my_words")</a></li>
+                            <li><a href="/user/keys">@Html.LocalizationString("menu_words_my_words")</a></li>
                             <li class="divider"></li>
 
                             <li><a href="/key/all">@Html.LocalizationString("menu_words_words")</a></li>
@@ -62,18 +65,27 @@
 
                 <ul class="nav navbar-nav navbar-right">
 
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Current User Name <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/user/login">@Html.LocalizationString("menu_user_login")</a></li>
-                            <li><a href="/user/logout">@Html.LocalizationString("menu_user_logout")</a></li>
-                            <li><a href="/user/new">@Html.LocalizationString("menu_user_sign_up")</a></li>
-                            <li><a href="/user/reset">@Html.LocalizationString("menu_user_reset")</a></li>
-                        </ul>
-                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="@GravatarHelper.GetGravatarURL(User.Identity.GetUserEmail(), 25)" alt="@User.Identity.GetUserFullName()" class="img-circle" />
+                                @User.Identity.GetUserFullName() <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/user/reset">@Html.LocalizationString("menu_user_reset")</a></li>
+                                <li><a href="/user/logout">@Html.LocalizationString("menu_user_logout")</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a href="/user/login">@Html.LocalizationString("menu_user_login")</a></li>
+                        <li><a href="/user/new">@Html.LocalizationString("menu_user_sign_up")</a></li>
+                    }
 
-                    <li style="margin-left: -10px; margin-top: -5px;"><a href="/lang/change/tr"><img src="/public/img/flag/tr.png" alt="Türkçe" /></a></li>
-                    <li style="margin-left: -20px; margin-top: -5px;"><a href="/lang/change/en"><img src="/public/img/flag/en.png" alt="English" /></a></li>
+
+
                 </ul>
 
                 <form class="navbar-form navbar-right">
@@ -82,7 +94,7 @@
 
             </div>
         </div>
-        
+
 
 
         <div class="row">

@@ -13,15 +13,19 @@ namespace SetLocale.Client.Web.Services
 {
     public interface IAppService
     {
-  
+        Task<int> Create(AppModel model);
+        Task<List<App>> GetAll();
+        Task<List<App>> GetByUserEmail(string email);
+        Task<List<App>> GetByUserId(int userId);
+        Task<App> Get(int appId);
     }
 
     public class AppService : IAppService
     {
-        private readonly IRepository<App> _AppRepository;
-        public AppService(IRepository<App> AppRepository)
+        private readonly IRepository<App> _appRepository;
+        public AppService(IRepository<App> appRepository)
         {
-            _AppRepository = AppRepository;
+            _appRepository = appRepository;
         }
 
         public Task<int> Create(AppModel model)
@@ -33,15 +37,17 @@ namespace SetLocale.Client.Web.Services
 
             var app = new App
             {
-                Id = model.Id,
-                OwnerEmail=model.Email,
-                Name=model.Name,
+                UserEmail = model.Email,
+                Name = model.Name,
+                Url = model.Url,
+                CreatedBy = model.CreatedBy,
                 Description = model.Description ?? string.Empty,
-                
+                Tokens = new List<Token>() { new Token{ CreatedBy = model.CreatedBy, Key = Guid.NewGuid().ToString().Replace("-",""),  UsageCount  = 0} }
+
             };
 
-            _AppRepository.Create(app);
-            _AppRepository.SaveChanges();
+            _appRepository.Create(app);
+            _appRepository.SaveChanges();
 
             if (app.Id < 1)
             {
@@ -53,18 +59,41 @@ namespace SetLocale.Client.Web.Services
 
         public Task<List<App>> GetAll()
         {
-            var apps = _AppRepository.FindAll().ToList();
+            var apps = _appRepository.FindAll().ToList();
             return Task.FromResult(apps);
         }
-        public Task<App> GetByOwnerEmail(string email)
+
+        public Task<List<App>> GetByUserEmail(string email)
         {
             if (!email.IsEmail())
             {
                 return null;
             }
 
-            var app = _AppRepository.FindOne(x => x.OwnerEmail == email);
-            return Task.FromResult(app);
+            var apps = _appRepository.FindAll(x => x.UserEmail == email).ToList();
+            return Task.FromResult(apps);
+        }
+
+        public Task<List<App>> GetByUserId(int userId)
+        {
+            if (userId < 1)
+            {
+                return null;
+            }
+
+            var apps = _appRepository.FindAll(x => x.CreatedBy == userId).ToList();
+            return Task.FromResult(apps);
+        }
+
+        public Task<App> Get(int appId)
+        {
+            if (appId < 1)
+            {
+                return null;
+            }
+
+            var apps = _appRepository.FindById(appId);
+            return Task.FromResult(apps);
         }
     }
 }

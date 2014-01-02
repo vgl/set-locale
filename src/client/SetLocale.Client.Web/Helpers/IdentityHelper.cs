@@ -14,5 +14,10 @@ namespace SetLocale.Client.Web.Helpers
         {
             return identity.IsAuthenticated ? identity.Name.Split('|')[1] : string.Empty;
         }
+
+        public static string GetUserEmail(this IIdentity identity)
+        {
+            return identity.IsAuthenticated ? identity.Name.Split('|')[2] : string.Empty;
+        }
     }
 }
