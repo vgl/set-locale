@@ -36,9 +36,9 @@ namespace SetLocale.Client.Web.Repositories
             AddWord(context, "menu_words", "Kelimeler Menüsü için.", "Kelimeler", "Words", "set-locale");
             AddWord(context, "menu_words_new_word", string.Empty, "Yeni Kelime", "New Word", "set-locale");
             AddWord(context, "menu_words_words", string.Empty, "Tüm Kelimeler", "All Words", "set-locale");
-            AddWord(context, "menu_words_my_words", string.Empty, "Kelimelerim", "My Words", "set-locale");
+            AddWord(context, "menu_words_my_words", string.Empty, "Kelimelerimasd", "My Words 12", "set-locale");
             AddWord(context, "menu_words_not_translated", string.Empty, "Çevrilmeyen Kelimeler", "Not Translated", "set-locale");
-
+              
             AddWord(context, "menu_apps", "Uygulamalar Menüsü için.", "Uygulamalar", "Applications", "set-locale");
             AddWord(context, "menu_apps_new_app", string.Empty, "Yeni Uygulama", "New Application", "set-locale");
             AddWord(context, "menu_apps_my_apps", string.Empty, "Uygulamalarım", "My Applications", "set-locale");

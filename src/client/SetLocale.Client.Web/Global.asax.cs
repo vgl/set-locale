@@ -158,6 +158,7 @@ namespace SetLocale.Client.Web
             #endregion
 
             #region WORDS
+             
 
             #region WORDS_Words
 
@@ -200,6 +201,12 @@ namespace SetLocale.Client.Web
             enTexts.Add("btn_menu_words_new_word_save", "Save");
 
             #endregion
+
+            #endregion
+
+            #region TAGS
+
+            enTexts.Add("menu_words_words_tag_key_listing", "Tag Key Listing");
 
             #endregion
 
@@ -395,6 +402,11 @@ namespace SetLocale.Client.Web
 
             #endregion
 
+            #region TAGLAR
+
+            trTexts.Add("menu_words_words_tag_key_listing", "Tag Kelime Listesi");
+
+            #endregion
 
             #endregion
 
