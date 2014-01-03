@@ -10,9 +10,8 @@
     <h3>@ViewBag.Title</h3>
     <hr />
 
-    <form action="/user/new" method="post">
-
-
+    <form id="frm" name="frm" action="/user/new" method="post">
+         
         <div class="row">
             <strong>@Html.LocalizationString("sign_up_name")</strong>
             <input type="text" class="form-control input-lg" name="name" id="name" value="@Model.Name" />
