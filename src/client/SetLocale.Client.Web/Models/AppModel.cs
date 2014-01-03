@@ -37,6 +37,7 @@ namespace SetLocale.Client.Web.Models
             model.IsActive = entity.IsActive;
             model.Name = entity.Name;
             model.Description = entity.Description;
+            model.Url = entity.Url;
 
             foreach (var token in entity.Tokens)
             {
@@ -49,8 +50,7 @@ namespace SetLocale.Client.Web.Models
             }
 
             return model;
-
-
+             
         }
 
         internal static object MapFromEntity(List<App> apps)
