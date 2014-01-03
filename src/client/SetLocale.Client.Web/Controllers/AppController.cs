@@ -11,14 +11,17 @@ namespace SetLocale.Client.Web.Controllers
     public class AppController : BaseController
     {
         private readonly IAppService _appService;
-        public AppController(IUserService userService, IFormsAuthenticationService formsAuthenticationService, IAppService appService)
+        public AppController(
+            IUserService userService, 
+            IFormsAuthenticationService formsAuthenticationService, 
+            IAppService appService)
             : base(userService, formsAuthenticationService)
         {
             _appService = appService;
         }
 
         [HttpGet]
-        public async Task<ActionResult> Detail(int id)
+        public async Task<ActionResult> Detail(int id = 0)
         {
             if (id < 1)
             {

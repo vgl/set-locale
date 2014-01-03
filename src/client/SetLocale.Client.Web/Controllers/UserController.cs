@@ -28,20 +28,14 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Apps(int id = 0)
         {
-            return View();
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> Apps(int userId = 0)
-        {
-            if (userId == 0)
+            if (id == 0)
             {
-                userId = User.Identity.GetUserId();
+                id = User.Identity.GetUserId();
             }
 
-            var apps = await _appService.GetByUserId(userId);
+            var apps = await _appService.GetByUserId(id);
             var model = new List<AppModel>();
             foreach (var app in apps)
             {
@@ -51,14 +45,14 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ViewResult> Words(int userId = 0)
+        public async Task<ViewResult> Words(int id = 0)
         {
-            if (userId == 0)
+            if (id == 0)
             {
-                userId = User.Identity.GetUserId();
+                id = User.Identity.GetUserId();
             }
 
-            var entities = await _wordService.GetByUserId(userId);
+            var entities = await _wordService.GetByUserId(id);
             var model = new List<WordModel>();
             foreach (var entity in entities)
             {
