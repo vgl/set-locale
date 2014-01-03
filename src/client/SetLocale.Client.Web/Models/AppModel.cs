@@ -49,13 +49,7 @@ namespace SetLocale.Client.Web.Models
                 });
             }
 
-            return model;
-<<<<<<< HEAD
-             
-=======
-
-
->>>>>>> 5d0b1a3fb63154552c88821572a1faa2e5d18ae9
+            return model; 
         }
     }
 }
