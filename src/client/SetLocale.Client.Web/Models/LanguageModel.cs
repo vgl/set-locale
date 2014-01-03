@@ -31,7 +31,7 @@
             return new LanguageModel
             {
                 Key = "az",
-                Name = "Türkçe",
+                Name = "Azərbaycan dili",
                 ImageUrl = "/public/img/flag/az.png"
             };
         }
@@ -41,7 +41,7 @@
             return new LanguageModel
             {
                 Key = "cn",
-                Name = "Türkçe",
+                Name = "中文 (zhōngwén)",
                 ImageUrl = "/public/img/flag/cn.png"
             };
         }
@@ -51,7 +51,7 @@
             return new LanguageModel
             {
                 Key = "fr",
-                Name = "Türkçe",
+                Name = "Français",
                 ImageUrl = "/public/img/flag/fr.png"
             };
         }
@@ -61,7 +61,7 @@
             return new LanguageModel
             {
                 Key = "gr",
-                Name = "Türkçe",
+                Name = "Deutsch",
                 ImageUrl = "/public/img/flag/gr.png"
             };
         }
@@ -71,7 +71,7 @@
             return new LanguageModel
             {
                 Key = "it",
-                Name = "Türkçe",
+                Name = "Italiano",
                 ImageUrl = "/public/img/flag/it.png"
             };
         }
@@ -81,7 +81,7 @@
             return new LanguageModel
             {
                 Key = "kz",
-                Name = "Türkçe",
+                Name = "Қазақ тілі",
                 ImageUrl = "/public/img/flag/kz.png"
             };
         }
@@ -91,7 +91,7 @@
             return new LanguageModel
             {
                 Key = "ru",
-                Name = "Türkçe",
+                Name = "Русский язык",
                 ImageUrl = "/public/img/flag/ru.png"
             };
         }
@@ -101,7 +101,7 @@
             return new LanguageModel
             {
                 Key = "sp",
-                Name = "Türkçe",
+                Name = "Español",
                 ImageUrl = "/public/img/flag/sp.png"
             };
         }
@@ -111,7 +111,7 @@
             return new LanguageModel
             {
                 Key = "tk",
-                Name = "Türkçe",
+                Name = "түркmенче (türkmençe)",
                 ImageUrl = "/public/img/flag/tk.png"
             };
         }
