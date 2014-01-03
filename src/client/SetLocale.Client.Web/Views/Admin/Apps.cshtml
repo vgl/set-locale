@@ -23,13 +23,17 @@
         <tbody>
             @foreach (var item in Model)
             {
-                 var val = item.IsActive ? Html.LocalizationString("menu_settings_apps_deactivate") : Html.LocalizationString("menu_settings_apps_activate");
-                 var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
+                var val = item.IsActive ? Html.LocalizationString("menu_settings_apps_deactivate") : Html.LocalizationString("menu_settings_apps_activate");
+                var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
                 <tr>
                     <td>
-                         <a type="button" class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
+                        <a type="button" class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
                     </td>
+<<<<<<< HEAD
                     <td>@item.Email</td> 
+=======
+                    <td>@item.Email</td>
+>>>>>>> 5d0b1a3fb63154552c88821572a1faa2e5d18ae9
                     <td><a href="/app/detail/@item.Id">@item.Name</a></td>
                     <td>@item.Description</td>
                     <td>@item.Url</td>
@@ -39,7 +43,7 @@
 
         </tbody>
     </table>
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 </div>
 <div class="modal fade" id="DeactivateModal" tabindex="-1" role="dialog" aria-labelledby="lblDeactivateModal" aria-hidden="true">
     <div class="modal-dialog">

@@ -16,7 +16,6 @@ namespace SetLocale.Client.Web.Services
         Task<List<Word>> GetByUserId(int userId);
         Task<Word> GetByKey(string key);
         Task<List<Word>> GetAll();
-
         Task<List<Word>> GetNotTranslated();
     }
 
