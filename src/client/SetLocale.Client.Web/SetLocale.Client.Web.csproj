@@ -162,7 +162,6 @@
     <Content Include="Views\User\Apps.cshtml" />
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Word\All.cshtml" />
-    <Content Include="Views\Word\My.cshtml" />
     <Content Include="Views\Word\NotTranslated.cshtml" />
     <Content Include="Views\Word\Detail.cshtml" />
     <Content Include="Views\User\Words.cshtml" />

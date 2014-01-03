@@ -12,7 +12,6 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th></th>
                 <th>@Html.LocalizationString("menu_words_not_translated_key")</th>
                 <th>@Html.LocalizationString("menu_words_not_translated_description")</th>
                 <th>@Html.LocalizationString("menu_words_not_translated_tag")</th>
@@ -23,15 +22,12 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        <a type="button" class="btn btn-sm btn-warning" href="/word/edit/@item.Key">@Html.LocalizationString("btn_menu_words_not_translated_edit")</a>
-                    </td>
                     <td><a href="/word/detail/@item.Key">@item.Key</a></td>
                     <td>@item.Description</td>
                     <td>
                         @foreach (var tag in item.Tags)
                         {
-                            <a class="label label-info" href="/tag/index/@tag.UrlName">@tag.Name</a>
+                            <a class="label label-info" href="/tag/detail/@tag.UrlName">@tag.Name</a>
                         }
                     </td>
                     <td>
