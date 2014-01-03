@@ -18,6 +18,7 @@ namespace SetLocale.Client.Web.Services
         Task<List<App>> GetByUserId(int userId);
         Task<App> Get(int appId);
         Task<bool> CreateToken(TokenModel token);
+        Task<bool> ChangeStatus(int appId, bool isActive);
     }
 
     public class AppService : IAppService
@@ -130,6 +131,26 @@ namespace SetLocale.Client.Web.Services
             {
                 return Task.FromResult(false);
             }
+
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> ChangeStatus(int appId, bool isActive)
+        {
+            if (appId < 1)
+            {
+                return Task.FromResult(false);
+            }
+
+            var app = _appRepository.FindOne(x => x.Id == appId);
+            if (app == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            app.IsActive = !isActive;
+            _appRepository.Update(app);
+            _appRepository.SaveChanges();
 
             return Task.FromResult(true);
         }

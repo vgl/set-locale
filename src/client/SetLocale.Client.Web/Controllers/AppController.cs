@@ -37,7 +37,7 @@ namespace SetLocale.Client.Web.Controllers
             var model = AppModel.MapFromEntity(entity);
             return View(model);
         }
-
+        
         [HttpGet]
         public ActionResult New()
         {
@@ -88,6 +88,19 @@ namespace SetLocale.Client.Web.Controllers
             result.Result = token;
 
             return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<JsonResult> ChangeStatus(int id, bool isActive)
+        {
+            var model = new ResponseModel { Ok = false };
+            if (id < 1)
+            {
+                return Json(model, JsonRequestBehavior.DenyGet);
+            }
+
+            model.Ok = await _appService.ChangeStatus(id, isActive);
+            return Json(model, JsonRequestBehavior.DenyGet);
         }
     }
 }
