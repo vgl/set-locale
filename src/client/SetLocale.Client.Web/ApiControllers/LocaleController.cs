@@ -1,12 +1,16 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+
 using SetLocale.Client.Web.Helpers;
+using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 
 namespace SetLocale.Client.Web.ApiControllers
 {
+    [RoutePrefix("api")]
     public class LocaleController : BaseApiController
     {
         private readonly IWordService _wordService;
@@ -16,7 +20,9 @@ namespace SetLocale.Client.Web.ApiControllers
             _wordService = wordService;
         }
 
-        [Route("api/locale/{lang}/{key}")]
+        [HttpGet,
+         EnableCors(origins: "*", headers: "*", methods: "GET"),
+         Route("locale/{lang}/{key}")]
         public async Task<IHttpActionResult> Get(string lang, string key)
         {
             var word = await _wordService.GetByKey(key);
@@ -36,13 +42,42 @@ namespace SetLocale.Client.Web.ApiControllers
             return BadRequest(string.Format("word found but has no translation for {0}", lang));
         }
 
-        [Route("api/locales/{lang}"),
-         EnableCors(origins: "*", headers: "*", methods: "GET")]
-        public IHttpActionResult GetAll(string lang)
+        [HttpGet,
+         EnableCors(origins: "*", headers: "*", methods: "GET"),
+         Route("locales/{lang}")]
+        public async Task<IHttpActionResult> GetAll(string lang)
         {
-            var items = new { lang, items = new { Key = "a", Value = "tr a" } };
+            var result = new List<WordItemModel>();
+            if (!LanguageModel.IsValidLanguageKey(lang))
+            {
+                return Ok(result);
+            }
 
-            return Ok(items);
+            var items = await _wordService.GetAll();
+            if (lang == LanguageModel.TR().Key)
+            {
+                foreach (var item in items)
+                {
+                    result.Add(new WordItemModel
+                    {
+                        Key = item.Key,
+                        Value = item.Translation_TR
+                    });
+                }
+            }
+            else if (lang == LanguageModel.EN().Key)
+            {
+                foreach (var item in items)
+                {
+                    result.Add(new WordItemModel
+                    {
+                        Key = item.Key,
+                        Value = item.Translation_EN
+                    });
+                }
+            }
+
+            return Ok(result);
         }
     }
 }

@@ -115,5 +115,18 @@
                 ImageUrl = "/public/img/flag/tk.png"
             };
         }
+
+        public static bool IsValidLanguageKey(string lang)
+        {
+            switch (lang)
+            {
+                case "tr":
+                    return true;
+                case "en":
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

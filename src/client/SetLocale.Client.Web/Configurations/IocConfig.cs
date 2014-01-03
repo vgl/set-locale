@@ -91,7 +91,9 @@ namespace SetLocale.Client.Web.Configurations
         {
             container.Register(
                 Component.For(typeof(IRepository<>)).ImplementedBy(typeof(Repository<>)).LifestyleTransient(),
+
                 Component.For<IFormsAuthenticationService>().ImplementedBy<FormsAuthenticationService>().LifestylePerWebRequest(),
+
                 Component.For<IUserService>().ImplementedBy<UserService>().LifestylePerWebRequest(),
                 Component.For<IAppService>().ImplementedBy<AppService>().LifestylePerWebRequest(),
                 Component.For<ITagService>().ImplementedBy<TagService>().LifestylePerWebRequest(),

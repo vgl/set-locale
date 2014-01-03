@@ -214,6 +214,7 @@
     <Compile Include="Models\AppModel.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\HomeStatsModel.cs" />
+    <Compile Include="Models\WordItemModel.cs" />
     <Compile Include="Models\WordModel.cs" />
     <Compile Include="Models\LanguageModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
