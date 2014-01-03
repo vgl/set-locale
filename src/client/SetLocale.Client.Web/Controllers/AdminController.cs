@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -53,6 +54,7 @@ namespace SetLocale.Client.Web.Controllers
                 return View(model);
             }
 
+            model.Password = Guid.NewGuid().ToString().Replace("-", string.Empty);
             model.Language = Thread.CurrentThread.CurrentUICulture.Name;
             var userId = await _userService.Create(model, SetLocaleRole.Translator.Value);
             if (userId == null)
@@ -60,6 +62,8 @@ namespace SetLocale.Client.Web.Controllers
                 model.Msg = "bir sorun oluştu...";
                 return View(model);
             }
+
+            //send mail to translator to welcome and ask for reset password
 
             return Redirect("/admin/users");
         }
