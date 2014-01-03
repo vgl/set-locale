@@ -20,6 +20,11 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Detail(int id)
         {
+            if (id < 1)
+            {
+                return RedirectToHome();
+            }
+
             var entity = await _appService.Get(id);
             if (entity == null)
             {

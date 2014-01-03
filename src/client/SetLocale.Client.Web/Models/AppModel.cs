@@ -52,22 +52,5 @@ namespace SetLocale.Client.Web.Models
 
 
         }
-
-        internal static object MapFromEntity(List<App> apps)
-        {
-            var model = new List<AppModel>();
-            foreach (var app in apps)
-            {
-                model.Add(new AppModel
-                {
-                    Email = app.UserEmail,
-                    IsActive = app.IsActive,
-                    Name = app.Name,
-                    Description = app.Description
-                    
-                });
-            }
-            return model;
-        }
     }
 }

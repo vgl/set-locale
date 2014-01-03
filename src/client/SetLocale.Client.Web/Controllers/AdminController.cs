@@ -90,13 +90,13 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Apps()
         {
-            List<App> apps;
-            apps = await _appService.GetAll();
-
-            var model = AppModel.MapFromEntity(apps);
-
+            var apps = await _appService.GetAll();
+            var model = new List<AppModel>();
+            foreach (var app in apps)
+            {
+                model.Add(AppModel.MapFromEntity(app));
+            }
             return View(model);
         }
     }
-
 }

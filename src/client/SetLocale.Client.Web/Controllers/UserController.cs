@@ -42,7 +42,11 @@ namespace SetLocale.Client.Web.Controllers
             }
 
             var apps = await _appService.GetByUserId(userId);
-            var model = AppModel.MapFromEntity(apps);
+            var model = new List<AppModel>();
+            foreach (var app in apps)
+            {
+                model.Add(AppModel.MapFromEntity(app));
+            }
             return View(model);
         }
 
