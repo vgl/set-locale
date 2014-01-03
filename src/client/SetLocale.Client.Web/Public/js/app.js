@@ -18,7 +18,7 @@ var allLanguages = [{ id: 'tr', text: 'Türkçe' },
 $(function () {
     $("a.btnAction").click(function() {
         var textBtn = "input#btnModalAction";
-
+        
         var id = $(this).data(textId);
         var isActive = $(this).data(textIsActive);
         

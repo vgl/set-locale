@@ -76,6 +76,8 @@
                 }).done(function (r) {
                     if (r && r.Ok) {
 
+                        console.log(r);
+
                         if (isActive) {
                             $("a[data-id='" + id + "']").removeClass("btn-warning").addClass("btn-success").data("isactive", false).html(textActivate);
                         }

@@ -45,7 +45,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <input type="button" class="close" data-dismiss="modal" aria-hidden="true" value="&times;" />
                 <h4 class="modal-title">@Html.LocalizationString("modal_title_users")</h4>
             </div>
             <div class="modal-body">
@@ -53,7 +53,7 @@
             </div>
             <div class="modal-footer">
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("btn_cancel")" />
-                <input type="button" class="btn" value="@Html.LocalizationString("btn_ok")" id="btnDeactivate" data-id="" data-isactive="" />
+                <input type="button" class="btn" value="@Html.LocalizationString("btn_ok")" id="btnModalAction" data-id="" data-isactive="" />
             </div>
         </div>
     </div>
@@ -66,7 +66,7 @@
             var textActivate = "@Html.LocalizationString("btn_activate")";
             var textDeactivate = "@Html.LocalizationString("btn_deactivate")";
            
-            $("input#btnDeactivate").click(function () {
+            $("input#btnModalAction").click(function () {
                 var id = $(this).data("id");
                 var isActive = $(this).data("isactive");
 
@@ -76,7 +76,6 @@
                     data: "id=" + id + "&isActive=" + isActive + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
                 }).done(function (r) {
                     if (r && r.Ok) {
-
                         if (isActive) {
                             $("a[data-id='" + id + "']").removeClass("btn-warning").addClass("btn-success").data("isactive", false).html(textActivate);
                         }
@@ -85,7 +84,6 @@
                         }
 
                         $("#DeactivateModal").modal('hide');
-
                     } else {
                         //todo:warning
                     }
