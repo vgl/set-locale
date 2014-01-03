@@ -41,7 +41,7 @@ namespace SetLocale.Client.Web.Models
             if (entity.Tags != null
                 && entity.Tags.Any())
             {
-                foreach (var tag in model.Tags)
+                foreach (var tag in entity.Tags)
                 {
                     model.Tags.Add(new TagModel
                     {
