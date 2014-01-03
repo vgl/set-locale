@@ -83,7 +83,7 @@ namespace SetLocale.Client.Web.Controllers
             return View(model);
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous]
         public async Task<ActionResult> New(UserModel model)
         {
             if (!model.IsValidForNewDeveloper())
