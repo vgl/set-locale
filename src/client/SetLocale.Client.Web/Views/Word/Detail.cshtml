@@ -91,11 +91,12 @@
                             btnEdit.click(fnEdit);
 
                             tdBtn.append(btnEdit);
-                            tdFlag.append($("<img class='flag' style='margin:5px;' alt='flag' src='/public/img/flag/" + lang + ".png'/>"));
+                            tdFlag.append($("<img class='flag' style='margin:5px;margin-left: 0;margin-top: 0;' alt='flag' src='/public/img/flag/" + lang + ".png'/>"));
 
                             $.each(allLanguages, function (i, l) {
                                 if (l.id == lang) {
                                     tdFlag.append($('<span>' + l.text + '</span>'));
+                                    translatedLanguages.push(l);
                                 }
                             });
                             tdTranslation.html(translation);
@@ -106,6 +107,8 @@
 
                             $('table tbody').append(tr);
 
+                            
+                            
                             $("input.btnNewTranslate").show();
                             $("div#dvForm").html('');
                         } else {
