@@ -16,6 +16,8 @@ namespace SetLocale.Client.Web.Services
         Task<List<Word>> GetByUserId(int userId);
         Task<Word> GetByKey(string key);
         Task<List<Word>> GetAll();
+
+        Task<List<Word>> GetNotTranslated();
     }
 
     public class WordService : IWordService
@@ -34,7 +36,7 @@ namespace SetLocale.Client.Web.Services
             }
 
             var slug = model.Key.ToUrlSlug();
-            if (_wordRepository.Set<Word>().Any(x=>x.Key == slug))
+            if (_wordRepository.Set<Word>().Any(x => x.Key == slug))
             {
                 return null;
             }
@@ -63,7 +65,7 @@ namespace SetLocale.Client.Web.Services
                 UpdatedBy = model.CreatedBy,
                 Tags = tags
             };
-            
+
             _wordRepository.Create(word);
             _wordRepository.SaveChanges();
 
@@ -77,7 +79,7 @@ namespace SetLocale.Client.Web.Services
 
         public Task<List<Word>> GetByUserId(int userId)
         {
-            var words = _wordRepository.FindAll(x => x.CreatedBy == userId).ToList();
+            var words = _wordRepository.FindAll(x => x.CreatedBy == userId, x => x.Tags).ToList();
             return Task.FromResult(words);
         }
 
@@ -85,6 +87,12 @@ namespace SetLocale.Client.Web.Services
         {
             var word = _wordRepository.FindOne(x => x.Key == key);
             return Task.FromResult(word);
+        }
+
+        public Task<List<Word>> GetNotTranslated()
+        {
+            var words = _wordRepository.FindAll(x => x.IsTranslated == false).ToList();
+            return Task.FromResult(words);
         }
 
         public Task<List<Word>> GetAll()

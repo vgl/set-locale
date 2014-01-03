@@ -48,11 +48,16 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ViewResult NotTranslated()
+        public  async Task<ViewResult> NotTranslated()
         {
-            //var model = _demoDataService.GetNotTranslatedKeys();
-            //return View(model);
-            return null;
+            var entities = await _wordService.GetNotTranslated();
+            var model = new List<WordModel>();
+            foreach (var entity in entities)
+            {
+                model.Add(WordModel.MapEntityToModel(entity));
+            }
+
+            return View(model);
         }
 
 
