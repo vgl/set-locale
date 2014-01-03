@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text;
 using SetLocale.Client.Web.Entities;
 using System.Collections.Generic;
 
@@ -14,6 +15,18 @@ namespace SetLocale.Client.Web.Models
         public List<LanguageModel> Languages { get; set; }
         public List<TranslationModel> Translations { get; set; }
         public int CreatedBy { get; set; }
+        public string LanguagesStr {
+            get
+            {
+                var str = new StringBuilder();
+                foreach (var language in Languages)
+                {
+                    str.AppendFormat("{{ id:'{1}',text:'{0}' }},", language.Name, language.Key);
+                }
+
+                return str.ToString();
+            }
+        }
 
         public WordModel()
         {

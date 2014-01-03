@@ -72,9 +72,9 @@
                 $.each(allLanguages, function(i, lang) {
 
                     var isExisting = false;
-                    $.each(translatedLanguages, function (j, l) {
-                        if (lang.id === l.id) {
-                            isExisting = true;
+                    $.each(translatedLanguages, function(j, l) {
+                        if (lang.id == l.id) {
+                            isExisting = false;
                             return;
                         }
                     });
@@ -83,8 +83,8 @@
                         inputLanguages.append('<option value="' + lang.id + '">' + lang.text + '</opiton>');
                     }
                 });
+                
 
-                $("div#dvTest").append(btnSave).append(inputLanguages);
 
 
             }
