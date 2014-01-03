@@ -8,7 +8,6 @@ using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Repositories;
 
-
 namespace SetLocale.Client.Web.Services
 {
     public interface IUserService

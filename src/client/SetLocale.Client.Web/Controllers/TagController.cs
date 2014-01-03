@@ -27,7 +27,7 @@ namespace SetLocale.Client.Web.Controllers
             var model = new List<WordModel>();
             foreach (var entity in entities)
             {
-                model.Add(TagModel.MapEntityToModel(entity));
+                model.Add(WordModel.MapEntityToModel(entity));
             }
             return View(model);
         }

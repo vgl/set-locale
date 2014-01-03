@@ -10,13 +10,22 @@
 <hr />
 
 <div class="row">
-    @foreach (var tag in Model.Tags)
-    {
-        <a class="label label-info" href="/tag/index/@tag.UrlName">@tag.Name</a>
+    <p>
+        @Model.Description
+    </p>
 
-       }
-<input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" value="@Html.LocalizationString("btn_words_new_word")" data-id="@Model.Key" />
-    @Html.AntiForgeryToken()
+    <p>
+        @foreach (var tag in Model.Tags)
+        {
+            <a class="label label-info" href="/tag/index/@tag.UrlName">@tag.Name</a>
+        }
+        
+        <input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
+        @Html.AntiForgeryToken()
+    </p>
+
+
+
 </div>
 
 
@@ -35,7 +44,7 @@
                 {
                     <tr>
                         <td>
-                            <a type="button" class="btn btn-sm btn-warning" href="/word/edit/@Model.Key">@Html.LocalizationString("edit")</a>
+                            <a type="button" class="btn btn-sm btn-warning" href="/word/edit/@Model.Key">@Html.LocalizationString("btn_edit")</a>
                         </td>
                         <td> <img src="@item.Language.ImageUrl" alt="@item.Language.Name" /> @item.Language.Name</td>
                         <td>@item.Value</td>
@@ -50,87 +59,87 @@
 
 {
 
-<link href="/public/css/select2.css" rel="stylesheet"/>
-<script src="/public/js/select2.js"></script>
+    <link href="/public/css/select2.css" rel="stylesheet" />
+    <script src="/public/js/select2.js"></script>
 
     <script>
         $(function () {
 
-      
+
 
             $("input.btnNewTranslate").click(function () {
-                var keyId = $(this).data("id");               
-                        var row = $("<tr />");
-                        var url = "#";
-                        var inputSaveButton = $("<input />");
-                        
-                        inputSaveButton.attr("class","btn btn-sm btn-primary btnAction");
-                        inputSaveButton.attr("type", "Button");
-                        inputSaveButton.attr("data-id", keyId);                       
-                        inputSaveButton.attr("value",'@Html.LocalizationString("btn_menu_settings_new_translator_save")');
-                        inputSaveButton.click(function () {
-                           
-                            inputSaveButton.remove();
-                            url = "/word/edit/@Model.Key";
-                            var aEditButton = $("<a />");
-                            aEditButton.addClass("btn btn-sm btn-warning btnEdit");
-                            aEditButton.attr("data-id", keyId);
-                            aEditButton.attr("href", url);
-                            aEditButton.html('@Html.LocalizationString("btn_menu_settings_new_translator_edit")');
-                            tdSaveButton.append(aEditButton);
-                            
-                            var e = document.getElementById("e1");
-                            var selectedvalue = e.options[e.selectedIndex].value;
-                            var img = "<img class='flag' src='../../public/img/flag/" + selectedvalue + ".png'/>";
-                            var strUser = e.options[e.selectedIndex].text;
-                            
-                            tdLanguage.html(img+ " " +strUser);
-                            
-                            var inputval = $('input[name="tbCeviri"]').val();
-                            
-                            
-                            tdTranslation.html(inputval);
+                var keyId = $(this).data("id");
+                var row = $("<tr />");
+                var url = "#";
+                var inputSaveButton = $("<input />");
 
-                        });
+                inputSaveButton.attr("class", "btn btn-sm btn-primary btnAction");
+                inputSaveButton.attr("type", "Button");
+                inputSaveButton.attr("data-id", keyId);
+                inputSaveButton.attr("value", '@Html.LocalizationString("btn_save")');
+                inputSaveButton.click(function () {
 
-                        var tdSaveButton = $("<td />");
-                        tdSaveButton.append(inputSaveButton);
-                        row.append(tdSaveButton);
+                    inputSaveButton.remove();
+                    url = "/word/edit/@Model.Key";
+                    var aEditButton = $("<a />");
+                    aEditButton.addClass("btn btn-sm btn-warning btnEdit");
+                    aEditButton.attr("data-id", keyId);
+                    aEditButton.attr("href", url);
+                    aEditButton.html('@Html.LocalizationString("btn_edit")');
+                    tdSaveButton.append(aEditButton);
 
-                        var tdLanguage = $(document.createElement('td')).attr("id", 'TextBoxDiv' );
-                        tdLanguage.after().html('<select id="e1" ><option value="tr">Türkçe</option><option value="az">Azərbaycan dili</option><option value="cn">中文 (zhōngwén)</option><option value="en">English</option><option value="sp">Español</option><option value="fr">Français</option><option value="ru">Русский язык</option><option value="gr">Deutsch</option><option value="it">Italiano</option><option value="tk">түркmенче (türkmençe)</option><option value="kz">Қазақ тілі</option>');
+                    var e = document.getElementById("e1");
+                    var selectedvalue = e.options[e.selectedIndex].value;
+                    var img = "<img class='flag' src='../../public/img/flag/" + selectedvalue + ".png'/>";
+                    var strUser = e.options[e.selectedIndex].text;
 
-                        tdLanguage.appendTo(row);
-                       
+                    tdLanguage.html(img + " " + strUser);
 
-                        
-                        
-                        var tdTranslation = $("<td />");
-                        var tbTranslation = $("<input />");
-                        tbTranslation.attr("type", "Text");
-                        tbTranslation.attr("name", "tbCeviri");
-                        tdTranslation.append(tbTranslation);
-                        row.append(tdTranslation);
+                    var inputval = $('input[name="tbCeviri"]').val();
 
-                        $('table tbody').append(row);
 
-                        function format(state) {
-                            if (!state.id) return state.text; // optgroup
-                            return "<img class='flag' src='../../public/img/flag/" + state.id.toLowerCase() + ".png'/>" + state.text;
-                        }
+                    tdTranslation.html(inputval);
 
-                        $("#e1").select2({
-                            formatResult: format,
-                            formatSelection: format,
-                            escapeMarkup: function (m) { return m; }
-                        });
-         
-              
+                });
+
+                var tdSaveButton = $("<td />");
+                tdSaveButton.append(inputSaveButton);
+                row.append(tdSaveButton);
+
+                var tdLanguage = $(document.createElement('td')).attr("id", 'TextBoxDiv');
+                tdLanguage.after().html('<select id="e1" ><option value="tr">Türkçe</option><option value="az">Azərbaycan dili</option><option value="cn">中文 (zhōngwén)</option><option value="en">English</option><option value="sp">Español</option><option value="fr">Français</option><option value="ru">Русский язык</option><option value="gr">Deutsch</option><option value="it">Italiano</option><option value="tk">түркmенче (türkmençe)</option><option value="kz">Қазақ тілі</option>');
+
+                tdLanguage.appendTo(row);
+
+
+
+
+                var tdTranslation = $("<td />");
+                var tbTranslation = $("<input />");
+                tbTranslation.attr("type", "Text");
+                tbTranslation.attr("name", "tbCeviri");
+                tdTranslation.append(tbTranslation);
+                row.append(tdTranslation);
+
+                $('table tbody').append(row);
+
+                function format(state) {
+                    if (!state.id) return state.text; // optgroup
+                    return "<img class='flag' src='../../public/img/flag/" + state.id.toLowerCase() + ".png'/>" + state.text;
+                }
+
+                $("#e1").select2({
+                    formatResult: format,
+                    formatSelection: format,
+                    escapeMarkup: function (m) { return m; }
+                });
+
+
             });
             $("a.btnEdit").click(function () {
                 url = "/word/edit/@Model.Key";
             });
-        
+
         });
     </script>
 }
