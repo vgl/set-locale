@@ -59,16 +59,27 @@
 
     <script>
         $(function() {
-
             var translatedLanguages = [@Html.Raw(Model.LanguagesStr)];
-
-
+            
             function addNewTranslationRow() {
                 var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
                 btnSave.val('@Html.LocalizationString("btn_save")');
                 btnSave.data('id', '@Model.Key');
 
-                var inputLanguages = $('<select id="selLanguages" />');
+                btnSave.click(function() {
+                    var lang = $("select#selLanguages").val();
+                    var translation = $("input#txtTranslation").val();
+
+                    console.log('@Model.Key' + ' ' + lang + ' ' + translation);
+                    
+
+                    //save success
+                    $("input.btnNewTranslate").show();
+
+                });
+
+
+                var inputLanguages = $('<select id="selLanguages" name="selLanguages" />');
                 $.each(allLanguages, function(i, lang) {
 
                     var isExisting = false;
@@ -84,7 +95,12 @@
                     }
                 });
 
-                $("div#dvTest").append(btnSave).append(inputLanguages);
+                var inputTranslation = $('<input type="text" id="txtTranslation" name="txtTranslation" />');
+
+                $("div#dvTest").append(btnSave).append(inputLanguages).append(inputTranslation);
+
+
+                
 
 
             }
@@ -92,10 +108,11 @@
 
             $("input.btnNewTranslate").click(function() {
 
+                $(this).hide();
                 addNewTranslationRow();
 
 
-                var keyId = $(this).data("id");
+                @*var keyId = $(this).data("id");
                 var row = $("<tr />");
                 var url = "#";
                 var inputSaveButton = $("<input />");
@@ -119,7 +136,7 @@
 
                     //                    $("select#selLanguages").
                     var selectedvalue = e.options[e.selectedIndex].value;
-                    var img = "<img class='flag' src='../../public/img/flag/" + selectedvalue + ".png'/>";
+                    var img = "<img class='flag' src='/public/img/flag/" + selectedvalue + ".png'/>";
                     var strUser = e.options[e.selectedIndex].text;
 
                     tdLanguage.html(img + " " + strUser);
@@ -153,25 +170,20 @@
                 tdTranslation.append(tbTranslation);
                 row.append(tdTranslation);
 
-                $('table tbody').append(row);
+                $('table tbody').append(row);*@
+                
+
+
+
+
 
                 function format(state) {
-                    if (!state.id) return state.text; // optgroup
-                    return "<img class='flag' src='../../public/img/flag/" + state.id.toLowerCase() + ".png'/>" + state.text;
+                    if (!state.id) return state.text; 
+                    return "<img class='flag' alt='flag' style='margin:5px;' src='/public/img/flag/" + state.id.toLowerCase() + ".png'/>" + state.text;
                 }
 
-                $("#e1").select2({
-                    formatResult: format,
-                    formatSelection: format,
-                    escapeMarkup: function(m) { return m; }
-                });
-
-
+                $("select#selLanguages").select2({formatResult: format,formatSelection: format,escapeMarkup: function(m) { return m; }});
             });
-            $("a.btnEdit").click(function() {
-                url = "/word/edit/@Model.Key";
-            });
-
         });
     </script>
 }
