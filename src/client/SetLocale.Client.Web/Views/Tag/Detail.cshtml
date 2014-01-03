@@ -1,1 +1,44 @@
-﻿
+﻿@using SetLocale.Client.Web.Helpers 
+@using SetLocale.Client.Web.Models
+@model List<SetLocale.Client.Web.Models.WordModel>
+
+@{
+    ViewBag.Title = string.Format("{0} {1}", Model.First().Tags.First().Name.ToString(), Html.LocalizationString("menu_words_words_tag_key_listing"));
+}
+
+<h3>@ViewBag.Title</h3>
+<hr />
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>@Html.LocalizationString("words_word_key")</th>
+                <th>@Html.LocalizationString("description")</th>
+                <th>@Html.LocalizationString("tag")</th>
+                <th>@Html.LocalizationString("translated_language")</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><a href="/word/detail/@item.Key">@item.Key</a></td>
+                    <td>@item.Description</td>
+                    <td>
+                        @foreach (var tag in item.Tags)
+                        {
+                            <a class="label label-info" href="/tag/detail/@tag.UrlName">@tag.Name</a>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var lang in item.Languages)
+                        { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
