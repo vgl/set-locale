@@ -2,7 +2,7 @@
 @model List<SetLocale.Client.Web.Models.AppModel>
 
 @{
-    ViewBag.Title = Html.LocalizationString("user_apps");
+    ViewBag.Title = Html.LocalizationString("menu_user_apps");
 }
 
 <h3>@ViewBag.Title</h3>
@@ -13,17 +13,17 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@Html.LocalizationString("user_apps_name")</th>
-                <th>@Html.LocalizationString("user_apps_description")</th>
-                <th>@Html.LocalizationString("user_apps_url")</th>
-                <th>@Html.LocalizationString("user_apps_usage_count")</th>
+                <th>@Html.LocalizationString("application_name")</th>
+                <th>@Html.LocalizationString("description")</th>
+                <th>@Html.LocalizationString("url")</th>
+                <th>@Html.LocalizationString("usage_count")</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                var val = item.IsActive ? Html.LocalizationString("user_apps_deactivate") : Html.LocalizationString("user_apps_activate");
-                  var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
+                var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
+                var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
                 <tr>
                     <td>
                          <a type="button" class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
@@ -34,7 +34,6 @@
                     <td>@item.UsageCount</td>
                 </tr>
             }
-
         </tbody>
     </table>
  @Html.AntiForgeryToken()
@@ -47,11 +46,11 @@
                 <h4 class="modal-title">@Html.LocalizationString("modal_title_apps")</h4>
             </div>
             <div class="modal-body">
-                @Html.LocalizationString("modal_body_users")
+                @Html.LocalizationString("modal_body_apps")
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("Cancel")" />
-                <input type="button" class="btn btn-primary" value="@Html.LocalizationString("Ok")" id="btnDeactivate" data-id="" data-isactive="" />
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("btn_cancel")" />
+                <input type="button" class="btn" value="@Html.LocalizationString("btn_ok")" id="btnModalAction" data-id="" data-isactive="" />
             </div>
         </div>
     </div>
@@ -61,24 +60,16 @@
 {
     <script>
         $(function () {
-            var textActivate = "@Html.LocalizationString("user_apps_activate")";
-            var textDeactivate = "@Html.LocalizationString("user_apps_deactivate")";
+            var textActivate = "@Html.LocalizationString("btn_activate")";
+            var textDeactivate = "@Html.LocalizationString("btn_deactivate")";
 
-            $("a.btnAction").click(function () {
-                var id = $(this).data("id");
-                var isActive = $(this).data("isactive");
-
-                $("input#btnDeactivate").data("id", id)
-                                        .data("isactive", isActive);
-            });
-
-            $("input#btnDeactivate").click(function () {
+            $("input#btnModalAction").click(function () {
                 var id = $(this).data("id");
                 var isActive = $(this).data("isactive");
                 console.log(id);
                 console.log(isActive);
                 $.ajax({
-                    url: "/Ajax/ChangeAppStatus",
+                    url: "/App/ChangeStatus",
                     type: "POST",
                     data: "id=" + id + "&isActive=" + isActive + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
                 }).done(function (r) {

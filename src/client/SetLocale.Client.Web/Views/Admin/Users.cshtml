@@ -63,26 +63,9 @@
 {
     <script>
         $(function () {
-
             var textActivate = "@Html.LocalizationString("btn_activate")";
             var textDeactivate = "@Html.LocalizationString("btn_deactivate")";
-
-            $("a.btnAction").click(function () {
-                var id = $(this).data("id");
-                var isActive = $(this).data("isactive");
-
-                $("input#btnDeactivate").removeClass("btn-danger").removeClass("btn-success");
-                if (isActive) {
-                    $("input#btnDeactivate").addClass("btn-danger");
-                } else {
-                    $("input#btnDeactivate").addClass("btn-success");
-                }
-
-                $("input#btnDeactivate").data("id", id)
-                                        .data("isactive", isActive);
-                
-
-            });
+           
             $("input#btnDeactivate").click(function () {
                 var id = $(this).data("id");
                 var isActive = $(this).data("isactive");
