@@ -10,12 +10,12 @@
     <h3>@ViewBag.Title</h3>
     <hr />
 
-    <form action="/app/new" method="post">
+    <form id="frm" name="frm" action="/app/new" method="post">
 
 
         <div class="row">
             <strong>@Html.LocalizationString("menu_apps_new_app_app_name")</strong>
-            <input type="text" class="form-control input-lg" name="Name" id="Name" value="@Model.Name" />
+            <input type="text" class="form-control input-lg" name="name" id="name" value="@Model.Name" />
         </div>
 
         <div class="row">
@@ -48,10 +48,10 @@
         $(function () {
             $("form#frm").validate({
                 rules: {
-                    key: {
+                    name: {
                         required: true
                     },
-                    tag: {
+                    url: {
                         required: true
                     },
                     description: {
@@ -59,8 +59,8 @@
                       }
                 },
                 messages: {
-                    key: "*", 
-                    tag: "*",
+                    name: "*",
+                    url: "*",
                     description: "*"
                 }
             });

@@ -10,9 +10,8 @@
     <h3>@ViewBag.Title</h3>
     <hr />
 
-    <form action="/word/new" method="post">
-
-
+    <form id="frm" name="frm" action="/word/new" method="post">
+         
         <div class="row">
             <strong>@Html.LocalizationString("menu_words_new_word_key")</strong>
             <input type="text" class="form-control input-lg" name="key" id="key" value="@Model.Key" />
@@ -48,12 +47,14 @@
         $(function () {
             $("form#frm").validate({
                 rules: {
-                    appName: { required: true },
-                    url: { required: true }
+                    key: { required: true },
+                    tag: { required: true },
+                    description: { required: true }
                 },
                 messages: {
-                    appName: "*",
-                    url: "*"
+                    key: "*",
+                    tag: "*",
+                    description: "*"
                 }
             });
         });
