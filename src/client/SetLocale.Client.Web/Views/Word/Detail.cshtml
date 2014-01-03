@@ -44,7 +44,7 @@
                 {
                     <tr>
                         <td>
-                            <a type="button" class="btn btn-sm btn-warning" href="/word/edit/@Model.Key">@Html.LocalizationString("btn_edit")</a>
+                            <input type="button" class="btn btn-sm btn-warning btnEdit" value="@Html.LocalizationString("btn_edit")" data-lang="@item.Language.Key" />
                         </td>
                         <td> <img src="@item.Language.ImageUrl" alt="@item.Language.Name" /> @item.Language.Name</td>
                         <td>@item.Value</td>
@@ -87,9 +87,12 @@
                             var tdFlag = $('<td />');
                             var tdTranslation = $('<td />');
 
-                            tdBtn.append($('<input type="button" class="btn btn-sm btn-warning btnEdit" data-lang="' + lang + '" value="@Html.LocalizationString("btn_edit")" />'));
-                            tdFlag.append($("<img class='flag' alt='flag' src='/public/img/flag/" + lang + ".png'/>"));
-                            
+                            var btnEdit = $('<input type="button" class="btn btn-sm btn-warning btnEdit" data-lang="' + lang + '" value="@Html.LocalizationString("btn_edit")" />');
+                            btnEdit.click(fnEdit);
+
+                            tdBtn.append(btnEdit);
+                            tdFlag.append($("<img class='flag' style='margin:5px;' alt='flag' src='/public/img/flag/" + lang + ".png'/>"));
+
                             $.each(allLanguages, function (i, l) {
                                 if (l.id == lang) {
                                     tdFlag.append($('<span>' + l.text + '</span>'));
@@ -127,7 +130,7 @@
                     }
                 });
 
-                var inputTranslation = $('<input type="text" id="txtTranslation" class="form-control col-4" name="txtTranslation" />');
+                var inputTranslation = $('<input type="text" id="txtTranslation" name="txtTranslation" class="form-control col-4" />');
 
                 var dv1 = $('<div style="margin:5px;float:left;" />');
                 var dv2 = $('<div style="margin:5px;float:left;" />');
@@ -136,8 +139,46 @@
                 dv1.append(inputLanguages);
                 dv2.append(inputTranslation);
                 dv3.append(btnSave);
-                
+
                 $("div#dvForm").append(dv1).append(dv2).append('<br style="display:block;clear:both;"/>').append(dv3);
+            }
+
+            function prepareEditRow(btn) {
+                var lang = btn.data("lang");
+                var td = btn.parent().parent().children(":last");
+
+                var inputTranslation = $('<input type="text" id="txtEdit" name="txtEdit" class="form-control col-4" data-lang="' + lang + '" />');
+                inputTranslation.val(td.html());
+
+                td.html("");
+                td.append(inputTranslation);
+            }
+
+            function prepareDataShowingRow(btn) {
+                var lang = btn.data("lang");
+                var translations = $("input#txtEdit");
+
+                var translation = "";
+                $.each(translations, function (i, txt) {
+                    if ($(txt).data("lang") == lang) {
+                        translation = $(txt).val();
+                        return;
+                    }
+                });
+
+                var td = btn.parent().parent().children(":last");
+
+                $.ajax({
+                    url: "/Word/Translate",
+                    type: "POST",
+                    data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
+                }).done(function (r) {
+                    if (r && r.Ok) {
+                        td.html(translation);
+                    } else {
+                        //todo:warning
+                    }
+                });
             }
 
             $("input.btnNewTranslate").click(function () {
@@ -152,6 +193,22 @@
 
                 $("select#selLanguages").select2({ formatResult: format, formatSelection: format, escapeMarkup: function (m) { return m; } });
             });
+
+            var fnEdit = function () {
+                if ($(this).hasClass("btn-warning")) {
+                    $(this).removeClass("btn-warning").addClass("btn-primary");
+                    $(this).val("@Html.LocalizationString("btn_save")");
+
+                    prepareEditRow($(this));
+                } else if ($(this).hasClass("btn-primary")) {
+                    $(this).removeClass("btn-primary").addClass("btn-warning");
+                    $(this).val("@Html.LocalizationString("btn_edit")");
+
+                    prepareDataShowingRow($(this));
+                }
+            };
+
+            $("input.btnEdit").click(fnEdit);
         });
     </script>
 }
