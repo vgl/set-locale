@@ -108,5 +108,22 @@ namespace SetLocale.Client.Web.Controllers
 
             return View(model);
         }
+
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<JsonResult> Translate(string key, string language, string translation)
+        {
+            var model = new ResponseModel { Ok = false };
+
+            if (string.IsNullOrEmpty(key)
+                || string.IsNullOrEmpty(language)
+                || string.IsNullOrEmpty(translation))
+            {
+                return Json(model, JsonRequestBehavior.DenyGet);
+            }
+
+            model.Ok = await _wordService.Translate(key, language, translation);
+            return Json(model, JsonRequestBehavior.DenyGet);
+        }
     }
 }

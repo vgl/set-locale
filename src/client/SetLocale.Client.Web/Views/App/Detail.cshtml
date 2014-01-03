@@ -14,10 +14,12 @@
     </p>
 </div>
 <div class="row">
-    <input type="button" id="btnNewToken" class="btn btn-sm btn-primary pull-right" value="@Html.LocalizationString("btn_create_new_token")" data-id="@Model.Id" />
-    @Html.AntiForgeryToken()
+    @if (Model.IsActive)
+    {
+        <input type="button" id="btnNewToken" class="btn btn-sm btn-primary pull-right" value="@Html.LocalizationString("btn_create_new_token")" data-id="@Model.Id" />
+        @Html.AntiForgeryToken()
+    }
 </div>
-
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
         <thead>
@@ -76,7 +78,7 @@
             };
 
             $("a.btnAct").click(fnBtnActionClick);
-            
+
             $("input#btnDelete").click(function () {
                 var token = $(this).data("id");
 
@@ -98,7 +100,7 @@
             $("input#btnNewToken").click(function () {
                 var appId = $(this).data("id");
                 $("input#btnDelete").data("id", appId);
-                
+
                 $.ajax({
                     url: "/app/newtoken",
                     type: "POST",
@@ -108,7 +110,7 @@
                         var row = $("<tr />");
                         var url = "#DeleteModal";
                         var aDeleteButton = $("<a />");
-                        
+
                         aDeleteButton.addClass("btn btn-sm btn-warning btnAct");
                         aDeleteButton.attr("data-toggle", "modal");
                         aDeleteButton.attr("data-id", r.Result.Token);
@@ -141,7 +143,7 @@
             });
 
 
-            
+
         });
     </script>
 }

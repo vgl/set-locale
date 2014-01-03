@@ -11,7 +11,7 @@ namespace SetLocale.Client.Web.Helpers
             return Regex.Replace(
                 Regex.Replace(
                     Regex.Replace(
-                        text.Trim().ToLower()
+                        text.Trim().ToLowerInvariant()
                             .Replace("ö", "o")
                             .Replace("ç", "c")
                             .Replace("ş", "s")

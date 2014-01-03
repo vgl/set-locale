@@ -103,6 +103,18 @@ namespace SetLocale.Client.Web.Models
 
                     model.Languages.Add(LanguageModel.AZ());
                 }
+
+                if (!string.IsNullOrEmpty(entity.Translation_SP))
+                {
+                    model.Translations.Add(new TranslationModel
+                    {
+                        Key = entity.Key,
+                        Value = entity.Translation_SP,
+                        Language = LanguageModel.SP()
+                    });
+
+                    model.Languages.Add(LanguageModel.SP());
+                }
             }
 
             return model;

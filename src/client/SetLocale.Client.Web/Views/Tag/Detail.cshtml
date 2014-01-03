@@ -1,9 +1,8 @@
-﻿@using SetLocale.Client.Web.Helpers 
-@using SetLocale.Client.Web.Models
+﻿@using SetLocale.Client.Web.Helpers
 @model List<SetLocale.Client.Web.Models.WordModel>
 
 @{
-    ViewBag.Title = string.Format("{0} {1}", Model.First().Tags.First().Name.ToString(), Html.LocalizationString("menu_words_words_tag_key_listing"));
+    ViewBag.Title = string.Format("{0} {1}", ViewBag.Key, Html.LocalizationString("menu_words_words_tag_key_listing"));
 }
 
 <h3>@ViewBag.Title</h3>
@@ -20,25 +19,27 @@
             </tr>
         </thead>
         <tbody>
-            
-            @foreach (var item in Model)
+            @if (Model != null
+                 && Model.Any())
             {
-                <tr>
-                    <td><a href="/word/detail/@item.Key">@item.Key</a></td>
-                    <td>@item.Description</td>
-                    <td>
-                        @foreach (var tag in item.Tags)
-                        {
-                            <a class="label label-info" href="/tag/detail/@tag.UrlName">@tag.Name</a>
-                        }
-                    </td>
-                    <td>
-                        @foreach (var lang in item.Languages)
-                        { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
-                    </td>
-                </tr>
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td><a href="/word/detail/@item.Key">@item.Key</a></td>
+                        <td>@item.Description</td>
+                        <td>
+                            @foreach (var tag in item.Tags)
+                            {
+                                <a class="label label-info" href="/tag/detail/@tag.UrlName">@tag.Name</a>
+                            }
+                        </td>
+                        <td>
+                            @foreach (var lang in item.Languages)
+                            { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
+                        </td>
+                    </tr>
+                }
             }
-
         </tbody>
     </table>
 </div>

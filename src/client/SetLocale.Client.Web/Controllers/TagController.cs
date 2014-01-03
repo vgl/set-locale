@@ -23,6 +23,7 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public async Task<ViewResult> Detail(string id = "set-locale")
         {
+            ViewBag.Key = id;
             var entities = await _tagService.GetWords(id);
             var model = new List<WordModel>();
             foreach (var entity in entities)

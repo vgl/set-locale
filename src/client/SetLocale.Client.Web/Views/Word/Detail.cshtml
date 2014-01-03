@@ -16,7 +16,7 @@
     <p>
         @foreach (var tag in Model.Tags)
         {
-            <a class="label label-info" href="/tag/index/@tag.UrlName">@tag.Name</a>
+            <a class="label label-info" href="/tag/detail/@tag.UrlName">@tag.Name</a>
         }
 
         <input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
@@ -58,29 +58,42 @@
     <script src="/public/js/select2.js"></script>
 
     <script>
-        $(function() {
+        $(function () {
             var translatedLanguages = [@Html.Raw(Model.LanguagesStr)];
-            
+
             function addNewTranslationRow() {
                 var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
                 btnSave.val('@Html.LocalizationString("btn_save")');
                 btnSave.data('id', '@Model.Key');
 
-                btnSave.click(function() {
+                btnSave.click(function () {
                     var lang = $("select#selLanguages").val();
                     var translation = $("input#txtTranslation").val();
 
                     console.log('@Model.Key' + ' ' + lang + ' ' + translation);
-                    
 
-                    //save success
-                    $("input.btnNewTranslate").show();
+                    $.ajax({
+                        url: "/Word/Translate",
+                        type: "POST",
+                        data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
+                    }).done(function (r) {
+                        if (r && r.Ok) {
 
+
+                            console.log(r);
+
+
+
+                            $("input.btnNewTranslate").show();
+                        } else {
+                            //todo:warning
+                        }
+                    });
                 });
 
 
                 var inputLanguages = $('<select id="selLanguages" name="selLanguages" />');
-                $.each(allLanguages, function(i, lang) {
+                $.each(allLanguages, function (i, lang) {
 
                     var isExisting = false;
                     $.each(translatedLanguages, function (j, l) {
@@ -100,13 +113,13 @@
                 $("div#dvTest").append(btnSave).append(inputLanguages).append(inputTranslation);
 
 
-                
+
 
 
             }
 
 
-            $("input.btnNewTranslate").click(function() {
+            $("input.btnNewTranslate").click(function () {
 
                 $(this).hide();
                 addNewTranslationRow();
@@ -171,18 +184,18 @@
                 row.append(tdTranslation);
 
                 $('table tbody').append(row);*@
-                
+
 
 
 
 
 
                 function format(state) {
-                    if (!state.id) return state.text; 
+                    if (!state.id) return state.text;
                     return "<img class='flag' alt='flag' style='margin:5px;' src='/public/img/flag/" + state.id.toLowerCase() + ".png'/>" + state.text;
                 }
 
-                $("select#selLanguages").select2({formatResult: format,formatSelection: format,escapeMarkup: function(m) { return m; }});
+                $("select#selLanguages").select2({ formatResult: format, formatSelection: format, escapeMarkup: function (m) { return m; } });
             });
         });
     </script>
