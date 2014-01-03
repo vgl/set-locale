@@ -19,6 +19,7 @@ namespace SetLocale.Client.Web.Services
         Task<App> Get(int appId);
         Task<bool> CreateToken(TokenModel token);
         Task<bool> ChangeStatus(int appId, bool isActive);
+        Task<bool> DeleteToken(string token, int deletedBy);
     }
 
     public class AppService : IAppService
@@ -151,6 +152,24 @@ namespace SetLocale.Client.Web.Services
             app.IsActive = !isActive;
             _appRepository.Update(app);
             _appRepository.SaveChanges();
+
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> DeleteToken(string token, int deletedBy)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return Task.FromResult(false);
+            }
+
+            if (!_tokenRepository.Set<Token>().Any(x=>x.Key == token))
+            {
+                return Task.FromResult(false);
+            }
+
+            _tokenRepository.SoftDelete(x=>x.Key == token, deletedBy);
+            _tokenRepository.SaveChanges();
 
             return Task.FromResult(true);
         }

@@ -102,5 +102,18 @@ namespace SetLocale.Client.Web.Controllers
             model.Ok = await _appService.ChangeStatus(id, isActive);
             return Json(model, JsonRequestBehavior.DenyGet);
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<JsonResult> DeleteToken( string token)
+        {
+            var model = new ResponseModel { Ok = false };
+            if (string.IsNullOrEmpty(token))
+            {
+                return Json(model, JsonRequestBehavior.DenyGet);
+            }
+
+            model.Ok = await _appService.DeleteToken(token, User.Identity.GetUserId());
+            return Json(model, JsonRequestBehavior.DenyGet);
+        }
     }
 }
