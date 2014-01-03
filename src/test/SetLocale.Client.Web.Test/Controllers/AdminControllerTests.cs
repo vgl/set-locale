@@ -27,8 +27,6 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void new_translator_should_return_user_model()
         {
-            // Arrange           
-            var demoService = new Mock<IDemoDataService>();
 
             // Act
             var controller = new AdminController(null,null, null);
@@ -37,7 +35,6 @@ namespace SetLocale.Client.Web.Test.Controllers
             // Assert
             Assert.NotNull(view);
             controller.AssertGetAttribute("NewTranslator");
-            demoService.Verify(x => x.GetAUser(), Times.Once);
         }
 
         [Test]
