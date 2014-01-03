@@ -115,6 +115,83 @@ namespace SetLocale.Client.Web.Models
 
                     model.Languages.Add(LanguageModel.SP());
                 }
+                if (!string.IsNullOrEmpty(entity.Translation_CN))
+                {
+                    model.Translations.Add(new TranslationModel
+                    {
+                        Key = entity.Key,
+                        Value = entity.Translation_CN,
+                        Language = LanguageModel.CN()
+                    });
+
+                    model.Languages.Add(LanguageModel.CN());
+                }
+                if (!string.IsNullOrEmpty(entity.Translation_FR))
+                {
+                    model.Translations.Add(new TranslationModel
+                    {
+                        Key = entity.Key,
+                        Value = entity.Translation_FR,
+                        Language = LanguageModel.FR()
+                    });
+
+                    model.Languages.Add(LanguageModel.FR());
+                }
+                if (!string.IsNullOrEmpty(entity.Translation_GR))
+                {
+                    model.Translations.Add(new TranslationModel
+                    {
+                        Key = entity.Key,
+                        Value = entity.Translation_GR,
+                        Language = LanguageModel.GR()
+                    });
+
+                    model.Languages.Add(LanguageModel.GR());
+                }
+                if (!string.IsNullOrEmpty(entity.Translation_IT))
+                {
+                    model.Translations.Add(new TranslationModel
+                    {
+                        Key = entity.Key,
+                        Value = entity.Translation_IT,
+                        Language = LanguageModel.IT()
+                    });
+
+                    model.Languages.Add(LanguageModel.IT());
+                }
+                if (!string.IsNullOrEmpty(entity.Translation_KZ))
+                {
+                    model.Translations.Add(new TranslationModel
+                    {
+                        Key = entity.Key,
+                        Value = entity.Translation_KZ,
+                        Language = LanguageModel.KZ()
+                    });
+
+                    model.Languages.Add(LanguageModel.KZ());
+                }
+                if (!string.IsNullOrEmpty(entity.Translation_RU))
+                {
+                    model.Translations.Add(new TranslationModel
+                    {
+                        Key = entity.Key,
+                        Value = entity.Translation_RU,
+                        Language = LanguageModel.RU()
+                    });
+
+                    model.Languages.Add(LanguageModel.RU());
+                }
+                if (!string.IsNullOrEmpty(entity.Translation_TK))
+                {
+                    model.Translations.Add(new TranslationModel
+                    {
+                        Key = entity.Key,
+                        Value = entity.Translation_TK,
+                        Language = LanguageModel.TK()
+                    });
+
+                    model.Languages.Add(LanguageModel.TK());
+                }
             }
 
             return model;
