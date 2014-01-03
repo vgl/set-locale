@@ -41,7 +41,7 @@ namespace SetLocale.Client.Web.Services
             {
                 Email = model.Email,
                 Name = model.Name,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(Guid.NewGuid().ToString(), BCrypt.Net.BCrypt.GenerateSalt(12)),
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password),
                 ImageUrl = img,
                 RoleId = roleId,
                 RoleName = SetLocaleRole.GetString(roleId),
@@ -49,6 +49,8 @@ namespace SetLocale.Client.Web.Services
                 Language = model.Language
             };
             _userRepo.Create(user);
+
+
 
             if (!_userRepo.SaveChanges()) return null;
 
@@ -114,7 +116,7 @@ namespace SetLocale.Client.Web.Services
             {
                 return Task.FromResult(false);
             }
-            
+
             user.IsActive = !isActive;
             _userRepo.Update(user);
             _userRepo.SaveChanges();
