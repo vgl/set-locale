@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SetLocale.Client.Web.Entities;
 
 namespace SetLocale.Client.Web.Models
@@ -39,7 +40,8 @@ namespace SetLocale.Client.Web.Models
             model.Description = entity.Description;
             model.Url = entity.Url;
 
-            foreach (var token in entity.Tokens)
+            var tokens = entity.Tokens.Where(x => !x.IsDeleted);
+            foreach (var token in tokens)
             {
                 model.Tokens.Add(new TokenModel
                 {
@@ -49,7 +51,7 @@ namespace SetLocale.Client.Web.Models
                 });
             }
 
-            return model; 
+            return model;
         }
     }
 }
