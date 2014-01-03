@@ -16,9 +16,9 @@ namespace SetLocale.Client.Web.Controllers
         private readonly IWordService _wordService;
 
         public UserController(
-            IUserService userService, 
-            IWordService wordService, 
-            IFormsAuthenticationService formsAuthenticationService, 
+            IUserService userService,
+            IWordService wordService,
+            IFormsAuthenticationService formsAuthenticationService,
             IAppService appService)
             : base(userService, formsAuthenticationService)
         {
@@ -61,7 +61,20 @@ namespace SetLocale.Client.Web.Controllers
 
             return View(model);
         }
-        
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<JsonResult> ChangeStatus(int id, bool isActive)
+        {
+            var model = new ResponseModel { Ok = false };
+            if (id < 1)
+            {
+                return Json(model, JsonRequestBehavior.DenyGet);    
+            }
+
+            model.Ok = await _userService.ChangeStatus(id, isActive);
+            return Json(model, JsonRequestBehavior.DenyGet);
+        }
+
         #region Membership
         [HttpGet, AllowAnonymous]
         public ActionResult New()

@@ -13,19 +13,22 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@Html.LocalizationString("menu_settings_users_name")</th>
-                <th>@Html.LocalizationString("menu_settings_users_email")</th>
-                <th>@Html.LocalizationString("menu_settings_users_role")</th>
+                <th>@Html.LocalizationString("name")</th>
+                <th>@Html.LocalizationString("user_email")</th>
+                <th>@Html.LocalizationString("user_role")</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                var val = item.IsActive ? Html.LocalizationString("menu_settings_users_deactivate") : Html.LocalizationString("menu_settings_users_activate");
+                var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
                 var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
                 <tr>
                     <td>
-                        <a type="button" class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
+                        @if (User.Identity.GetUserId() != item.Id)
+                        {
+                            <a type="button" class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
+                        }
                     </td>
                     <td>@item.Name</td>
                     <td>@item.Email</td>
@@ -49,8 +52,8 @@
                 @Html.LocalizationString("modal_body_users")
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("Cancel")" />
-                <input type="button" class="btn btn-primary" value="@Html.LocalizationString("Ok")" id="btnDeactivate" data-id="" data-isactive="" />
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("btn_cancel")" />
+                <input type="button" class="btn" value="@Html.LocalizationString("btn_ok")" id="btnDeactivate" data-id="" data-isactive="" />
             </div>
         </div>
     </div>
@@ -61,22 +64,31 @@
     <script>
         $(function () {
 
-            var textActivate = "@Html.LocalizationString("menu_settings_users_activate")";
-            var textDeactivate = "@Html.LocalizationString("menu_settings_users_deactivate")";
+            var textActivate = "@Html.LocalizationString("btn_activate")";
+            var textDeactivate = "@Html.LocalizationString("btn_deactivate")";
 
             $("a.btnAction").click(function () {
                 var id = $(this).data("id");
                 var isActive = $(this).data("isactive");
 
+                $("input#btnDeactivate").removeClass("btn-danger").removeClass("btn-success");
+                if (isActive) {
+                    $("input#btnDeactivate").addClass("btn-danger");
+                } else {
+                    $("input#btnDeactivate").addClass("btn-success");
+                }
+
                 $("input#btnDeactivate").data("id", id)
                                         .data("isactive", isActive);
+                
+
             });
             $("input#btnDeactivate").click(function () {
                 var id = $(this).data("id");
                 var isActive = $(this).data("isactive");
 
                 $.ajax({
-                    url: "/Ajax/ChangeUserStatus",
+                    url: "/User/ChangeStatus",
                     type: "POST",
                     data: "id=" + id + "&isActive=" + isActive + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
                 }).done(function (r) {
@@ -92,7 +104,7 @@
                         $("#DeactivateModal").modal('hide');
 
                     } else {
-                        //warning
+                        //todo:warning
                     }
                 });
             });

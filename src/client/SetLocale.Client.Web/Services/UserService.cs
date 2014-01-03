@@ -18,6 +18,7 @@ namespace SetLocale.Client.Web.Services
         Task<bool> Authenticate(string email, string password);
         Task<List<User>> GetAll();
         Task<List<User>> GetAllByRoleId(int roleId);
+        Task<bool> ChangeStatus(int userId, bool isActive);
     }
 
     public class UserService : IUserService
@@ -93,7 +94,7 @@ namespace SetLocale.Client.Web.Services
         public Task<List<User>> GetAll()
         {
             var users = _userRepo.FindAll().ToList();
-            return Task.FromResult(users);          
+            return Task.FromResult(users);
         }
 
         public Task<List<User>> GetAllByRoleId(int roleId)
@@ -102,5 +103,24 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(users);
         }
 
+        public Task<bool> ChangeStatus(int userId, bool isActive)
+        {
+            if (userId < 1)
+            {
+                return Task.FromResult(false);
+            }
+
+            var user = _userRepo.FindOne(x => x.Id == userId);
+            if (user == null)
+            {
+                return Task.FromResult(false);
+            }
+            
+            user.IsActive = !isActive;
+            _userRepo.Update(user);
+            _userRepo.SaveChanges();
+
+            return Task.FromResult(true);
+        }
     }
 }
