@@ -77,32 +77,39 @@ namespace SetLocale.Client.Web.Test.Controllers
         public void Users_should_return_app_model()
         {
             // Arrange           
-            var demoService = new Mock<IDemoDataService>();
+            var userService = new Mock<IUserService>();
 
             // Act
-            var controller = new AdminController(null,null, null);
-            var view = controller.Users();
+            var controller = new AdminController(userService.Object, null, null);
+            var view = controller.Users(1);
 
             // Assert
             Assert.NotNull(view);
             controller.AssertGetAttribute("Users");
-            demoService.Verify(x => x.GetAllUsers(), Times.Once);
+            userService.Verify(x => x.GetAllByRoleId(1), Times.Once);
+
+            view = controller.Users(8);     // Methodta id>0 && id<4 olduğu için iki ayrı kontrol yaptık.
+
+            // Assert
+            Assert.NotNull(view);
+            controller.AssertGetAttribute("Users");
+            userService.Verify(x => x.GetAll(), Times.Once);
         }
 
         [Test]
         public void apps_should_return_app_model()
         {
             // Arrange           
-            var demoService = new Mock<IDemoDataService>();
+            var appService = new Mock<IAppService>();
 
             // Act
-            var controller = new AdminController(null,null, null);
+            var controller = new AdminController(null,null, appService.Object);
             var view = controller.Apps();
 
             // Assert
             Assert.NotNull(view);
             controller.AssertGetAttribute("Apps");
-            demoService.Verify(x => x.GetAllApps(), Times.Once);
+            appService.Verify(x => x.GetAll(), Times.Once);
         }
     }
 }
