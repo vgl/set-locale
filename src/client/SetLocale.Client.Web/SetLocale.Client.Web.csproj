@@ -192,6 +192,7 @@
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\WordController.cs" />
     <Compile Include="Controllers\LangController.cs" />
     <Compile Include="Controllers\TagController.cs" />
