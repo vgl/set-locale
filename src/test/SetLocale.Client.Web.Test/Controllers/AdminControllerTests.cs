@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Moq;
@@ -68,9 +69,11 @@ namespace SetLocale.Client.Web.Test.Controllers
         {
             // Arrange
             var inValidModel = new UserModel { Name = "test name" };
+            var userService = new Mock<IUserService>();
+            userService.Setup(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Translator.Value)).Returns(() => Task.FromResult<int?>(1));
 
             // Act
-            var controller = new AdminController(null, null, null);
+            var controller = new AdminController(userService.Object, null, null);
             var view = await controller.NewTranslator(inValidModel) as ViewResult;
 
             // Assert
@@ -84,26 +87,39 @@ namespace SetLocale.Client.Web.Test.Controllers
         }
 
         [Test]
-        public void users_should_return_with_app_model()
+        public void users_id_is_greater_four_should_return_with_app_model()
         {
             // Arrange           
             var userService = new Mock<IUserService>();
+            userService.Setup(x => x.GetAll()).Returns(() => Task.FromResult<List<User>>(new List<User>())); 
+             
+            // Act
+            var controller = new AdminController(userService.Object, null, null);
+            var view = controller.Users(5);     
+
+            // Assert
+            Assert.NotNull(view);
+            controller.AssertGetAttribute("Users",new[] { typeof(int) });
+            userService.Verify(x => x.GetAll(), Times.Once);
+             
+        }
+
+        [Test]
+        public void users_id_is_between_one_and_four_should_return_with_app_model()
+        {
+            // Arrange           
+            var userService = new Mock<IUserService>();
+            userService.Setup(x => x.GetAllByRoleId(1)).Returns(() => Task.FromResult<List<User>>(new List<User>()));
 
             // Act
             var controller = new AdminController(userService.Object, null, null);
-            var view = controller.Users(1);
+            var view = controller.Users(1);      
 
             // Assert
             Assert.NotNull(view);
-            controller.AssertGetAttribute("Users");
+            controller.AssertGetAttribute("Users", new[] { typeof(int) });
             userService.Verify(x => x.GetAllByRoleId(1), Times.Once);
 
-            view = controller.Users(8);     // Methodta id>0 && id<4 olduğu için iki ayrı kontrol yaptık.
-
-            // Assert
-            Assert.NotNull(view);
-            controller.AssertGetAttribute("Users");
-            userService.Verify(x => x.GetAll(), Times.Once);
         }
 
         [Test]
@@ -111,6 +127,7 @@ namespace SetLocale.Client.Web.Test.Controllers
         {
             // Arrange           
             var appService = new Mock<IAppService>();
+            appService.Setup(x => x.GetAll()).Returns(() => Task.FromResult<List<App>>(new List<App>()));
 
             // Act
             var controller = new AdminController(null, null, appService.Object);
