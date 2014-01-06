@@ -23,7 +23,10 @@
         <div>
             <div id="dvForm" class="pull-left"></div>
 
-            <input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
+            <input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
+
+            <input type="button" class="btn btn-sm btn-info btnNewTag pull-right" value="@Html.LocalizationString("btn_new_tag")" data-id="@Model.Key" />
+
             @Html.AntiForgeryToken()
         </div>
     </p>
