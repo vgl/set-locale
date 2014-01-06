@@ -293,6 +293,7 @@ namespace SetLocale.Client.Web.Repositories
                 Translation_EN = en,
                 Translation_TR = tr,
                 CreatedBy = 1,
+                TranslationCount = 2,
                 Tags = new List<Tag>
                 {
                     new Tag
