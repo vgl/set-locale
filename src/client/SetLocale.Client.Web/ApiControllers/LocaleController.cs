@@ -44,7 +44,7 @@ namespace SetLocale.Client.Web.ApiControllers
 
         [HttpGet,
          EnableCors(origins: "*", headers: "*", methods: "GET"),
-         Route("locales/{lang}")]
+         Route("mylocale/{lang}")]
         public async Task<IHttpActionResult> GetAll(string lang)
         {
             var result = new List<WordItemModel>();

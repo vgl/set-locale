@@ -17,10 +17,11 @@ namespace SetLocale.Client.Web.Helpers
                             .Replace("ş", "s")
                             .Replace("ı", "i")
                             .Replace("ğ", "g")
-                            .Replace("ü", "u"),
+                            .Replace("ü", "u")
+                            .Replace("-", "_"),
                         @"\s+", " "), // multiple spaces to one space
                     @"\s", "-"), // spaces to hypens
-                @"[^a-z0-9\s-]", string.Empty); // removing invalid chars
+                @"[^a-z0-9_\s-]", string.Empty); // removing invalid chars
         }
 
         public static string ToProperCaseTR(this string str)
