@@ -8,6 +8,7 @@ namespace SetLocale.Client.Web.Models
     public class WordModel : BaseModel
     {
         public string Key { get; set; }
+        public int Count { get; set; }
         public string Description { get; set; }
         public string Tag { get; set; }
         public bool IsTranslated { get; set; }
