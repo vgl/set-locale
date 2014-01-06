@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-
+using System.Drawing;
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Helpers;
 
@@ -29,14 +29,17 @@ namespace SetLocale.Client.Web.Repositories
             AddApplication(context, "collade@test.com", "Collade", "a task management and team collaboration application.", "marmaradrone.github.io");
             #endregion
 
-            #region Menu Words
+            #region Words
+
             AddWord(context, "app_name", "Uygulama ismi", "Set Locale", "Set Locale", "set-locale");
+             
+            #region Menu
             AddWord(context, "search", "Ara textbox için", "Ara", "Search", "set-locale");
 
             AddWord(context, "menu_words", "Kelimeler Menüsü için.", "Kelimeler", "Words", "set-locale");
             AddWord(context, "menu_words_new_word", string.Empty, "Yeni Kelime", "New Word", "set-locale");
             AddWord(context, "menu_words_words", string.Empty, "Tüm Kelimeler", "All Words", "set-locale");
-            AddWord(context, "menu_words_my_words", string.Empty, "Kelimelerimasd", "My Words 12", "set-locale");
+            AddWord(context, "menu_words_my_words", string.Empty, "Kelimelerimasd", "My Words", "set-locale");
             AddWord(context, "menu_words_not_translated", string.Empty, "Çevrilmeyen Kelimeler", "Not Translated", "set-locale");
               
             AddWord(context, "menu_apps", "Uygulamalar Menüsü için.", "Uygulamalar", "Applications", "set-locale");
@@ -52,7 +55,89 @@ namespace SetLocale.Client.Web.Repositories
             AddWord(context, "menu_user_logout", string.Empty, "Çıkış", "Logout", "set-locale");
             AddWord(context, "menu_user_sign_up", string.Empty, "Kayıt Ol", "Signup", "set-locale");
             AddWord(context, "menu_user_reset", string.Empty, "Şifre Sıfırla", "Reset Password", "set-locale");
+
+            #region UserMenu
+
+            #region USER_Login
+
+            AddWord(context, "login_view_title", "Kullanıcı giriş menüsü için.","Sisteme Giriş", "Login to System", "set-locale");
+            AddWord(context, "btn_login", string.Empty,"Giriş", "Login", "set-locale");
+            AddWord(context, "email", string.Empty,"E-Posta", "Email", "set-locale");
+            AddWord(context, "password", string.Empty,"Şifre", "Password", "set-locale");
+
             #endregion
+
+            #region USER_Sign_Up
+            AddWord(context, "sign_up_new_user", "Yeni Kullanıcı menüsü için.","Yeni Kullanıcı", "New User", "set-locale");
+            AddWord(context, "btn_sign_up", string.Empty, "Kayıt Ol", "Sign Up", "set-locale");
+            AddWord(context, "sign_up_email", string.Empty, "E-Posta", "Email", "set-locale");
+            AddWord(context, "sign_up_password", string.Empty, "Şifre" ,"Password", "set-locale");
+            AddWord(context, "sign_up_name", string.Empty, "Ad Soyad", "Name", "set-locale");
+
+
+
+            #endregion
+
+            #region USER_Reset_Password
+            AddWord(context, "user_password_reset_title","Şifre sıfırlama menüsü için.","Şifre Sıfırlama", "Reset Password", "set-locale");
+            AddWord(context, "user_password_reset_email", string.Empty,"E-Posta", "Email", "set-locale");
+            AddWord(context, "btn_user_password_reset", string.Empty,"Şifre Sıfırlama Linki Gönder", "Send Reset Password Link", "set-locale");
+
+
+            #endregion
+
+            #region USER_APPS
+            AddWord(context, "user_apps", "Kullanıcıya ait Uygulamalar menüsü","Uygulamalarım", "My Applications", "set-locale");
+            AddWord(context, "user_apps_name", string.Empty, "Uygulama İsmi","Application Name", "set-locale");
+            AddWord(context, "user_apps_description", string.Empty,"Açıklama", "Description", "set-locale");
+            AddWord(context, "user_apps_usage_count", string.Empty,"Kullanım Sayısı", "Usage Count", "set-locale");
+            AddWord(context, "user_apps_url", string.Empty,"Url", "Url", "set-locale");
+            AddWord(context, "user_apps_deactivate", string.Empty,"Pasif", "Deactivate", "set-locale");
+            AddWord(context, "user_apps_activate", string.Empty,"Aktif", "Activate", "set-locale");
+            #endregion
+
+            #endregion
+
+            #region AdminMenu
+
+            #region Admin_Apps
+
+            AddWord(context, "menu_settings_apps_email", string.Empty,"E-Posta", "Email", "set-locale");
+            AddWord(context, "menu_settings_apps_app_name", string.Empty, "Uygulama İsmi", "Application Name", "set-locale");
+            AddWord(context, "menu_settings_apps_description", string.Empty, "Açıklama", "Description", "set-locale");
+            AddWord(context, "menu_settings_apps_url", "Url", string.Empty, "Url", "set-locale");
+            AddWord(context, "menu_settings_apps_usage_count", string.Empty, "Kullanım Sayısı", "Usage Count", "set-locale");
+            AddWord(context, "menu_settings_apps_deactivate", string.Empty, "Pasif", "Deactivate", "set-locale");
+            AddWord(context, "menu_settings_apps_activate", string.Empty, "Aktif", "Activate", "set-locale");
+
+            #endregion
+
+            #region Admin_New_Translator
+            AddWord(context, "menu_settings_new_translator_name", string.Empty, "Ad Soyad", "Name", "set-locale");
+            AddWord(context, "menu_settings_new_translator_email", string.Empty, "E-Posta", "Email", "set-locale");
+            AddWord(context, "btn_menu_settings_new_translator_save", string.Empty, "Kaydet", "Save", "set-locale");
+            AddWord(context, "btn_menu_settings_new_translator_edit", string.Empty, "Düzenle", "Edit", "set-locale");
+
+            #endregion
+
+            #region Admin_Users
+            AddWord(context, "menu_settings_users_name", string.Empty, "Ad Soyad", "Name", "set-locale");
+            AddWord(context, "menu_settings_users_email", string.Empty, "E-Posta", "Email", "set-locale");
+            AddWord(context, "menu_settings_users_role", string.Empty, "Yetki Grubu", "RoleName", "set-locale");
+            AddWord(context, "menu_settings_users_deactivate", string.Empty, "Pasif", "Deactivate", "set-locale");
+            AddWord(context, "menu_settings_users_activate", string.Empty, "Aktif", "Activate", "set-locale");
+
+            #endregion
+
+            #endregion
+
+             
+            #endregion
+
+
+
+            #endregion
+
 
             context.SaveChanges();
         }
