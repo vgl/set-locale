@@ -39,7 +39,7 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult NewTranslator()
+        public ViewResult NewTranslator()
         {
             var model = new UserModel();
             return View(model);
