@@ -57,8 +57,10 @@ namespace SetLocale.Client.Web.Test
         [Test]
         public void AppControllerRoutes()
         {
-            "~/app/new".WithMethod(HttpVerbs.Get).ShouldMapTo<AppController>(action => action.New());
-            "~/app/detail".WithMethod(HttpVerbs.Get).ShouldMapTo<AppController>(action => action.Detail(1).Result);
+            "~/app/new".WithMethod(HttpVerbs.Get).ShouldMapTo<AppController>(action => action.New());       
+            var appDetail = "~/app/detail".WithMethod(HttpVerbs.Get);
+             appDetail.Values["id"] = 1;
+             appDetail.ShouldMapTo<AppController>(action => action.Detail(1).Result);
         }
 
         [Test]

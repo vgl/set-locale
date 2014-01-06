@@ -69,20 +69,21 @@ namespace SetLocale.Client.Web.Test.Controllers
         {
             // Arrange
             var inValidModel = new UserModel { Name = "test name" };
-            var userService = new Mock<IUserService>();
-            userService.Setup(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Translator.Value)).Returns(() => Task.FromResult<int?>(1));
+            //var userService = new Mock<IUserService>();                   Model Invalid olduğu için direk app_model geri dönecek. Mock'a ihtiyaç yok.
+            //userService.Setup(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Translator.Value)).Returns(() => Task.FromResult<int?>(1));
 
             // Act
-            var controller = new AdminController(userService.Object, null, null);
+            //var controller = new AdminController(userService.Object, null, null);
+            var controller = new AdminController(null, null, null);
             var view = await controller.NewTranslator(inValidModel) as ViewResult;
 
             // Assert
             Assert.NotNull(view);
             Assert.NotNull(view.Model);
-            var model = view.Model as UserModel;
+            var model = view.Model;
 
             Assert.NotNull(model);
-
+            Assert.IsAssignableFrom(typeof(UserModel), model);
             controller.AssertPostAttribute("NewTranslator", new[] { typeof(UserModel) });
         }
 
