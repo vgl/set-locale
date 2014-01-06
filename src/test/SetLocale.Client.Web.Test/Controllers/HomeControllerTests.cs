@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Web.Mvc;
 using Moq;
 using NUnit.Framework;
 
@@ -13,7 +14,7 @@ namespace SetLocale.Client.Web.Test.Controllers
     public class HomeControllerTests
     {
         [Test]
-        public void index_should_return_home_stats_model()
+        public async void index_should_return_home_stats_model()
         {
             // Arrange
             var reportService = new Mock<IReportService>();
@@ -21,11 +22,11 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             // Act
             var controller = new HomeController(reportService.Object, null, null);
-            var view = controller.Index();
+            var view = await controller.Index();
 
             // Assert
-            Assert.NotNull(view.Result);
-            var model = view.Result.Model as HomeStatsModel;
+            Assert.NotNull(view);
+            var model = view.Model as HomeStatsModel;
             Assert.NotNull(model);
             controller.AssertGetAttribute("Index");
         }

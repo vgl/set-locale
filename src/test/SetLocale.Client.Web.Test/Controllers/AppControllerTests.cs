@@ -75,7 +75,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             // Act
             var controller = new AppController(null, null, appService.Object);
-            var view = controller.New(validModel).Result as RedirectResult;
+            var view = controller.New(validModel).Result as RedirectResult;     // User.Identity.GetUserId(); yi alamıyor.
 
             // Assert
             Assert.NotNull(view);

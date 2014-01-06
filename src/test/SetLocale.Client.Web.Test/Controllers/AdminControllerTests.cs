@@ -109,7 +109,7 @@ namespace SetLocale.Client.Web.Test.Controllers
         {
             // Arrange           
             var userService = new Mock<IUserService>();
-            userService.Setup(x => x.GetAllByRoleId(1)).Returns(() => Task.FromResult<List<User>>(new List<User>()));
+            userService.Setup(x => x.GetAllByRoleId(1)).Returns(() => Task.FromResult(new List<User>()));
 
             // Act
             var controller = new AdminController(userService.Object, null, null);
@@ -127,7 +127,7 @@ namespace SetLocale.Client.Web.Test.Controllers
         {
             // Arrange           
             var appService = new Mock<IAppService>();
-            appService.Setup(x => x.GetAll()).Returns(() => Task.FromResult<List<App>>(new List<App>()));
+            appService.Setup(x => x.GetAll()).Returns(() => Task.FromResult(new List<App>()));
 
             // Act
             var controller = new AdminController(null, null, appService.Object);
