@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 using SetLocale.Client.Web.Entities;
@@ -33,7 +34,7 @@ namespace SetLocale.Client.Web.Services
             var translatorCount = _userRepository.FindAll(x => x.RoleId == SetLocaleRole.Translator.Value).Count();
             var keyCount = _wordRepository.FindAll().Count();
             var appCount = _appRepository.FindAll().Count();
-            var translationCount = 0;
+            var translationCount = _wordRepository.FindAll().Sum(x => x.TranslationCount);
 
             var model = new HomeStatsModel
             {

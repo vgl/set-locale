@@ -60,7 +60,8 @@ namespace SetLocale.Client.Web.Services
             {
                 Key = slug,
                 Description = model.Description ?? string.Empty,
-                IsTranslated = false,
+                IsTranslated = false, 
+                TranslationCount = 0,
                 CreatedBy = model.CreatedBy,
                 UpdatedBy = model.CreatedBy,
                 Tags = tags
@@ -113,6 +114,7 @@ namespace SetLocale.Client.Web.Services
             var type = word.GetType();
             var propInfo = type.GetProperty(string.Format("Translation_{0}", language.ToUpperInvariant()), new Type[0]);
             propInfo.SetValue(word, translation);
+            word.TranslationCount ++;
             word.IsTranslated = true;
 
             _wordRepository.Update(word);

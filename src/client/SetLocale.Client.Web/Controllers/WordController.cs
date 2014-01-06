@@ -78,6 +78,7 @@ namespace SetLocale.Client.Web.Controllers
             }
 
             model.CreatedBy = User.Identity.GetUserId();
+            
             var key = await _wordService.Create(model);
             if (key == null)
             {

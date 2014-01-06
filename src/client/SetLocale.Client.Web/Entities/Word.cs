@@ -6,8 +6,8 @@ namespace SetLocale.Client.Web.Entities
     {
         public string Key { get; set; }
         public string Description { get; set; }
-        public bool IsTranslated { get; set; }
-
+        public bool IsTranslated { get; set; } 
+        public int TranslationCount { get; set; } 
         public string Translation_TR { get; set; }
         public string Translation_EN { get; set; }
         public string Translation_AZ { get; set; }
