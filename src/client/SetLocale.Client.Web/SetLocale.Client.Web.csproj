@@ -141,6 +141,7 @@
     <Content Include="Public\img\flag\tk.png" />
     <Content Include="Public\img\select2-spinner.gif" />
     <Content Include="Public\img\select2x2.png" />
+    <Content Include="Public\img\word.png" />
     <Content Include="Public\js\select2.js" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />

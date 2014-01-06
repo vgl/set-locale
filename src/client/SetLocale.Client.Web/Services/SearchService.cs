@@ -36,9 +36,8 @@ namespace SetLocale.Client.Web.Services
             {
                 keys = text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             }
-            
-            var words = _wordRepository.Set<Word>();
 
+            var words = _wordRepository.Set<Word>();
             foreach (var key in keys)
             {
                 var _key = key;
@@ -50,10 +49,15 @@ namespace SetLocale.Client.Web.Services
             var wordResults = words.OrderByDescending(x => x.Id).Skip(0).Take(10).ToList();
             foreach (var item in wordResults)
             {
+                var exp = string.Format("{0}", item.Translation_EN ?? item.Translation_TR);
+                if (exp.Length > 15)
+                {
+                    exp = exp.Substring(0, 15);
+                }
                 result.Add(new SearchResult
                 {
                     Url = string.Format("/word/detail/{0}", item.Key),
-                    Name = string.Format("{0}, {1}", item.Key, item.Translation_EN ?? item.Translation_TR),
+                    Name = string.Format("{0}, {1} ...", item.Key, exp),
                     ImgUrl = "/public/img/word.png"
                 });
             }
@@ -61,6 +65,4 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(result);
         }
     }
-
-   
 }
