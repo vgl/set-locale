@@ -13,14 +13,14 @@ namespace SetLocale.Client.Web.Test.Controllers
         public void index_should_return_home_stats_model()
         {
             // Arrange
-            
+
             // Act
-            var controller = new HomeController(null, null);
+            var controller = new HomeController(null, null, null);
             var view = controller.Index();
 
             // Assert
-            Assert.NotNull(view.Model);
-            var model = view.Model as HomeStatsModel;
+            Assert.NotNull(view.Result);
+            var model = view.Result.Model as HomeStatsModel;
             Assert.NotNull(model);
             controller.AssertGetAttribute("Index");
         }

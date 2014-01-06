@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
-
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 using Moq;
 using NUnit.Framework;
 
 using SetLocale.Client.Web.Controllers;
+using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
@@ -18,106 +21,99 @@ namespace SetLocale.Client.Web.Test.Controllers
         public void new_should_return_key_model()
         {
             // Arrange
-            var demoService = new Mock<IDemoDataService>();
-
-            var key = new KeyModel { Key = "my-key" };
-            demoService.Setup(x => x.GetAKey()).Returns(key);
-
+            var wordService = new Mock<IWordService>();
+             
+            wordService.Setup(x => x.GetAll());
+             
             // Act
-            var controller = new KeyController(null, null, null);
+            var controller = new WordController(null, null, wordService.Object);
             var view = controller.New();
-
-
+             
             // Assert
             Assert.NotNull(view);
-            var model = view.Model as KeyModel;
+            var model = view.Model as WordModel;
 
             Assert.NotNull(model);
-            controller.AssertGetAttribute("New");
-            demoService.Verify(x => x.GetAKey(), Times.Once);
+            controller.AssertGetAttribute("New"); 
         }
 
         [Test]
-        public void detail_should_return_key_model()
+        public async void detail_should_return_key_model()
         {
             // Arrange
-            var demoService = new Mock<IDemoDataService>();
-
-            var key = new KeyModel { Key = "my-key" };
-            demoService.Setup(x => x.GetAKey()).Returns(key);
+            var wordService = new Mock<IWordService>(); 
+            wordService.Setup(x => x.GetAll());
 
             // Act
-            var controller = new KeyController(null, null, null);
-            var view = controller.Detail();
+            var controller = new WordController(null, null, wordService.Object);
+            var view = await controller.Detail("menu_words") as ViewResult;
 
             // Assert
             Assert.NotNull(view);
 
-            var model = view.Model as KeyModel;
+            var model = view.Model as WordModel;
             controller.AssertGetAttribute("Detail");
             Assert.NotNull(model);
 
-            demoService.Verify(x => x.GetAKey(), Times.Once);
+            wordService.Verify(x => x.GetByKey("test"), Times.Once);
 
         }
 
+       
         [Test]
-        public void all_should_return_key_model_list()
+        public async void all_should_return_key_model_list()
         {
             // Arrange
-            var demoService = new Mock<IDemoDataService>();
-            var list = new List<KeyModel> { new KeyModel { Key = "my-key" } };
-            demoService.Setup(x => x.GetAllKeys()).Returns(list);
+            var wordService = new Mock<IWordService>(); 
+            wordService.Setup(x => x.GetAll());
 
             // Act
-            var controller = new KeyController(null,null, null);
-            var view = controller.All();
-
+            var controller = new WordController(null, null, wordService.Object);
+            var view = await controller.All();
             // Assert
             Assert.NotNull(view);
 
-            var model = view.Model as List<KeyModel>;
+            var model = view.Model as List<WordModel>;
             Assert.NotNull(model);
             controller.AssertGetAttribute("All");
-            demoService.Verify(x => x.GetAllKeys(), Times.Once);
+            wordService.Verify(x => x.GetAll(), Times.Once);
         }
 
         [Test]
-        public void notTranslated_should_return_key_model_list()
+        public async void notTranslated_should_return_key_model_list()
         {
             // Arrange
-            var demoService = new Mock<IDemoDataService>();
+            var wordService = new Mock<IWordService>();
 
-            var list = new List<KeyModel> { new KeyModel { Key = "my-key" } };
+            var list = new List<WordModel> { new WordModel { Key = "my-key" } };
 
-            demoService.Setup(x => x.GetNotTranslatedKeys()).Returns(list);
+            wordService.Setup(x => x.GetNotTranslated());
 
             // Act
-            var controller = new KeyController(null, null, null);
-            var view = controller.NotTranslated();
+            var controller = new WordController(null, null, null);
+            var view = await controller.NotTranslated() as ViewResult;
 
             // Assert
             Assert.NotNull(view);
 
-            var model = view.Model as List<KeyModel>;
+            var model = view.Model as List<WordModel>;
             controller.AssertGetAttribute("NotTranslated");
             Assert.NotNull(model);
 
-            demoService.Verify(x => x.GetNotTranslatedKeys(), Times.Once);
+            wordService.Verify(x => x.GetNotTranslated(), Times.Once);
         }
 
         [Test]
         public void edit_should_return_translation_model()
         {
             // Arrange
-            var demoService = new Mock<IDemoDataService>();
+            var wordService = new Mock<IWordService>();
 
             var translated = new TranslationModel { Key = "my-key" };
-            demoService.Setup(x => x.GetATranslation()).Returns(translated);
-
+            wordService.Setup(x => x.Translate("","",""));              
 
             // Act
-            var controller = new KeyController(null, null, null);
+            var controller = new WordController(null, null, null);
             var view = controller.Edit("id", ConstHelper.tr);
 
             // Assert
@@ -127,7 +123,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             Assert.NotNull(model);
 
-            demoService.Verify(x => x.GetATranslation(), Times.Once);
+            wordService.Verify(x => x.Translate("", "", ""), Times.Once);
             controller.AssertPostAttribute("Edit", new[] { typeof(TranslationModel) });
         }
     }

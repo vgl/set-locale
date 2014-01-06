@@ -19,25 +19,25 @@ namespace SetLocale.Client.Web.Test.Controllers
         public void detail_should_return_key_model_list()
         {
             // Arrange
-            var demoService = new Mock<IDemoDataService>();
-            var list = new List<KeyModel> { new KeyModel { Key = "my-key" } };
-            demoService.Setup(x => x.GetMyKeys()).Returns(list);
+            var tagService = new Mock<ITagService>();
+            var list = new List<WordModel> { new WordModel { Key = "my-key" } };
+            tagService.Setup(x => x.GetWords(""));
 
             // Act
-            var controller = new TagController(null,null,null);
+            var controller = new TagController(null, null, null);
             var view = controller.Detail();
-            
+
 
             // Assert
             Assert.NotNull(view);
-            var model = view.Result.Model as List<KeyModel>;
+            var model = view.Result.Model as List<WordModel>;
 
             Assert.NotNull(model);
 
             CollectionAssert.AllItemsAreUnique(model);
             Assert.AreEqual(model.Count, list.Count);
 
-            demoService.Verify(x => x.GetMyKeys(), Times.Once);
+            tagService.Verify(x => x.GetWords(""), Times.Once);
             controller.AssertGetAttribute("Index", new[] { typeof(string) });
         }
     }

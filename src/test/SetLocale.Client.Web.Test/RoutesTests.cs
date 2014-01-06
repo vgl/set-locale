@@ -22,9 +22,9 @@ namespace SetLocale.Client.Web.Test
         [Test]
         public void HomeControllerRoutes()
         {
-            "~/".WithMethod(HttpVerbs.Get).ShouldMapTo<HomeController>(action => action.Index());
-            "~/home".WithMethod(HttpVerbs.Get).ShouldMapTo<HomeController>(action => action.Index());
-            "~/home/index".WithMethod(HttpVerbs.Get).ShouldMapTo<HomeController>(action => action.Index());
+            "~/".WithMethod(HttpVerbs.Get).ShouldMapTo<HomeController>(action => action.Index().Result);
+            "~/home".WithMethod(HttpVerbs.Get).ShouldMapTo<HomeController>(action => action.Index().Result);
+            "~/home/index".WithMethod(HttpVerbs.Get).ShouldMapTo<HomeController>(action => action.Index().Result);
         }
 
         [Test]
@@ -46,17 +46,17 @@ namespace SetLocale.Client.Web.Test
         [Test]
         public void KeyControllerRoutes()
         {
-            "~/word/all".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.All());
-            "~/word/nottranslated".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.NotTranslated());
+            "~/word/all".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.All().Result);
+            "~/word/nottranslated".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.NotTranslated().Result);
 
-            "~/word/new".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.New());
+            "~/word/new".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.New());
            
 
             var keyEditRoute = "~/word/edit/sign_up".WithMethod(HttpVerbs.Get);
             keyEditRoute.Values["lang"] = ConstHelper.tr;
-            keyEditRoute.ShouldMapTo<KeyController>(action => action.Edit("sign_up", ConstHelper.tr));
+            keyEditRoute.ShouldMapTo<WordController>(action => action.Edit("sign_up", ConstHelper.tr));
 
-            "~/word/detail/sign_up".WithMethod(HttpVerbs.Get).ShouldMapTo<KeyController>(action => action.Detail());
+            "~/word/detail/sign_up".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.Detail("id").Result);
         }
 
         [Test]
@@ -69,7 +69,6 @@ namespace SetLocale.Client.Web.Test
         [Test]
         public void UserControllerRoutes()
         {
-            "~/user/index".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Index());
             "~/user/apps".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Apps(1).Result);
             "~/user/new".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.New());
             "~/user/reset".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Reset());
