@@ -18,9 +18,14 @@
         {
             <a class="label label-info" href="/tag/detail/@tag.UrlName">@tag.Name</a>
         }
+    </p>
+    <p>
+        <div>
+            <div id="dvForm" class="pull-left"></div>
 
-        <input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
-        @Html.AntiForgeryToken()
+            <input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
+            @Html.AntiForgeryToken()
+        </div>
     </p>
 </div>
 
@@ -39,7 +44,7 @@
                 {
                     <tr>
                         <td>
-                            <a type="button" class="btn btn-sm btn-warning" href="/word/edit/@Model.Key">@Html.LocalizationString("btn_edit")</a>
+                            <input type="button" class="btn btn-sm btn-warning btnEdit" value="@Html.LocalizationString("btn_edit")" data-lang="@item.Language.Key" />
                         </td>
                         <td> <img src="@item.Language.ImageUrl" alt="@item.Language.Name" /> @item.Language.Name</td>
                         <td>@item.Value</td>
@@ -50,7 +55,7 @@
     </div>
 </div>
 
-<div id="dvTest"></div>
+
 
 @section script
 {
@@ -70,8 +75,6 @@
                     var lang = $("select#selLanguages").val();
                     var translation = $("input#txtTranslation").val();
 
-                    console.log('@Model.Key' + ' ' + lang + ' ' + translation);
-
                     $.ajax({
                         url: "/Word/Translate",
                         type: "POST",
@@ -79,18 +82,40 @@
                     }).done(function (r) {
                         if (r && r.Ok) {
 
+                            var tr = $('<tr />');
+                            var tdBtn = $('<td />');
+                            var tdFlag = $('<td />');
+                            var tdTranslation = $('<td />');
 
-                            console.log(r);
+                            var btnEdit = $('<input type="button" class="btn btn-sm btn-warning btnEdit" data-lang="' + lang + '" value="@Html.LocalizationString("btn_edit")" />');
+                            btnEdit.click(fnEdit);
 
+                            tdBtn.append(btnEdit);
+                            tdFlag.append($("<img class='flag' style='margin:5px;margin-left: 0;margin-top: 0;' alt='flag' src='/public/img/flag/" + lang + ".png'/>"));
 
+                            $.each(allLanguages, function (i, l) {
+                                if (l.id == lang) {
+                                    tdFlag.append($('<span>' + l.text + '</span>'));
+                                    translatedLanguages.push(l);
+                                }
+                            });
+                            tdTranslation.html(translation);
 
+                            tr.append(tdBtn);
+                            tr.append(tdFlag);
+                            tr.append(tdTranslation);
+
+                            $('table tbody').append(tr);
+
+                            
+                            
                             $("input.btnNewTranslate").show();
+                            $("div#dvForm").html('');
                         } else {
                             //todo:warning
                         }
                     });
                 });
-
 
                 var inputLanguages = $('<select id="selLanguages" name="selLanguages" />');
                 $.each(allLanguages, function (i, lang) {
@@ -108,81 +133,62 @@
                     }
                 });
 
-                var inputTranslation = $('<input type="text" id="txtTranslation" name="txtTranslation" />');
+                var inputTranslation = $('<input type="text" id="txtTranslation" name="txtTranslation" class="form-control col-4" />');
 
-                $("div#dvTest").append(btnSave).append(inputLanguages).append(inputTranslation);
+                var dv1 = $('<div style="margin:5px;float:left;" />');
+                var dv2 = $('<div style="margin:5px;float:left;" />');
+                var dv3 = $('<div style="margin:5px;float:left;" />');
 
-                  
+                dv1.append(inputLanguages);
+                dv2.append(inputTranslation);
+                dv3.append(btnSave);
+
+                $("div#dvForm").append(dv1).append(dv2).append('<br style="display:block;clear:both;"/>').append(dv3);
             }
 
+            function prepareEditRow(btn) {
+                var lang = btn.data("lang");
+                var td = btn.parent().parent().children(":last");
 
-            $("input.btnNewTranslate").click(function () {
+                var inputTranslation = $('<input type="text" id="txtEdit" name="txtEdit" class="form-control col-4" data-lang="' + lang + '" />');
+                inputTranslation.val(td.html());
 
-                $(this).hide();
-                addNewTranslationRow();
+                td.html("");
+                td.append(inputTranslation);
+            }
 
+            function prepareDataShowingRow(btn) {
+                var lang = btn.data("lang");
+                var translations = $("input#txtEdit");
 
-                @*var keyId = $(this).data("id");
-                var row = $("<tr />");
-                var url = "#";
-                var inputSaveButton = $("<input />");
-
-                inputSaveButton.attr("class", "btn btn-sm btn-primary btnAction");
-                inputSaveButton.attr("type", "Button");
-                inputSaveButton.attr("data-id", keyId);
-                inputSaveButton.attr("value", '@Html.LocalizationString("btn_save")');
-                inputSaveButton.click(function() {
-
-                    inputSaveButton.remove();
-                    url = "/word/edit/@Model.Key";
-                    var aEditButton = $("<a />");
-                    aEditButton.addClass("btn btn-sm btn-warning btnEdit");
-                    aEditButton.attr("data-id", keyId);
-                    aEditButton.attr("href", url);
-                    aEditButton.html('@Html.LocalizationString("btn_edit")');
-                    tdSaveButton.append(aEditButton);
-
-                    var e = document.getElementById("selLanguages");
-
-                    //                    $("select#selLanguages").
-                    var selectedvalue = e.options[e.selectedIndex].value;
-                    var img = "<img class='flag' src='/public/img/flag/" + selectedvalue + ".png'/>";
-                    var strUser = e.options[e.selectedIndex].text;
-
-                    tdLanguage.html(img + " " + strUser);
-
-                    var inputval = $('input[name="tbCeviri"]').val();
-
-
-                    tdTranslation.html(inputval);
-
+                var translation = "";
+                $.each(translations, function (i, txt) {
+                    if ($(txt).data("lang") == lang) {
+                        translation = $(txt).val();
+                        return;
+                    }
                 });
 
-                var tdSaveButton = $("<td />");
-                tdSaveButton.append(inputSaveButton);
-                row.append(tdSaveButton);
+                var td = btn.parent().parent().children(":last");
 
-                var tdLanguage = $(document.createElement('td')).attr("id", 'TextBoxDiv');
-                tdLanguage.after().html('<select id="selLanguages">' +
-                    '<option value="tr">Türkçe</option><option value="az">Azərbaycan dili</option>' +
-                    '<option value="cn">中文 (zhōngwén)</option><option value="en">English</option>' +
-                    '<option value="sp">Español</option><option value="fr">Français</option>' +
-                    '<option value="ru">Русский язык</option><option value="gr">Deutsch</option>' +
-                    '<option value="it">Italiano</option><option value="tk">түркmенче (türkmençe)</option><option value="kz">Қазақ тілі</option>');
+                $.ajax({
+                    url: "/Word/Translate",
+                    type: "POST",
+                    data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
+                }).done(function (r) {
+                    if (r && r.Ok) {
+                        td.html(translation);
+                    } else {
+                        //todo:warning
+                    }
+                });
+            }
 
-                tdLanguage.appendTo(row);
+            $("input.btnNewTranslate").click(function () {
+                $(this).hide();
 
+                addNewTranslationRow();
 
-                var tdTranslation = $("<td />");
-                var tbTranslation = $("<input />");
-                tbTranslation.attr("type", "Text");
-                tbTranslation.attr("name", "tbCeviri");
-                tdTranslation.append(tbTranslation);
-                row.append(tdTranslation);
-
-                $('table tbody').append(row);*@
-
-                 
                 function format(state) {
                     if (!state.id) return state.text;
                     return "<img class='flag' alt='flag' style='margin:5px;' src='/public/img/flag/" + state.id.toLowerCase() + ".png'/>" + state.text;
@@ -190,6 +196,22 @@
 
                 $("select#selLanguages").select2({ formatResult: format, formatSelection: format, escapeMarkup: function (m) { return m; } });
             });
+
+            var fnEdit = function () {
+                if ($(this).hasClass("btn-warning")) {
+                    $(this).removeClass("btn-warning").addClass("btn-primary");
+                    $(this).val("@Html.LocalizationString("btn_save")");
+
+                    prepareEditRow($(this));
+                } else if ($(this).hasClass("btn-primary")) {
+                    $(this).removeClass("btn-primary").addClass("btn-warning");
+                    $(this).val("@Html.LocalizationString("btn_edit")");
+
+                    prepareDataShowingRow($(this));
+                }
+            };
+
+            $("input.btnEdit").click(fnEdit);
         });
     </script>
 }
