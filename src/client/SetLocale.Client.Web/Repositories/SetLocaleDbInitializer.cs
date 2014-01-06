@@ -18,6 +18,7 @@ namespace SetLocale.Client.Web.Repositories
             AddAdmin(context, "Mehmet Sabancıoğlu", "mehmet.sabancioglu@gmail.com");
             AddAdmin(context, "Cihan Çoşkun", "cihancoskun@gmail.com");
 
+
             AddTranslator(context, "Kemal Çolak", "kml.colak@gmail.com");
             #endregion
 
