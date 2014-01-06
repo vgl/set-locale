@@ -72,29 +72,6 @@
         $(function() {
             var translatedLanguages = [@Html.Raw(Model.LanguagesStr)];
 
-            function addNewTagRow() {
-
-                var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
-                btnSave.val('@Html.LocalizationString("btn_save")');
-                btnSave.data('id', '@Model.Key');
-   
-                var inputTag = $('<input type="text" id="txtTag" name="txtTag" class="form-control col-4" />');
-
-                var dv1 = $('<div style="margin:5px;float:left;" />');
-
-                var dv3 = $('<div style="margin:5px;float:left;" />');
-
-                dv1.append(inputTag);
-                dv3.append(btnSave);
-
-                $("div#dvForm").append(dv1).append('<br style="display:block;clear:both;"/>').append(dv3);
-                btnSave.click(function () {
-                    var tag = $("input#txtTag").val();
-                    $("div#dvTag").html(tag);
-
-                });
-            }
-
             function addNewTranslationRow() {
                 var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
                 btnSave.val('@Html.LocalizationString("btn_save")');
@@ -241,12 +218,34 @@
 
             $("input.btnEdit").click(fnEdit);
         });
-        $("input.btn_new_tag").click(function () {
+        $("input.btnNewTag").click(function () {
             $(this).hide();
 
             addNewTagRow();
 
         });
+        function addNewTagRow() {
+
+            var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
+            btnSave.val('@Html.LocalizationString("btn_save")');
+            btnSave.data('id', '@Model.Key');
+
+            var inputTag = $('<input type="text" id="txtTag" name="txtTag" class="form-control col-4" />');
+
+            var dv1 = $('<div style="margin:5px;float:left;" />');
+
+            var dv3 = $('<div style="margin:5px;float:left;" />');
+
+            dv1.append(inputTag);
+            dv3.append(btnSave);
+
+            $("div#dvForm").append(dv1).append('<br style="display:block;clear:both;"/>').append(dv3);
+            btnSave.click(function () {
+                var tag = $("input#txtTag").val();
+                $("div#dvTag").html(tag);
+
+            });
+        }
     </script>
 }
 
