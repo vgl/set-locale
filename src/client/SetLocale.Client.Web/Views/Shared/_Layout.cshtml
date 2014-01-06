@@ -38,17 +38,17 @@
                             <li><a href="/user/words">@Html.LocalizationString("menu_words_my_words")</a></li>
                             <li><a href="/word/all">@Html.LocalizationString("menu_words_words")</a></li>
                             <li><a href="/word/nottranslated">@Html.LocalizationString("menu_words_not_translated")</a></li>
-                            
+
                         </ul>
                     </li>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_apps") <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                         <li><a href="/app/new">@Html.LocalizationString("menu_apps_new_app")</a></li>    
-                         <li class="divider"></li>
-                           
-                         <li><a href="/user/apps">@Html.LocalizationString("menu_apps_apps")</a></li>
+                            <li><a href="/app/new">@Html.LocalizationString("menu_apps_new_app")</a></li>
+                            <li class="divider"></li>
+
+                            <li><a href="/user/apps">@Html.LocalizationString("menu_apps_apps")</a></li>
                         </ul>
                     </li>
 
@@ -58,9 +58,9 @@
                             <li><a href="/admin/newtranslator">@Html.LocalizationString("menu_settings_new_translator")</a></li>
                             <li class="divider"></li>
 
-                            <li><a href="/admin/apps">@Html.LocalizationString("menu_settings_apps")</a></li>               
+                            <li><a href="/admin/apps">@Html.LocalizationString("menu_settings_apps")</a></li>
                             <li><a href="/admin/users">@Html.LocalizationString("menu_settings_users")</a></li>
-                            
+
                         </ul>
                     </li>
                 </ul>
@@ -90,13 +90,18 @@
 
                 </ul>
 
-                <form class="navbar-form navbar-right">
-                    <input id="search" type="text" class="form-control col-lg-8" placeholder="@Html.LocalizationString("menu_search")">
-                </form>
+                @* <form class="navbar-form navbar-right">
+                        <input id="search" type="text" class="form-control col-lg-8" placeholder="@Html.LocalizationString("menu_search")">
+                    </form>*@
+
+                <div class="navbar-form navbar-right">
+                    <input id="txtSearch" type="text" class="form-control col-lg-8" placeholder="@Html.LocalizationString("menu_search")">
+                    <div id="dvSearchResults"></div>
+                </div>
 
             </div>
         </div>
-        
+
 
         <div class="row">
             @RenderBody()
@@ -106,6 +111,91 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
     <script src="/public/js/app.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            $("#txtSearch").focusout(function () {
+                if ($('.popopver').length < 1) {
+                    $('#txtSearch').popover('hide');
+                }
+            });
+
+            var queryString, highlightRow;
+
+            $('#txtSearch').keyup(function (key) {
+                if (key.which == 37 || key.which == 39) {
+                    // sağ sola okda tekra arama yapmasın diye...
+                    // sadece a-z09 kabul etsine çevirmeli...
+                }
+                else {
+                    if (key.which == 40) {
+                        highlightRow = $('.popover-content').find('.row.highlight');
+                        if (highlightRow.length == 0) {
+                            $('.popover-content>.row:first').addClass('highlight');
+                        }
+                        else {
+                            var nextHighlight = $('.highlight').next('.row');
+                            if (nextHighlight.length > 0) {
+                                $('.highlight').removeClass('highlight');
+                                nextHighlight.addClass('highlight');
+                            }
+                        }
+                    }
+                    else if (key.which == 38) {
+                        highlightRow = $('.popover-content').find('.row.highlight');
+                        if (highlightRow.length == 0) {
+                            $('.popover-content>.row:last').addClass('highlight');
+                        }
+                        else {
+                            var prevHighlight = $('.highlight').prev('.row');
+                            if (prevHighlight.length > 0) {
+                                $('.highlight').removeClass('highlight');
+                                prevHighlight.addClass('highlight');
+                            }
+                        }
+                    }
+                    else if (key.which == 13) {
+                        highlightRow = $('.highlight');
+                        if (highlightRow.length > 0) {
+                            location.href = highlightRow.find('a').attr('href');
+
+                            if (queryString != undefined) {
+                                queryString.abort();
+                            }
+                        }
+                    }
+                    else {
+                        queryString = $(this).val();
+                        if (queryString.length > 1) {
+                            $('.popover-content:visible').html('');
+                            $('#txtSearch').popover({ content: "Lütfen Bekleyiniz...", title: "", placement: "bottom", container: "body", html: "true" }).popover('show');
+
+                            $.get('/search/query', { text: queryString }, function (r) {
+                                $('.popover-content:visible').html("");
+                                if (r && r.Ok) {
+                                    if (r.Result.length == 0) {
+                                        $('.popover-content:visible').html("Sonuç Bulunamadı !");
+                                    }
+                                    else {
+                                        $.each(r.Result, function () {
+                                            var row = $('<div class="row" style="margin-bottom:5px;padding:5px 5px 5px 5px;"></div>');
+                                            var li = $('<div class="col-sm-12"></div>').append('<a href="' + this.Url + '"><img style="padding-right:5px;" alt="" src="' + this.ImgUrl + '" />' + this.Name + '</a>');
+                                            row.append(li);
+
+                                            $('.popover-content:visible').append(row);
+                                        });
+                                    }
+                                } else {
+                                    $('.popover-content:visible').html("Sonuç Bulunamadı !");
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 
     @RenderSection("script", false)
 </body>
