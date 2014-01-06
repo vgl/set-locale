@@ -89,28 +89,6 @@ namespace SetLocale.Client.Web.Controllers
             return Redirect("/word/detail/" + key);
         }
 
-        [HttpGet]
-        public ViewResult Edit(string id, string lang = ConstHelper.tr)
-        {
-            //var model = _demoDataService.GetATranslation();
-            //return View(model);
-            return null;
-        }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(TranslationModel model)
-        {
-            if (model.IsValid())
-            {
-
-
-                return Redirect("/tag/detail/" + model.Key);
-            }
-
-            return View(model);
-        }
-
-
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<JsonResult> Translate(string key, string language, string translation)
         {
