@@ -36,7 +36,7 @@ namespace SetLocale.Client.Web.Services
             {
                 keys = text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             }
-            
+
             var words = _wordRepository.Set<Word>();
 
             foreach (var key in keys)
@@ -53,7 +53,7 @@ namespace SetLocale.Client.Web.Services
                 result.Add(new SearchResult
                 {
                     Url = string.Format("/word/detail/{0}", item.Key),
-                    Name = string.Format("{0}, {1}", item.Key, item.Translation_EN ?? item.Translation_TR),
+                    Name = string.Format("{0}, {1}", item.Key, item.Translation_EN ?? item.Translation_TR).Substring(0,15).Insert(15,"..."),
                     ImgUrl = "/public/img/word.png"
                 });
             }
@@ -62,5 +62,5 @@ namespace SetLocale.Client.Web.Services
         }
     }
 
-   
+
 }
