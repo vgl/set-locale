@@ -50,12 +50,7 @@ namespace SetLocale.Client.Web.Test
             "~/word/nottranslated".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.NotTranslated().Result);
 
             "~/word/new".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.New());
-           
-
-            var keyEditRoute = "~/word/edit/sign_up".WithMethod(HttpVerbs.Get);
-            keyEditRoute.Values["lang"] = ConstHelper.tr;
-            keyEditRoute.ShouldMapTo<WordController>(action => action.Edit("sign_up", ConstHelper.tr));
-
+          
             "~/word/detail/sign_up".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.Detail("id").Result);
         }
 

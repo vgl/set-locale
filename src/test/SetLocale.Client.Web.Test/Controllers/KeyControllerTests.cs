@@ -102,30 +102,6 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             wordService.Verify(x => x.GetNotTranslated(), Times.Once);
         }
-
-        [Test]
-        public void edit_should_return_translation_model()
-        {
-            // Arrange
-            var wordService = new Mock<IWordService>();
-
-            var translated = new TranslationModel { Key = "my-key" };
-            wordService.Setup(x => x.Translate("","",""));              
-
-            // Act
-            var controller = new WordController(null, null, null);
-            var view = controller.Edit("id", ConstHelper.tr);
-
-            // Assert
-            Assert.NotNull(view);
-
-            var model = view.Model as TranslationModel;
-
-            Assert.NotNull(model);
-
-            wordService.Verify(x => x.Translate("", "", ""), Times.Once);
-            controller.AssertPostAttribute("Edit", new[] { typeof(TranslationModel) });
-        }
     }
 }
 
