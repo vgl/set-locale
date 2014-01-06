@@ -24,7 +24,7 @@ namespace SetLocale.Client.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             GlobalConfiguration.Configuration.EnsureInitialized();
-
+            
             PrepareIocContainer();
 
             PrepareLocalizationStrings();
@@ -35,7 +35,7 @@ namespace SetLocale.Client.Web
             var enTexts = new Dictionary<string, string>();
             #region EN
             enTexts.Add("app_name", "Set Locale");
-
+            
 
             #region Menu
 
@@ -158,7 +158,7 @@ namespace SetLocale.Client.Web
             #endregion
 
             #region WORDS
-
+             
 
             #region WORDS_Words
 
@@ -364,7 +364,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("menu_words_words_translated_lang", "Çevrilmiş Dil");
             trTexts.Add("btn_menu_words_words_edit", "Düzenle");
             trTexts.Add("btn_words_new_word", "Yeni Çeviri Ekle");
-
+            
 
             #endregion
 
@@ -424,7 +424,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("save_and_close", "Kaydet & Kapat");
 
             trTexts.Add("home_summary", "set-locale <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong>{3}</strong> farklı kelime için <strong>{4}</strong> adet çeviri sunmaktadır");
-            trTexts.Add("home_title", "set-locale servisine hoş geldiniz");
+            trTexts.Add("home_title","set-locale servisine hoş geldiniz");
             #endregion
             #endregion
 

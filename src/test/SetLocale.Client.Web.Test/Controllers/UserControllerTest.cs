@@ -10,6 +10,6 @@ namespace SetLocale.Client.Web.Test.Controllers
     [TestFixture]
     public class UserControllerTest
     {
-
+       
     }
 }

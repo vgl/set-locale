@@ -26,7 +26,7 @@ namespace SetLocale.Client.Web.Controllers
 
         public ActionResult RedirectToHome()
         {
-            return RedirectToAction("Index", "Home");
+            return Redirect("/home/index");    
         }
 
         public void SetLanguage()

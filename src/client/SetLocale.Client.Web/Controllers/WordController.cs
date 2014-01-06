@@ -24,7 +24,7 @@ namespace SetLocale.Client.Web.Controllers
                 return RedirectToHome();
             }
 
-            var entity = await _wordService.GetByKey(id);
+            var entity = await _wordService.GetByKey(id);           // Entity null kontrolü Test tarafında yapılmadı.
             if (entity == null)
             {
                 return RedirectToHome();
