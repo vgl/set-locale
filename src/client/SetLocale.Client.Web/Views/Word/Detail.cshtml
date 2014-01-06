@@ -77,32 +77,7 @@
                 var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
                 btnSave.val('@Html.LocalizationString("btn_save")');
                 btnSave.data('id', '@Model.Key');
-                btnSave.click(function () {
-                    var tag = $("input#txtTag").val();
-                    $("div#dvTag").html(tag);
-
-                });
-                //var TagHead = $('<h2>Yeni Tag Ekle<h2/>');
-
-                //var inputTag = $('<input type="text" id="txtTag   " name="txtTag" class="form-control col-4" />');
-
-                //var dv1 = $('<div style="margin:5px;float:left;" />');
-                //var dv2 = $('<div style="margin:5px;float:left;" />');
-                //var dv3 = $('<div style="margin:5px;float:left;" />');
-
-                //dv1.append(TagHead);
-                //dv2.append(inputTag);
-                //dv3.append(btnSave);
-
-
-                //$("div#dvForm").append(dv1).append(dv2).append('<br style="display:block;clear:both;"/>').append(dv3);
-
-                //btnSave.click(function () {
-                //    var tag = $("input#txtTag").val();
-                //    $("div#dvTag").html(tag);
-
-
-                //});
+   
                 var inputTag = $('<input type="text" id="txtTag" name="txtTag" class="form-control col-4" />');
 
                 var dv1 = $('<div style="margin:5px;float:left;" />');
@@ -113,6 +88,11 @@
                 dv3.append(btnSave);
 
                 $("div#dvForm").append(dv1).append('<br style="display:block;clear:both;"/>').append(dv3);
+                btnSave.click(function () {
+                    var tag = $("input#txtTag").val();
+                    $("div#dvTag").html(tag);
+
+                });
             }
 
             function addNewTranslationRow() {
@@ -150,7 +130,6 @@
                             });
                             tdTranslation.html(translation);
 
-
                             tr.append(tdBtn);
                             tr.append(tdFlag);
                             tr.append(tdTranslation);
@@ -181,7 +160,7 @@
                         inputLanguages.append('<option value="' + lang.id + '">' + lang.text + '</opiton>');
                     }
                 });
-                //var tdTranslationHead = $('<h2>Yeni Çeviri<h2/>');
+                
                 var inputTranslation = $('<input type="text" id="txtTranslation" name="txtTranslation" class="form-control col-4" />');
 
                 var dv1 = $('<div style="margin:5px;float:left;" />');
@@ -262,7 +241,7 @@
 
             $("input.btnEdit").click(fnEdit);
         });
-        $("input.btnNewTag").click(function() {
+        $("input.btn_new_tag").click(function () {
             $(this).hide();
 
             addNewTagRow();
