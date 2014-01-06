@@ -243,7 +243,7 @@
             $("div#dvForm").append(dv1).append('<br style="display:block;clear:both;"/>').append(dv3);
             btnSave.click(function () {
                 var tag = $("input#txtTag").val();
-                var tags = $('<a class="label label-info" href="/tag/detail/'+tag+'">'+tag+'</a>');
+                var tags = $('<a class="label label-info" style="margin-left:5px;" href="/tag/detail/' + tag + '">' + tag + '</a>');
                 $("div#dvTag").append(tags);
                 
                 $("div#dvForm").html('');
