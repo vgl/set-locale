@@ -16,7 +16,7 @@ namespace SetLocale.Client.Web.Controllers
             _wordService = wordService;
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<ActionResult> Detail(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -34,7 +34,7 @@ namespace SetLocale.Client.Web.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<ViewResult> All()
         {
             var entities = await _wordService.GetAll();

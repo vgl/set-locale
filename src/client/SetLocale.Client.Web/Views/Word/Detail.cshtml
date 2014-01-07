@@ -22,17 +22,21 @@
             }
         </div>
     </p>
-    <p>
-        <div>
-            <div id="dvForm" class="pull-left"></div>
 
-            <input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
+    @if (User.Identity.IsAuthenticated)
+    {
+        <p>
+            <div>
+                <div id="dvForm" class="pull-left"></div>
 
-            <input type="button" class="btn btn-sm btn-info btnNewTag pull-right" value="@Html.LocalizationString("btn_new_tag")" data-id="@Model.Key" />
+                <input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
 
-            @Html.AntiForgeryToken()
-        </div>
-    </p>
+                <input type="button" class="btn btn-sm btn-info btnNewTag pull-right" value="@Html.LocalizationString("btn_new_tag")" data-id="@Model.Key" />
+
+                @Html.AntiForgeryToken()
+            </div>
+        </p>
+    }
 </div>
 
 <div class="row">
@@ -40,7 +44,10 @@
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th></th>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <th></th>
+                    }
                     <th>@Html.LocalizationString("language")</th>
                     <th>@Html.LocalizationString("translation")</th>
                 </tr>
@@ -49,9 +56,12 @@
                 @foreach (var item in Model.Translations)
                 {
                     <tr>
-                        <td>
-                            <input type="button" class="btn btn-sm btn-warning btnEdit" value="@Html.LocalizationString("btn_edit")" data-lang="@item.Language.Key" />
-                        </td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <td>
+                                <input type="button" class="btn btn-sm btn-warning btnEdit" value="@Html.LocalizationString("btn_edit")" data-lang="@item.Language.Key" />
+                            </td>
+                        }
                         <td> <img src="@item.Language.ImageUrl" alt="@item.Language.Name" /> @item.Language.Name</td>
                         <td>@item.Value</td>
                     </tr>
@@ -69,7 +79,7 @@
     <script src="/public/js/select2.js"></script>
 
     <script>
-        $(function() {
+        $(function () {
             var translatedLanguages = [@Html.Raw(Model.LanguagesStr)];
 
             function addNewTranslationRow() {
@@ -77,15 +87,16 @@
                 btnSave.val('@Html.LocalizationString("btn_save")');
                 btnSave.data('id', '@Model.Key');
 
-                btnSave.click(function() {
+                btnSave.click(function () {
                     var lang = $("select#selLanguages").val();
                     var translation = $("input#txtTranslation").val();
+                    $("input.btnNewTag").show();
 
                     $.ajax({
                         url: "/Word/Translate",
                         type: "POST",
                         data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
-                    }).done(function(r) {
+                    }).done(function (r) {
                         if (r && r.Ok) {
 
                             var tr = $('<tr />');
@@ -99,7 +110,7 @@
                             tdBtn.append(btnEdit);
                             tdFlag.append($("<img class='flag' style='margin:5px;margin-left: 0;margin-top: 0;' alt='flag' src='/public/img/flag/" + lang + ".png'/>"));
 
-                            $.each(allLanguages, function(i, l) {
+                            $.each(allLanguages, function (i, l) {
                                 if (l.id == lang) {
                                     tdFlag.append($('<span>' + l.text + '</span>'));
                                     translatedLanguages.push(l);
@@ -123,10 +134,10 @@
                 });
 
                 var inputLanguages = $('<select id="selLanguages" name="selLanguages" />');
-                $.each(allLanguages, function(i, lang) {
+                $.each(allLanguages, function (i, lang) {
 
                     var isExisting = false;
-                    $.each(translatedLanguages, function(j, l) {
+                    $.each(translatedLanguages, function (j, l) {
                         if (lang.id === l.id) {
                             isExisting = true;
                             return;
@@ -137,7 +148,7 @@
                         inputLanguages.append('<option value="' + lang.id + '">' + lang.text + '</opiton>');
                     }
                 });
-                
+
                 var inputTranslation = $('<input type="text" id="txtTranslation" name="txtTranslation" class="form-control col-4" />');
 
                 var dv1 = $('<div style="margin:5px;float:left;" />');
@@ -167,7 +178,7 @@
                 var translations = $("input#txtEdit");
 
                 var translation = "";
-                $.each(translations, function(i, txt) {
+                $.each(translations, function (i, txt) {
                     if ($(txt).data("lang") == lang) {
                         translation = $(txt).val();
                         return;
@@ -180,7 +191,7 @@
                     url: "/Word/Translate",
                     type: "POST",
                     data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
-                }).done(function(r) {
+                }).done(function (r) {
                     if (r && r.Ok) {
                         td.html(translation);
                     } else {
@@ -189,8 +200,9 @@
                 });
             }
 
-            $("input.btnNewTranslate").click(function() {
+            $("input.btnNewTranslate").click(function () {
                 $(this).hide();
+                $("input.btnNewTag").hide();
 
                 addNewTranslationRow();
 
@@ -199,10 +211,10 @@
                     return "<img class='flag' alt='flag' style='margin:5px;' src='/public/img/flag/" + state.id.toLowerCase() + ".png'/>" + state.text;
                 }
 
-                $("select#selLanguages").select2({ formatResult: format, formatSelection: format, escapeMarkup: function(m) { return m; } });
+                $("select#selLanguages").select2({ formatResult: format, formatSelection: format, escapeMarkup: function (m) { return m; } });
             });
 
-            var fnEdit = function() {
+            var fnEdit = function () {
                 if ($(this).hasClass("btn-warning")) {
                     $(this).removeClass("btn-warning").addClass("btn-primary");
                     $(this).val("@Html.LocalizationString("btn_save")");
@@ -220,7 +232,7 @@
         });
         $("input.btnNewTag").click(function () {
             $(this).hide();
-
+            $("input.btnNewTranslate").hide();
             addNewTagRow();
 
         });
@@ -238,16 +250,17 @@
 
             dv1.append(inputTag);
             dv3.append(btnSave);
-         
+
 
             $("div#dvForm").append(dv1).append('<br style="display:block;clear:both;"/>').append(dv3);
             btnSave.click(function () {
                 var tag = $("input#txtTag").val();
                 var tags = $('<a class="label label-info" style="margin-left:5px;" href="/tag/detail/' + tag + '">' + tag + '</a>');
                 $("div#dvTag").append(tags);
-                
+
                 $("div#dvForm").html('');
                 $("input.btnNewTag").show();
+                $("input.btnNewTranslate").show();
             });
         }
     </script>

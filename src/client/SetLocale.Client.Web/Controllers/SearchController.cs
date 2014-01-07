@@ -19,7 +19,7 @@ namespace SetLocale.Client.Web.Controllers
             _searchService = searchService;
         }
 
-        [System.Web.Http.HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<JsonResult> Query(string text)
         {
             var model = new ResponseModel { Ok = false };

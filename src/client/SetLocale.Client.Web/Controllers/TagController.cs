@@ -20,7 +20,7 @@ namespace SetLocale.Client.Web.Controllers
             _tagService = tagService;
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<ViewResult> Detail(string id = "set-locale")
         {
             ViewBag.Key = id;

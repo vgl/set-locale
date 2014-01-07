@@ -19,7 +19,7 @@ namespace SetLocale.Client.Web.Controllers
             _reportService = reportService;
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async Task<ViewResult> Index()
         {
             var model = await _reportService.GetHomeStats();
