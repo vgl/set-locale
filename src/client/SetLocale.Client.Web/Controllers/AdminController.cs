@@ -72,10 +72,10 @@ namespace SetLocale.Client.Web.Controllers
         public async Task<ActionResult> Users(int id = 0)
         {
             List<User> users;
-            if (id > 0
-                && id < 4)
+            var roleId = id;
+            if (SetLocaleRole.IsValid(roleId))
             {
-                users = await _userService.GetAllByRoleId(id);
+                users = await _userService.GetAllByRoleId(roleId);
             }
             else
             {

@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web.Mvc;
+
 using Moq;
 using NUnit.Framework;
 
 using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Entities;
+using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 using SetLocale.Client.Web.Test.TestHelpers;
-using System.Web.Mvc;
-using SetLocale.Client.Web.Models;
 
 namespace SetLocale.Client.Web.Test.Controllers
 {
@@ -69,26 +68,20 @@ namespace SetLocale.Client.Web.Test.Controllers
         {
             // Arrange
             var inValidModel = new UserModel { Name = "test name" };
-            //var userService = new Mock<IUserService>();                   Model Invalid olduğu için direk app_model geri dönecek. Mock'a ihtiyaç yok.
-            //userService.Setup(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Translator.Value)).Returns(() => Task.FromResult<int?>(1));
 
             // Act
-            //var controller = new AdminController(userService.Object, null, null);
             var controller = new AdminController(null, null, null);
             var view = await controller.NewTranslator(inValidModel) as ViewResult;
 
             // Assert
             Assert.NotNull(view);
             Assert.NotNull(view.Model);
-            var model = view.Model;
-
-            Assert.NotNull(model);
-            Assert.IsAssignableFrom(typeof(UserModel), model);
+            Assert.IsAssignableFrom(typeof(UserModel), view.Model);
             controller.AssertPostAttribute("NewTranslator", new[] { typeof(UserModel) });
         }
 
         [Test]
-        public void users_id_is_greater_than_four_should_return_with_app_model()
+        public void users_should_return_all_users_when_role_not_valid()
         {
             // Arrange           
             var userService = new Mock<IUserService>();
@@ -106,7 +99,7 @@ namespace SetLocale.Client.Web.Test.Controllers
         }
 
         [Test]
-        public void users_id_is_between_one_and_four_should_return_with_app_model()
+        public void users_should_return_roles_users_when_role_is_valid()
         {
             // Arrange           
             var userService = new Mock<IUserService>();
@@ -124,7 +117,7 @@ namespace SetLocale.Client.Web.Test.Controllers
         }
 
         [Test]
-        public void apps_should_return_with_app_model()
+        public void apps_should_return_with_app_list_model()
         {
             // Arrange           
             var appService = new Mock<IAppService>();
