@@ -436,7 +436,7 @@ namespace SetLocale.Client.Web
         {
             var container = new WindsorContainer().Install(FromAssembly.This());
             ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(container.Kernel));
-            GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator), new WindsorCompositionRoot(container));
+            GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator), new WindsorAPIControllerFactory(container));
         }
 
         protected void Application_PreSendRequestHeaders(object sender, EventArgs e)
