@@ -6,7 +6,6 @@ using NUnit.Framework;
 
 using SetLocale.Client.Web.Configurations;
 using SetLocale.Client.Web.Controllers;
-using SetLocale.Client.Web.Helpers;
 
 namespace SetLocale.Client.Web.Test
 {
@@ -36,11 +35,12 @@ namespace SetLocale.Client.Web.Test
         [Test]
         public void AdminControllerRoutes()
         {
-            "~/admin/newtranslator".ShouldMapTo<AdminController>(action => action.NewTranslator());
-            "~/admin/index".ShouldMapTo<AdminController>(action => action.Index());
-            "~/admin/users".ShouldMapTo<AdminController>(action => action.Users(0).Result);
-            "~/admin/users/1".ShouldMapTo<AdminController>(action => action.Users(1).Result);
-            "~/admin/apps".ShouldMapTo<AdminController>(action => action.Apps().Result);
+            "~/admin/newtranslator".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.NewTranslator());
+            "~/admin/index".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Index());
+
+            "~/admin/users".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Users(0).Result);
+            "~/admin/users/1".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Users(1).Result);
+            "~/admin/apps".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Apps().Result);
         }
 
         [Test]
@@ -50,29 +50,30 @@ namespace SetLocale.Client.Web.Test
             "~/word/nottranslated".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.NotTranslated().Result);
 
             "~/word/new".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.New());
-          
-            "~/word/detail/sign_up".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.Detail("id").Result);
+
+            "~/word/detail/sign_up".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.Detail("sign_up").Result);
         }
 
         [Test]
         public void AppControllerRoutes()
         {
-            "~/app/new".WithMethod(HttpVerbs.Get).ShouldMapTo<AppController>(action => action.New());       
+            "~/app/new".WithMethod(HttpVerbs.Get).ShouldMapTo<AppController>(action => action.New());
+            
             var appDetail = "~/app/detail".WithMethod(HttpVerbs.Get);
-             appDetail.Values["id"] = 1;
-             appDetail.ShouldMapTo<AppController>(action => action.Detail(1).Result);
+            appDetail.Values["id"] = 1;
+            appDetail.ShouldMapTo<AppController>(action => action.Detail(1).Result);
         }
 
         [Test]
         public void UserControllerRoutes()
         {
-            "~/user/apps".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Apps(1).Result);
             "~/user/new".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.New());
             "~/user/reset".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Reset());
             "~/user/login".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Login());
             "~/user/logout".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Logout());
-        }
 
+            "~/user/apps".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Apps(1).Result);
+        }
 
         [Test]
         public void LangControllerRoutes()
@@ -81,9 +82,6 @@ namespace SetLocale.Client.Web.Test
             langChangeRoute.Values["id"] = "1";
             langChangeRoute.ShouldMapTo<LangController>(action => action.Change("1"));
         }
-
-
-
     }
 }
 

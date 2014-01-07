@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Security.Principal;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Moq;
@@ -50,8 +52,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.AreEqual(view.Url, "/home/index"); 
             controller.AssertGetAttribute("Detail", new[] { typeof(int) });              
         }
-
-          
+        
         [Test]
         public void new_should_return_app_model()
         {  
@@ -68,6 +69,21 @@ namespace SetLocale.Client.Web.Test.Controllers
         public void new_should_redirect_if_model_is_valid()
         {
             // Arrange
+
+            var controllerContext = new Mock<ControllerContext>();
+            var httpContext = new Mock<HttpContextBase>();
+            var httpRequest = new Mock<HttpRequestBase>();
+
+            var userIdentity = new Mock<IIdentity>();
+
+
+            controllerContext.Setup(x => x.HttpContext).Returns(httpContext.Object);
+            httpContext.Setup(x => x.Request).Returns(httpRequest.Object);
+            
+            
+            
+            //controllerContext.Object.HttpContext.User
+
             var appService = new Mock<IAppService>();
             var validModel = new AppModel { Name = "test name", Url = "test.com", Description = "test description" };
 
