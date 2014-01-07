@@ -19,52 +19,57 @@
         <div class="row">
             <div class="navbar navbar-default">
 
-
+             
                 <ul class="nav navbar-nav">
+                   
+                        <li style="margin-left: -5px; margin-top: -2px;"><a href="/lang/change/tr"><img src="/public/img/flag/tr.png" alt="Türkçe" /></a></li>
+                        <li style="margin-left: -20px; margin-right: -20px; margin-top: -2px;"><a href="/lang/change/en"><img src="/public/img/flag/en.png" alt="English" /></a></li>
 
-                    <li style="margin-left: -5px; margin-top: -2px;"><a href="/lang/change/tr"><img src="/public/img/flag/tr.png" alt="Türkçe" /></a></li>
-                    <li style="margin-left: -20px; margin-right: -20px; margin-top: -2px;"><a href="/lang/change/en"><img src="/public/img/flag/en.png" alt="English" /></a></li>
-
-                    <li><a href="/">@Html.LocalizationString("app_name")</a></li>
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_words")<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
+                        <li><a href="/">@Html.LocalizationString("app_name")</a></li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_words")<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
 
 
-                            <li><a href="/word/new">@Html.LocalizationString("menu_words_new_word")</a></li>
-                            <li class="divider"></li>
+                                <li><a href="/word/new">@Html.LocalizationString("menu_words_new_word")</a></li>
+                                <li class="divider"></li>
 
-                            <li><a href="/user/words">@Html.LocalizationString("menu_words_my_words")</a></li>
-                            <li><a href="/word/all">@Html.LocalizationString("menu_words_words")</a></li>
-                            <li><a href="/word/nottranslated">@Html.LocalizationString("menu_words_not_translated")</a></li>
+                                <li><a href="/user/words">@Html.LocalizationString("menu_words_my_words")</a></li>
+                                <li><a href="/word/all">@Html.LocalizationString("menu_words_words")</a></li>
+                                <li><a href="/word/nottranslated">@Html.LocalizationString("menu_words_not_translated")</a></li>
 
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
 
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_apps") <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/app/new">@Html.LocalizationString("menu_apps_new_app")</a></li>
-                            <li class="divider"></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_apps") <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/app/new">@Html.LocalizationString("menu_apps_new_app")</a></li>
+                                <li class="divider"></li>
 
-                            <li><a href="/user/apps">@Html.LocalizationString("menu_apps_apps")</a></li>
-                        </ul>
-                    </li>
+                                <li><a href="/user/apps">@Html.LocalizationString("menu_apps_apps")</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_settings") <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/admin/newtranslator">@Html.LocalizationString("menu_settings_new_translator")</a></li>
-                            <li class="divider"></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_settings") <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/admin/newtranslator">@Html.LocalizationString("menu_settings_new_translator")</a></li>
+                                <li class="divider"></li>
 
-                            <li><a href="/admin/apps">@Html.LocalizationString("menu_settings_apps")</a></li>
-                            <li><a href="/admin/users">@Html.LocalizationString("menu_settings_users")</a></li>
+                                <li><a href="/admin/apps">@Html.LocalizationString("menu_settings_apps")</a></li>
+                                <li><a href="/admin/users">@Html.LocalizationString("menu_settings_users")</a></li>
 
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a href="/word/all">@Html.LocalizationString("menu_words")</a></li>
+                    }
                 </ul>
-
                 <ul class="nav navbar-nav navbar-right">
 
                     @if (User.Identity.IsAuthenticated)
@@ -89,10 +94,6 @@
 
 
                 </ul>
-
-                @* <form class="navbar-form navbar-right">
-                        <input id="search" type="text" class="form-control col-lg-8" placeholder="@Html.LocalizationString("menu_search")">
-                    </form>*@
 
                 <div class="navbar-form navbar-right">
                     <input id="txtSearch" type="text" class="form-control col-lg-8" placeholder="@Html.LocalizationString("menu_search")">
