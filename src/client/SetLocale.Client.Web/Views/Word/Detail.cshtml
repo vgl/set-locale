@@ -80,6 +80,7 @@
                 btnSave.click(function() {
                     var lang = $("select#selLanguages").val();
                     var translation = $("input#txtTranslation").val();
+                    $("input.btnNewTag").show();
 
                     $.ajax({
                         url: "/Word/Translate",
@@ -191,6 +192,7 @@
 
             $("input.btnNewTranslate").click(function() {
                 $(this).hide();
+                $("input.btnNewTag").hide();
 
                 addNewTranslationRow();
 
@@ -220,7 +222,7 @@
         });
         $("input.btnNewTag").click(function () {
             $(this).hide();
-
+            $("input.btnNewTranslate").hide();
             addNewTagRow();
 
         });
@@ -248,6 +250,7 @@
                 
                 $("div#dvForm").html('');
                 $("input.btnNewTag").show();
+                $("input.btnNewTranslate").show();
             });
         }
     </script>
