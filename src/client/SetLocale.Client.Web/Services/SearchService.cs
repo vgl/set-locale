@@ -42,8 +42,8 @@ namespace SetLocale.Client.Web.Services
             {
                 var _key = key;
                 words = words.Where(x => x.Key.Contains(_key)
-                                        || x.Translation_TR.Contains(_key)
-                                        || x.Translation_EN.Contains(_key));
+                                         || x.Translation_TR.Contains(_key)
+                                         || x.Translation_EN.Contains(_key));
             }
 
             var wordResults = words.OrderByDescending(x => x.Id).Skip(0).Take(10).ToList();

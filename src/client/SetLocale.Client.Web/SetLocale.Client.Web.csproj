@@ -184,6 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\BaseApiController.cs" />
+    <Compile Include="ApiControllers\LocalesController.cs" />
     <Compile Include="ApiControllers\LocaleController.cs" />
     <Compile Include="Configurations\FilterConfig.cs" />
     <Compile Include="Configurations\IocConfig.cs" />
