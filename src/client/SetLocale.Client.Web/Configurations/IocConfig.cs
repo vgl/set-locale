@@ -41,11 +41,11 @@ namespace SetLocale.Client.Web.Configurations
         }
     }
 
-    public class WindsorCompositionRoot : IHttpControllerActivator
+    public class WindsorAPIControllerFactory : IHttpControllerActivator
     {
         private readonly IWindsorContainer _container;
 
-        public WindsorCompositionRoot(IWindsorContainer container)
+        public WindsorAPIControllerFactory(IWindsorContainer container)
         {
             _container = container;
         }
