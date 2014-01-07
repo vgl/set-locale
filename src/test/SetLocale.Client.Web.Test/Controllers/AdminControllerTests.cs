@@ -81,43 +81,26 @@ namespace SetLocale.Client.Web.Test.Controllers
         }
 
         [Test]
-        public void users_should_return_all_users_when_role_not_valid()
+        public async void users_should_return_with_list_user_model()
         {
             // Arrange           
             var userService = new Mock<IUserService>();
-            userService.Setup(x => x.GetAll()).Returns(() => Task.FromResult(new List<User>())); 
+            userService.Setup(x => x.GetAll()).Returns(() => Task.FromResult(new List<User>()));
              
             // Act
             var controller = new AdminController(userService.Object, null, null);
-            var view = controller.Users(5);     
+            var view = await controller.Users(5) as ViewResult;     
 
             // Assert
             Assert.NotNull(view);
-            controller.AssertGetAttribute("Users",new[] { typeof(int) });
-            userService.Verify(x => x.GetAll(), Times.Once);
-             
-        }
-
-        [Test]
-        public void users_should_return_roles_users_when_role_is_valid()
-        {
-            // Arrange           
-            var userService = new Mock<IUserService>();
-            userService.Setup(x => x.GetAllByRoleId(1)).Returns(() => Task.FromResult(new List<User>()));
-
-            // Act
-            var controller = new AdminController(userService.Object, null, null);
-            var view = controller.Users(1);      
-
-            // Assert
-            Assert.NotNull(view);
+            Assert.NotNull(view.Model);
+            Assert.IsAssignableFrom(typeof(List<UserModel>), view.Model);
             controller.AssertGetAttribute("Users", new[] { typeof(int) });
-            userService.Verify(x => x.GetAllByRoleId(1), Times.Once);
-
+            userService.Verify(x => x.GetAll(), Times.Once); 
         }
-
+         
         [Test]
-        public void apps_should_return_with_app_list_model()
+        public async void apps_should_return_with_list_app_model()
         {
             // Arrange           
             var appService = new Mock<IAppService>();
@@ -125,10 +108,12 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             // Act
             var controller = new AdminController(null, null, appService.Object);
-            var view = controller.Apps();
+            var view = await controller.Apps() as ViewResult;
 
             // Assert
             Assert.NotNull(view);
+            Assert.NotNull(view.Model);
+            Assert.IsAssignableFrom(typeof(List<AppModel>), view.Model); 
             controller.AssertGetAttribute("Apps");
             appService.Verify(x => x.GetAll(), Times.Once);
         }
