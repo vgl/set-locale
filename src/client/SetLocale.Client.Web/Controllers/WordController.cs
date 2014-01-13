@@ -59,8 +59,7 @@ namespace SetLocale.Client.Web.Controllers
 
             return View(model);
         }
-
-
+         
         [HttpGet]
         public ViewResult New()
         {
@@ -104,5 +103,21 @@ namespace SetLocale.Client.Web.Controllers
             model.Ok = await _wordService.Translate(key, language, translation);
             return Json(model, JsonRequestBehavior.DenyGet);
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<JsonResult> Tag(string key, string tag)
+        {
+            var model = new ResponseModel { Ok = false };
+
+            if (string.IsNullOrEmpty(key)
+                || string.IsNullOrEmpty(tag))
+            {
+                return Json(model, JsonRequestBehavior.DenyGet);
+            }
+
+            model.Ok = await _wordService.Tag(key, tag);
+            return Json(model, JsonRequestBehavior.DenyGet);
+        }
+        
     }
 }

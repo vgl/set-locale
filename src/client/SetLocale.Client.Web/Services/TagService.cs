@@ -14,7 +14,7 @@ namespace SetLocale.Client.Web.Services
 
     public class TagService : ITagService
     {
-        private readonly IRepository<Word> _wordRepository;
+        private readonly IRepository<Word> _wordRepository; 
 
         public TagService(
             IRepository<Word> wordRepository)
@@ -27,5 +27,7 @@ namespace SetLocale.Client.Web.Services
             var words = _wordRepository.FindAll(x => x.Tags.Any(y => y.UrlName == tagUrlName)).ToList();
             return Task.FromResult(words);
         }
+
+
     }
 }
