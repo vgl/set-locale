@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Services;
+using SetLocale.Client.Web.Test.Builders;
 using SetLocale.Client.Web.Test.TestHelpers;
 
 namespace SetLocale.Client.Web.Test.Controllers
@@ -28,13 +29,14 @@ namespace SetLocale.Client.Web.Test.Controllers
             httpResponse.Setup(x => x.SetCookie(It.IsAny<HttpCookie>()));
 
             // Act
-            var controller = new LangController(null, null);
-            controller.ControllerContext = controllerContext.Object;
-            var view = controller.Change("tr");
+            var sut = new LangControllerBuilder().Build();
+
+            sut.ControllerContext = controllerContext.Object;
+            var view = sut.Change("tr");
 
             // Assert
             Assert.NotNull(view);
-            controller.AssertGetAttribute("Change", new[] { typeof(string) });
+            sut.AssertGetAttribute("Change", new[] { typeof(string) });
             httpResponse.Verify(x => x.SetCookie(It.IsAny<HttpCookie>()), Times.AtLeastOnce);
         }
     }

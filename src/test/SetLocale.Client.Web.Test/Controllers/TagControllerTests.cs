@@ -10,6 +10,7 @@ using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
+using SetLocale.Client.Web.Test.Builders;
 using SetLocale.Client.Web.Test.TestHelpers;
 
 namespace SetLocale.Client.Web.Test.Controllers
@@ -26,8 +27,10 @@ namespace SetLocale.Client.Web.Test.Controllers
             tagService.Setup(x => x.GetWords("set-locale")).Returns(() => Task.FromResult(new List<Word>{new Word()}));
 
             // Act
-            var controller = new TagController(tagService.Object, null, null);
-            var view = controller.Detail("set-locale");
+            var sut = new TagControllerBuilder().WithTagService(tagService.Object)
+                                                .Build();
+
+            var view = sut.Detail("set-locale");
              
             // Assert
             Assert.NotNull(view);
@@ -39,7 +42,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.AreEqual(model.Count, list.Count);       
 
             tagService.Verify(x => x.GetWords("set-locale"), Times.Once);
-            controller.AssertGetAttribute("Detail", new[] { typeof(string) });
+            sut.AssertGetAttribute("Detail", new[] { typeof(string) });
         }
     }
 }
