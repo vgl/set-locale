@@ -25,12 +25,8 @@
         @Html.AntiForgeryToken()
 
         <div class="row">
-            <div style="margin:10px;float:left;">
-                <input type="submit" value="@Html.LocalizationString("btn_login")" class="btn btn-primary btn-lg" />
-            </div>
-            <div style="margin: 10px; margin-top: 28px; font-size: 20px; float: left;">
-                <a href="/user/reset">@Html.LocalizationString("forgot_your_password")</a>
-            </div>
+            <input type="submit" value="@Html.LocalizationString("btn_login")" class="btn btn-primary btn-lg" style="margin: 10px;" /> 
+            <a href="/user/reset">@Html.LocalizationString("forgot_your_password")</a>
         </div>
 
 
