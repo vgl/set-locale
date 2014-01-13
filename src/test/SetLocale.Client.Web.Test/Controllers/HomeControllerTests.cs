@@ -7,6 +7,7 @@ using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 using SetLocale.Client.Web.Test.TestHelpers;
+using SetLocale.Client.Web.Test.Builders;
 
 namespace SetLocale.Client.Web.Test.Controllers
 {
@@ -21,14 +22,16 @@ namespace SetLocale.Client.Web.Test.Controllers
             reportService.Setup(x => x.GetHomeStats()).Returns(() => Task.FromResult(new HomeStatsModel()));
 
             // Act
-            var controller = new HomeController(reportService.Object, null, null);
-            var view = await controller.Index();
+            var sut = new HomeControllerBuilder().WithReportService(reportService.Object)
+                                                 .Build();
+
+            var view = await sut.Index();
 
             // Assert
             Assert.NotNull(view);
             var model = view.Model as HomeStatsModel;
             Assert.NotNull(model);
-            controller.AssertGetAttribute("Index");
+            sut.AssertGetAttribute("Index");
         }
     }
 }
