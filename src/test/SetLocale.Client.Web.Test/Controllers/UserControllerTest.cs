@@ -15,6 +15,7 @@ using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Repositories;
 using SetLocale.Client.Web.Services;
 using SetLocale.Client.Web.Test.TestHelpers;
+using SetLocale.Client.Web.Test.Builders;
 
 namespace SetLocale.Client.Web.Test.Controllers
 {
@@ -29,8 +30,9 @@ namespace SetLocale.Client.Web.Test.Controllers
             appService.Setup(x => x.GetByUserId(1)).Returns(() => Task.FromResult(new List<App>()));
 
             // Act
-            var controller = new UserController(null, null, null, appService.Object);
-            var view = await controller.Apps(1) as ViewResult;
+            var sut = new UserControllerBuilder().WithAppService(appService.Object)
+                                                 .Build();
+            var view = await sut.Apps(1) as ViewResult;
 
             // Assert
             Assert.NotNull(view);
@@ -38,7 +40,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             var model = view.Model;
             Assert.NotNull(model);
             Assert.IsAssignableFrom<List<AppModel>>(model);
-            controller.AssertGetAttribute("Apps", new[] { typeof(int) });
+            sut.AssertGetAttribute("Apps", new[] { typeof(int) });
 
             appService.Verify(x => x.GetByUserId(1), Times.Once);
 
@@ -52,18 +54,20 @@ namespace SetLocale.Client.Web.Test.Controllers
             wordService.Setup(x => x.GetByUserId(1)).Returns(() => Task.FromResult(new List<Word>()));
 
             // Act
-            var controller = new UserController(null, wordService.Object, null, null);
-            var view = await controller.Words(1) as ViewResult;
+           
+            var sut = new UserControllerBuilder().WithWordService(wordService.Object)
+                                                 .Build();
+
+            var view = await sut.Words(1) as ViewResult;
 
             // Assert
             Assert.NotNull(view);
 
             var model = view.Model;
             Assert.NotNull(model);
-            controller.AssertGetAttribute("Words", new[] { typeof(int) });
+            sut.AssertGetAttribute("Words", new[] { typeof(int) });
 
             wordService.Verify(x => x.GetByUserId(1), Times.Once);
-
         }
 
         [Test]
@@ -74,8 +78,10 @@ namespace SetLocale.Client.Web.Test.Controllers
             userService.Setup(x => x.ChangeStatus(1, true)).Returns(() => Task.FromResult(new bool()));
 
             // Act
-            var controller = new UserController(userService.Object, null, null, null);
-            var view = await controller.ChangeStatus(1, true);
+            var sut = new UserControllerBuilder().WithUserService(userService.Object)
+                                                 .Build();
+
+            var view = await sut.ChangeStatus(1, true);
 
             // Assert
             Assert.NotNull(view);
@@ -84,25 +90,26 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(model);
             Assert.IsAssignableFrom(typeof(ResponseModel), model);
 
-            controller.AssertPostAttribute("ChangeStatus", new[] { typeof(int), typeof(bool) });
+            sut.AssertPostAttribute("ChangeStatus", new[] { typeof(int), typeof(bool) });
             userService.Verify(x => x.ChangeStatus(1, true), Times.Once);
-
         }
 
         [Test]
         public void new_should_return_with_user_model()
         {
             // Act
-            var controller = new UserController(null, null, null, null);
-            var view = controller.New() as ViewResult;
+            var sut = new UserControllerBuilder().Build();
+
+            var view = sut.New() as ViewResult;
 
             // Assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
             Assert.IsAssignableFrom(typeof(UserModel), model);
-            controller.AssertGetAttribute("New");
-            controller.AssertAllowAnonymousAttribute("New");
+
+            sut.AssertGetAttribute("New");
+            sut.AssertAllowAnonymousAttribute("New");
         }
 
         [Test]
@@ -115,16 +122,17 @@ namespace SetLocale.Client.Web.Test.Controllers
             userService.Setup(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Developer.Value)).Returns(() => Task.FromResult<int?>(1));
 
             // Act
-            var controller = new UserController(userService.Object, null, null, null);
-            var view = await controller.New(validModel) as RedirectResult;
+            var sut = new UserControllerBuilder().WithUserService(userService.Object)
+                                                 .Build();
+            var view = await sut.New(validModel) as RedirectResult;
 
             // Assert
             Assert.NotNull(view);
             Assert.AreEqual(view.Url, "/user/apps");
             userService.Verify(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Developer.Value), Times.Once);
-            controller.AssertPostAttribute("New", new[] { typeof(UserModel) });
-            controller.AssertAllowAnonymousAttribute("New", new[] { typeof(UserModel) });
 
+            sut.AssertPostAttribute("New", new[] { typeof(UserModel) });
+            sut.AssertAllowAnonymousAttribute("New", new[] { typeof(UserModel) });
         }
 
         [Test]
@@ -134,50 +142,51 @@ namespace SetLocale.Client.Web.Test.Controllers
             var invalidModel = new UserModel { Name = "test name" };
 
             // Act
-            var controller = new UserController(null, null, null, null);
-            var view = await controller.New(invalidModel) as ViewResult;
+            var sut = new UserControllerBuilder().Build();
+            var view = await sut.New(invalidModel) as ViewResult;
 
             // Assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
             Assert.IsAssignableFrom(typeof(UserModel), model);
-            controller.AssertPostAttribute("New", new[] { typeof(UserModel) });
-            controller.AssertAllowAnonymousAttribute("New", new[] { typeof(UserModel) });
 
+            sut.AssertPostAttribute("New", new[] { typeof(UserModel) });
+            sut.AssertAllowAnonymousAttribute("New", new[] { typeof(UserModel) });
         }
 
         [Test]
         public void reset_should_return_with_reset_model()
         {
             // Act
-            var controller = new UserController(null, null, null, null);
-            var view = controller.Reset() as ViewResult;
+            var sut = new UserControllerBuilder().BuildWithMockControllerContext();
+            var view = sut.Reset() as ViewResult;
 
             // Assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
             Assert.IsAssignableFrom(typeof(ResetModel), model);
-            controller.AssertGetAttribute("Reset");
-            controller.AssertAllowAnonymousAttribute("Reset");
+
+            sut.AssertGetAttribute("Reset");
+            sut.AssertAllowAnonymousAttribute("Reset");
         }
 
         [Test]
         public void login_should_return_with_login_model()
         {
             // Act
-            var controller = new UserController(null, null, null, null);
-            var view = controller.Login() as ViewResult;
+            var sut = new UserControllerBuilder().Build();
+            var view = sut.Login() as ViewResult;
 
             // Assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
             Assert.IsAssignableFrom(typeof(LoginModel), model);
-            controller.AssertGetAttribute("Login");
-            controller.AssertAllowAnonymousAttribute("Login");
 
+            sut.AssertGetAttribute("Login");
+            sut.AssertAllowAnonymousAttribute("Login");
         }
 
         [Test]
@@ -202,15 +211,18 @@ namespace SetLocale.Client.Web.Test.Controllers
             formsAuthenticationService.Setup(x => x.SignIn(string.Format("{0}|{1}|{2}", id, name, email), true));    
 
             // Act
-            var controller = new UserController(userService.Object, null, formsAuthenticationService.Object, null);
-            var view = await controller.Login(validModel) as RedirectResult;
+            var sut = new UserControllerBuilder().WithUserService(userService.Object)
+                                                 .WithFormsAuthenticationService(formsAuthenticationService.Object)
+                                                 .Build();
+            var view = await sut.Login(validModel) as RedirectResult;
 
             // Assert
             Assert.NotNull(view);
             Assert.AreEqual(view.Url, "/user/apps");
             userService.Verify(x => x.Authenticate(validModel.Email, validModel.Password), Times.Once);
-            controller.AssertPostAttribute("Login", new[] { typeof(LoginModel) });
-            controller.AssertAllowAnonymousAttribute("Login", new[] { typeof(LoginModel) });
+
+            sut.AssertPostAttribute("Login", new[] { typeof(LoginModel) });
+            sut.AssertAllowAnonymousAttribute("Login", new[] { typeof(LoginModel) });
         }
 
         [Test]
@@ -220,17 +232,17 @@ namespace SetLocale.Client.Web.Test.Controllers
             var invalidModel = new LoginModel { Email = "test@test.com"};   
 
             // Act
-            var controller = new UserController(null, null, null, null);
-            var view = await controller.Login(invalidModel) as ViewResult;
+            var sut = new UserControllerBuilder().Build(); ;
+            var view = await sut.Login(invalidModel) as ViewResult;
 
             // Assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
-            Assert.IsAssignableFrom(typeof(LoginModel), model); 
-            controller.AssertPostAttribute("Login", new[] { typeof(LoginModel) });
-            controller.AssertAllowAnonymousAttribute("Login", new[] { typeof(LoginModel) });
-
+            Assert.IsAssignableFrom(typeof(LoginModel), model);
+ 
+            sut.AssertPostAttribute("Login", new[] { typeof(LoginModel) });
+            sut.AssertAllowAnonymousAttribute("Login", new[] { typeof(LoginModel) });
         }
 
         [Test]
@@ -241,13 +253,15 @@ namespace SetLocale.Client.Web.Test.Controllers
             formsAuthenticationService.Setup(x => x.SignOut());
 
             // Act
-            var controller = new UserController(null, null, formsAuthenticationService.Object, null);
-            var view = controller.Logout() as RedirectResult;
+            var sut = new UserControllerBuilder().WithFormsAuthenticationService(formsAuthenticationService.Object)
+                                                 .Build();
+
+            var view = sut.Logout() as RedirectResult;
 
             // Assert
             Assert.NotNull(view);
             Assert.AreEqual(view.Url, "/home/index");
-            controller.AssertGetAttribute("Logout");  
+            sut.AssertGetAttribute("Logout");  
         }
 
     }

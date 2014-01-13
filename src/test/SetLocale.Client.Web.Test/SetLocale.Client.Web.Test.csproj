@@ -89,6 +89,8 @@
     <Compile Include="Builders\HomeControllerBuilder.cs" />
     <Compile Include="Builders\LangControllerBuilder.cs" />
     <Compile Include="Builders\TagControllerBuilder.cs" />
+    <Compile Include="Builders\UserControllerBuilder.cs" />
+    <Compile Include="Builders\WordControllerBuilder.cs" />
     <Compile Include="Controllers\AdminControllerTests.cs" />
     <Compile Include="Controllers\AppControllerTests.cs" />
     <Compile Include="Controllers\HomeControllerTests.cs" />
