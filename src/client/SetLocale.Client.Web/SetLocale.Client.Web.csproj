@@ -233,6 +233,7 @@
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\SetLocaleDbContext.cs" />
     <Compile Include="Repositories\SetLocaleDbInitializer.cs" />
+    <Compile Include="Repositories\SetLocaleDbMigrationConfiguration.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\FormsAuthenticationService.cs" />
     <Compile Include="Services\ReportService.cs" />
