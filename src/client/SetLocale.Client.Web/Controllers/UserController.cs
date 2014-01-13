@@ -106,14 +106,15 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet, AllowAnonymous]
         public ActionResult Reset()
         {
-            var model = new ResetModel()
+            var model = new ResetModel();
+
+            if (User.Identity.IsAuthenticated)
             {
-                Email = "dev@test.com"
-            };
+                model.Email = User.Identity.GetUserEmail();
+            }
 
             return View(model);
         }
-
 
         [HttpGet, AllowAnonymous]
         public ActionResult Login()
