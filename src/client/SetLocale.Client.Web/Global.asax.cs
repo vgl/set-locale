@@ -210,6 +210,12 @@ namespace SetLocale.Client.Web
 
             #endregion
 
+            #region RESETPASSWORD
+
+            enTexts.Add("forgot_your_password", "Forgot your password?");
+
+            #endregion
+             
             #endregion
 
 
@@ -405,6 +411,12 @@ namespace SetLocale.Client.Web
             #region TAGLAR
 
             trTexts.Add("menu_words_words_tag_key_listing", "Tag Kelime Listesi");
+
+            #endregion
+
+            #region ŞİFRERESETLE
+
+            trTexts.Add("forgot_your_password", "Şifremi unuttum");
 
             #endregion
 
