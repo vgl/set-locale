@@ -38,7 +38,15 @@ namespace SetLocale.Client.Web.Models
             model.IsActive = entity.IsActive;
             model.Name = entity.Name;
             model.Description = entity.Description;
-            model.Url = entity.Url;
+
+            if (entity.Url.StartsWith("http"))
+            {
+                model.Url = entity.Url;               
+            }
+            else
+            {
+                model.Url = "http://" + entity.Url;
+            }
 
             var tokens = entity.Tokens.Where(x => !x.IsDeleted);
             foreach (var token in tokens)
