@@ -18,11 +18,12 @@ namespace SetLocale.Client.Web.Services
         Task<List<Word>> GetAll();
         Task<List<Word>> GetNotTranslated();
         Task<bool> Translate(string key, string language, string translation);
+        Task<bool> Tag(string key, string tag);
     }
 
     public class WordService : IWordService
     {
-        private readonly IRepository<Word> _wordRepository;
+        private readonly IRepository<Word> _wordRepository; 
         public WordService(IRepository<Word> wordRepository)
         {
             _wordRepository = wordRepository;
@@ -60,7 +61,7 @@ namespace SetLocale.Client.Web.Services
             {
                 Key = slug,
                 Description = model.Description ?? string.Empty,
-                IsTranslated = false, 
+                IsTranslated = false,
                 TranslationCount = 0,
                 CreatedBy = model.CreatedBy,
                 UpdatedBy = model.CreatedBy,
@@ -110,12 +111,41 @@ namespace SetLocale.Client.Web.Services
             {
                 return Task.FromResult(false);
             }
-            
+
             var type = word.GetType();
             var propInfo = type.GetProperty(string.Format("Translation_{0}", language.ToUpperInvariant()), new Type[0]);
             propInfo.SetValue(word, translation);
-            word.TranslationCount ++;
+            word.TranslationCount++;
             word.IsTranslated = true;
+
+            _wordRepository.Update(word);
+            _wordRepository.SaveChanges();
+
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> Tag(string key, string tagName)
+        {
+            if (string.IsNullOrEmpty(key)
+               || string.IsNullOrEmpty(tagName))
+            {
+                return Task.FromResult(false);
+            }
+
+            var word = _wordRepository.FindOne(x => x.Key == key && x.Tags.Count(y => y.Name == tagName) == 0);
+            if (word == null)
+            {
+                return Task.FromResult(false);
+            }
+
+            var tag = new Tag
+           {
+               Name = tagName,
+               UrlName = tagName.ToUrlSlug(),
+               CreatedBy = 1
+           };
+
+            word.Tags = new List<Tag> { tag };
 
             _wordRepository.Update(word);
             _wordRepository.SaveChanges();

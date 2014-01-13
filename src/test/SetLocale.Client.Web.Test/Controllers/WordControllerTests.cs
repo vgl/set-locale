@@ -71,8 +71,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             wordService.Verify(x => x.GetByKey("key"), Times.Once);
 
         }
-
-       
+         
         [Test]
         public async void all_should_return_key_model_list()
         {
@@ -111,6 +110,18 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(model);
 
             wordService.Verify(x => x.GetNotTranslated(), Times.Once);
+        }
+
+        [Test]
+        public async void translate_should_return_with_response_model()
+        {
+            //todo: Translate(string key, string language, string translation) kontrolü yapılacak.
+        }
+
+        [Test]
+        public async void tag_should_return_with_response_model()
+        {
+            //todo: Tag(string key, string tag) kontrolü yapılacak.
         }
     }
 }
