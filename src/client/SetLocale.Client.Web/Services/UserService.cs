@@ -15,10 +15,8 @@ namespace SetLocale.Client.Web.Services
         Task<int?> Create(UserModel model, int roleId = 3);
         Task<User> GetByEmail(string email);
         Task<bool> Authenticate(string email, string password);
-        Task<List<User>> GetAll();
-
-        Task<PagedList<User>> GetUsers(int pageNumber);
-
+        Task<List<User>> GetAll(); 
+        Task<PagedList<User>> GetUsers(int pageNumber); 
         Task<List<User>> GetAllByRoleId(int roleId);
         Task<bool> ChangeStatus(int userId, bool isActive);
     }

@@ -14,6 +14,7 @@ namespace SetLocale.Client.Web.Services
     {
         Task<int> Create(AppModel model);
         Task<List<App>> GetAll();
+        Task<PagedList<App>> GetApps(int pageNumber);
         Task<List<App>> GetByUserEmail(string email);
         Task<List<App>> GetByUserId(int userId);
         Task<App> Get(int appId);
@@ -71,6 +72,24 @@ namespace SetLocale.Client.Web.Services
         {
             var apps = _appRepository.FindAll().ToList();
             return Task.FromResult(apps);
+        }
+
+        public Task<PagedList<App>> GetApps(int pageNumber)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            pageNumber--;
+
+            var items = _appRepository.FindAll();
+
+            long totalCount = items.Count();
+
+            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * pageNumber).Take(ConstHelper.PageSize);
+
+            return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList())); 
         }
 
         public Task<List<App>> GetByUserEmail(string email)

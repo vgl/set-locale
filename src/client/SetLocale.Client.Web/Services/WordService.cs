@@ -16,6 +16,7 @@ namespace SetLocale.Client.Web.Services
         Task<List<Word>> GetByUserId(int userId);
         Task<Word> GetByKey(string key);
         Task<List<Word>> GetAll();
+        Task<PagedList<Word>> GetWords(int pageNumber);
         Task<List<Word>> GetNotTranslated();
         Task<bool> Translate(string key, string language, string translation);
         Task<bool> Tag(string key, string tag);
@@ -89,6 +90,24 @@ namespace SetLocale.Client.Web.Services
         {
             var word = _wordRepository.FindOne(x => x.Key == key);
             return Task.FromResult(word);
+        }
+
+        public Task<PagedList<Word>> GetWords(int pageNumber)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            pageNumber--;
+
+            var items = _wordRepository.FindAll();
+
+            long totalCount = items.Count();
+
+            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * pageNumber).Take(ConstHelper.PageSize);
+
+            return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
         }
 
         public Task<List<Word>> GetNotTranslated()
