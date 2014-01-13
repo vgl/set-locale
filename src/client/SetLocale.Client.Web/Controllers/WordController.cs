@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Mvc;
+using System.Web.Mvc; 
 
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
@@ -33,17 +34,29 @@ namespace SetLocale.Client.Web.Controllers
             var model = WordModel.MapEntityToModel(entity);
             return View(model);
         }
-
+          
         [HttpGet, AllowAnonymous]
-        public async Task<ViewResult> All()
+        public async Task<ViewResult> All(int id = 0)
         {
-            var entities = await _wordService.GetAll();
-            var model = new List<WordModel>();
-            foreach (var entity in entities)
+            var pageNumber = id;
+            if (pageNumber < 1)
             {
-                model.Add(WordModel.MapEntityToModel(entity));
+                pageNumber = 1;
             }
+             
+            var items = await _wordService.GetWords(pageNumber);
+            var list = items.Items.Select(WordModel.MapEntityToModel).ToList();
 
+            var model = new PageModel<WordModel>
+            {
+                Items = list,
+                HasNextPage = items.HasNextPage,
+                HasPreviousPage = items.HasPreviousPage,
+                Number = items.Number,
+                TotalCount = items.TotalCount,
+                TotalPageCount = items.TotalPageCount
+            };
+              
             return View(model);
         }
 

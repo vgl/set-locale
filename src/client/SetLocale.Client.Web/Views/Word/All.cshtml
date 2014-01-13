@@ -1,5 +1,6 @@
-﻿@using SetLocale.Client.Web.Helpers
-@model List<SetLocale.Client.Web.Models.WordModel>
+﻿@using System.Threading
+@using SetLocale.Client.Web.Helpers
+@model SetLocale.Client.Web.Models.PageModel<SetLocale.Client.Web.Models.WordModel>
 
 @{
     ViewBag.Title = Html.LocalizationString("menu_words_words_key_listing");
@@ -19,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
                 <tr>
                     <td><a href="/word/detail/@item.Key">@item.Key</a></td>
@@ -33,10 +34,51 @@
                     <td>
                         @foreach (var lang in item.Languages)
                         { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="4" align="center">
+                    @if (Model.TotalPageCount > 20)
+                    {
+                        var startPageNum = 1;
+                        var finishPageNum = 20;
+                        
+                        if (Model.Number > 10)
+                        {
+                            startPageNum = Model.Number - 9; 
+                            <a href="~/word/all/1">...</a>
+                        }
+                        
+                        if (Model.Number + 10 > Model.TotalPageCount)
+                        {
+                            finishPageNum = Model.TotalPageCount;
+                        }
+                        else if(Model.Number > 10)
+                        {
+                            finishPageNum = Model.Number + 10;
+                        }
+
+                        for (int pageNum = startPageNum; pageNum < finishPageNum; pageNum++)
+                          {
+                              if (pageNum == Model.Number)
+                                {
+                                    @pageNum
+                                }
+                                else
+                                {
+                                    <a href="~/word/all/@pageNum">@pageNum</a>
+                                }
+                          }
+
+                        if (Model.TotalPageCount != finishPageNum)
+                        {
+                            <a href="~/word/all/@Model.TotalPageCount">...</a>
+                        }
+                    }
+                     
                 </td>
             </tr>
-            }
-
         </tbody>
     </table>
 </div>

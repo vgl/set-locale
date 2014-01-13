@@ -98,14 +98,12 @@ namespace SetLocale.Client.Web.Services
             {
                 pageNumber = 1;
             }
-
-            pageNumber--;
-
+              
             var items = _wordRepository.FindAll();
 
             long totalCount = items.Count();
 
-            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * pageNumber).Take(ConstHelper.PageSize);
+            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber -1)).Take(ConstHelper.PageSize);
 
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
         }
@@ -172,7 +170,7 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(true);
         }
 
-        public Task<List<Word>> GetAll()
+        public Task<List<Word>> GetAll()        // Bunun yerine GetWords Methodu geliştirildi. Gerekli mi diye kontrol et sonra sil.
         {
             var words = _wordRepository.FindAll().ToList();
             return Task.FromResult(words);
