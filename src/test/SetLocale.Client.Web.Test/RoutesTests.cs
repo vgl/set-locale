@@ -39,8 +39,8 @@ namespace SetLocale.Client.Web.Test
             "~/admin/newtranslator".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.NewTranslator());
             "~/admin/index".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Index());
 
-            "~/admin/users".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Users(0, 1).Result);
-            "~/admin/users/1".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Users(1, 1).Result);
+            "~/admin/users".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Users(0).Result);
+            "~/admin/users/1".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Users(1).Result);
             "~/admin/apps".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Apps().Result);
         }
 
