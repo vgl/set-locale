@@ -15,6 +15,7 @@ using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Services;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Test.TestHelpers;
+using SetLocale.Client.Web.Test.Builders;
 
 
 namespace SetLocale.Client.Web.Test.Controllers
@@ -27,16 +28,19 @@ namespace SetLocale.Client.Web.Test.Controllers
         {
             // Arrange           
             var appService = new Mock<IAppService>();
-            appService.Setup(x => x.Get(1)).Returns(() => Task.FromResult(new App{ Id=1, Tokens = new List<Token>()} ));
+            appService.Setup(x => x.Get(1)).Returns(() => Task.FromResult(new App{ Id=1, Tokens = new List<Token>(), Url = "url"} ));
 
             // Act
-            var controller = new AppController(null, null, appService.Object);
-            var view = await controller.Detail(1) as ViewResult;
+            var sut = new AppControllerBuilder().WithAppService(appService.Object)
+                                                .Build();
+
+            var view = await sut.Detail(1) as ViewResult;
 
             // Assert
             Assert.NotNull(view);
             Assert.NotNull(view.Model);
-            controller.AssertGetAttribute("Detail", new []{ typeof(int)});
+
+            sut.AssertGetAttribute("Detail", new []{ typeof(int)});
             appService.Verify(x => x.Get(1), Times.Once);
         }
 
@@ -47,25 +51,28 @@ namespace SetLocale.Client.Web.Test.Controllers
             var appService = new Mock<IAppService>();   
 
             // Act 
-            var controller = new AppController(null, null, appService.Object);
-            var view = await controller.Detail(0) as RedirectResult;
+            var sut = new AppControllerBuilder().WithAppService(appService.Object)
+                                                .Build();
+
+            var view = await sut.Detail(0) as RedirectResult;
 
             // Assert
             Assert.NotNull(view); 
             Assert.AreEqual(view.Url, "/home/index"); 
-            controller.AssertGetAttribute("Detail", new[] { typeof(int) });              
+            sut.AssertGetAttribute("Detail", new[] { typeof(int) });              
         }
         
         [Test]
         public void new_should_return_app_model()
         {  
             // Act
-            var controller = new AppController(null,null,null);
-            var view = controller.New();
+            var sut = new AppControllerBuilder().Build();
+
+            var view = sut.New();
 
             // Assert
             Assert.NotNull(view);
-            controller.AssertGetAttribute("New"); 
+            sut.AssertGetAttribute("New"); 
         }
           
         [Test]
@@ -76,8 +83,11 @@ namespace SetLocale.Client.Web.Test.Controllers
             var inValidModel = new AppModel { Name = "test name", Url = "test.com" };
 
             // Act
-            var controller = new AppController(null, null, appService.Object);
-            var view = controller.New(inValidModel).Result as ViewResult; 
+            
+            var sut = new AppControllerBuilder().WithAppService(appService.Object)
+                                                  .Build();
+
+            var view = sut.New(inValidModel).Result as ViewResult; 
 
             // Assert
             Assert.NotNull(view);
@@ -86,7 +96,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             Assert.NotNull(model);
 
-            controller.AssertPostAttribute("New", new[] { typeof(AppModel) });
+            sut.AssertPostAttribute("New", new[] { typeof(AppModel) });
         }
     }
      
