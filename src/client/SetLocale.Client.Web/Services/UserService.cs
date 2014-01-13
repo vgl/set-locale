@@ -16,6 +16,9 @@ namespace SetLocale.Client.Web.Services
         Task<User> GetByEmail(string email);
         Task<bool> Authenticate(string email, string password);
         Task<List<User>> GetAll();
+
+        Task<PagedList<User>> GetUsers(int pageNumber);
+
         Task<List<User>> GetAllByRoleId(int roleId);
         Task<bool> ChangeStatus(int userId, bool isActive);
     }
@@ -96,6 +99,24 @@ namespace SetLocale.Client.Web.Services
         {
             var users = _userRepo.FindAll().ToList();
             return Task.FromResult(users);
+        }
+
+        public Task<PagedList<User>> GetUsers(int pageNumber)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            pageNumber--;
+
+            var items = _userRepo.FindAll();
+
+            long totalCount = items.Count();
+
+            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * pageNumber).Take(ConstHelper.PageSize);
+
+            return Task.FromResult(new PagedList<User>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
         }
 
         public Task<List<User>> GetAllByRoleId(int roleId)
