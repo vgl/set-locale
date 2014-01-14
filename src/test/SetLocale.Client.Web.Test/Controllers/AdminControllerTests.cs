@@ -89,26 +89,25 @@ namespace SetLocale.Client.Web.Test.Controllers
             sut.AssertPostAttribute("NewTranslator", new[] { typeof(UserModel) });
         }
 
-        //[Test]
-        //public async void users_should_return_with_list_user_model()
-        //{
-        //    // Arrange           
-        //    var userService = new Mock<IUserService>();
-        //    userService.Setup(x => x.GetAll()).Returns(() => Task.FromResult(new List<User>()));
-       
-        //  
+        [Test]
+        public async void users_should_return_with_list_user_model()
+        {
+            // Arrange           
+            var userService = new Mock<IUserService>();
+            userService.Setup(x => x.GetAll()).Returns(() => Task.FromResult(new List<User>()));
+             
             // Act
-        //    var sut = new AdminControllerBuilder().WithUserService(userService.Object)
-        //                                        .Build();
-        //    var view = await sut.Users(5) as ViewResult;     
+            var sut = new AdminControllerBuilder().WithUserService(userService.Object)
+                                                .Build();
+            var view = await sut.Users(5) as ViewResult;     
 
-        //    // Assert
-        //    Assert.NotNull(view);
-        //    Assert.NotNull(view.Model);
-        //    Assert.IsAssignableFrom(typeof(List<UserModel>), view.Model);
-        //    sut.AssertGetAttribute("Users", new[] { typeof(int) });
-        //    userService.Verify(x => x.GetAll(), Times.Once); 
-        //} 
+            // Assert
+            Assert.NotNull(view);
+            Assert.NotNull(view.Model);
+            Assert.IsAssignableFrom(typeof(List<UserModel>), view.Model);
+            sut.AssertGetAttribute("Users", new[] { typeof(int) });
+            userService.Verify(x => x.GetAll(), Times.Once); 
+        }
          
         [Test]
         public async void apps_should_return_with_list_app_model()

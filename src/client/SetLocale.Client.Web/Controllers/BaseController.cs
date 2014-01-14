@@ -11,7 +11,7 @@ namespace SetLocale.Client.Web.Controllers
     {
         public HtmlHelper _htmlHelper;
 
-        private readonly IUserService _userService;
+        public readonly IUserService _userService;
         public readonly IFormsAuthenticationService _formsAuthenticationService;
         
         public BaseController(
@@ -26,7 +26,7 @@ namespace SetLocale.Client.Web.Controllers
 
         public ActionResult RedirectToHome()
         {
-            return Redirect("/home/index");    
+            return Redirect("/");    
         }
 
         public void SetLanguage()

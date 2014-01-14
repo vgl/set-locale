@@ -53,8 +53,6 @@ namespace SetLocale.Client.Web.Services
             };
             _userRepo.Create(user);
 
-
-
             if (!_userRepo.SaveChanges()) return null;
 
             return await Task.FromResult(user.Id);

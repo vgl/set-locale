@@ -1,5 +1,6 @@
 ﻿using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Services;
+
 namespace SetLocale.Client.Web.Test.Builders
 {
     public class AppControllerBuilder
@@ -7,13 +8,13 @@ namespace SetLocale.Client.Web.Test.Builders
         private IFormsAuthenticationService _formAuthenticationService;
         private IUserService _userService;
         private IAppService _appService;
+
         public AppControllerBuilder()
         {
             _formAuthenticationService = null;
             _userService = null;
             _appService = null;   
         }
-
 
         internal AppControllerBuilder WithFormsAuthenticationService(IFormsAuthenticationService formAuthenticationService)
         {
@@ -31,7 +32,6 @@ namespace SetLocale.Client.Web.Test.Builders
         {
             _appService = appService;
             return this;
-
         }
 
         internal AppController Build()

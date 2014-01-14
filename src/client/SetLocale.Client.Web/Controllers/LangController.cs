@@ -8,8 +8,12 @@ namespace SetLocale.Client.Web.Controllers
 {
     public class LangController : BaseController
     {
-        public LangController(IUserService userService, IFormsAuthenticationService formsAuthenticationService) : base(userService, formsAuthenticationService)
+        public LangController(
+            IUserService userService, 
+            IFormsAuthenticationService formsAuthenticationService) 
+            : base(userService, formsAuthenticationService)
         {
+
         }
 
         [HttpGet, AllowAnonymous]

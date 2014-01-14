@@ -27,7 +27,7 @@
                 var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
                 <tr>
                     <td>
-                        <a type="button" class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
+                        <a class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
                     </td>
                     <td>@item.Email</td>
                     <td><a href="/app/detail/@item.Id">@item.Name</a></td>
@@ -61,34 +61,37 @@
 @section script
 {
     <script>
-        $(function () {
+        $(function() {
             var textActivate = "@Html.LocalizationString("btn_activate")";
             var textDeactivate = "@Html.LocalizationString("btn_deactivate")";
 
-            $("input#btnModalAction").click(function () {
+            $("input#btnModalAction").click(function() {
                 var id = $(this).data(textId);
                 var isActive = $(this).data(textIsActive);
-                
+
                 $.ajax({
                     url: "/App/ChangeStatus",
                     type: "POST",
-                    data: "id=" + id + "&isActive=" + isActive + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
-                }).done(function (r) {
-                    if (r && r.Ok) {
+                    data: "id=" + id + "&isActive=" + isActive + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                    success: function(r) {
+                        if (r && r.Ok) {
+                            if (isActive) {
+                                $("a[data-id='" + id + "']").removeClass("btn-warning")
+                                                            .addClass("btn-success")
+                                                            .data("isactive", false)
+                                                            .html(textActivate);
+                            } else {
+                                $("a[data-id='" + id + "']").removeClass("btn-success")
+                                                            .addClass("btn-warning")
+                                                            .data("isactive", true)
+                                                            .html(textDeactivate);
+                            }
 
-                        console.log(r);
+                            $("#DeactivateModal").modal('hide');
 
-                        if (isActive) {
-                            $("a[data-id='" + id + "']").removeClass("btn-warning").addClass("btn-success").data("isactive", false).html(textActivate);
+                        } else {
+                            //warning
                         }
-                        else {
-                            $("a[data-id='" + id + "']").removeClass("btn-success").addClass("btn-warning").data("isactive", true).html(textDeactivate);
-                        }
-
-                        $("#DeactivateModal").modal('hide');
-
-                    } else {
-                        //warning
                     }
                 });
             });

@@ -12,7 +12,11 @@ namespace SetLocale.Client.Web.Controllers
     public class WordController : BaseController
     {
         private readonly IWordService _wordService;
-        public WordController(IUserService userService, IFormsAuthenticationService formsAuthenticationService, IWordService wordService) : base(userService, formsAuthenticationService)
+        public WordController(
+            IWordService wordService,
+            IUserService userService, 
+            IFormsAuthenticationService formsAuthenticationService) 
+            : base(userService, formsAuthenticationService)
         {
             _wordService = wordService;
         }
@@ -20,16 +24,10 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet, AllowAnonymous]
         public async Task<ActionResult> Detail(string id)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                return RedirectToHome();
-            }
+            if (string.IsNullOrEmpty(id)) return RedirectToHome();
 
             var entity = await _wordService.GetByKey(id);           // Entity null kontrolü Test tarafında yapılmadı.
-            if (entity == null)
-            {
-                return RedirectToHome();
-            }
+            if (entity == null) return RedirectToHome();
 
             var model = WordModel.MapEntityToModel(entity);
             return View(model);

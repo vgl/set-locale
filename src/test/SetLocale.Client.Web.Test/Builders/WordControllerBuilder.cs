@@ -1,5 +1,6 @@
 ﻿using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Services;
+
 namespace SetLocale.Client.Web.Test.Builders
 {
     public class WordControllerBuilder
@@ -7,7 +8,6 @@ namespace SetLocale.Client.Web.Test.Builders
         private IUserService _userService;
         private IFormsAuthenticationService _formsAuthenticationService;
         private IWordService _wordService;
-
 
         public WordControllerBuilder()
         {
@@ -36,8 +36,7 @@ namespace SetLocale.Client.Web.Test.Builders
 
         internal WordController Build()
         {
-            return new WordController(_userService, _formsAuthenticationService, _wordService);
+            return new WordController(_wordService, _userService, _formsAuthenticationService);
         }
-
     }
 }

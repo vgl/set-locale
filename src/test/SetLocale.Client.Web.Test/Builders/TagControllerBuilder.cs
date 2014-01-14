@@ -1,5 +1,6 @@
 ﻿using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Services;
+
 namespace SetLocale.Client.Web.Test.Builders
 {
     public class TagControllerBuilder
@@ -8,15 +9,13 @@ namespace SetLocale.Client.Web.Test.Builders
         private IUserService _userService;
         private ITagService _tagService;
 
-
         public TagControllerBuilder()
         {
             _formsAuthenticationService = null;
             _tagService = null;
             _userService = null;
         }
-
-
+        
         internal TagControllerBuilder WithFormsAuthenticationService(IFormsAuthenticationService formsAuthenticationService)
         {
             _formsAuthenticationService = formsAuthenticationService;
@@ -33,7 +32,6 @@ namespace SetLocale.Client.Web.Test.Builders
         {
             _tagService = tagService;
             return this;
-
         }
 
         internal TagController Build()

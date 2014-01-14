@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
-using System.Web.Mvc;
+
 using Moq;
 using NUnit.Framework;
 
-using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 using SetLocale.Client.Web.Test.TestHelpers;
@@ -18,20 +17,23 @@ namespace SetLocale.Client.Web.Test.Controllers
         public async void index_should_return_home_stats_model()
         {
             // Arrange
+            const string actionName = "Index";
+
             var reportService = new Mock<IReportService>();
             reportService.Setup(x => x.GetHomeStats()).Returns(() => Task.FromResult(new HomeStatsModel()));
 
             // Act
             var sut = new HomeControllerBuilder().WithReportService(reportService.Object)
                                                  .Build();
-
             var view = await sut.Index();
+            var model = view.Model as HomeStatsModel;
 
             // Assert
             Assert.NotNull(view);
-            var model = view.Model as HomeStatsModel;
             Assert.NotNull(model);
-            sut.AssertGetAttribute("Index");
+            
+            sut.AssertGetAttribute(actionName);
+            sut.AssertAllowAnonymousAttribute(actionName);
         }
     }
 }

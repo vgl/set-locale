@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
+using System.Linq;
 
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Helpers;
@@ -17,6 +18,8 @@ namespace SetLocale.Client.Web.Repositories
 
         protected override void Seed(SetLocaleDbContext context)
         {
+            if (context.Users.Any()) return;
+
             #region Users
             AddAdmin(context, "Serdar Büyüktemiz", "hserdarb@gmail.com");
             AddAdmin(context, "Caner Çavuş", "canercvs@gmail.com");
@@ -241,7 +244,7 @@ namespace SetLocale.Client.Web.Repositories
                 Name = name,
                 RoleId = SetLocaleRole.Admin.Value,
                 RoleName = SetLocaleRole.Admin.ToString(),
-                ImageUrl = GravatarHelper.GetGravatarURL(email, 35, "mm"),
+                ImageUrl = GravatarHelper.GetGravatarURL(email, 35),
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password"),
                 LastLoginAt = DateTime.Now,
                 IsActive = true
@@ -257,7 +260,7 @@ namespace SetLocale.Client.Web.Repositories
                 Name = name,
                 RoleId = SetLocaleRole.Translator.Value,
                 RoleName = SetLocaleRole.Translator.ToString(),
-                ImageUrl = GravatarHelper.GetGravatarURL(email, 35, "mm"),
+                ImageUrl = GravatarHelper.GetGravatarURL(email, 35),
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password"),
                 LastLoginAt = DateTime.Now,
                 IsActive = true
