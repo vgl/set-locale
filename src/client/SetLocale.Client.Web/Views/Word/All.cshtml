@@ -50,12 +50,13 @@
                                 <li><a href="~/word/all/@(Model.Number)">@(Model.Number)</a></li>
                                 @if (Model.HasNextPage)
                                 {
-                                    <li><a href="~/word/all/@(Model.Number+1)">&raquo;</a></li> 
+                                    <li><a href="~/word/all/@(Model.Number+1)">&raquo;</a></li>
                                 }
                             </ul>
-
+                            <br/> 
+                            <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
                         </td>
-                    </tr>
+                    </tr> 
                 }
             } 
         </tbody>

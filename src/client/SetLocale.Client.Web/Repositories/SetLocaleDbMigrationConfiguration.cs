@@ -228,6 +228,7 @@ namespace SetLocale.Client.Web.Repositories
             AddWord(context, "modal_title_apps", string.Empty, "Uygulama Durumu", "App Status", "set-locale");
             AddWord(context, "updating_key_view_title", string.Empty, "Kelime Çevirisi Güncelleme Ekranı", "Updating Key", "set-locale");
             AddWord(context, "save_and_close", string.Empty, "Kaydet & Kapat", "Save & Close", "set-locale");
+            AddWord(context, "total_page_count", string.Empty, "Toplam Sayfa Sayısı", "Total Number of Pages", "set-locale");
 
             AddWord(context, "home_summary", string.Empty, "set-locale <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong>{3}</strong> farklı kelime için <strong>{4}</strong> adet çeviri sunmaktadır", "set-locale's <strong>{2}</strong> translator provides <strong>{4}</strong> translation for <strong>{3}</strong> keys and <strong>{0}</strong> developer is consuming this service with  <strong>{1}</strong> application", "set-locale");
             AddWord(context, "home_title", string.Empty, "set-locale servisine hoş geldiniz", "welcome to set-locale", "set-locale");

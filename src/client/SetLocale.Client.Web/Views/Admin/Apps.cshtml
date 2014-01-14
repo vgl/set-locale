@@ -52,7 +52,8 @@
                                     <li><a href="~/admin/apps/@(Model.Number+1)">&raquo;</a></li>
                                 }
                             </ul>
-
+                            <br />
+                            <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
                         </td>
                     </tr>
                 }

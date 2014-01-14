@@ -53,7 +53,8 @@
                                     <li><a href="~/user/apps/@ViewBag.UserId?page=@(Model.Number+1)">&raquo;</a></li>
                                 }
                             </ul>
-
+                            <br />
+                            <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
                         </td>
                     </tr>
                 }
