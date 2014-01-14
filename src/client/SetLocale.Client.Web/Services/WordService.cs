@@ -14,8 +14,7 @@ namespace SetLocale.Client.Web.Services
     {
         Task<string> Create(WordModel model);
         Task<PagedList<Word>> GetByUserId(int userId, int pageNumber);
-        Task<Word> GetByKey(string key);
-        Task<List<Word>> GetAll();
+        Task<Word> GetByKey(string key); 
         Task<PagedList<Word>> GetWords(int pageNumber);
         Task<PagedList<Word>> GetNotTranslated(int pageNumber);
         Task<bool> Translate(string key, string language, string translation);
@@ -211,12 +210,6 @@ namespace SetLocale.Client.Web.Services
             _wordRepository.SaveChanges();
 
             return Task.FromResult(true);
-        }
-
-        public Task<List<Word>> GetAll()        // Bunun yerine GetWords Methodu geliştirildi. Gerekli mi diye kontrol et sonra sil.
-        {
-            var words = _wordRepository.FindAll().ToList();
-            return Task.FromResult(words);
-        }
+        } 
     }
 }

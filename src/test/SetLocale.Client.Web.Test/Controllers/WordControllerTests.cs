@@ -71,25 +71,25 @@ namespace SetLocale.Client.Web.Test.Controllers
             wordService.Verify(x => x.GetByKey("key"), Times.Once);
         }
          
-        [Test]
-        public async void all_should_return_key_model_list()
-        {
-            // Arrange
-            var wordService = new Mock<IWordService>(); 
-            wordService.Setup(x => x.GetAll()).Returns(() => Task.FromResult(new List<Word>()));
+        //[Test]
+        //public async void all_should_return_key_model_list()
+        //{
+        //    // Arrange
+        //    var wordService = new Mock<IWordService>(); 
+        //    wordService.Setup(x => x.GetAll()).Returns(() => Task.FromResult(new List<Word>()));
 
-            // Act
-            var sut = new WordControllerBuilder().WithWordService(wordService.Object)
-                                                 .Build();
-            var view = await sut.All();
-            // Assert
-            Assert.NotNull(view);
+        //    // Act
+        //    var sut = new WordControllerBuilder().WithWordService(wordService.Object)
+        //                                         .Build();
+        //    var view = await sut.All();
+        //    // Assert
+        //    Assert.NotNull(view);
 
-            var model = view.Model as List<WordModel>;
-            Assert.NotNull(model);
-            sut.AssertGetAttribute("All");
-            wordService.Verify(x => x.GetAll(), Times.Once);
-        }
+        //    var model = view.Model as List<WordModel>;
+        //    Assert.NotNull(model);
+        //    sut.AssertGetAttribute("All");
+        //    wordService.Verify(x => x.GetAll(), Times.Once);
+        //}
 
         //[Test]
         //public async void notTranslated_should_return_key_model_list()

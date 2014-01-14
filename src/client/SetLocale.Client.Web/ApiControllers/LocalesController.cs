@@ -29,10 +29,10 @@ namespace SetLocale.Client.Web.ApiControllers
                 return Ok(result);
             }
 
-            var items = await _wordService.GetAll();
+            var items = await _wordService.GetWords(page);
             if (lang == LanguageModel.TR().Key)
             {
-                foreach (var item in items)
+                foreach (var item in items.Items)
                 {
                     result.Add(new WordItemModel
                     {
@@ -43,7 +43,7 @@ namespace SetLocale.Client.Web.ApiControllers
             }
             else if (lang == LanguageModel.EN().Key)
             {
-                foreach (var item in items)
+                foreach (var item in items.Items)
                 {
                     result.Add(new WordItemModel
                     {
