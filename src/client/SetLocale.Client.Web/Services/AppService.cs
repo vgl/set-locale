@@ -89,6 +89,9 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
         }
 
+        /*
+         * GetByUserEmail Herhangi bir yerde kullanılmıyor sanırım kullanılmayacak da. Silinebilir ?
+         */
         public Task<List<App>> GetByUserEmail(string email)
         {
             if (!email.IsEmail())
