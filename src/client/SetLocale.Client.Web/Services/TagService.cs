@@ -24,7 +24,7 @@ namespace SetLocale.Client.Web.Services
 
         public Task<List<Word>> GetWords(string tagUrlName)
         {
-            var words = _wordRepository.FindAll(x => x.Tags.Any(y => y.UrlName == tagUrlName)).ToList();
+            var words = _wordRepository.FindAll(x => x.Tags.Any(y => y.UrlName == tagUrlName)).Distinct().ToList();
             return Task.FromResult(words);
         }
 
