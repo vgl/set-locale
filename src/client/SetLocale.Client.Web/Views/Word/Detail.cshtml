@@ -1,6 +1,4 @@
-﻿@using SetLocale.Client.Web.Helpers
-
-@model SetLocale.Client.Web.Models.WordModel
+﻿@model WordModel
 
 @{
     ViewBag.Title = Model.Key;
@@ -17,7 +15,6 @@
         <div id="dvTag">
             @foreach (var tag in Model.Tags)
             {
-
                 <a class="label label-info" href="/tag/detail/@tag.UrlName">@tag.Name</a>
             }
         </div>
@@ -27,10 +24,14 @@
     {
         <p>
             <div>
-                <div id="dvForm" class="pull-left"></div>
+                <div class="pull-left">
+                    <div>
+                        <h3 id="hdForm"></h3>
+                    </div>
+                    <div id="dvForm"></div>
+                </div>
 
                 <input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
-
                 <input type="button" class="btn btn-sm btn-info btnNewTag pull-right" value="@Html.LocalizationString("btn_new_tag")" data-id="@Model.Key" />
 
                 @Html.AntiForgeryToken()
@@ -79,237 +80,258 @@
     <script src="/public/js/select2.js"></script>
 
     <script>
-    $(function () {
-        var translatedLanguages = [@Html.Raw(Model.LanguagesStr)];
+        $(function() {
+            var translatedLanguages = [@Html.Raw(Model.LanguagesStr)];
 
-        function addNewTranslationRow() { 
-            var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-primary');
-            btnCancel.val('@Html.LocalizationString("btn_cancel")');
+            function addNewTranslationRow() {
+                var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
+                btnCancel.val('@Html.LocalizationString("btn_cancel")');
 
-            btnCancel.click(function () {
+                btnCancel.click(function() {
 
-                $("div#dvForm").html('');
-                $("input.btnNewTag").show();
-                $("input.btnNewTranslate").show();
+                    $("h3#hdForm").html('');
+                    $("div#dvForm").html('');
+                    $("input.btnNewTag").show();
+                    $("input.btnNewTranslate").show();
 
-            });
+                });
 
-            var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
-            btnSave.val('@Html.LocalizationString("btn_save")');
-            btnSave.data('id', '@Model.Key');
+                var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
+                btnSave.val('@Html.LocalizationString("btn_save")');
+                btnSave.data('id', '@Model.Key');
 
-            btnSave.click(function () {
-                var lang = $("select#selLanguages").val();
-                var translation = $("input#txtTranslation").val();
-                $("input.btnNewTag").show();
+                btnSave.click(function() {
+                    var lang = $("select#selLanguages").val();
+                    var translation = $("input#txtTranslation").val();
+                    $("input.btnNewTag").show();
 
-                $.ajax({
-                    url: "/Word/Translate",
-                    type: "POST",
-                    data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
-                }).done(function (r) {
-                    if (r && r.Ok) {
+                    $.ajax({
+                        url: "/Word/Translate",
+                        type: "POST",
+                        data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                        success: function(r) {
+                            if (r && r.Ok) {
 
-                        var tr = $('<tr />');
+                                var tr = $('<tr />');
 
-                        var tdBtn = $('<td />');
-                        var tdFlag = $('<td />');
-                        var tdTranslation = $('<td />');
+                                var tdBtn = $('<td />');
+                                var tdFlag = $('<td />');
+                                var tdTranslation = $('<td />');
 
-                        var btnEdit = $('<input type="button" class="btn btn-sm btn-warning btnEdit" data-lang="' + lang + '" value="@Html.LocalizationString("btn_edit")" />');
-                        btnEdit.click(fnEdit);
-                        tdBtn.append(btnEdit);
-                        tdFlag.append($("<img class='flag' style='margin:5px;margin-left: 0;margin-top: 0;' alt='flag' src='/public/img/flag/" + lang + ".png'/>"));
+                                var btnEdit = $('<input type="button" class="btn btn-sm btn-warning btnEdit" data-lang="' + lang + '" value="@Html.LocalizationString("btn_edit")" />');
+                                btnEdit.click(fnEdit);
+                                tdBtn.append(btnEdit);
+                                tdFlag.append($("<img class='flag' style='margin:5px;margin-left: 0;margin-top: 0;' alt='flag' src='/public/img/flag/" + lang + ".png'/>"));
 
-                        $.each(allLanguages, function (i, l) {
-                            if (l.id == lang) {
-                                tdFlag.append($('<span>' + l.text + '</span>'));
-                                translatedLanguages.push(l);
+                                $.each(allLanguages, function(i, l) {
+                                    if (l.id == lang) {
+                                        tdFlag.append($('<span>' + l.text + '</span>'));
+                                        translatedLanguages.push(l);
+                                    }
+                                });
+                                tdTranslation.html(translation);
+
+                                tr.append(tdBtn);
+                                tr.append(tdFlag);
+                                tr.append(tdTranslation);
+
+                                $('table tbody').append(tr);
+
+
+                                $("input.btnNewTranslate").show();
+                                $("div#dvForm").html('');
+                            } else {
+                                //todo:warning
                             }
-                        });
-                        tdTranslation.html(translation);
+                        }
+                    });
+                });
 
-                        tr.append(tdBtn);
-                        tr.append(tdFlag);
-                        tr.append(tdTranslation);
+                var inputLanguages = $('<select id="selLanguages" name="selLanguages" />');
+                $.each(allLanguages, function(i, lang) {
 
-                        $('table tbody').append(tr);
+                    var isExisting = false;
+                    $.each(translatedLanguages, function(j, l) {
+                        if (lang.id === l.id) {
+                            isExisting = true;
+                            return;
+                        }
+                    });
 
-
-                        $("input.btnNewTranslate").show();
-                        $("div#dvForm").html('');
-                    } else {
-                        //todo:warning
+                    if (!isExisting) {
+                        inputLanguages.append('<option value="' + lang.id + '">' + lang.text + '</opiton>');
                     }
                 });
-            });
 
-            var inputLanguages = $('<select id="selLanguages" name="selLanguages" />');
-            $.each(allLanguages, function (i, lang) {
+                var inputTranslation = $('<input type="text" id="txtTranslation" name="txtTranslation" class="form-control col-4" />');
 
-                var isExisting = false;
-                $.each(translatedLanguages, function (j, l) {
-                    if (lang.id === l.id) {
-                        isExisting = true;
+                var dv1 = $('<div style="margin:5px;float:left;" />');
+                var dv2 = $('<div style="margin:5px;float:left;" />');
+                var dv3 = $('<div style="margin:5px;float:left;" />');
+                var dv4 = $('<div style="margin:5px;float:left;" />');
+
+                dv1.append(inputLanguages);
+                dv2.append(inputTranslation);
+                dv3.append(btnSave);
+                dv4.append(btnCancel);
+
+                $("h3#hdForm").html('@Html.LocalizationString("title_new_translation")');
+                $("div#dvForm").append(dv1).append(dv2).append('<br style="display:block;clear:both;"/>').append(dv3).append(dv4);
+            }
+
+            function prepareEditRow(btn) {
+                var lang = btn.data("lang");
+                var td = btn.parent().parent().children(":last");
+
+                var inputTranslation = $('<input type="text" id="txtEdit" name="txtEdit" class="form-control col-4" data-lang="' + lang + '" />');
+                inputTranslation.val(td.html());
+
+                td.html("");
+                td.append(inputTranslation);
+            }
+
+            function prepareDataShowingRow(btn) {
+                var lang = btn.data("lang");
+                var translations = $("input#txtEdit");
+
+                btn.parent().children(":last-child").remove();
+
+                var translation = "";
+                $.each(translations, function(i, txt) {
+                    if ($(txt).data("lang") == lang) {
+                        translation = $(txt).val();
                         return;
                     }
                 });
 
-                if (!isExisting) {
-                    inputLanguages.append('<option value="' + lang.id + '">' + lang.text + '</opiton>');
-                }
-            });
-
-            var inputTranslation = $('<input type="text" id="txtTranslation" name="txtTranslation" class="form-control col-4" />');
-             
-            var dv1 = $('<div style="margin:5px;float:left;" />');
-            var dv2 = $('<div style="margin:5px;float:left;" />');
-            var dv3 = $('<div style="margin:5px;float:left;" />');
-            var dv4 = $('<div style="margin:5px;float:left;" />');
-
-            dv1.append(inputLanguages);
-            dv2.append(inputTranslation);
-            dv3.append(btnSave);
-            dv4.append(btnCancel);
-
-            $("div#dvForm").append(dv1).append(dv2).append('<br style="display:block;clear:both;"/>').append(dv3).append(dv4);
-        }
-
-        function prepareEditRow(btn) {
-            var lang = btn.data("lang");
-            var td = btn.parent().parent().children(":last");
-
-            var inputTranslation = $('<input type="text" id="txtEdit" name="txtEdit" class="form-control col-4" data-lang="' + lang + '" />');
-            inputTranslation.val(td.html());
-
-            td.html("");
-            td.append(inputTranslation);
-        }
-
-        function prepareDataShowingRow(btn) {
-            var lang = btn.data("lang");
-            var translations = $("input#txtEdit");
-
-            var translation = "";
-            $.each(translations, function (i, txt) {
-                if ($(txt).data("lang") == lang) {
-                    translation = $(txt).val();
-                    return;
-                }
-            });
-
-            var td = btn.parent().parent().children(":last");
-
-            $.ajax({
-                url: "/Word/Translate",
-                type: "POST",
-                data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
-            }).done(function (r) {
-                if (r && r.Ok) {
-                    td.html(translation);
-                } else {
-                    //todo:warning
-                }
-            });
-        }
-
-        $("input.btnNewTranslate").click(function () {
-            $(this).hide();
-            $("input.btnNewTag").hide();
-
-            addNewTranslationRow();
-
-            function format(state) {
-                if (!state.id) return state.text;
-                return "<img class='flag' alt='flag' style='margin:5px;' src='/public/img/flag/" + state.id.toLowerCase() + ".png'/>" + state.text;
-            }
-
-            $("select#selLanguages").select2({ formatResult: format, formatSelection: format, escapeMarkup: function (m) { return m; } });
-        });
-
-        var fnEdit = function () {
-            if ($(this).hasClass("btn-warning")) {
-                $(this).removeClass("btn-warning").addClass("btn-primary");
-                $(this).val("@Html.LocalizationString("btn_save")");
-
-                prepareEditRow($(this));
-            } else if ($(this).hasClass("btn-primary")) {
-                $(this).removeClass("btn-primary").addClass("btn-warning");
-                $(this).val("@Html.LocalizationString("btn_edit")");
-
-                prepareDataShowingRow($(this));
-            }
-        };
-
-        $("input.btnEdit").click(fnEdit);
-
-
-
-        $("input.btnNewTag").click(function () {
-            $(this).hide();
-            $("input.btnNewTranslate").hide();
-            addNewTagRow();
-
-        });
-
-        function addNewTagRow() { 
-            var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-primary');
-            btnCancel.val('@Html.LocalizationString("btn_cancel")');
-
-            btnCancel.click(function () {
-
-                $("div#dvForm").html('');
-                $("input.btnNewTag").show();
-                $("input.btnNewTranslate").show();
-
-            });
-
-            var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
-            btnSave.val('@Html.LocalizationString("btn_save")');
-            btnSave.data('id', '@Model.Key');
-             
-            btnSave.click(function () {
-                var tag = $("input#txtTag").val();
+                var td = btn.parent().parent().children(":last");
 
                 $.ajax({
-                    url: "/Word/Tag",
+                    url: "/Word/Translate",
                     type: "POST",
-                    data: "key=@Model.Key&tag=" + tag + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
-                }).done(function (r) {
-                    if (r && r.Ok) {
-                        var tags = $('<a class="label label-info" style="margin-left:5px;" href="/tag/detail/' + tag + '">' + tag + '</a>');
-                        $("div#dvTag").append(tags);
-
-                        $("div#dvForm").html('');
-                        $("input.btnNewTag").show();
-                        $("input.btnNewTranslate").show();
-
-                    } else {
-                        //todo:warning
+                    data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                    success: function(r) {
+                        if (r && r.Ok) {
+                            td.html(translation);
+                        } else {
+                            //todo:warning
+                        }
                     }
                 });
+            }
+
+            $("input.btnNewTranslate").click(function() {
+                $(this).hide();
+                $("input.btnNewTag").hide();
+
+                addNewTranslationRow();
+
+                function format(state) {
+                    if (!state.id) return state.text;
+                    return "<img class='flag' alt='flag' style='margin:5px;' src='/public/img/flag/" + state.id.toLowerCase() + ".png'/>" + state.text;
+                }
+
+                $("select#selLanguages").select2({ formatResult: format, formatSelection: format, escapeMarkup: function(m) { return m; } });
             });
 
-            var inputTag = $('<input type="text" id="txtTag" name="txtTag" class="form-control col-4" />');
+            var fnEdit = function() {
+                var td = $(this).parent().parent().children(":last");
+                var oldText = td.html();
 
-            var dv1 = $('<div style="margin:5px;float:left;" />');
+                if ($(this).hasClass("btn-warning")) {
+                    $(this).removeClass("btn-warning").addClass("btn-primary");
+                    $(this).val("@Html.LocalizationString("btn_save")");
 
-            var dv2 = $('<div style="margin:5px;float:left;" />');
+                    var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
+                    btnCancel.val('@Html.LocalizationString("btn_cancel")');
 
-            var dv3 = $('<div style="margin:5px;float:left;" />');
+                    $(this).parent().append(btnCancel);
+                    prepareEditRow($(this));
+                    
+                    btnCancel.click(function (r) {
+                        var btn = $(this).parent().children(":first");
+                        $(btn).removeClass("btn-primary").addClass("btn-warning");
+                        $(btn).val("@Html.LocalizationString("btn_edit")");
 
-            dv1.append(inputTag);
-            dv2.append(btnSave);
-            dv3.append(btnCancel);
+                        $(this).remove();
 
-            $("div#dvForm").append(dv1).append('<br style="display:block;clear:both;"/>').append(dv2).append(dv3);
+                        var lastTd = $("input#txtEdit").parent();
+                        $(lastTd).html(oldText);
+
+                    });
+                } else if ($(this).hasClass("btn-primary")) {
+                    $(this).removeClass("btn-primary").addClass("btn-warning");
+                    $(this).val("@Html.LocalizationString("btn_edit")");
+
+                    prepareDataShowingRow($(this));
+                }
+            };
+
+            $("input.btnEdit").click(fnEdit);
 
 
-        }
-         
-    });
-         
+            $("input.btnNewTag").click(function() {
+                $(this).hide();
+                $("input.btnNewTranslate").hide();
+                addNewTagRow();
 
+            });
+
+            function addNewTagRow() {
+                var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
+                btnCancel.val('@Html.LocalizationString("btn_cancel")');
+
+                btnCancel.click(function() {
+                    $("h3#hdForm").html('');
+                    $("div#dvForm").html('');
+                    $("input.btnNewTag").show();
+                    $("input.btnNewTranslate").show();
+                });
+
+                var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
+                btnSave.val('@Html.LocalizationString("btn_save")');
+                btnSave.data('id', '@Model.Key');
+
+                btnSave.click(function() {
+                    var tag = $("input#txtTag").val();
+
+                    $.ajax({
+                        url: "/Word/Tag",
+                        type: "POST",
+                        data: "key=@Model.Key&tag=" + tag + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                        success: function(r) {
+                            if (r && r.Ok) {
+                                var tags = $('<a class="label label-info" style="margin-left:5px;" href="/tag/detail/' + tag + '">' + tag + '</a>');
+                                $("div#dvTag").append(tags);
+
+                                $("div#dvForm").html('');
+                                $("input.btnNewTag").show();
+                                $("input.btnNewTranslate").show();
+
+                            } else {
+                                //todo:warning
+                            }
+                        }
+                    });
+                });
+
+                var inputTag = $('<input type="text" id="txtTag" name="txtTag" class="form-control col-4" />');
+
+                var dv1 = $('<div style="margin:5px;float:left;" />');
+
+                var dv2 = $('<div style="margin:5px;float:left;" />');
+
+                var dv3 = $('<div style="margin:5px;float:left;" />');
+
+                dv1.append(inputTag);
+                dv2.append(btnSave);
+                dv3.append(btnCancel);
+
+                $("h3#hdForm").html('@Html.LocalizationString("title_new_tag")');
+                $("div#dvForm").append(dv1).append('<br style="display:block;clear:both;"/>').append(dv2).append(dv3);
+            }
+
+        });
     </script>
 }
 

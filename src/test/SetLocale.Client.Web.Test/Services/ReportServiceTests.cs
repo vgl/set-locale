@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 using Moq;
 using NUnit.Framework;
+
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Repositories;
-using SetLocale.Client.Web.Services;
+using SetLocale.Client.Web.Test.Builders;
 
 namespace SetLocale.Client.Web.Test.Services
 {
@@ -29,38 +29,27 @@ namespace SetLocale.Client.Web.Test.Services
                 TranslationCount = 5
             };
 
-            //act
             var userRepository = new Mock<IRepository<User>>();
-            userRepository.Setup(x => x.FindAll(y => y.RoleId != SetLocaleRole.Translator.Value)).Returns(new List<User>
-            {
-                new User{RoleId = 1},
-                new User{RoleId = 2}
-            }.AsQueryable());
+            userRepository.Setup(x => x.FindAll(y => y.RoleId != SetLocaleRole.Developer.Value))
+                          .Returns(new List<User> { new User { Id = 1 }, new User { Id = 2 } }.AsQueryable());
 
-            userRepository.Setup(x => x.FindAll(y => y.RoleId == SetLocaleRole.Translator.Value)).Returns(new List<User>
-            {
-                new User{RoleId = 1},
-                new User{RoleId = 2},
-                new User{RoleId = 3},
-            }.AsQueryable());
+            userRepository.Setup(x => x.FindAll(y => y.RoleId == SetLocaleRole.Translator.Value))
+                          .Returns(new List<User> { new User { Id = 3 }, new User { Id = 4 }, new User { Id = 5 }, }.AsQueryable());
 
             var wordRepository = new Mock<IRepository<Word>>();
-            wordRepository.Setup(x => x.FindAll((It.IsAny<Expression<Func<Word, bool>>>()))).Returns(new List<Word>
-            {
-                new Word{TranslationCount = 1},
-                new Word{TranslationCount = 1},
-                new Word{TranslationCount = 1},
-                new Word{TranslationCount = 2},
-            }.AsQueryable());
+            wordRepository.Setup(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>()))
+                          .Returns(new List<Word> { new Word { TranslationCount = 1 }, new Word { TranslationCount = 1 }, new Word { TranslationCount = 1 }, new Word { TranslationCount = 2 }, }.AsQueryable());
 
             var appRepository = new Mock<IRepository<App>>();
-            appRepository.Setup(x => x.FindAll((It.IsAny<Expression<Func<App, bool>>>()))).Returns(new List<App>
-            {
-                new App{Id = 1}
-            }.AsQueryable());
+            appRepository.Setup(x => x.FindAll(It.IsAny<Expression<Func<App, bool>>>()))
+                         .Returns(new List<App> { new App { Id = 1 } }.AsQueryable());
 
-            var service = new ReportService(userRepository.Object, wordRepository.Object, appRepository.Object);
-            var homestats = await service.GetHomeStats();
+            //act
+            var sut = new ReportServiceBuilder().WithUserRepository(userRepository.Object)
+                                                .WithWordRepository(wordRepository.Object)
+                                                .WithAppRepository(appRepository.Object)
+                                                .Build();
+            var homestats = await sut.GetHomeStats();
 
             //assert
             Assert.AreEqual(model.ApplicationCount, homestats.ApplicationCount);
@@ -68,6 +57,10 @@ namespace SetLocale.Client.Web.Test.Services
             Assert.AreEqual(model.TranslatorCount, homestats.TranslatorCount);
             Assert.AreEqual(model.KeyCount, homestats.KeyCount);
             Assert.AreEqual(model.TranslationCount, homestats.TranslationCount);
+
+            appRepository.Verify(x => x.FindAll(It.IsAny<Expression<Func<App, bool>>>()), Times.AtLeastOnce);
+            userRepository.Verify(x => x.FindAll(It.IsAny<Expression<Func<User, bool>>>()), Times.AtLeastOnce);
+            wordRepository.Verify(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>()), Times.AtLeastOnce);
         }
     }
 }
