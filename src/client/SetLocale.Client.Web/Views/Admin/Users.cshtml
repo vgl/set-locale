@@ -1,5 +1,5 @@
 ﻿@using SetLocale.Client.Web.Helpers
-@model List<SetLocale.Client.Web.Models.UserModel>
+@model SetLocale.Client.Web.Models.PageModel<SetLocale.Client.Web.Models.UserModel>
 
 @{
     ViewBag.Title = Html.LocalizationString("menu_settings_users");
@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
                 var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
                 var buttonCss = item.IsActive ? "btn-warning" : "btn-success";

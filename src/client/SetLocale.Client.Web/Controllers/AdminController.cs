@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -68,26 +69,62 @@ namespace SetLocale.Client.Web.Controllers
             return Redirect("/admin/users");
         }
 
+        //[HttpGet]
+        //public async Task<ActionResult> Users(int id = 0)
+        //{
+        //    List<User> users;
+        //    var roleId = id;
+        //    if (SetLocaleRole.IsValid(roleId))
+        //    {
+        //        users = await _userService.GetAllByRoleId(roleId);
+        //    }
+        //    else
+        //    {
+        //        users = await _userService.GetAll();
+        //    }
+
+        //    var model = new List<UserModel>();
+        //    foreach (var user in users)
+        //    {
+        //        model.Add(UserModel.MapUserToUserModel(user));
+        //    }
+
+        //    return View(model);
+        //}
+
         [HttpGet]
-        public async Task<ActionResult> Users(int id = 0)
+        public async Task<ActionResult> Users(int id = 0, int pageNum = 1)
         {
-            List<User> users;
+            var pageNumber = pageNum;
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            PagedList<User> users;
+
             var roleId = id;
             if (SetLocaleRole.IsValid(roleId))
             {
-                users = await _userService.GetAllByRoleId(roleId);
+                users = await _userService.GetAllByRoleId(roleId, pageNumber);
             }
             else
             {
-                users = await _userService.GetAll();
+                users = await _userService.GetAll(pageNumber);
             }
 
-            var model = new List<UserModel>();
-            foreach (var user in users)
+            var list = users.Items.Select(UserModel.MapUserToUserModel).ToList();
+
+            var model = new PageModel<UserModel>
             {
-                model.Add(UserModel.MapUserToUserModel(user));
-            }
-
+                Items = list,
+                HasNextPage = users.HasNextPage,
+                HasPreviousPage = users.HasPreviousPage,
+                Number = users.Number,
+                TotalCount = users.TotalCount,
+                TotalPageCount = users.TotalPageCount
+            };
+             
             return View(model);
         }
 

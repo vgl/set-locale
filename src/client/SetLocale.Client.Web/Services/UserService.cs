@@ -15,9 +15,11 @@ namespace SetLocale.Client.Web.Services
         Task<int?> Create(UserModel model, int roleId = 3);
         Task<User> GetByEmail(string email);
         Task<bool> Authenticate(string email, string password);
-        Task<List<User>> GetAll(); 
+        Task<List<User>> GetAll();
+        Task<PagedList<User>> GetAll(int pageNum); 
         Task<PagedList<User>> GetUsers(int pageNumber); 
         Task<List<User>> GetAllByRoleId(int roleId);
+        Task<PagedList<User>> GetAllByRoleId(int roleId, int pageNum);
         Task<bool> ChangeStatus(int userId, bool isActive);
     }
 
@@ -99,6 +101,22 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(users);
         }
 
+        public Task<PagedList<User>> GetAll(int pageNum)
+        {
+            if (pageNum < 1)
+            {
+                pageNum = 1;
+            }
+
+            var items = _userRepo.FindAll();
+
+            long totalCount = items.Count();
+
+            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNum - 1)).Take(ConstHelper.PageSize);
+
+            return Task.FromResult(new PagedList<User>(pageNum, ConstHelper.PageSize, totalCount, items.ToList()));
+        }
+
         public Task<PagedList<User>> GetUsers(int pageNumber)
         {
             if (pageNumber < 1)
@@ -121,6 +139,22 @@ namespace SetLocale.Client.Web.Services
         {
             var users = _userRepo.FindAll(x => x.RoleId == roleId).ToList();
             return Task.FromResult(users);
+        }
+
+        public Task<PagedList<User>> GetAllByRoleId(int roleId, int pageNum)
+        {
+            if (pageNum < 1)
+            {
+                pageNum = 1;
+            }
+
+            var items = _userRepo.FindAll(x => x.RoleId == roleId).ToList();
+
+            long totalCount = items.Count();
+
+            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNum - 1)).Take(ConstHelper.PageSize).ToList();
+
+            return Task.FromResult(new PagedList<User>(pageNum, ConstHelper.PageSize, totalCount, items));
         }
 
         public Task<bool> ChangeStatus(int userId, bool isActive)
