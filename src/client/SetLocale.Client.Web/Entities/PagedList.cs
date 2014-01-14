@@ -22,7 +22,7 @@ namespace SetLocale.Client.Web.Entities
             Size = pageSize;
             TotalCount = totalCount;
             TotalPageCount = (int)Math.Ceiling(totalCount / (double)pageSize);
-            HasPreviousPage = Number > 1;
+            HasPreviousPage = Number > 0;
             HasNextPage = Number < TotalPageCount;
         }
     }

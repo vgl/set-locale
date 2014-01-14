@@ -23,12 +23,11 @@ namespace SetLocale.Client.Web.Test.Services
         {
             _wordRepository = new Mock<IRepository<Word>>();
             _wordRepository.Setup(x => x.Set<Word>())
-                         .Returns(new List<Word>
-                          {
-                              new Word { Id = 1, Key = "k1", Translation_TR = "tr1", Translation_EN = "eng1" },
-                              new Word { Id = 2, Key = "k1_k2", Translation_TR = _exp},
-                              new Word { Id = 3, Key = "k1_k3", Translation_TR = "tr3", Translation_EN = "eng3" },
-                          }.AsQueryable());
+                           .Returns(new List<Word>
+                            {   new Word { Id = 1, Key = "k1", Translation_TR = "tr1", Translation_EN = "eng1" },
+                                new Word { Id = 2, Key = "k1_k2", Translation_TR = _exp},
+                                new Word { Id = 3, Key = "k1_k3", Translation_TR = "tr3", Translation_EN = "eng3" },
+                            }.AsQueryable());
         }
 
         [Test]
