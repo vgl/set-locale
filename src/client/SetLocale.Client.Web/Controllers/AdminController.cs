@@ -81,9 +81,9 @@ namespace SetLocale.Client.Web.Controllers
             PagedList<User> users;
 
             ViewBag.RoleId = id;
-            if (SetLocaleRole.IsValid(ViewBag.RoleId))
+            if (SetLocaleRole.IsValid(id))
             {
-                users = await _userService.GetAllByRoleId(ViewBag.RoleId, pageNumber);
+                users = await _userService.GetAllByRoleId(id, pageNumber);
             }
             else
             {

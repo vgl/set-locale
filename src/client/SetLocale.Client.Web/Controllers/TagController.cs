@@ -21,12 +21,23 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet, AllowAnonymous]
-        public async Task<ViewResult> Detail(string id = "set-locale")
+        public async Task<ViewResult> Detail(string id = "set-locale", int page = 1)
         {
             ViewBag.Key = id;
 
-            var entities = await _tagService.GetWords(id);
-            var model = entities.Select(WordModel.MapEntityToModel).ToList();
+            var words = await _tagService.GetWords(id,page);
+
+            var list = words.Items.Select(WordModel.MapEntityToModel).ToList();
+
+            var model = new PageModel<WordModel>
+            {
+                Items = list,
+                HasNextPage = words.HasNextPage,
+                HasPreviousPage = words.HasPreviousPage,
+                Number = words.Number,
+                TotalCount = words.TotalCount,
+                TotalPageCount = words.TotalPageCount
+            };
 
             return View(model);
         }

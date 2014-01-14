@@ -30,7 +30,7 @@ namespace SetLocale.Client.Web.Test
         [Test]
         public void TagControllerRoutes()
         {
-            "~/tag/index/deneme".WithMethod(HttpVerbs.Get).ShouldMapTo<TagController>(action => action.Detail("deneme").Result);
+            "~/tag/index/deneme".WithMethod(HttpVerbs.Get).ShouldMapTo<TagController>(action => action.Detail("tag-name",1).Result);
         }
 
         [Test]
