@@ -108,7 +108,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="specs\admin-add-new-user-as-translator.feature" />
+    <None Include="specs\admin-adds-new-user-as-translator.feature" />
     <None Include="specs\admin-deactivates-apps.feature" />
     <None Include="specs\admin-deactivates-users.feature" />
     <None Include="specs\admin-lists-apps-paging.feature" />
