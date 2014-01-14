@@ -30,7 +30,7 @@ namespace SetLocale.Client.Web.Services
 
         public Task<HomeStatsModel> GetHomeStats()
         {
-            var developerCount = _userRepository.FindAll(x => x.RoleId != SetLocaleRole.Translator.Value).Count();
+            var developerCount = _userRepository.FindAll(x => x.RoleId != SetLocaleRole.Developer.Value).Count();
             var translatorCount = _userRepository.FindAll(x => x.RoleId == SetLocaleRole.Translator.Value).Count();
             var keyCount = _wordRepository.FindAll().Count();
             var appCount = _appRepository.FindAll().Count();
