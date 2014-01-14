@@ -1,5 +1,5 @@
 ﻿@using SetLocale.Client.Web.Helpers
-@model List<SetLocale.Client.Web.Models.WordModel>
+@model SetLocale.Client.Web.Models.PageModel<SetLocale.Client.Web.Models.WordModel>
 
 @{
     ViewBag.Title = Html.LocalizationString("menu_words_my_words_key_listing");
@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
                 <tr>
                     <td><a href="/word/detail/@item.Key">@item.Key</a></td>
@@ -37,6 +37,29 @@
                 </tr>
             }
 
+            @{
+                if (Model.HasNextPage || Model.HasPreviousPage)
+                {
+                    <tr>
+                        <td colspan="4" align="center">
+                            <ul class="pagination">
+                                @if (Model.HasPreviousPage)
+                                {
+                                    <li><a href="~/user/words/@ViewBag.UserId?page=@(Model.Number-1)">&laquo;</a></li>
+                                }
+
+                                <li><a href="~/user/words/@ViewBag.UserId?page=@(Model.Number)">@(Model.Number)</a></li>
+
+                                @if (Model.HasNextPage)
+                                {
+                                    <li><a href="~/user/words/@ViewBag.UserId?page=@(Model.Number+1)">&raquo;</a></li>
+                                }
+                            </ul>
+
+                        </td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
 </div>

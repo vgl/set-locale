@@ -13,10 +13,9 @@ namespace SetLocale.Client.Web.Services
     public interface IAppService
     {
         Task<int> Create(AppModel model);
-        Task<List<App>> GetAll();
         Task<PagedList<App>> GetApps(int pageNumber);
         Task<List<App>> GetByUserEmail(string email);
-        Task<List<App>> GetByUserId(int userId);
+        Task<PagedList<App>> GetByUserId(int userId, int pageNumber);
         Task<App> Get(int appId);
         Task<bool> CreateToken(TokenModel token);
         Task<bool> ChangeStatus(int appId, bool isActive);
@@ -68,12 +67,6 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(app.Id);
         }
 
-        public Task<List<App>> GetAll()
-        {
-            var apps = _appRepository.FindAll().ToList();
-            return Task.FromResult(apps);
-        }
-
         public Task<PagedList<App>> GetApps(int pageNumber)
         {
             if (pageNumber < 1)
@@ -81,15 +74,13 @@ namespace SetLocale.Client.Web.Services
                 pageNumber = 1;
             }
 
-            pageNumber--;
-
             var items = _appRepository.FindAll();
 
             long totalCount = items.Count();
 
-            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * pageNumber).Take(ConstHelper.PageSize);
+            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
 
-            return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList())); 
+            return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
         }
 
         public Task<List<App>> GetByUserEmail(string email)
@@ -103,15 +94,25 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(apps);
         }
 
-        public Task<List<App>> GetByUserId(int userId)
+        public Task<PagedList<App>> GetByUserId(int userId, int pageNumber)
         {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
             if (userId < 1)
             {
                 return null;
             }
 
             var apps = _appRepository.FindAll(x => x.CreatedBy == userId).ToList();
-            return Task.FromResult(apps);
+
+            long totalCount = apps.Count();
+
+            apps = apps.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
+
+            return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, apps));
         }
 
         public Task<App> Get(int appId)
@@ -182,12 +183,12 @@ namespace SetLocale.Client.Web.Services
                 return Task.FromResult(false);
             }
 
-            if (!_tokenRepository.Set<Token>().Any(x=>x.Key == token))
+            if (!_tokenRepository.Set<Token>().Any(x => x.Key == token))
             {
                 return Task.FromResult(false);
             }
 
-            _tokenRepository.SoftDelete(x=>x.Key == token, deletedBy);
+            _tokenRepository.SoftDelete(x => x.Key == token, deletedBy);
             _tokenRepository.SaveChanges();
 
             return Task.FromResult(true);

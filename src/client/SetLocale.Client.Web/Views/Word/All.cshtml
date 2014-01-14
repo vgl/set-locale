@@ -37,48 +37,27 @@
                     </td>
                 </tr>
             }
-            <tr>
-                <td colspan="4" align="center">
-                    @if (Model.TotalPageCount > 20)
-                    {
-                        var startPageNum = 1;
-                        var finishPageNum = 20;
-                        
-                        if (Model.Number > 10)
-                        {
-                            startPageNum = Model.Number - 9; 
-                            <a href="~/word/all/1">...</a>
-                        }
-                        
-                        if (Model.Number + 10 > Model.TotalPageCount)
-                        {
-                            finishPageNum = Model.TotalPageCount;
-                        }
-                        else if(Model.Number > 10)
-                        {
-                            finishPageNum = Model.Number + 10;
-                        }
-
-                        for (int pageNum = startPageNum; pageNum < finishPageNum; pageNum++)
-                          {
-                              if (pageNum == Model.Number)
+            @{
+                if (Model.HasNextPage || Model.HasPreviousPage)
+                {
+                    <tr>
+                        <td colspan="4" align="center">
+                            <ul class="pagination">
+                                @if (Model.HasPreviousPage)
                                 {
-                                    @pageNum
+                                    <li><a href="~/word/all/@(Model.Number-1)">&laquo;</a></li>
                                 }
-                                else
+                                <li><a href="~/word/all/@(Model.Number)">@(Model.Number)</a></li>
+                                @if (Model.HasNextPage)
                                 {
-                                    <a href="~/word/all/@pageNum">@pageNum</a>
+                                    <li><a href="~/word/all/@(Model.Number+1)">&raquo;</a></li> 
                                 }
-                          }
+                            </ul>
 
-                        if (Model.TotalPageCount != finishPageNum)
-                        {
-                            <a href="~/word/all/@Model.TotalPageCount">...</a>
-                        }
-                    }
-                     
-                </td>
-            </tr>
+                        </td>
+                    </tr>
+                }
+            } 
         </tbody>
     </table>
 </div>

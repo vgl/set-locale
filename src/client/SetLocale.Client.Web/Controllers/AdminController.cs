@@ -68,34 +68,11 @@ namespace SetLocale.Client.Web.Controllers
 
             return Redirect("/admin/users");
         }
-
-        //[HttpGet]
-        //public async Task<ActionResult> Users(int id = 0)
-        //{
-        //    List<User> users;
-        //    var roleId = id;
-        //    if (SetLocaleRole.IsValid(roleId))
-        //    {
-        //        users = await _userService.GetAllByRoleId(roleId);
-        //    }
-        //    else
-        //    {
-        //        users = await _userService.GetAll();
-        //    }
-
-        //    var model = new List<UserModel>();
-        //    foreach (var user in users)
-        //    {
-        //        model.Add(UserModel.MapUserToUserModel(user));
-        //    }
-
-        //    return View(model);
-        //}
-
+         
         [HttpGet]
-        public async Task<ActionResult> Users(int id = 0, int pageNum = 1)
+        public async Task<ActionResult> Users(int id = 0, int page = 1)
         {
-            var pageNumber = pageNum;
+            var pageNumber = page;
             if (pageNumber < 1)
             {
                 pageNumber = 1;
@@ -103,14 +80,14 @@ namespace SetLocale.Client.Web.Controllers
 
             PagedList<User> users;
 
-            var roleId = id;
-            if (SetLocaleRole.IsValid(roleId))
+            ViewBag.RoleId = id;
+            if (SetLocaleRole.IsValid(ViewBag.RoleId))
             {
-                users = await _userService.GetAllByRoleId(roleId, pageNumber);
+                users = await _userService.GetAllByRoleId(ViewBag.RoleId, pageNumber);
             }
             else
             {
-                users = await _userService.GetAll(pageNumber);
+                users = await _userService.GetUsers(pageNumber);
             }
 
             var list = users.Items.Select(UserModel.MapUserToUserModel).ToList();
@@ -128,15 +105,40 @@ namespace SetLocale.Client.Web.Controllers
             return View(model);
         }
 
+        //[HttpGet]
+        //public async Task<ActionResult> Apps()
+        //{
+        //    var apps = await _appService.GetAll();
+        //    var model = new List<AppModel>();
+        //    foreach (var app in apps)
+        //    {
+        //        model.Add(AppModel.MapFromEntity(app));
+        //    }
+        //    return View(model);
+        //}
+
         [HttpGet]
-        public async Task<ActionResult> Apps()
+        public async Task<ActionResult> Apps(int id = 0)
         {
-            var apps = await _appService.GetAll();
-            var model = new List<AppModel>();
-            foreach (var app in apps)
+            var pageNumber = id; 
+            if (pageNumber < 1)
             {
-                model.Add(AppModel.MapFromEntity(app));
+                pageNumber = 1;
             }
+            var apps = await _appService.GetApps(pageNumber);
+
+            var list = apps.Items.Select(AppModel.MapFromEntity).ToList();
+
+            var model = new PageModel<AppModel>
+            {
+                Items = list,
+                HasNextPage = apps.HasNextPage,
+                HasPreviousPage = apps.HasPreviousPage,
+                Number = apps.Number,
+                TotalCount = apps.TotalCount,
+                TotalPageCount = apps.TotalPageCount
+            };
+
             return View(model);
         }
     }

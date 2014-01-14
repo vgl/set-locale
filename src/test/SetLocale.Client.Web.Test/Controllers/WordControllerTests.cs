@@ -91,28 +91,28 @@ namespace SetLocale.Client.Web.Test.Controllers
             wordService.Verify(x => x.GetAll(), Times.Once);
         }
 
-        [Test]
-        public async void notTranslated_should_return_key_model_list()
-        {
-            // Arrange
-            var wordService = new Mock<IWordService>();  
-            wordService.Setup(x => x.GetNotTranslated()).Returns(() => Task.FromResult(new List<Word>()));
+        //[Test]
+        //public async void notTranslated_should_return_key_model_list()
+        //{
+        //    // Arrange
+        //    var wordService = new Mock<IWordService>();  
+        //    wordService.Setup(x => x.GetNotTranslated()).Returns(() => Task.FromResult(new List<Word>()));
              
-            // Act
-            var sut = new WordControllerBuilder().WithWordService(wordService.Object)
-                                                .Build();
+        //    // Act
+        //    var sut = new WordControllerBuilder().WithWordService(wordService.Object)
+        //                                        .Build();
 
-            var view = await sut.NotTranslated();
+        //    var view = await sut.NotTranslated();
 
-            // Assert
-            Assert.NotNull(view);
+        //    // Assert
+        //    Assert.NotNull(view);
 
-            var model = view.Model as List<WordModel>;
-            sut.AssertGetAttribute("NotTranslated");
-            Assert.NotNull(model);
+        //    var model = view.Model as List<WordModel>;
+        //    sut.AssertGetAttribute("NotTranslated");
+        //    Assert.NotNull(model);
 
-            wordService.Verify(x => x.GetNotTranslated(), Times.Once);
-        }
+        //    wordService.Verify(x => x.GetNotTranslated(), Times.Once);
+        //}
 
         [Test]
         public async void translate_should_return_with_response_model()

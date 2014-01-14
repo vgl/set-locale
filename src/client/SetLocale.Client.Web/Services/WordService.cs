@@ -13,11 +13,11 @@ namespace SetLocale.Client.Web.Services
     public interface IWordService
     {
         Task<string> Create(WordModel model);
-        Task<List<Word>> GetByUserId(int userId);
+        Task<PagedList<Word>> GetByUserId(int userId, int pageNumber);
         Task<Word> GetByKey(string key);
         Task<List<Word>> GetAll();
         Task<PagedList<Word>> GetWords(int pageNumber);
-        Task<List<Word>> GetNotTranslated();
+        Task<PagedList<Word>> GetNotTranslated(int pageNumber);
         Task<bool> Translate(string key, string language, string translation);
         Task<bool> Tag(string key, string tag);
     }
@@ -80,10 +80,25 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(word.Key);
         }
 
-        public Task<List<Word>> GetByUserId(int userId)
+        public Task<PagedList<Word>> GetByUserId(int userId,int pageNumber)
         {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            if (userId < 1)
+            {
+                return null;
+            }
+
             var words = _wordRepository.FindAll(x => x.CreatedBy == userId, x => x.Tags).ToList();
-            return Task.FromResult(words);
+
+            long totalCount = words.Count();
+
+            words = words.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
+
+            return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words));
         }
 
         public Task<Word> GetByKey(string key)
@@ -108,10 +123,20 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
         }
 
-        public Task<List<Word>> GetNotTranslated()
+        public Task<PagedList<Word>> GetNotTranslated(int pageNumber = 1)
         {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
             var words = _wordRepository.FindAll(x => x.IsTranslated == false).ToList();
-            return Task.FromResult(words);
+
+            long totalCount = words.Count();
+
+            words = words.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
+
+            return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words));
         }
 
         public Task<bool> Translate(string key, string language, string translation)

@@ -41,14 +41,14 @@ namespace SetLocale.Client.Web.Test
 
             "~/admin/users".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Users(0,1).Result);
             "~/admin/users/1".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Users(1,1).Result);
-            "~/admin/apps".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Apps().Result);
+            "~/admin/apps".WithMethod(HttpVerbs.Get).ShouldMapTo<AdminController>(action => action.Apps(1).Result);
         }
 
         [Test]
         public void KeyControllerRoutes()
         {
             "~/word/all".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.All(1).Result);
-            "~/word/nottranslated".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.NotTranslated().Result);
+            "~/word/nottranslated".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.NotTranslated(1).Result);
 
             "~/word/new".WithMethod(HttpVerbs.Get).ShouldMapTo<WordController>(action => action.New());
 
@@ -73,7 +73,7 @@ namespace SetLocale.Client.Web.Test
             "~/user/login".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Login());
             "~/user/logout".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Logout());
 
-            "~/user/apps".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Apps(1).Result);
+            "~/user/apps".WithMethod(HttpVerbs.Get).ShouldMapTo<UserController>(action => action.Apps(0,1).Result);
         }
 
         [Test]

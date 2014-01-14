@@ -59,14 +59,26 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public  async Task<ViewResult> NotTranslated()
+        public  async Task<ViewResult> NotTranslated(int id = 1)
         {
-            var entities = await _wordService.GetNotTranslated();
-            var model = new List<WordModel>();
-            foreach (var entity in entities)
+            var pageNumber = id;
+            if (pageNumber < 1)
             {
-                model.Add(WordModel.MapEntityToModel(entity));
+                pageNumber = 1;
             }
+
+            var words = await _wordService.GetNotTranslated(pageNumber);
+            var list = words.Items.Select(WordModel.MapEntityToModel).ToList();
+            
+            var model = new PageModel<WordModel>
+            {
+                Items = list,
+                HasNextPage = words.HasNextPage,
+                HasPreviousPage = words.HasPreviousPage,
+                Number = words.Number,
+                TotalCount = words.TotalCount,
+                TotalPageCount = words.TotalPageCount
+            };
 
             return View(model);
         }

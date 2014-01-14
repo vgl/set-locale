@@ -1,5 +1,5 @@
 ﻿@using SetLocale.Client.Web.Helpers
-@model List<SetLocale.Client.Web.Models.AppModel>
+@model SetLocale.Client.Web.Models.PageModel<SetLocale.Client.Web.Models.AppModel>
 
 @{
     ViewBag.Title = Html.LocalizationString("menu_user_apps");
@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
                 var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
                 var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
@@ -34,6 +34,31 @@
                     <td>@item.UsageCount</td>
                 </tr>
             }
+
+            @{
+                if (Model.HasNextPage || Model.HasPreviousPage)
+                {
+                    <tr>
+                        <td colspan="5" align="center">
+                            <ul class="pagination">
+                                @if (Model.HasPreviousPage)
+                                {
+                                    <li><a href="~/user/apps/@ViewBag.UserId?page=@(Model.Number-1)">&laquo;</a></li>
+                                }
+
+                                <li><a href="~/user/apps/@ViewBag.UserId?page=@(Model.Number)">@(Model.Number)</a></li>
+
+                                @if (Model.HasNextPage)
+                                {
+                                    <li><a href="~/user/apps/@ViewBag.UserId?page=@(Model.Number+1)">&raquo;</a></li>
+                                }
+                            </ul>
+
+                        </td>
+                    </tr>
+                }
+            }
+
         </tbody>
     </table>
  @Html.AntiForgeryToken()

@@ -14,12 +14,9 @@ namespace SetLocale.Client.Web.Services
     {
         Task<int?> Create(UserModel model, int roleId = 3);
         Task<User> GetByEmail(string email);
-        Task<bool> Authenticate(string email, string password);
-        Task<List<User>> GetAll();
-        Task<PagedList<User>> GetAll(int pageNum); 
-        Task<PagedList<User>> GetUsers(int pageNumber); 
-        Task<List<User>> GetAllByRoleId(int roleId);
-        Task<PagedList<User>> GetAllByRoleId(int roleId, int pageNum);
+        Task<bool> Authenticate(string email, string password); 
+        Task<PagedList<User>> GetUsers(int pageNumber);  
+        Task<PagedList<User>> GetAllByRoleId(int roleId, int pageNumber);
         Task<bool> ChangeStatus(int userId, bool isActive);
     }
 
@@ -91,29 +88,7 @@ namespace SetLocale.Client.Web.Services
             _userRepo.SaveChanges();
 
             return Task.FromResult(result);
-        }
-
-        public Task<List<User>> GetAll()
-        {
-            var users = _userRepo.FindAll().ToList();
-            return Task.FromResult(users);
-        }
-
-        public Task<PagedList<User>> GetAll(int pageNum)
-        {
-            if (pageNum < 1)
-            {
-                pageNum = 1;
-            }
-
-            var items = _userRepo.FindAll();
-
-            long totalCount = items.Count();
-
-            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNum - 1)).Take(ConstHelper.PageSize);
-
-            return Task.FromResult(new PagedList<User>(pageNum, ConstHelper.PageSize, totalCount, items.ToList()));
-        }
+        } 
 
         public Task<PagedList<User>> GetUsers(int pageNumber)
         {
@@ -122,37 +97,29 @@ namespace SetLocale.Client.Web.Services
                 pageNumber = 1;
             }
 
-            pageNumber--;
-
             var items = _userRepo.FindAll();
 
             long totalCount = items.Count();
 
-            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * pageNumber).Take(ConstHelper.PageSize);
+            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
 
             return Task.FromResult(new PagedList<User>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
-        }
+        } 
 
-        public Task<List<User>> GetAllByRoleId(int roleId)
+        public Task<PagedList<User>> GetAllByRoleId(int roleId, int pageNumber)
         {
-            var users = _userRepo.FindAll(x => x.RoleId == roleId).ToList();
-            return Task.FromResult(users);
-        }
-
-        public Task<PagedList<User>> GetAllByRoleId(int roleId, int pageNum)
-        {
-            if (pageNum < 1)
+            if (pageNumber < 1)
             {
-                pageNum = 1;
+                pageNumber = 1;
             }
 
             var items = _userRepo.FindAll(x => x.RoleId == roleId).ToList();
 
             long totalCount = items.Count();
 
-            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNum - 1)).Take(ConstHelper.PageSize).ToList();
+            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
 
-            return Task.FromResult(new PagedList<User>(pageNum, ConstHelper.PageSize, totalCount, items));
+            return Task.FromResult(new PagedList<User>(pageNumber, ConstHelper.PageSize, totalCount, items));
         }
 
         public Task<bool> ChangeStatus(int userId, bool isActive)

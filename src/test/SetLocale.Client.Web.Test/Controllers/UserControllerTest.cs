@@ -22,53 +22,53 @@ namespace SetLocale.Client.Web.Test.Controllers
     [TestFixture]
     public class UserControllerTest
     {
-        [Test]
-        public async void apps_should_return_with_app_model()
-        {
-            // Arrange
-            var appService = new Mock<IAppService>();
-            appService.Setup(x => x.GetByUserId(1)).Returns(() => Task.FromResult(new List<App>()));
+        //[Test]
+        //public async void apps_should_return_with_app_model()
+        //{
+        //    // Arrange
+        //    var appService = new Mock<IAppService>();
+        //    appService.Setup(x => x.GetByUserId(1)).Returns(() => Task.FromResult(new List<App>()));
 
-            // Act
-            var sut = new UserControllerBuilder().WithAppService(appService.Object)
-                                                 .Build();
-            var view = await sut.Apps(1) as ViewResult;
+        //    // Act
+        //    var sut = new UserControllerBuilder().WithAppService(appService.Object)
+        //                                         .Build();
+        //    var view = await sut.Apps(1) as ViewResult;
 
-            // Assert
-            Assert.NotNull(view);
+        //    // Assert
+        //    Assert.NotNull(view);
 
-            var model = view.Model;
-            Assert.NotNull(model);
-            Assert.IsAssignableFrom<List<AppModel>>(model);
-            sut.AssertGetAttribute("Apps", new[] { typeof(int) });
+        //    var model = view.Model;
+        //    Assert.NotNull(model);
+        //    Assert.IsAssignableFrom<List<AppModel>>(model);
+        //    sut.AssertGetAttribute("Apps", new[] { typeof(int) });
 
-            appService.Verify(x => x.GetByUserId(1), Times.Once);
+        //    appService.Verify(x => x.GetByUserId(1), Times.Once);
 
-        }
+        //}
 
-        [Test]
-        public async void words_should_return_with_word_model()
-        {
-            // Arrange
-            var wordService = new Mock<IWordService>();
-            wordService.Setup(x => x.GetByUserId(1)).Returns(() => Task.FromResult(new List<Word>()));
+        //[Test]
+        //public async void words_should_return_with_word_model()
+        //{
+        //    // Arrange
+        //    var wordService = new Mock<IWordService>();
+        //    wordService.Setup(x => x.GetByUserId(1)).Returns(() => Task.FromResult(new List<Word>()));
 
-            // Act
+        //    // Act
            
-            var sut = new UserControllerBuilder().WithWordService(wordService.Object)
-                                                 .Build();
+        //    var sut = new UserControllerBuilder().WithWordService(wordService.Object)
+        //                                         .Build();
 
-            var view = await sut.Words(1) as ViewResult;
+        //    var view = await sut.Words(1) as ViewResult;
 
-            // Assert
-            Assert.NotNull(view);
+        //    // Assert
+        //    Assert.NotNull(view);
 
-            var model = view.Model;
-            Assert.NotNull(model);
-            sut.AssertGetAttribute("Words", new[] { typeof(int) });
+        //    var model = view.Model;
+        //    Assert.NotNull(model);
+        //    sut.AssertGetAttribute("Words", new[] { typeof(int) });
 
-            wordService.Verify(x => x.GetByUserId(1), Times.Once);
-        }
+        //    wordService.Verify(x => x.GetByUserId(1), Times.Once);
+        //}
 
         [Test]
         public async void change_status_should_return_with_response_model()
