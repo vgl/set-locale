@@ -1,5 +1,6 @@
 ﻿using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Services;
+
 namespace SetLocale.Client.Web.Test.Builders
 {
     public class LangControllerBuilder
@@ -29,6 +30,5 @@ namespace SetLocale.Client.Web.Test.Builders
         {
             return new LangController(_userService, _formsAuthenticationService);
         }
-
     }
 }

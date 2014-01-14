@@ -1,10 +1,12 @@
-﻿using System.Security.Principal;
-using Moq;
-using SetLocale.Client.Web.Controllers;
-using SetLocale.Client.Web.Helpers;
-using SetLocale.Client.Web.Services;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
+using System.Security.Principal;
+
+using Moq;
+
+using SetLocale.Client.Web.Controllers;
+using SetLocale.Client.Web.Services;
+
 namespace SetLocale.Client.Web.Test.Builders
 {
     public class UserControllerBuilder
@@ -14,7 +16,6 @@ namespace SetLocale.Client.Web.Test.Builders
         private IWordService _wordService;
         private IFormsAuthenticationService _formsAuthenticationService;
 
-
         public UserControllerBuilder()
         {
             _appService = null;
@@ -22,7 +23,6 @@ namespace SetLocale.Client.Web.Test.Builders
             _userService = null;
             _wordService = null;
         }
-
 
         internal UserControllerBuilder WithFormsAuthenticationService(IFormsAuthenticationService formsAuthenticationService)
         {
@@ -47,13 +47,11 @@ namespace SetLocale.Client.Web.Test.Builders
         {
             _wordService = wordService;
             return this;
-
         }
 
         internal UserController BuildWithMockControllerContext()
         {
             var sut = Build();
-
 
             var controllerContext = new Mock<ControllerContext>();
             var httpContext = new Mock<HttpContextBase>();
@@ -69,21 +67,16 @@ namespace SetLocale.Client.Web.Test.Builders
             user.Setup(x => x.Identity).Returns(currentUser.Object);
             currentUser.Setup(x => x.IsAuthenticated).Returns(true);
             currentUser.Setup(x => x.Name).Returns(string.Format("{0}|{1}|{2}|{3}", 1, "name", "test@test.com", 1));    
-           
 
             httpResponse.Setup(x => x.SetCookie(It.IsAny<HttpCookie>()));
-
 
             sut.ControllerContext = controllerContext.Object;
             return sut;
         }
-
-
+        
         internal UserController Build()
         {
             return new UserController(_userService, _wordService, _formsAuthenticationService, _appService);
         }
-
-
     }
 }

@@ -1,17 +1,10 @@
-﻿using Moq;
-using SetLocale.Client.Web.Controllers;
+﻿using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SetLocale.Client.Web.Test.Builders
 {
     public class AdminControllerBuilder
     {
-
         private IFormsAuthenticationService _formAuthenticationService;
         private IUserService _userService;
         private IAppService _appService;
@@ -39,15 +32,11 @@ namespace SetLocale.Client.Web.Test.Builders
         {
             _appService = appService;
             return this;
-
         }
 
         internal AdminController Build()
         {
             return new AdminController(_userService, _formAuthenticationService, _appService);
         }
-
-
-
     }
 }

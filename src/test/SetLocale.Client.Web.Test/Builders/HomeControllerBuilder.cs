@@ -1,5 +1,6 @@
 ﻿using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Services;
+
 namespace SetLocale.Client.Web.Test.Builders
 {
     public class HomeControllerBuilder
@@ -31,14 +32,11 @@ namespace SetLocale.Client.Web.Test.Builders
         {
             _reportService = reportService;
             return this;
-
         }
 
         internal HomeController Build()
         {
             return new HomeController(_reportService, _userService, _formsAuthenticationService);
         }
-
-
     }
 }
