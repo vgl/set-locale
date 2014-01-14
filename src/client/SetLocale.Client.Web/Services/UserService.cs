@@ -100,6 +100,12 @@ namespace SetLocale.Client.Web.Services
             var items = _userRepo.FindAll();
 
             long totalCount = items.Count();
+            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
+
+            if (pageNumber > totalPageCount)
+            {
+                pageNumber = 1;
+            }
 
             items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
 
@@ -116,6 +122,12 @@ namespace SetLocale.Client.Web.Services
             var items = _userRepo.FindAll(x => x.RoleId == roleId).ToList();
 
             long totalCount = items.Count();
+            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
+
+            if (pageNumber > totalPageCount)
+            {
+                pageNumber = 1;
+            }
 
             items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
 

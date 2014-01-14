@@ -104,19 +104,7 @@ namespace SetLocale.Client.Web.Controllers
              
             return View(model);
         }
-
-        //[HttpGet]
-        //public async Task<ActionResult> Apps()
-        //{
-        //    var apps = await _appService.GetAll();
-        //    var model = new List<AppModel>();
-        //    foreach (var app in apps)
-        //    {
-        //        model.Add(AppModel.MapFromEntity(app));
-        //    }
-        //    return View(model);
-        //}
-
+          
         [HttpGet]
         public async Task<ActionResult> Apps(int id = 0)
         {

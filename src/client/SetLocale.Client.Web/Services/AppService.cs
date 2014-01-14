@@ -77,6 +77,12 @@ namespace SetLocale.Client.Web.Services
             var items = _appRepository.FindAll();
 
             long totalCount = items.Count();
+            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
+
+            if (pageNumber > totalPageCount)
+            {
+                pageNumber = 1;
+            }
 
             items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
 
@@ -109,6 +115,12 @@ namespace SetLocale.Client.Web.Services
             var apps = _appRepository.FindAll(x => x.CreatedBy == userId).ToList();
 
             long totalCount = apps.Count();
+            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
+
+            if (pageNumber > totalPageCount)
+            {
+                pageNumber = 1;
+            }
 
             apps = apps.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
 

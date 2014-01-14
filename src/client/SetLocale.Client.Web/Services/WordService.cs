@@ -95,6 +95,12 @@ namespace SetLocale.Client.Web.Services
             var words = _wordRepository.FindAll(x => x.CreatedBy == userId, x => x.Tags).ToList();
 
             long totalCount = words.Count();
+            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
+
+            if (pageNumber > totalPageCount)
+            {
+                pageNumber = 1;
+            }
 
             words = words.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
 
@@ -117,6 +123,12 @@ namespace SetLocale.Client.Web.Services
             var items = _wordRepository.FindAll();
 
             long totalCount = items.Count();
+            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
+
+            if (pageNumber > totalPageCount)
+            {
+                pageNumber = 1;
+            }
 
             items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber -1)).Take(ConstHelper.PageSize);
 
@@ -133,6 +145,12 @@ namespace SetLocale.Client.Web.Services
             var words = _wordRepository.FindAll(x => x.IsTranslated == false).ToList();
 
             long totalCount = words.Count();
+            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
+
+            if (pageNumber > totalPageCount)
+            {
+                pageNumber = 1;
+            }
 
             words = words.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
 
