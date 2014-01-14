@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+
 using Moq;
 using NUnit.Framework;
 
-using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Entities;
-using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 using SetLocale.Client.Web.Test.Builders;
