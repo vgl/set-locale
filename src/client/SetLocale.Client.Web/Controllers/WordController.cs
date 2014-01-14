@@ -13,8 +13,8 @@ namespace SetLocale.Client.Web.Controllers
         private readonly IWordService _wordService;
         public WordController(
             IWordService wordService,
-            IUserService userService,
-            IFormsAuthenticationService formsAuthenticationService)
+            IUserService userService, 
+            IFormsAuthenticationService formsAuthenticationService) 
             : base(userService, formsAuthenticationService)
         {
             _wordService = wordService;
@@ -46,7 +46,7 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ViewResult> NotTranslated()
+        public  async Task<ViewResult> NotTranslated()
         {
             var entities = await _wordService.GetNotTranslated();
             var model = new List<WordModel>();
@@ -57,7 +57,7 @@ namespace SetLocale.Client.Web.Controllers
 
             return View(model);
         }
-
+         
         [HttpGet]
         public ViewResult New()
         {
@@ -75,7 +75,7 @@ namespace SetLocale.Client.Web.Controllers
             }
 
             model.CreatedBy = User.Identity.GetUserId();
-
+            
             var key = await _wordService.Create(model);
             if (key == null)
             {
@@ -116,6 +116,6 @@ namespace SetLocale.Client.Web.Controllers
             model.Ok = await _wordService.Tag(key, tag);
             return Json(model, JsonRequestBehavior.DenyGet);
         }
-
+        
     }
 }
