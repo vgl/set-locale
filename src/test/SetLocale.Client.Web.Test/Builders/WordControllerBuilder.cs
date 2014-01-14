@@ -36,7 +36,7 @@ namespace SetLocale.Client.Web.Test.Builders
 
         internal WordController Build()
         {
-            return new WordController(_userService, _formsAuthenticationService, _wordService);
+            return new WordController(_wordService, _userService, _formsAuthenticationService);
         }
     }
 }
