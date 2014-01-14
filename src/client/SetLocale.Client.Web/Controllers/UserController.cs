@@ -13,7 +13,6 @@ namespace SetLocale.Client.Web.Controllers
     public class UserController : BaseController
     {
         private readonly IAppService _appService;
-        private readonly IUserService _userService;
         private readonly IWordService _wordService;
 
         public UserController(
@@ -24,7 +23,6 @@ namespace SetLocale.Client.Web.Controllers
             : base(userService, formsAuthenticationService)
         {
             _appService = appService;
-            _userService = userService;
             _wordService = wordService;
         }
 
@@ -44,7 +42,7 @@ namespace SetLocale.Client.Web.Controllers
 
             ViewBag.UserId = id;
 
-            var apps = await _appService.GetByUserId(id, pageNumber);       // id yerine ViewBag.UserId yapılamıyor.
+            var apps = await _appService.GetByUserId(id, pageNumber);
 
             var list = apps.Items.Select(AppModel.MapFromEntity).ToList();
 

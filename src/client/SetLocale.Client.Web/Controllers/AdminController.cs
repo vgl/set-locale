@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,13 +13,14 @@ namespace SetLocale.Client.Web.Controllers
     public class AdminController : BaseController
     {
         private readonly IAppService _appService;
-        private readonly IUserService _userService;
 
-        public AdminController(IUserService userService, IFormsAuthenticationService formsAuthenticationService, IAppService appService)
+        public AdminController(
+            IUserService userService, 
+            IFormsAuthenticationService formsAuthenticationService, 
+            IAppService appService)
             : base(userService, formsAuthenticationService)
         {
             _appService = appService;
-            _userService = userService;
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -36,7 +36,7 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            return Redirect("/admin/apps");
         }
 
         [HttpGet]
