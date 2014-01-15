@@ -88,12 +88,7 @@ namespace SetLocale.Client.Web.Test.Services
 
             appRepository.Verify(x => x.FindAll(It.IsAny<Expression<Func<App, bool>>>()), Times.Once);
         }
-
-        /*
-         * GetByUserEmail Herhangi bir yerde kullanýlmýyor sanýrým kullanýlmayacak da. Silinebilir ?
-         * Bu sebeple testini yapmadým.
-         */
-
+         
         [Test]
         public async void should_get_return_with_app()
         {

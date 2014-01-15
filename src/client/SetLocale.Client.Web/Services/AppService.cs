@@ -13,8 +13,7 @@ namespace SetLocale.Client.Web.Services
     public interface IAppService
     {
         Task<int> Create(AppModel model);
-        Task<PagedList<App>> GetApps(int pageNumber);
-        Task<List<App>> GetByUserEmail(string email);
+        Task<PagedList<App>> GetApps(int pageNumber); 
         Task<PagedList<App>> GetByUserId(int userId, int pageNumber);
         Task<App> Get(int appId);
         Task<bool> CreateToken(TokenModel token);
@@ -87,22 +86,8 @@ namespace SetLocale.Client.Web.Services
             items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
 
             return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
-        }
-
-        /*
-         * GetByUserEmail Herhangi bir yerde kullanılmıyor sanırım kullanılmayacak da. Silinebilir ?
-         */
-        public Task<List<App>> GetByUserEmail(string email)
-        {
-            if (!email.IsEmail())
-            {
-                return null;
-            }
-
-            var apps = _appRepository.FindAll(x => x.UserEmail == email).ToList();
-            return Task.FromResult(apps);
-        }
-
+        } 
+       
         public Task<PagedList<App>> GetByUserId(int userId, int pageNumber)
         {
             if (pageNumber < 1)
