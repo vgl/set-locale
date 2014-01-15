@@ -80,7 +80,7 @@ namespace SetLocale.Client.Web.Controllers
 
             ViewBag.UserId = id;
 
-            var words = await _wordService.GetByUserId(id, pageNumber);          // id yerine ViewBag.UserId yapılamıyor.
+            var words = await _wordService.GetByUserId(id, pageNumber);     
             var list = words.Items.Select(WordModel.MapEntityToModel).ToList();
 
             var model = new PageModel<WordModel>
