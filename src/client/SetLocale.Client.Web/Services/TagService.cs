@@ -10,8 +10,7 @@ using SetLocale.Client.Web.Repositories;
 namespace SetLocale.Client.Web.Services
 {
     public interface ITagService
-    {
-        Task<List<Word>> GetWords(string tagUrlName);
+    { 
         Task<PagedList<Word>> GetWords(string tagUrlName, int pageNumber);
     }
 
@@ -24,12 +23,7 @@ namespace SetLocale.Client.Web.Services
         {
             _wordRepository = wordRepository;
         }
-
-        public Task<List<Word>> GetWords(string tagUrlName)
-        {
-            var words = _wordRepository.FindAll(x => x.Tags.Any(y => y.UrlName == tagUrlName)).Distinct().ToList();
-            return Task.FromResult(words);
-        }
+         
 
         public Task<PagedList<Word>> GetWords(string tagUrlName, int pageNumber)
         {

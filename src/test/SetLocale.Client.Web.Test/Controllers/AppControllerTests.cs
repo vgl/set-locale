@@ -50,7 +50,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             var sut = new AppControllerBuilder().WithAppService(appService.Object)
                                                 .Build();
 
-            var view = await sut.Detail() as RedirectResult;
+            var view = await sut.Detail(0) as RedirectResult;
 
             // Assert
             Assert.NotNull(view); 
