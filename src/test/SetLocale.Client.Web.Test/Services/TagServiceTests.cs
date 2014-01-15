@@ -49,7 +49,7 @@ namespace SetLocale.Client.Web.Test.Services
             var result = await sut.GetWords(string.Empty, 0);
 
             //assert
-            Assert.AreEqual(result.Number, 0);
+            Assert.AreEqual(result.Number, 1);
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace SetLocale.Client.Web.Test.Services
             var result = await sut.GetWords(string.Empty, 2);
 
             //assert
-            Assert.AreEqual(result.Number, 1);
+            Assert.AreEqual(result.Number, 2);
             Assert.AreEqual(result.Size, ConstHelper.PageSize);
             Assert.AreEqual(result.TotalCount, ConstHelper.PageSize * 4);
             Assert.AreEqual(result.HasPreviousPage, true);
