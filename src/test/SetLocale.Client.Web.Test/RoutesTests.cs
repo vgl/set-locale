@@ -22,7 +22,7 @@ namespace SetLocale.Client.Web.Test
         [Test]
         public void HomeControllerRoutes()
         {
-            "~/".WithMethod(HttpVerbs.Get).ShouldMapTo<HomeController>(action => action.Index().Result);
+            "~/".WithMethod(HttpVerbs.Get).ShouldMapTo<HomeController>(action => action.Index().ConfigureAwait(true).GetAwaiter().GetResult());
             "~/home".WithMethod(HttpVerbs.Get).ShouldMapTo<HomeController>(action => action.Index().Result);
             "~/home/index".WithMethod(HttpVerbs.Get).ShouldMapTo<HomeController>(action => action.Index().Result);
         }

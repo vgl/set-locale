@@ -44,7 +44,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             // Assert
             Assert.NotNull(view);
-            Assert.AreEqual(view.Url, "/home/index");
+            Assert.AreEqual(view.Url, "/");
             sut.AssertGetAttribute("Detail",new []{ typeof(string)}); 
               
         }
