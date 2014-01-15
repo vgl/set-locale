@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 
 using Moq;
@@ -20,11 +19,11 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void index_should_return()
         {
-            // Act
+            //act
             var sut = new AdminControllerBuilder().Build();
             var view = sut.Index();
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             sut.AssertGetAttribute("Index");
         }
@@ -32,12 +31,12 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void new_translator_should_return_with_user_model()
         {
-            // Act
+            //act
             var sut = new AdminControllerBuilder().Build();
             var view = sut.NewTranslator();
             var model = view.Model;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             Assert.NotNull(model);
             Assert.IsAssignableFrom(typeof(UserModel), model);
@@ -48,18 +47,18 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void new_translator_should_redirect_if_model_is_valid()
         {
-            // Arrange
+            //arrange
             var validModel = new UserModel { Name = "test name", Email = "test@test.com" };
 
             var userService = new Mock<IUserService>();
             userService.Setup(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Translator.Value)).Returns(() => Task.FromResult<int?>(1));
 
-            // Act
+            //act
             var sut = new AdminControllerBuilder().WithUserService(userService.Object)
                                                  .Build();
             var view = await sut.NewTranslator(validModel) as RedirectResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             Assert.AreEqual(view.Url, "/admin/users");
             Assert.IsInstanceOf<BaseController>(sut);
@@ -68,20 +67,18 @@ namespace SetLocale.Client.Web.Test.Controllers
             sut.AssertPostAttribute("NewTranslator", new[] { typeof(UserModel) });
             
         }
-
- 
-
+        
         [Test]
         public async void new_translator_should_return_with_app_model_if_model_is_invalid()
         {
-            // Arrange
+            //arrange
             var inValidModel = new UserModel { Name = "test name" };
 
-            // Act
+            //act
             var sut = new AdminControllerBuilder().Build();
             var view = await sut.NewTranslator(inValidModel) as ViewResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             Assert.NotNull(view.Model);
             Assert.IsAssignableFrom(typeof(UserModel), view.Model);
@@ -92,16 +89,16 @@ namespace SetLocale.Client.Web.Test.Controllers
         //[Test]
         //public async void users_should_return_with_list_user_model()
         //{
-        //    // Arrange           
+        //    //arrange           
         //    var userService = new Mock<IUserService>();
         //    userService.Setup(x => x.GetAll()).Returns(() => Task.FromResult(new List<User>()));
              
-        //    // Act
+        //    //act
         //    var sut = new AdminControllerBuilder().WithUserService(userService.Object)
         //                                        .Build();
         //    var view = await sut.Users(5) as ViewResult;     
 
-        //    // Assert
+        //   //assert
         //    Assert.NotNull(view);
         //    Assert.NotNull(view.Model);
         //    Assert.IsAssignableFrom(typeof(List<UserModel>), view.Model);
@@ -112,17 +109,17 @@ namespace SetLocale.Client.Web.Test.Controllers
         //[Test]
         //public async void apps_should_return_with_list_app_model()
         //{
-        //    // Arrange           
+        //    //arrange           
         //    var appService = new Mock<IAppService>();
         //    appService.Setup(x => x.GetAll()).Returns(() => Task.FromResult(new List<App>()));
 
-        //    // Act
+        //    //act
         //    var sut = new AdminControllerBuilder().WithAppService(appService.Object)
         //                                          .Build();
 
         //    var view = await sut.Apps() as ViewResult;
 
-        //    // Assert
+        //   //assert
         //    Assert.NotNull(view);
         //    Assert.NotNull(view.Model);
         //    Assert.IsAssignableFrom(typeof(List<AppModel>), view.Model); 

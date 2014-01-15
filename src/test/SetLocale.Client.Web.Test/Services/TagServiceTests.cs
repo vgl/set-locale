@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+
 using Moq;
 using NUnit.Framework;
+
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Repositories;
@@ -14,30 +16,8 @@ namespace SetLocale.Client.Web.Test.Services
     [TestFixture]
     public class TagServiceTests
     {
-        //[Test]
-        //public async void should_return_words()
-        //{
-        //    //arrange
-        //    var wordRepository = new Mock<IRepository<Word>>();
-        //    wordRepository.Setup(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>()))
-        //                  .Returns(new List<Word> { new Word{Id = 1, Key="key"} }.AsQueryable());
-
-        //    //act
-        //    var sut = new TagServiceBuilder().WithWordRepository(wordRepository.Object)
-        //                                     .Build();
-
-        //    var result = await sut.GetWords(string.Empty);
-
-        //    //assert
-        //    Assert.AreEqual(result.Count, 1);
-            
-        //    wordRepository.Verify(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>()), Times.AtLeastOnce);
-        //}
-
-        // todo:should_return_words silinebilir.
-
         [Test]
-        public async void should_set_pagenumber_to_one_if_it_less()
+        public async void should_set_pagenumber_to_one_if_it_is_less()
         {
             //arrange
             var wordRepository = new Mock<IRepository<Word>>();

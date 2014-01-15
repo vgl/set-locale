@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.UI;
+
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Repositories;
@@ -23,7 +22,6 @@ namespace SetLocale.Client.Web.Services
         {
             _wordRepository = wordRepository;
         }
-         
 
         public Task<PagedList<Word>> GetWords(string tagUrlName, int pageNumber)
         {

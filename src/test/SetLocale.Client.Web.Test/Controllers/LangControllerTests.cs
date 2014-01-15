@@ -15,7 +15,7 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void change_should_add_lang_cookie()
         {
-            // Arrange
+            //arrange
             const string actionName = "Change";
 
             var controllerContext = new Mock<ControllerContext>();
@@ -28,13 +28,13 @@ namespace SetLocale.Client.Web.Test.Controllers
             httpContext.Setup(x => x.Response).Returns(httpResponse.Object);
             httpResponse.Setup(x => x.SetCookie(It.IsAny<HttpCookie>()));
 
-            // Act
+            //act
             var sut = new LangControllerBuilder().Build();
             sut.ControllerContext = controllerContext.Object;
 
             var view = sut.Change("tr");
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             
             sut.AssertGetAttribute(actionName, new[] { typeof(string) });

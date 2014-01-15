@@ -19,13 +19,13 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void new_should_return_key_model()
         {
-            // Arrange 
+            //arrange 
 
-            // Act
+            //act
             var sut = new WordControllerBuilder().Build();
             var view = sut.New();
              
-            // Assert
+           //assert
             Assert.NotNull(view);
             var model = view.Model as WordModel;
 
@@ -36,13 +36,13 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void detail_id_is_null_or_empty_should_return_key_model()
         {
-            // Arrange
+            //arrange
             
-            // Act
+            //act
             var sut = new WordControllerBuilder().Build();
             var view = await sut.Detail("") as RedirectResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             Assert.AreEqual(view.Url, "/");
             sut.AssertGetAttribute("Detail",new []{ typeof(string)}); 
@@ -52,17 +52,17 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void detail_id_is_not_null_should_return_key_model()
         {
-            // Arrange
+            //arrange
             var wordService = new Mock<IWordService>();
             wordService.Setup(x => x.GetByKey("key")).Returns(() => Task.FromResult(new Word()));
 
-            // Act
+            //act
             var sut = new WordControllerBuilder().WithWordService(wordService.Object)
                                                  .Build();
 
             var view = await sut.Detail("key") as ViewResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             var model = view.Model as WordModel;
             Assert.NotNull(model);
@@ -74,15 +74,15 @@ namespace SetLocale.Client.Web.Test.Controllers
         //[Test]
         //public async void all_should_return_key_model_list()
         //{
-        //    // Arrange
+        //    //arrange
         //    var wordService = new Mock<IWordService>(); 
         //    wordService.Setup(x => x.GetAll()).Returns(() => Task.FromResult(new List<Word>()));
 
-        //    // Act
+        //    //act
         //    var sut = new WordControllerBuilder().WithWordService(wordService.Object)
         //                                         .Build();
         //    var view = await sut.All();
-        //    // Assert
+        //   //assert
         //    Assert.NotNull(view);
 
         //    var model = view.Model as List<WordModel>;
@@ -94,17 +94,17 @@ namespace SetLocale.Client.Web.Test.Controllers
         //[Test]
         //public async void notTranslated_should_return_key_model_list()
         //{
-        //    // Arrange
+        //    //arrange
         //    var wordService = new Mock<IWordService>();  
         //    wordService.Setup(x => x.GetNotTranslated()).Returns(() => Task.FromResult(new List<Word>()));
              
-        //    // Act
+        //    //act
         //    var sut = new WordControllerBuilder().WithWordService(wordService.Object)
         //                                        .Build();
 
         //    var view = await sut.NotTranslated();
 
-        //    // Assert
+        //   //assert
         //    Assert.NotNull(view);
 
         //    var model = view.Model as List<WordModel>;

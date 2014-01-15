@@ -20,7 +20,7 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void detail_should_return_key_model_list()
         {
-            // Arrange
+            //arrange
             const string tag = "set-locale";
             const string actionName = "Detail";
 
@@ -28,13 +28,13 @@ namespace SetLocale.Client.Web.Test.Controllers
             var list = new List<Word> { new Word { Id = 1, Key = tag }, new Word { Id = 2, Key = tag } };
             tagService.Setup(x => x.GetWords(tag, 1)).Returns(() => Task.FromResult(new PagedList<Word>(1, 2, 3, list)));
 
-            // Act
+            //act
             var sut = new TagControllerBuilder().WithTagService(tagService.Object)
                                                 .Build();
             var view = sut.Detail();
             var model = view.Result.Model as PageModel<WordModel>;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             Assert.NotNull(model);
             Assert.IsInstanceOf<BaseController>(sut);

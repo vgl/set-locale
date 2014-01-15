@@ -16,16 +16,16 @@ namespace SetLocale.Client.Web.Test.Controllers
         //[Test]
         //public async void apps_should_return_with_app_model()
         //{
-        //    // Arrange
+        //    //arrange
         //    var appService = new Mock<IAppService>();
         //    appService.Setup(x => x.GetByUserId(1)).Returns(() => Task.FromResult(new List<App>()));
 
-        //    // Act
+        //    //act
         //    var sut = new UserControllerBuilder().WithAppService(appService.Object)
         //                                         .Build();
         //    var view = await sut.Apps(1) as ViewResult;
 
-        //    // Assert
+        //   //assert
         //    Assert.NotNull(view);
 
         //    var model = view.Model;
@@ -40,18 +40,18 @@ namespace SetLocale.Client.Web.Test.Controllers
         //[Test]
         //public async void words_should_return_with_word_model()
         //{
-        //    // Arrange
+        //    //arrange
         //    var wordService = new Mock<IWordService>();
         //    wordService.Setup(x => x.GetByUserId(1)).Returns(() => Task.FromResult(new List<Word>()));
 
-        //    // Act
+        //    //act
            
         //    var sut = new UserControllerBuilder().WithWordService(wordService.Object)
         //                                         .Build();
 
         //    var view = await sut.Words(1) as ViewResult;
 
-        //    // Assert
+        //   //assert
         //    Assert.NotNull(view);
 
         //    var model = view.Model;
@@ -64,17 +64,17 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void change_status_should_return_with_response_model()
         {
-            // Arrange
+            //arrange
             var userService = new Mock<IUserService>();
             userService.Setup(x => x.ChangeStatus(1, true)).Returns(() => Task.FromResult(new bool()));
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().WithUserService(userService.Object)
                                                  .Build();
 
             var view = await sut.ChangeStatus(1, true);
 
-            // Assert
+           //assert
             Assert.NotNull(view);
 
             var model = view.Data;
@@ -88,12 +88,12 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void new_should_return_with_user_model()
         {
-            // Act
+            //act
             var sut = new UserControllerBuilder().Build();
 
             var view = sut.New() as ViewResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
@@ -106,18 +106,18 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void new_should_redirect_if_model_is_valid()
         {
-            // Arrange
+            //arrange
             var validModel = new UserModel { Name = "test name", Email = "test@test.com", Password = "pass" };
 
             var userService = new Mock<IUserService>();
             userService.Setup(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Developer.Value)).Returns(() => Task.FromResult<int?>(1));
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().WithUserService(userService.Object)
                                                  .Build();
             var view = await sut.New(validModel) as RedirectResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             Assert.AreEqual(view.Url, "/user/apps");
             userService.Verify(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Developer.Value), Times.Once);
@@ -129,14 +129,14 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void new_should_return_with_user_model_if_model_is_invalid()
         {
-            // Arrange
+            //arrange
             var invalidModel = new UserModel { Name = "test name" };
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().Build();
             var view = await sut.New(invalidModel) as ViewResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
@@ -149,11 +149,11 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void reset_should_return_with_reset_model()
         {
-            // Act
+            //act
             var sut = new UserControllerBuilder().BuildWithMockControllerContext();
             var view = sut.Reset() as ViewResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
@@ -166,11 +166,11 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void login_should_return_with_login_model()
         {
-            // Act
+            //act
             var sut = new UserControllerBuilder().Build();
             var view = sut.Login() as ViewResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
@@ -183,7 +183,7 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void login_should_redirect_if_model_is_valid()
         {
-            // Arrange   
+            //arrange   
             const int id = 1;
             const string email = "test@test.com"; 
             const string name = "test";
@@ -201,13 +201,13 @@ namespace SetLocale.Client.Web.Test.Controllers
             var formsAuthenticationService = new Mock<IFormsAuthenticationService>();
             formsAuthenticationService.Setup(x => x.SignIn(string.Format("{0}|{1}|{2}", id, name, email), true));    
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().WithUserService(userService.Object)
                                                  .WithFormsAuthenticationService(formsAuthenticationService.Object)
                                                  .Build();
             var view = await sut.Login(validModel) as RedirectResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             Assert.AreEqual(view.Url, "/user/apps");
             userService.Verify(x => x.Authenticate(validModel.Email, validModel.Password), Times.Once);
@@ -219,14 +219,14 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void login_should_return_with_login_model_if_model_is_invalid()
         {
-            // Arrange
+            //arrange
             var invalidModel = new LoginModel { Email = "test@test.com"};   
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().Build(); ;
             var view = await sut.Login(invalidModel) as ViewResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
@@ -239,17 +239,17 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void logout_should_redirect()
         {
-            // Arrange    
+            //arrange    
             var formsAuthenticationService = new Mock<IFormsAuthenticationService>();
             formsAuthenticationService.Setup(x => x.SignOut());
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().WithFormsAuthenticationService(formsAuthenticationService.Object)
                                                  .Build();
 
             var view = sut.Logout() as RedirectResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             Assert.AreEqual(view.Url, "/");
             sut.AssertGetAttribute("Logout");  

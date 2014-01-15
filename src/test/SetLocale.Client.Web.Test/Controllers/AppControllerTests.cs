@@ -22,17 +22,17 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void detail_id_is_greater_than_zero_should_return_app_model()
         {
-            // Arrange           
+            //arrange           
             var appService = new Mock<IAppService>();
             appService.Setup(x => x.Get(1)).Returns(() => Task.FromResult(new App{ Id=1, Tokens = new List<Token>(), Url = "url"} ));
 
-            // Act
+            //act
             var sut = new AppControllerBuilder().WithAppService(appService.Object)
                                                 .Build();
 
             var view = await sut.Detail(1) as ViewResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             Assert.NotNull(view.Model);
 
@@ -43,16 +43,16 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void detail_id_is_lesser_than_one_should_redirect_to_home_index()
         {
-            // Arrange           
+            //arrange           
             var appService = new Mock<IAppService>();   
 
-            // Act 
+            //act 
             var sut = new AppControllerBuilder().WithAppService(appService.Object)
                                                 .Build();
 
             var view = await sut.Detail(0) as RedirectResult;
 
-            // Assert
+           //assert
             Assert.NotNull(view); 
             Assert.AreEqual(view.Url, "/");
             
@@ -62,12 +62,12 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void new_should_return_app_model()
         {  
-            // Act
+            //act
             var sut = new AppControllerBuilder().Build();
 
             var view = sut.New();
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             sut.AssertGetAttribute(ActionNameNew); 
         }
@@ -75,18 +75,18 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void new_should_return_app_model_if_model_is_invalid()
         {
-            // Arrange
+            //arrange
             var appService = new Mock<IAppService>();
             var inValidModel = new AppModel { Name = "test name", Url = "test.com" };
 
-            // Act
+            //act
             
             var sut = new AppControllerBuilder().WithAppService(appService.Object)
                                                   .Build();
 
             var view = sut.New(inValidModel).Result as ViewResult; 
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             Assert.NotNull(view.Model);
             var model = view.Model as AppModel;
