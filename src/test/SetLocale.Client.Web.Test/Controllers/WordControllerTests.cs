@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 using Moq;
 using NUnit.Framework;
-
+using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
@@ -16,6 +16,11 @@ namespace SetLocale.Client.Web.Test.Controllers
     [TestFixture]
     public class WordControllerTests
     {
+        const string ActionNameAll = "All";
+        const string ActionNameNew = "New";
+        const string ActionNameDetail = "Detail";
+        const string ActionNameNotTranslated = "NotTranslated";
+
         [Test]
         public void new_should_return_key_model()
         {
@@ -24,29 +29,29 @@ namespace SetLocale.Client.Web.Test.Controllers
             //act
             var sut = new WordControllerBuilder().Build();
             var view = sut.New();
-             
-           //assert
+
+            //assert
             Assert.NotNull(view);
             var model = view.Model as WordModel;
 
             Assert.NotNull(model);
-            sut.AssertGetAttribute("New"); 
+            sut.AssertGetAttribute(ActionNameNew);
         }
 
         [Test]
         public async void detail_id_is_null_or_empty_should_return_key_model()
         {
             //arrange
-            
+
             //act
             var sut = new WordControllerBuilder().Build();
             var view = await sut.Detail("") as RedirectResult;
 
-           //assert
+            //assert
             Assert.NotNull(view);
             Assert.AreEqual(view.Url, "/");
-            sut.AssertGetAttribute("Detail",new []{ typeof(string)}); 
-              
+            sut.AssertGetAttribute(ActionNameDetail, new[] { typeof(string) });
+
         }
 
         [Test]
@@ -62,57 +67,72 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             var view = await sut.Detail("key") as ViewResult;
 
-           //assert
+            //assert
             Assert.NotNull(view);
             var model = view.Model as WordModel;
             Assert.NotNull(model);
 
-            sut.AssertGetAttribute("Detail", new[] { typeof(string) });
+            sut.AssertGetAttribute(ActionNameDetail, new[] { typeof(string) });
             wordService.Verify(x => x.GetByKey("key"), Times.Once);
         }
-         
-        //[Test]
-        //public async void all_should_return_key_model_list()
-        //{
-        //    //arrange
-        //    var wordService = new Mock<IWordService>(); 
-        //    wordService.Setup(x => x.GetAll()).Returns(() => Task.FromResult(new List<Word>()));
 
-        //    //act
-        //    var sut = new WordControllerBuilder().WithWordService(wordService.Object)
-        //                                         .Build();
-        //    var view = await sut.All();
-        //   //assert
-        //    Assert.NotNull(view);
+        [Test]
+        public void get_words_return_with_paged_list_word()
+        {
+            //arrange
+            const string tag = "set-locale";
 
-        //    var model = view.Model as List<WordModel>;
-        //    Assert.NotNull(model);
-        //    sut.AssertGetAttribute("All");
-        //    wordService.Verify(x => x.GetAll(), Times.Once);
-        //}
+            var wordService = new Mock<IWordService>();
+            var list = new List<Word> { new Word { Id = 1, Key = tag }, new Word { Id = 2, Key = tag } };
+            wordService.Setup(x => x.GetWords(1)).Returns(Task.FromResult(new PagedList<Word>(1, 2, 3, list)));
 
-        //[Test]
-        //public async void notTranslated_should_return_key_model_list()
-        //{
-        //    //arrange
-        //    var wordService = new Mock<IWordService>();  
-        //    wordService.Setup(x => x.GetNotTranslated()).Returns(() => Task.FromResult(new List<Word>()));
-             
-        //    //act
-        //    var sut = new WordControllerBuilder().WithWordService(wordService.Object)
-        //                                        .Build();
+            //act
+            var sut = new WordControllerBuilder().WithWordService(wordService.Object)
+                                                .Build();
+            var view = sut.All(1);
+            var model = view.Result.Model as PageModel<WordModel>;
 
-        //    var view = await sut.NotTranslated();
+            //assert
+            Assert.NotNull(view);
+            Assert.NotNull(model);
+            Assert.IsInstanceOf<BaseController>(sut);
+            Assert.IsAssignableFrom<PageModel<WordModel>>(model);
+            Assert.AreEqual(model.Items.Count, list.Count);
+            CollectionAssert.AllItemsAreUnique(model.Items);
 
-        //   //assert
-        //    Assert.NotNull(view);
+            wordService.Verify(x => x.GetWords(1), Times.Once);
 
-        //    var model = view.Model as List<WordModel>;
-        //    sut.AssertGetAttribute("NotTranslated");
-        //    Assert.NotNull(model);
+            sut.AssertGetAttribute(ActionNameAll, new[] { typeof(int) });
+            sut.AssertAllowAnonymousAttribute(ActionNameAll, new[] { typeof(int) });
+        }
 
-        //    wordService.Verify(x => x.GetNotTranslated(), Times.Once);
-        //}
+        [Test]
+        public async void notTranslated_should_return_key_model_list()
+        {
+            //arrange
+            var wordService = new Mock<IWordService>();
+            var list = new List<Word> { new Word { Id = 1}, new Word { Id = 2} };
+            wordService.Setup(x => x.GetNotTranslated(1)).Returns(Task.FromResult(new PagedList<Word>(1, 2, 3, list)));
+
+            //act
+            var sut = new WordControllerBuilder().WithWordService(wordService.Object)
+                                                .Build();
+
+            var view = await sut.NotTranslated(1);
+            var model = view.Model as PageModel<WordModel>; ;
+
+            //assert
+            Assert.NotNull(view); 
+            Assert.NotNull(model);
+            Assert.IsInstanceOf<BaseController>(sut);
+            Assert.IsAssignableFrom<PageModel<WordModel>>(model);
+            Assert.AreEqual(model.Items.Count, list.Count);
+            CollectionAssert.AllItemsAreUnique(model.Items);
+
+            wordService.Verify(x => x.GetNotTranslated(1), Times.Once);
+
+            sut.AssertGetAttribute(ActionNameNotTranslated, new []{ typeof(int)});
+        }
 
         [Test]
         public async void translate_should_return_with_response_model()
