@@ -12,7 +12,7 @@ namespace SetLocale.Client.Web.Services
 {
     public interface IAppService
     {
-        Task<int> Create(AppModel model);
+        Task<int?> Create(AppModel model);
         Task<PagedList<App>> GetApps(int pageNumber); 
         Task<PagedList<App>> GetByUserId(int userId, int pageNumber);
         Task<App> Get(int appId);
@@ -34,7 +34,7 @@ namespace SetLocale.Client.Web.Services
             _appRepository = appRepository;
         }
 
-        public Task<int> Create(AppModel model)
+        public async Task<int?> Create(AppModel model)
         {
             if (!model.IsValidForNew())
             {
@@ -56,14 +56,36 @@ namespace SetLocale.Client.Web.Services
             };
 
             _appRepository.Create(app);
-            _appRepository.SaveChanges();
+            if (!_appRepository.SaveChanges()) return null;
 
-            if (app.Id < 1)
+            return await Task.FromResult(app.Id);
+        }
+
+        public Task<bool> CreateToken(TokenModel model)
+        {
+            if (!model.IsValid())
             {
-                return null;
+                return Task.FromResult(false);
             }
 
-            return Task.FromResult(app.Id);
+            if (!_appRepository.Any(x => x.Id == model.AppId))
+            {
+                return Task.FromResult(false);
+            }
+
+            var entity = new Token
+            {
+                CreatedBy = model.CreatedBy,
+                AppId = model.AppId,
+                Key = model.Token,
+                UsageCount = 0
+            };
+            _tokenRepository.Create(entity);
+            _tokenRepository.SaveChanges();
+
+            if (!_tokenRepository.SaveChanges()) Task.FromResult(true);
+
+            return Task.FromResult(true);
         }
 
         public Task<PagedList<App>> GetApps(int pageNumber)
@@ -125,37 +147,7 @@ namespace SetLocale.Client.Web.Services
             var app = _appRepository.FindOne(x => x.Id == appId, x => x.Tokens);
             return Task.FromResult(app);
         }
-
-        public Task<bool> CreateToken(TokenModel model)
-        {
-            if (!model.IsValid())
-            {
-                return Task.FromResult(false);
-            }
-
-            if (!_appRepository.Set<App>().Any(x => x.Id == model.AppId))
-            {
-                return Task.FromResult(false);
-            }
-
-            var entity = new Token
-            {
-                CreatedBy = model.CreatedBy,
-                AppId = model.AppId,
-                Key = model.Token,
-                UsageCount = 0
-            };
-            _tokenRepository.Create(entity);
-            _tokenRepository.SaveChanges();
-
-            if (entity.Id < 0)
-            {
-                return Task.FromResult(false);
-            }
-
-            return Task.FromResult(true);
-        }
-
+         
         public Task<bool> ChangeStatus(int appId, bool isActive)
         {
             if (appId < 1)
@@ -183,7 +175,7 @@ namespace SetLocale.Client.Web.Services
                 return Task.FromResult(false);
             }
 
-            if (!_tokenRepository.Set<Token>().Any(x => x.Key == token))
+            if (!_tokenRepository.Any(x => x.Key == token))
             {
                 return Task.FromResult(false);
             }

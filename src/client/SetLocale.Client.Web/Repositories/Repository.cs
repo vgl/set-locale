@@ -48,7 +48,7 @@ namespace SetLocale.Client.Web.Repositories
             entity.DeletedBy = deletedBy;
             entity.IsDeleted = true;
         }
-
+        
         public void SoftDelete(Expression<Func<TEntity, bool>> where, int deletedBy)
         {
             var objects = Context.Set<TEntity>().Where(where).AsEnumerable();
@@ -63,6 +63,11 @@ namespace SetLocale.Client.Web.Repositories
         public IQueryable<T> Set<T>() where T : class
         {
             return Context.Set<T>();
+        }
+
+        public bool Any(Expression<Func<TEntity, bool>> @where = null, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return FindAll(@where, includeProperties).Any();
         }
 
         public virtual TEntity FindOne(Expression<Func<TEntity, bool>> where = null, params Expression<Func<TEntity, object>>[] includeProperties)
@@ -87,6 +92,11 @@ namespace SetLocale.Client.Web.Repositories
         public virtual bool SaveChanges()
         {
             return 0 < Context.SaveChanges();
+        }
+
+        public int Count(Expression<Func<TEntity, bool>> where = null, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            return FindAll(where, includeProperties).Count();
         }
 
         public void Dispose()

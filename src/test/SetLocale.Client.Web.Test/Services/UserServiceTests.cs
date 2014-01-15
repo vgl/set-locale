@@ -29,10 +29,10 @@ namespace SetLocale.Client.Web.Test.Services
             var userId = userService.Create(userModel);
 
             // Assert
-            userRepository.Verify(x => x.Create(It.IsAny<User>()), Times.Once);
-            userRepository.Verify(x => x.SaveChanges(), Times.AtLeastOnce);
-
             Assert.NotNull(userId);
+
+            userRepository.Verify(x => x.Create(It.IsAny<User>()), Times.Once);
+            userRepository.Verify(x => x.SaveChanges(), Times.AtLeastOnce); 
         }
 
         [Test]
@@ -51,6 +51,7 @@ namespace SetLocale.Client.Web.Test.Services
             // Assert
             Assert.NotNull(user);
             Assert.AreEqual(user.Email, email);
+
             userRepository.Verify(x => x.FindOne(It.IsAny<Expression<Func<User, bool>>>()), Times.Once);
         }
 
@@ -66,10 +67,10 @@ namespace SetLocale.Client.Web.Test.Services
             var userId = userService.Create(userModel);
 
             // Assert
+            Assert.NotNull(userId);
+            
             userRepository.Verify(x => x.Create(It.IsAny<User>()), Times.Once);
             userRepository.Verify(x => x.SaveChanges(), Times.AtLeastOnce);
-
-            Assert.NotNull(userId);
         }
     }
 }

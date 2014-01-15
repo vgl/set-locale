@@ -58,7 +58,7 @@ namespace SetLocale.Client.Web.Controllers
             model.Email = User.Identity.GetUserEmail();
 
             var appId = await _appService.Create(model);
-            if (appId == 0)
+            if (appId == null)
             {
                 model.Msg = "bir sorun oluştu...";
                 return View(model);

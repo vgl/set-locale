@@ -37,7 +37,7 @@ namespace SetLocale.Client.Web.Services
             }
 
             var slug = model.Key.ToUrlSlug();
-            if (_wordRepository.Set<Word>().Any(x => x.Key == slug))
+            if (_wordRepository.Any(x => x.Key == slug))
             {
                 return null;
             }
@@ -178,9 +178,8 @@ namespace SetLocale.Client.Web.Services
             word.IsTranslated = true;
 
             _wordRepository.Update(word);
-            _wordRepository.SaveChanges();
 
-            return Task.FromResult(true);
+            return Task.FromResult(_wordRepository.SaveChanges());
         }
 
         public Task<bool> Tag(string key, string tagName)
@@ -207,9 +206,8 @@ namespace SetLocale.Client.Web.Services
             word.Tags = new List<Tag> { tag };
 
             _wordRepository.Update(word);
-            _wordRepository.SaveChanges();
 
-            return Task.FromResult(true);
+            return Task.FromResult(_wordRepository.SaveChanges());
         } 
     }
 }

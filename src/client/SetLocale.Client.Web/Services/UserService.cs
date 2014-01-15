@@ -148,10 +148,9 @@ namespace SetLocale.Client.Web.Services
             }
 
             user.IsActive = !isActive;
-            _userRepo.Update(user);
-            _userRepo.SaveChanges();
+            _userRepo.Update(user); 
 
-            return Task.FromResult(true);
+            return Task.FromResult(_userRepo.SaveChanges());
         }
     }
 }

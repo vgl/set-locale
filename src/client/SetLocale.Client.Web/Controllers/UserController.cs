@@ -44,6 +44,11 @@ namespace SetLocale.Client.Web.Controllers
 
             var apps = await _appService.GetByUserId(id, pageNumber);
 
+            if (apps == null)
+            {
+                return RedirectToHome();
+            }
+
             var list = apps.Items.Select(AppModel.MapFromEntity).ToList();
 
             var model = new PageModel<AppModel>
