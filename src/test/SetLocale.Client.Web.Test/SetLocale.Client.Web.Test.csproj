@@ -92,6 +92,7 @@
     <Compile Include="Builders\ReportServiceBuilder.cs" />
     <Compile Include="Builders\SearchServiceBuilder.cs" />
     <Compile Include="Builders\TagControllerBuilder.cs" />
+    <Compile Include="Builders\TagServiceBuilder.cs" />
     <Compile Include="Builders\UserControllerBuilder.cs" />
     <Compile Include="Builders\WordControllerBuilder.cs" />
     <Compile Include="Controllers\AdminControllerTests.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Services\AppServiceTests.cs" />
     <Compile Include="Services\ReportServiceTests.cs" />
     <Compile Include="Services\SearchServiceTests.cs" />
+    <Compile Include="Services\TagServiceTests.cs" />
     <Compile Include="Services\UserServiceTests.cs" />
     <Compile Include="TestHelpers\ControllerTestHelper.cs" />
   </ItemGroup>
