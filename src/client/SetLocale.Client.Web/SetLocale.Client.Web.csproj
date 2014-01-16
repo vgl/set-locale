@@ -161,7 +161,6 @@
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Admin\Apps.cshtml" />
     <Content Include="Views\User\Apps.cshtml" />
-    <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Word\All.cshtml" />
     <Content Include="Views\Word\NotTranslated.cshtml" />
     <Content Include="Views\Word\Detail.cshtml" />
@@ -202,6 +201,7 @@
     <Compile Include="Entities\App.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\PagedList.cs" />
+    <Compile Include="Entities\RequestLog.cs" />
     <Compile Include="Entities\Tag.cs" />
     <Compile Include="Entities\Token.cs" />
     <Compile Include="Entities\Word.cs" />
@@ -218,6 +218,7 @@
     <Compile Include="Models\AppModel.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\HomeStatsModel.cs" />
+    <Compile Include="Models\LocaleModel.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Models\WordItemModel.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Repositories\SetLocaleDbMigrationConfiguration.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\FormsAuthenticationService.cs" />
+    <Compile Include="Services\RequestLogService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\TagService.cs" />

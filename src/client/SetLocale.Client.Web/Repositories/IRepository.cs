@@ -22,6 +22,10 @@ namespace SetLocale.Client.Web.Repositories
         IQueryable<TEntity> FindAll(Expression<Func<TEntity, bool>> where = null, params Expression<Func<TEntity, object>>[] includeProperties);
         IQueryable<T> Set<T>() where T : class;
 
+        bool Any(Expression<Func<TEntity, bool>> where = null, params Expression<Func<TEntity, object>>[] includeProperties);
+         
         bool SaveChanges();
+
+        int Count(Expression<Func<TEntity, bool>> where = null, params Expression<Func<TEntity, object>>[] includeProperties);
     }
 }

@@ -1,8 +1,7 @@
-﻿@using SetLocale.Client.Web.Helpers
-@model SetLocale.Client.Web.Models.UserModel
+﻿@model UserModel
 
 @{
-    ViewBag.Title = Html.LocalizationString("menu_settings_new_translator");
+    ViewBag.Title = Html.LocalizationString("new_translator_title");
 }
 
 <div class="row col-lg-5">
@@ -10,21 +9,20 @@
     <hr />
 
     <form id="frm" name="frm" action="/admin/newtranslator" method="post">
-        
         <div class="row">
-            <strong>@Html.LocalizationString("menu_settings_new_translator_name")</strong>
+            <strong>@Html.LocalizationString("translator_name")</strong>
             <input type="text" class="form-control input-lg" name="name" id="name" value="@Model.Name" />
         </div>
 
         <div class="row">
-            <strong>@Html.LocalizationString("menu_settings_new_translator_email")</strong>
+            <strong>@Html.LocalizationString("email")</strong>
             <input type="text" class="form-control input-lg" name="email" id="email" value="@Model.Email" />
         </div>
 
         @Html.AntiForgeryToken()
 
         <div class="row">
-            <input type="submit" value="@Html.LocalizationString("btn_menu_settings_new_translator_save")" class="btn btn-primary btn-lg" />
+            <input type="submit" value="@Html.LocalizationString("btn_save")" class="btn btn-primary btn-lg" />
         </div>
 
         <div class="error">
@@ -33,10 +31,9 @@
     </form>
 </div>
 
-
 @section script
 {
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js" type="text/javascript"></script>
     <script>
         $(function () {
             $("form#frm").validate({

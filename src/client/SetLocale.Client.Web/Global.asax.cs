@@ -24,7 +24,7 @@ namespace SetLocale.Client.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             GlobalConfiguration.Configuration.EnsureInitialized();
-            
+
             PrepareIocContainer();
 
             PrepareLocalizationStrings();
@@ -33,9 +33,9 @@ namespace SetLocale.Client.Web
         private void PrepareLocalizationStrings()
         {
             var enTexts = new Dictionary<string, string>();
+            var trTexts = new Dictionary<string, string>();
+
             #region EN
-            enTexts.Add("app_name", "Set Locale");
-            
 
             #region Menu
 
@@ -60,187 +60,69 @@ namespace SetLocale.Client.Web
             enTexts.Add("menu_user_reset", "Reset Password");
 
             enTexts.Add("menu_search", "Search");
-            #region USER
 
-            #region USER_Login
+            #endregion
 
-            enTexts.Add("login_view_title", "Login to System");
-            enTexts.Add("btn_login", "Login");
+            enTexts.Add("name", "Name");
             enTexts.Add("email", "Email");
+            enTexts.Add("app_owner_email", "Owner Email");
             enTexts.Add("password", "Password");
-
-            #endregion
-
-            #region USER_Sign_Up
-            enTexts.Add("sign_up_new_user", "New User");
-            enTexts.Add("btn_sign_up", "Sign Up");
-            enTexts.Add("sign_up_email", "Email");
-            enTexts.Add("sign_up_password", "Password");
-            enTexts.Add("sign_up_name", "Name");
-
-
-
-            #endregion
-
-            #region USER_Reset_Password
-            enTexts.Add("user_password_reset_title", "Reset Password");
-            enTexts.Add("user_password_reset_email", "Email");
-            enTexts.Add("btn_user_password_reset", "Send Reset Password Link");
-
-
-            #endregion
-
-            #region USER_APPS
-            enTexts.Add("user_apps", "My Applications");
-            enTexts.Add("user_apps_name", "Application Name");
-            enTexts.Add("user_apps_description", "Description");
-            enTexts.Add("user_apps_usage_count", "Usage Count");
-            enTexts.Add("user_apps_url", "Url");
-            enTexts.Add("user_apps_deactivate", "Deactivate");
-            enTexts.Add("user_apps_activate", "Activate");
-            #endregion
-
-            #endregion
-
-            #region Admin
-
-            #region Admin_Apps
-
-            enTexts.Add("menu_settings_apps_email", "Email");
-            enTexts.Add("menu_settings_apps_app_name", "Application Name");
-            enTexts.Add("menu_settings_apps_description", "Description");
-            enTexts.Add("menu_settings_apps_url", "Url");
-            enTexts.Add("menu_settings_apps_usage_count", "Usage Count");
-            enTexts.Add("menu_settings_apps_deactivate", "Deactivate");
-            enTexts.Add("menu_settings_apps_activate", "Activate");
-
-            #endregion
-
-            #region Admin_New_Translator
-            enTexts.Add("menu_settings_new_translator_name", "Name");
-            enTexts.Add("menu_settings_new_translator_email", "Email");
-            enTexts.Add("btn_menu_settings_new_translator_save", "Save");
-            enTexts.Add("btn_menu_settings_new_translator_edit", "Edit");
-
-            #endregion
-
-            #region Admin_Users
-            enTexts.Add("menu_settings_users_name", "Name");
-            enTexts.Add("menu_settings_users_email", "Email");
-            enTexts.Add("menu_settings_users_role", "RoleName");
-            enTexts.Add("menu_settings_users_deactivate", "Deactivate");
-            enTexts.Add("menu_settings_users_activate", "Activate");
-
-            #endregion
-
-            #endregion
-
-            #region APPS
-
-            #region APPS_Apps
-
-            enTexts.Add("btn_menu_apps_apps_create_new_token", "Create New Token");
-            enTexts.Add("menu_apps_apps_token", "Token");
-            enTexts.Add("menu_apps_apps_creation_date", "Creation Date");
-            enTexts.Add("menu_apps_apps_usage_count", "Usage Count");
-            enTexts.Add("menu_apps_apps_delete", "Delete");
-
-            #endregion
-
-            #region APPS_New_Apps
-
-            enTexts.Add("btn_menu_apps_new_app_save", "Save");
-            enTexts.Add("menu_apps_new_app_app_name", "Application Name");
-            enTexts.Add("menu_apps_new_app_url", "Url");
-            enTexts.Add("menu_apps_new_app_description", "Description");
-
-            #endregion
-            #endregion
-
-            #region WORDS
-             
-
-            #region WORDS_Words
-
-            enTexts.Add("menu_words_words_key_listing", "Key Listing");
-            enTexts.Add("menu_words_words_key", "Key");
-            enTexts.Add("menu_words_words_description", "Description");
-            enTexts.Add("menu_words_words_tag", "Tag");
-            enTexts.Add("menu_words_words_translated_lang", "TranslatedLang");
-            enTexts.Add("btn_menu_words_words_edit", "Edit");
-            enTexts.Add("btn_words_new_word", "Add New Translate");
-            #endregion
-
-            #region WORDS_My_Word
-
-            enTexts.Add("menu_words_my_words_key_listing", "Key Listing");
-            enTexts.Add("menu_words_my_words_key", "Key");
-            enTexts.Add("menu_words_my_words_description", "Description");
-            enTexts.Add("menu_words_my_words_tag", "Tag");
-            enTexts.Add("menu_words_my_words_translated_lang", "TranslatedLang");
-            enTexts.Add("btn_menu_words_my_words_edit", "Edit");
-
-
-            #endregion
-
-            #region WORDS_Not_Translated
-            enTexts.Add("menu_words_not_translated_key_listing", "Key Listing");
-            enTexts.Add("menu_words_not_translated_key", "Key");
-            enTexts.Add("menu_words_not_translated_description", "Description");
-            enTexts.Add("menu_words_not_translated_tag", "Tag");
-            enTexts.Add("menu_words_not_translated_translated_lang", "TranslatedLang");
-            enTexts.Add("btn_menu_words_not_translated_edit", "Edit");
-
-            #endregion
-
-            #region WORDS_New_Word
-            enTexts.Add("menu_words_new_word_new_key", "New Key");
-            enTexts.Add("menu_words_new_word_key", "Key");
-            enTexts.Add("menu_words_new_word_description", "Description");
-            enTexts.Add("menu_words_new_word_tag", "Tag");
-            enTexts.Add("btn_menu_words_new_word_save", "Save");
-
-            #endregion
-
-            #endregion
-
-            #region TAGS
-
-            enTexts.Add("menu_words_words_tag_key_listing", "Tag Key Listing");
-
-            #endregion
-
-            #region RESETPASSWORD
-
+            enTexts.Add("app_name", "Application Name");
+            enTexts.Add("description", "Description");
+            enTexts.Add("usage_count", "Usage Count");
+            enTexts.Add("url", "Url");
+            enTexts.Add("token", "Token");
+            enTexts.Add("creation_date", "Creation Date");
+            enTexts.Add("user_role", "User Role");
+            enTexts.Add("word_key", "Key");
+            enTexts.Add("tag", "Tag");
+            enTexts.Add("translated_language", "Translated Language");
             enTexts.Add("forgot_your_password", "Forgot your password?");
+            enTexts.Add("total_page_count", "Total Page Count");
+            enTexts.Add("translator_name", "Translator Name");
 
-            #endregion
-             
-            #endregion
+            enTexts.Add("btn_login", "Login");
+            enTexts.Add("btn_sign_up", "Sign Up");
+            enTexts.Add("btn_password_reset", "Send Reset Password Link");
+            enTexts.Add("btn_create_new_token", "Create New Token");
+            enTexts.Add("btn_new_word", "Add New Translation");
+            enTexts.Add("btn_deactivate", "Deactivate");
+            enTexts.Add("btn_activate", "Activate");
+            enTexts.Add("btn_delete", "Delete");
+            enTexts.Add("btn_save", "Save");
+            enTexts.Add("btn_edit", "Edit");
+            enTexts.Add("btn_cancel", "Cancel");
+            enTexts.Add("btn_ok", "Ok");
 
+            enTexts.Add("home_summary", "SetLocale's <strong>{2}</strong> translator provided <strong>{4}</strong> translation for <strong><a href='/word/all' style='text-decoration:underline;color:red;'>{3}</a></strong> keys and <strong>{0}</strong> developer is consuming this service with <strong>{1}</strong> application");
 
-            #region Shared
-            enTexts.Add("Cancel", "Cancel");
-            enTexts.Add("Ok", "Ok");
-            enTexts.Add("delete", "Delete");
-            enTexts.Add("modal_body", "Are you sure  want to delete ?");
-            enTexts.Add("modal_title_delete_token", "Token Delete");
-            enTexts.Add("modal_body_users", "Are you sure  want to change the status ?");
-            enTexts.Add("modal_title_users", "User Status");
+            enTexts.Add("home_title", "Localization as a service");
+            enTexts.Add("words_key_listing_title", "Key Listing");
+            enTexts.Add("login_view_title", "Login to System");
+            enTexts.Add("new_user_title", "New User");
+            enTexts.Add("password_reset_title", "Reset Password");
+            enTexts.Add("user_apps_title", "My Applications");
+            enTexts.Add("all_apps_title", "All Applications");
+            enTexts.Add("all_users_title", "All Users");
+            enTexts.Add("word_new_key_title", "New Key");
+            enTexts.Add("words_my_key_listing_title", "My Keys Listing");
+            enTexts.Add("words_not_translated_key_listing_title", "Not Translated Keys Listing");
+            enTexts.Add("new_app_title", "New Application");
+            enTexts.Add("new_translator_title", "New Translator");
+            enTexts.Add("tag_keys_title", "Keys Listing Tagged With ");
+
             enTexts.Add("modal_title_apps", "App Status");
-            enTexts.Add("updating_key_view_title", "Updating Key");
-            enTexts.Add("save_and_close", "Save & Close");
-            enTexts.Add("home_summary", "set-locale's <strong>{2}</strong> translator provides <strong>{4}</strong> translation for <strong>{3}</strong> keys and <strong>{0}</strong> developer is consuming this service with  <strong>{1}</strong> application");
-            enTexts.Add("home_title", "welcome to set-locale");
-            #endregion
+            enTexts.Add("modal_body_apps", "Are you sure want to change the user's status?");
+            enTexts.Add("modal_title_delete_token", "Token Delete");
+            enTexts.Add("modal_body_delete_token", "Are you sure want to delete the token?");
+            enTexts.Add("modal_title_users", "User Status");
+            enTexts.Add("modal_body_users", "Are you sure want to change the application's status?");
 
             #endregion
 
-            var trTexts = new Dictionary<string, string>();
             #region TR
-            trTexts.Add("app_name", "Set Locale");
 
-            #region Menü
+            #region Menu
 
             trTexts.Add("menu_words", "Kelimeler");
             trTexts.Add("menu_words_words", "Tüm Kelimeler");
@@ -264,180 +146,63 @@ namespace SetLocale.Client.Web
 
             trTexts.Add("menu_search", "Ara");
 
-            #region KULLANICILAR
+            #endregion
 
-            #region KULLANICILAR_Giriş
+            trTexts.Add("name", "İsim");
+            trTexts.Add("email", "E-posta");
+            trTexts.Add("app_owner_email", "Uygulama Sahibinin E-postası");
+            trTexts.Add("password", "Şifre");
+            trTexts.Add("app_name", "Uygulama İsmi");
+            trTexts.Add("description", "Açıklama");
+            trTexts.Add("usage_count", "Kullanım Sayısı");
+            trTexts.Add("url", "Url");
+            trTexts.Add("token", "Token");
+            trTexts.Add("creation_date", "Oluşturma Tarihi");
+            trTexts.Add("user_role", "Yetki Grubu");
+            trTexts.Add("word_key", "Anahtar");
+            trTexts.Add("tag", "Etiket");
+            trTexts.Add("translated_language", "Çevrilmiş Dil");
+            trTexts.Add("forgot_your_password", "Şifremi Unuttum");
+            trTexts.Add("total_page_count", "Toplam Sayfa Sayısı");
+            trTexts.Add("translator_name", "İsmi");
 
-            trTexts.Add("login_view_title", "Sisteme Giriş");
             trTexts.Add("btn_login", "Giriş");
-            trTexts.Add("email", "Eposta Adresiniz");
-            trTexts.Add("password", "Şifreniz");
-
-            #endregion
-
-            #region KULLANICILAR_Kayıt_Ol
-            trTexts.Add("sign_up_new_user", "Kayıt Ol");
             trTexts.Add("btn_sign_up", "Kayıt Ol");
-            trTexts.Add("sign_up_email", "E-Posta");
-            trTexts.Add("sign_up_password", "Şifreniz");
-            trTexts.Add("sign_up_name", "İsminiz");
+            trTexts.Add("btn_password_reset", "Şifre Sıfırlama Linki Gönder");
+            trTexts.Add("btn_create_new_token", "Yeni Token Oluştur");
+            trTexts.Add("btn_new_word", "Yeni Çeviri Ekle");
+            trTexts.Add("btn_deactivate", "Pasif");
+            trTexts.Add("btn_activate", "Aktif");
+            trTexts.Add("btn_delete", "Sil");
+            trTexts.Add("btn_save", "Kaydet");
+            trTexts.Add("btn_edit", "Düzenle");
+            trTexts.Add("btn_cancel", "İptal");
+            trTexts.Add("btn_ok", "Tamam");
 
-            #endregion
+            trTexts.Add("home_summary", "SetLocale uygulamasında <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong>{3}</strong> farklı kelime için <strong>{4}</strong> adet çeviri eklenmiştir.");
 
-            #region KULLANICILAR_Şifre_Sıfırla
-            trTexts.Add("user_password_reset_title", "Şifre Sıfırla");
-            trTexts.Add("user_password_reset_email", "E-Posta");
-            trTexts.Add("btn_user_password_reset", "Şifre Sıfırlama Linki Gönder");
+            trTexts.Add("home_title", "Set-locale Servisine Hoş Geldiniz");
+            trTexts.Add("words_key_listing_title", "Anahtar Listesi");
+            trTexts.Add("login_view_title", "Sisteme Giriş");
+            trTexts.Add("new_user_title", "Yeni Kullanıcı");
+            trTexts.Add("password_reset_title", "Şifre Sıfırla");
+            trTexts.Add("user_apps_title", "Uygulamalarım");
+            trTexts.Add("all_apps_title", "Tüm Uygulamalar");
+            trTexts.Add("all_users_title", "Tüm Kullanıcılar");
+            trTexts.Add("word_new_key_title", "Yeni Anahtar");
+            trTexts.Add("words_my_key_listing_title", "Anahatar Listesi");
+            trTexts.Add("words_not_translated_key_listing_title", "Anahtar Listesi");
+            trTexts.Add("new_app_title", "Yeni Uygulama");
+            trTexts.Add("new_translator_title", "Yeni Çevirmen");
+            trTexts.Add("tag_keys_title", "Tag Anahtar Listesi ");
 
-
-            #endregion
-
-            #region KULLANICILAR_Uygulama
-            trTexts.Add("user_apps", "Uygulamalarım");
-            trTexts.Add("user_apps_name", "Uygulama İsmi");
-            trTexts.Add("user_apps_description", "Açıklama");
-            trTexts.Add("user_apps_usage_count", "Kullanım Sayısı");
-            trTexts.Add("user_apps_url", "Url");
-            trTexts.Add("user_apps_deactivate", "Pasif");
-            trTexts.Add("user_apps_activate", "Aktif");
-            #endregion
-
-            #endregion
-
-            #region AYARLAR
-
-            #region AYARLAR_Uygulamalar
-            trTexts.Add("menu_settings_apps_email", "E-Posta");
-            trTexts.Add("menu_settings_apps_app_name", "Uygulama İsmi");
-            trTexts.Add("menu_settings_apps_description", "Açıklama");
-            trTexts.Add("menu_settings_apps_url", "Url");
-            trTexts.Add("menu_settings_apps_usage_count", "Kullanım Sayısı");
-            trTexts.Add("menu_settings_apps_deactivate", "Pasif");
-            trTexts.Add("menu_settings_apps_activate", "Aktif");
-            #endregion
-
-            #region AYARLAR_Yeni_Çevirmen
-            trTexts.Add("menu_settings_new_translator_name", "İsmi");
-            trTexts.Add("menu_settings_new_translator_email", "E-Posta");
-            trTexts.Add("btn_menu_settings_new_translator_save", "Kaydet");
-            trTexts.Add("btn_menu_settings_new_translator_edit", "Düzenle");
-
-            #endregion
-
-            #region AYARLAR_Kullanıcı
-            trTexts.Add("menu_settings_users_name", "İsim");
-            trTexts.Add("menu_settings_users_email", "E-Posta");
-            trTexts.Add("menu_settings_users_role", "Yetki Grubu");
-            trTexts.Add("menu_settings_users_deactivate", "Pasif");
-            trTexts.Add("menu_settings_users_activate", "Aktif");
-
-            #endregion
-
-
-            #endregion
-
-            #region UYGULAMALAR
-
-            #region UYGULAMALAR_Uygulamalar
-
-            trTexts.Add("btn_menu_apps_apps_create_new_token", "Yeni Token Oluştur");
-            trTexts.Add("menu_apps_apps_token", "Token");
-            trTexts.Add("menu_apps_apps_creation_date", "Oluşturma Tarihi");
-            trTexts.Add("menu_apps_apps_usage_count", "Kullanım Sayısı");
-            trTexts.Add("menu_apps_apps_delete", "Sil");
-
-            #endregion
-
-            #region UYGULAMALAR_Yeni_Uygulama
-
-            trTexts.Add("btn_menu_apps_new_app_save", "Kaydet");
-            trTexts.Add("menu_apps_new_app_app_name", "Uygulama İsmi");
-            trTexts.Add("menu_apps_new_app_url", "Url");
-            trTexts.Add("menu_apps_new_app_description", "Açıklama");
-
-            #endregion
-
-            #endregion
-
-            #region KELİMELER
-
-            #region KELİMELER_Kelimeler
-
-            trTexts.Add("menu_words_words_key_listing", "Anahtar Listesi");
-            trTexts.Add("menu_words_words_key", "Anahtar");
-            trTexts.Add("menu_words_words_description", "Açıklama");
-            trTexts.Add("menu_words_words_tag", "Etiket");
-            trTexts.Add("menu_words_words_translated_lang", "Çevrilmiş Dil");
-            trTexts.Add("btn_menu_words_words_edit", "Düzenle");
-            trTexts.Add("btn_words_new_word", "Yeni Çeviri Ekle");
-            
-
-            #endregion
-
-            #region KELİMELER_Kelimelerim
-
-            trTexts.Add("menu_words_my_words_key_listing", "Anahtar Listesi");
-            trTexts.Add("menu_words_my_words_key", "Anahtar");
-            trTexts.Add("menu_words_my_words_description", "Açıklama");
-            trTexts.Add("menu_words_my_words_tag", "Etiket");
-            trTexts.Add("menu_words_my_words_translated_lang", "Çevrilmiş Dil");
-            trTexts.Add("btn_menu_words_my_words_edit", "Düzenle");
-
-
-            #endregion
-
-            #region KELİMELER_Çevrilmeyen_Kelimeler
-
-            trTexts.Add("menu_words_not_translated_key_listing", "Anahtar Listesi");
-            trTexts.Add("menu_words_not_translated_key", "Anahtar");
-            trTexts.Add("menu_words_not_translated_description", "Açıklama");
-            trTexts.Add("menu_words_not_translated_tag", "Etiket");
-            trTexts.Add("menu_words_not_translated_translated_lang", "Çevrilmiş Dil");
-            trTexts.Add("btn_menu_words_not_translated_edit", "Düzenle");
-
-            #endregion
-
-            #region KELİMELER_Yeni_Kelime
-            trTexts.Add("menu_words_new_word_new_key", "Yeni Anahtar");
-            trTexts.Add("menu_words_new_word_key", "Anahtar");
-            trTexts.Add("menu_words_new_word_description", "Açıklama");
-            trTexts.Add("menu_words_new_word_tag", "Etiket");
-            trTexts.Add("btn_menu_words_new_word_save", "Kaydet");
-
-            #endregion
-
-            #endregion
-
-            #region TAGLAR
-
-            trTexts.Add("menu_words_words_tag_key_listing", "Tag Kelime Listesi");
-
-            #endregion
-
-            #region ŞİFRERESETLE
-
-            trTexts.Add("forgot_your_password", "Şifremi unuttum");
-
-            #endregion
-
-            #endregion
-
-
-            #region Paylaşılan
-            trTexts.Add("Cancel", "Hayır");
-            trTexts.Add("Ok", "Evet");
-            trTexts.Add("delete", "Sil");
-            trTexts.Add("modal_body", "Silmek İstediğinize Eminmisiniz ?");
-            trTexts.Add("modal_title_delete_token", "Token Sil");
-            trTexts.Add("modal_body_users", "Durumu Değiştirmek İstediğinize Eminmisiniz ?");
-            trTexts.Add("modal_title_users", "Kullanıcı Durumu");
             trTexts.Add("modal_title_apps", "Uygulama Durumu");
-            trTexts.Add("updating_key_view_title", "Kelime Çevirisi Güncelleme Ekranı");
-            trTexts.Add("save_and_close", "Kaydet & Kapat");
+            trTexts.Add("modal_body_apps", "Silmek İstediğinize Emin misiniz?");
+            trTexts.Add("modal_title_delete_token", "Token Sil");
+            trTexts.Add("modal_body_delete_token", "Bu Anahtarı Silmek İstediğinize Emin misiniz?");
+            trTexts.Add("modal_title_users", "Kullanıcı Durumu");
+            trTexts.Add("modal_body_users", "Durumu Değiştirmek İstediğinize Emin misiniz?");
 
-            trTexts.Add("home_summary", "set-locale <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong>{3}</strong> farklı kelime için <strong>{4}</strong> adet çeviri sunmaktadır");
-            trTexts.Add("home_title","set-locale servisine hoş geldiniz");
-            #endregion
             #endregion
 
             Application.Add(ConstHelper.en_txt, enTexts);

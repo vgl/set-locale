@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Web.Security;
 using Moq;
-using MvcContrib.TestHelper;
 using NUnit.Framework;
-using Rhino.Mocks.Constraints;
 using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
-using SetLocale.Client.Web.Repositories;
 using SetLocale.Client.Web.Services;
 using SetLocale.Client.Web.Test.TestHelpers;
 using SetLocale.Client.Web.Test.Builders;
@@ -22,68 +16,80 @@ namespace SetLocale.Client.Web.Test.Controllers
     [TestFixture]
     public class UserControllerTest
     {
+        const string ActionNameWords = "Words";
+        const string ActionNameApps = "Apps";
+
         [Test]
         public async void apps_should_return_with_app_model()
         {
-            // Arrange
+            //arrange
+            var list = new List<App> { new App { Id = 1, Tokens = new List<Token>() }, new App { Id = 2, Tokens = new List<Token>() } };
             var appService = new Mock<IAppService>();
-            appService.Setup(x => x.GetByUserId(1)).Returns(() => Task.FromResult(new List<App>()));
+            appService.Setup(x => x.GetByUserId(1, 1))
+                      .Returns(Task.FromResult(new PagedList<App>(1, 2, 3, list))); 
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().WithAppService(appService.Object)
                                                  .Build();
-            var view = await sut.Apps(1) as ViewResult;
+            var view = await sut.Apps(1, 1) as ViewResult;
+            var model = view.Model as PageModel<AppModel>;
 
-            // Assert
+            //assert
             Assert.NotNull(view);
-
-            var model = view.Model;
             Assert.NotNull(model);
-            Assert.IsAssignableFrom<List<AppModel>>(model);
-            sut.AssertGetAttribute("Apps", new[] { typeof(int) });
+            Assert.IsInstanceOf<BaseController>(sut);
+            Assert.IsAssignableFrom<PageModel<AppModel>>(view.Model);
+            Assert.AreEqual(model.Items.Count, list.Count);
+            CollectionAssert.AllItemsAreUnique(model.Items);
 
-            appService.Verify(x => x.GetByUserId(1), Times.Once);
+            appService.Verify(x => x.GetByUserId(1, 1), Times.Once);
 
+            sut.AssertGetAttribute(ActionNameApps, new[] { typeof(int), typeof(int) }); 
         }
 
         [Test]
         public async void words_should_return_with_word_model()
         {
-            // Arrange
+            //arrange
+            var list = new List<Word> { new Word { Id = 1 }, new Word { Id = 2 } };
             var wordService = new Mock<IWordService>();
-            wordService.Setup(x => x.GetByUserId(1)).Returns(() => Task.FromResult(new List<Word>()));
+            wordService.Setup(x => x.GetByUserId(1, 1))
+                       .Returns(Task.FromResult(new PagedList<Word>(1, 2, 3, list)));
 
-            // Act
-           
+            //act 
             var sut = new UserControllerBuilder().WithWordService(wordService.Object)
                                                  .Build();
 
-            var view = await sut.Words(1) as ViewResult;
+            var view = await sut.Words(1, 1);
+            var model = view.Model as PageModel<WordModel>;
 
-            // Assert
+            //assert
             Assert.NotNull(view);
-
-            var model = view.Model;
             Assert.NotNull(model);
-            sut.AssertGetAttribute("Words", new[] { typeof(int) });
+            Assert.IsInstanceOf<BaseController>(sut);
+            Assert.IsAssignableFrom<PageModel<WordModel>>(view.Model);
+            Assert.AreEqual(model.Items.Count, list.Count);
+            CollectionAssert.AllItemsAreUnique(model.Items);
 
-            wordService.Verify(x => x.GetByUserId(1), Times.Once);
+            wordService.Verify(x => x.GetByUserId(1, 1), Times.Once);
+
+            sut.AssertGetAttribute(ActionNameWords, new[] { typeof(int), typeof(int) });
         }
 
         [Test]
         public async void change_status_should_return_with_response_model()
         {
-            // Arrange
+            //arrange
             var userService = new Mock<IUserService>();
             userService.Setup(x => x.ChangeStatus(1, true)).Returns(() => Task.FromResult(new bool()));
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().WithUserService(userService.Object)
                                                  .Build();
 
             var view = await sut.ChangeStatus(1, true);
 
-            // Assert
+            //assert
             Assert.NotNull(view);
 
             var model = view.Data;
@@ -97,12 +103,12 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void new_should_return_with_user_model()
         {
-            // Act
+            //act
             var sut = new UserControllerBuilder().Build();
 
             var view = sut.New() as ViewResult;
 
-            // Assert
+            //assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
@@ -115,18 +121,18 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void new_should_redirect_if_model_is_valid()
         {
-            // Arrange
+            //arrange
             var validModel = new UserModel { Name = "test name", Email = "test@test.com", Password = "pass" };
 
             var userService = new Mock<IUserService>();
             userService.Setup(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Developer.Value)).Returns(() => Task.FromResult<int?>(1));
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().WithUserService(userService.Object)
                                                  .Build();
             var view = await sut.New(validModel) as RedirectResult;
 
-            // Assert
+            //assert
             Assert.NotNull(view);
             Assert.AreEqual(view.Url, "/user/apps");
             userService.Verify(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Developer.Value), Times.Once);
@@ -138,14 +144,14 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void new_should_return_with_user_model_if_model_is_invalid()
         {
-            // Arrange
+            //arrange
             var invalidModel = new UserModel { Name = "test name" };
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().Build();
             var view = await sut.New(invalidModel) as ViewResult;
 
-            // Assert
+            //assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
@@ -158,11 +164,11 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void reset_should_return_with_reset_model()
         {
-            // Act
+            //act
             var sut = new UserControllerBuilder().BuildWithMockControllerContext();
             var view = sut.Reset() as ViewResult;
 
-            // Assert
+            //assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
@@ -175,11 +181,11 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void login_should_return_with_login_model()
         {
-            // Act
+            //act
             var sut = new UserControllerBuilder().Build();
             var view = sut.Login() as ViewResult;
 
-            // Assert
+            //assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
@@ -192,31 +198,32 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void login_should_redirect_if_model_is_valid()
         {
-            // Arrange   
+            //arrange   
             const int id = 1;
-            const string email = "test@test.com"; 
+            const string email = "test@test.com";
             const string name = "test";
             var validModel = new LoginModel { Email = email, Password = "pass" };
 
             var userService = new Mock<IUserService>();
-            userService.Setup(x => x.Authenticate(validModel.Email,validModel.Password)).Returns(() => Task.FromResult(true));
+            userService.Setup(x => x.Authenticate(validModel.Email, validModel.Password)).Returns(() => Task.FromResult(true));
             userService.Setup(x => x.GetByEmail(validModel.Email))
                                     .Returns(() => Task.FromResult(new User
-                                                                    { Id = id ,
-                                                                      Name = name,
-                                                                      Email = email
+                                                                    {
+                                                                        Id = id,
+                                                                        Name = name,
+                                                                        Email = email
                                                                     }));
 
             var formsAuthenticationService = new Mock<IFormsAuthenticationService>();
-            formsAuthenticationService.Setup(x => x.SignIn(string.Format("{0}|{1}|{2}", id, name, email), true));    
+            formsAuthenticationService.Setup(x => x.SignIn(string.Format("{0}|{1}|{2}", id, name, email), true));
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().WithUserService(userService.Object)
                                                  .WithFormsAuthenticationService(formsAuthenticationService.Object)
                                                  .Build();
             var view = await sut.Login(validModel) as RedirectResult;
 
-            // Assert
+            //assert
             Assert.NotNull(view);
             Assert.AreEqual(view.Url, "/user/apps");
             userService.Verify(x => x.Authenticate(validModel.Email, validModel.Password), Times.Once);
@@ -228,19 +235,19 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void login_should_return_with_login_model_if_model_is_invalid()
         {
-            // Arrange
-            var invalidModel = new LoginModel { Email = "test@test.com"};   
+            //arrange
+            var invalidModel = new LoginModel { Email = "test@test.com" };
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().Build(); ;
             var view = await sut.Login(invalidModel) as ViewResult;
 
-            // Assert
+            //assert
             Assert.NotNull(view);
             var model = view.Model;
             Assert.NotNull(model);
             Assert.IsAssignableFrom(typeof(LoginModel), model);
- 
+
             sut.AssertPostAttribute("Login", new[] { typeof(LoginModel) });
             sut.AssertAllowAnonymousAttribute("Login", new[] { typeof(LoginModel) });
         }
@@ -248,20 +255,20 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void logout_should_redirect()
         {
-            // Arrange    
+            //arrange    
             var formsAuthenticationService = new Mock<IFormsAuthenticationService>();
             formsAuthenticationService.Setup(x => x.SignOut());
 
-            // Act
+            //act
             var sut = new UserControllerBuilder().WithFormsAuthenticationService(formsAuthenticationService.Object)
                                                  .Build();
 
             var view = sut.Logout() as RedirectResult;
 
-            // Assert
+            //assert
             Assert.NotNull(view);
-            Assert.AreEqual(view.Url, "/home/index");
-            sut.AssertGetAttribute("Logout");  
+            Assert.AreEqual(view.Url, "/");
+            sut.AssertGetAttribute("Logout");
         }
 
     }

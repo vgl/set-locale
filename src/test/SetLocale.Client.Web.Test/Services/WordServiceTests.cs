@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
+
 using Moq;
 using NUnit.Framework;
+
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Models;
@@ -59,7 +60,7 @@ namespace SetLocale.Client.Web.Test.Services
         }
 
         [Test]
-        public void should_create_check_if_word_allready_exists()
+        public void create_check_if_word_allready_exists()
         {
             //arrange
             var model = new WordModel
@@ -69,17 +70,19 @@ namespace SetLocale.Client.Web.Test.Services
             };
 
             var wordRepository = new Mock<IRepository<Word>>();
-            wordRepository.Setup(x => x.Set<Word>()).Returns(new List<Word> {new Word { Key = model.Key }}.AsQueryable());
+            wordRepository.Setup(x => x.Any(It.IsAny<Expression<Func<Word, bool>>>()))
+                          .Returns(true);
 
             //act
-            var sut = new WordServiceBuilder().WithWordRepository(wordRepository.Object).Build();
+            var sut = new WordServiceBuilder().WithWordRepository(wordRepository.Object)
+                                              .Build();
 
             var result = sut.Create(model);
 
             //assert
             Assert.IsNull(result);
-
-            wordRepository.Verify(x => x.Set<Word>(), Times.Once);
+            wordRepository.Verify(x => x.Any(It.IsAny<Expression<Func<Word, bool>>>()), Times.Once);
+          
         }
 
         [Test]
@@ -118,10 +121,10 @@ namespace SetLocale.Client.Web.Test.Services
             //act
             var sut = new WordServiceBuilder().WithWordRepository(wordRepository.Object).Build();
 
-            var result = await sut.GetByUserId(1);
+            var result = await sut.GetByUserId(1,1);
 
             //assert
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, result.TotalCount);
 
             wordRepository.Verify(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>(), It.IsAny<Expression<Func<Word, object>>>()), Times.Once);
         }
@@ -207,7 +210,7 @@ namespace SetLocale.Client.Web.Test.Services
             var result = await sut.GetNotTranslated();
 
             //assert
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, result.TotalCount);
 
             wordRepository.Verify(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>()), Times.Once);
         }
@@ -267,7 +270,15 @@ namespace SetLocale.Client.Web.Test.Services
         {
             //arrange
             var wordRepository = new Mock<IRepository<Word>>();
-            wordRepository.Setup(x => x.FindOne(It.IsAny<Expression<Func<Word, bool>>>())).Returns(new Word());
+            wordRepository.Setup(x => x.FindOne(It.IsAny<Expression<Func<Word, bool>>>()))
+                          .Returns(new Word());
+
+            wordRepository.Setup(x => x.Update(It.IsAny<Word>()))
+                          .Returns(new Word());
+
+            wordRepository.Setup(x => x.SaveChanges())
+                          .Returns(true);
+
             //act
             var sut = new WordServiceBuilder().WithWordRepository(wordRepository.Object).Build();
 
@@ -317,10 +328,18 @@ namespace SetLocale.Client.Web.Test.Services
         {
             //arrange
             var wordRepository = new Mock<IRepository<Word>>();
-            wordRepository.Setup(x => x.FindOne(It.IsAny<Expression<Func<Word, bool>>>())).Returns(new Word());
+            wordRepository.Setup(x => x.FindOne(It.IsAny<Expression<Func<Word, bool>>>()))
+                          .Returns(new Word());
+
+            wordRepository.Setup(x => x.Update(It.IsAny<Word>()))
+                          .Returns(new Word());
+
+            wordRepository.Setup(x => x.SaveChanges())
+                          .Returns(true);
 
             //act
-            var sut = new WordServiceBuilder().WithWordRepository(wordRepository.Object).Build();
+            var sut = new WordServiceBuilder().WithWordRepository(wordRepository.Object)
+                                              .Build();
 
             var resultKey = await sut.Tag("key", "tagName");
 
@@ -342,10 +361,10 @@ namespace SetLocale.Client.Web.Test.Services
             //act
             var sut = new WordServiceBuilder().WithWordRepository(wordRepository.Object).Build();
 
-            var result = await sut.GetAll();
+            var result = await sut.GetWords(1);
 
             //assert
-            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2, result.TotalCount);
             wordRepository.Verify(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>()), Times.Once);
         }
     }

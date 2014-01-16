@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Moq;
 using NUnit.Framework;
 
+using SetLocale.Client.Web.Controllers;
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
@@ -18,30 +20,32 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public void detail_should_return_key_model_list()
         {
-            // Arrange
+            //arrange
             const string tag = "set-locale";
             const string actionName = "Detail";
 
             var tagService = new Mock<ITagService>();
-            var list = new List<WordModel> { new WordModel { Key = tag } };
-            tagService.Setup(x => x.GetWords(tag)).Returns(() => Task.FromResult(new List<Word> { new Word() }));
+            var list = new List<Word> { new Word { Id = 1, Key = tag }, new Word { Id = 2, Key = tag } };
+            tagService.Setup(x => x.GetWords(tag, 1)).Returns(() => Task.FromResult(new PagedList<Word>(1, 2, 3, list)));
 
-            // Act
+            //act
             var sut = new TagControllerBuilder().WithTagService(tagService.Object)
                                                 .Build();
             var view = sut.Detail();
-            var model = view.Result.Model as List<WordModel>;
+            var model = view.Result.Model as PageModel<WordModel>;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             Assert.NotNull(model);
-            Assert.AreEqual(model.Count, list.Count);
-            CollectionAssert.AllItemsAreUnique(model);
+            Assert.IsInstanceOf<BaseController>(sut);
+            Assert.IsAssignableFrom<PageModel<WordModel>>(model);
+            Assert.AreEqual(model.Items.Count, list.Count);
+            CollectionAssert.AllItemsAreUnique(model.Items);
 
-            tagService.Verify(x => x.GetWords(tag), Times.Once);
+            tagService.Verify(x => x.GetWords(tag, 1), Times.Once);
 
-            sut.AssertGetAttribute(actionName, new[] { typeof(string) });
-            sut.AssertAllowAnonymousAttribute(actionName, new[] { typeof(string) });
+            sut.AssertGetAttribute(actionName, new[] { typeof(string), typeof(int) });
+            sut.AssertAllowAnonymousAttribute(actionName, new[] { typeof(string), typeof(int) });
         }
     }
 }

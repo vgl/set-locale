@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 
 using SetLocale.Client.Web.Helpers;
+using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 
 namespace SetLocale.Client.Web.ApiControllers
@@ -32,9 +33,9 @@ namespace SetLocale.Client.Web.ApiControllers
             switch (lang)
             {
                 case ConstHelper.en:
-                    return Ok(new { word.Key, Lang = ConstHelper.en, Value = word.Translation_EN });
+                    return Ok(new LocaleModel { Key = word.Key, Lang = ConstHelper.en, Value = word.Translation_EN });
                 case ConstHelper.tr:
-                    return Ok(new { word.Key, Lang = ConstHelper.tr, Value = word.Translation_TR });
+                    return Ok(new LocaleModel { Key = word.Key, Lang = ConstHelper.tr, Value = word.Translation_TR });
             }
 
             return BadRequest(string.Format("word found but has no translation for {0}", lang));

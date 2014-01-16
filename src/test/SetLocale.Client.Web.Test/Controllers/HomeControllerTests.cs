@@ -16,19 +16,19 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void index_should_return_home_stats_model()
         {
-            // Arrange
+            //arrange
             const string actionName = "Index";
 
             var reportService = new Mock<IReportService>();
             reportService.Setup(x => x.GetHomeStats()).Returns(() => Task.FromResult(new HomeStatsModel()));
 
-            // Act
+            //act
             var sut = new HomeControllerBuilder().WithReportService(reportService.Object)
                                                  .Build();
             var view = await sut.Index();
             var model = view.Model as HomeStatsModel;
 
-            // Assert
+           //assert
             Assert.NotNull(view);
             Assert.NotNull(model);
             

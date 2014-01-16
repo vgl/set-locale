@@ -1,9 +1,10 @@
-Feature: Admin Panel Behaviours
+Feature: Admin Behaviours
   Scenario: Admin lists users first page
+
   	Given user with email "admin@test.com" exists 
     	And user should be logged in
     	And user is in "Admin" role
+		    
+	When user views "/admin/users"         
 
-    When user views "/admin/users"         
-
-    Then "50" user from system should be listed in a table.
+    Then users fist page should be listed in a table

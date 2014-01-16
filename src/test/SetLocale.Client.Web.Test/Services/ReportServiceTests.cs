@@ -30,19 +30,22 @@ namespace SetLocale.Client.Web.Test.Services
             };
 
             var userRepository = new Mock<IRepository<User>>();
-            userRepository.Setup(x => x.FindAll(y => y.RoleId != SetLocaleRole.Developer.Value))
-                          .Returns(new List<User> { new User { Id = 1 }, new User { Id = 2 } }.AsQueryable());
+            userRepository.Setup(x => x.Count(y => y.RoleId != SetLocaleRole.Developer.Value))
+                          .Returns(2);
 
-            userRepository.Setup(x => x.FindAll(y => y.RoleId == SetLocaleRole.Translator.Value))
-                          .Returns(new List<User> { new User { Id = 3 }, new User { Id = 4 }, new User { Id = 5 }, }.AsQueryable());
+            userRepository.Setup(x => x.Count(y => y.RoleId == SetLocaleRole.Translator.Value))
+                          .Returns(3);
 
             var wordRepository = new Mock<IRepository<Word>>();
+            wordRepository.Setup(x => x.Count(It.IsAny<Expression<Func<Word, bool>>>()))
+                          .Returns(4);
+
             wordRepository.Setup(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>()))
-                          .Returns(new List<Word> { new Word { TranslationCount = 1 }, new Word { TranslationCount = 1 }, new Word { TranslationCount = 1 }, new Word { TranslationCount = 2 }, }.AsQueryable());
+                         .Returns(new List<Word> { new Word { TranslationCount = 1 }, new Word { TranslationCount = 1 }, new Word { TranslationCount = 1 }, new Word { TranslationCount = 2 }, }.AsQueryable());
 
             var appRepository = new Mock<IRepository<App>>();
-            appRepository.Setup(x => x.FindAll(It.IsAny<Expression<Func<App, bool>>>()))
-                         .Returns(new List<App> { new App { Id = 1 } }.AsQueryable());
+            appRepository.Setup(x => x.Count(It.IsAny<Expression<Func<App, bool>>>()))
+                         .Returns(1);
 
             //act
             var sut = new ReportServiceBuilder().WithUserRepository(userRepository.Object)
@@ -58,8 +61,9 @@ namespace SetLocale.Client.Web.Test.Services
             Assert.AreEqual(model.KeyCount, homestats.KeyCount);
             Assert.AreEqual(model.TranslationCount, homestats.TranslationCount);
 
-            appRepository.Verify(x => x.FindAll(It.IsAny<Expression<Func<App, bool>>>()), Times.AtLeastOnce);
-            userRepository.Verify(x => x.FindAll(It.IsAny<Expression<Func<User, bool>>>()), Times.AtLeastOnce);
+            appRepository.Verify(x => x.Count(It.IsAny<Expression<Func<App, bool>>>()), Times.AtLeastOnce);
+            userRepository.Verify(x => x.Count(It.IsAny<Expression<Func<User, bool>>>()), Times.AtLeastOnce);
+            wordRepository.Verify(x => x.Count(It.IsAny<Expression<Func<Word, bool>>>()), Times.AtLeastOnce);
             wordRepository.Verify(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>()), Times.AtLeastOnce);
         }
     }

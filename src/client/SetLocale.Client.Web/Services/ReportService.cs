@@ -30,10 +30,10 @@ namespace SetLocale.Client.Web.Services
 
         public Task<HomeStatsModel> GetHomeStats()
         {
-            var developerCount = _userRepository.FindAll(x => x.RoleId != SetLocaleRole.Developer.Value).Count();
-            var translatorCount = _userRepository.FindAll(x => x.RoleId == SetLocaleRole.Translator.Value).Count();
-            var keyCount = _wordRepository.FindAll().Count();
-            var appCount = _appRepository.FindAll().Count();
+            var developerCount = _userRepository.Count(x => x.RoleId != SetLocaleRole.Developer.Value);
+            var translatorCount = _userRepository.Count(x => x.RoleId == SetLocaleRole.Translator.Value);
+            var keyCount = _wordRepository.Count();
+            var appCount = _appRepository.Count();
             var translationCount = _wordRepository.FindAll().Sum(x => x.TranslationCount);
 
             var model = new HomeStatsModel
@@ -44,7 +44,7 @@ namespace SetLocale.Client.Web.Services
                 KeyCount = keyCount,
                 TranslationCount = translationCount
             };
-
+            
             return Task.FromResult(model);
         }
     }

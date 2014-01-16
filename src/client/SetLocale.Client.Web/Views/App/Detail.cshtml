@@ -1,9 +1,7 @@
-﻿@using SetLocale.Client.Web.Helpers
-
-@model SetLocale.Client.Web.Models.AppModel
+﻿@model AppModel
 
 @{
-    ViewBag.Title = string.Format("{0} - {1}", Html.LocalizationString("menu_apps_my_apps"), Model.Name);
+    ViewBag.Title = string.Format("{0} - {1}", Html.LocalizationString("user_apps_title"), Model.Name);
 }
 
 <h3>@ViewBag.Title</h3>
@@ -24,7 +22,10 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th></th>
+                @if (ViewBag.IsActive)
+                {
+                    <th></th>
+                }
                 <th>@Html.LocalizationString("token")</th>
                 <th>@Html.LocalizationString("creation_date")</th>
                 <th>@Html.LocalizationString("usage_count")</th>
@@ -34,9 +35,12 @@
             @foreach (var item in Model.Tokens)
             {
                 <tr>
-                    <td>
-                        <a class="btn btn-sm btn-warning btnAct" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@Html.LocalizationString("btn_delete")</a>
-                    </td>
+                    @if (ViewBag.IsActive)
+                    {
+                        <td>
+                            <a class="btn btn-sm btn-warning btnAct" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@Html.LocalizationString("btn_delete")</a>
+                        </td>
+                    }
                     <td>@item.Token</td>
                     <td>@item.CreationDate.ToString("f")</td>
                     <td>@item.UsageCount</td>

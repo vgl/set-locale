@@ -13,11 +13,10 @@ namespace SetLocale.Client.Web.Services
     public interface IWordService
     {
         Task<string> Create(WordModel model);
-        Task<List<Word>> GetByUserId(int userId);
-        Task<Word> GetByKey(string key);
-        Task<List<Word>> GetAll();
+        Task<PagedList<Word>> GetByUserId(int userId, int pageNumber);
+        Task<Word> GetByKey(string key); 
         Task<PagedList<Word>> GetWords(int pageNumber);
-        Task<List<Word>> GetNotTranslated();
+        Task<PagedList<Word>> GetNotTranslated(int pageNumber);
         Task<bool> Translate(string key, string language, string translation);
         Task<bool> Tag(string key, string tag);
     }
@@ -38,7 +37,7 @@ namespace SetLocale.Client.Web.Services
             }
 
             var slug = model.Key.ToUrlSlug();
-            if (_wordRepository.Set<Word>().Any(x => x.Key == slug))
+            if (_wordRepository.Any(x => x.Key == slug))
             {
                 return null;
             }
@@ -74,10 +73,31 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(word.Key);
         }
 
-        public Task<List<Word>> GetByUserId(int userId)
+        public Task<PagedList<Word>> GetByUserId(int userId,int pageNumber)
         {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            if (userId < 1)
+            {
+                return null;
+            }
+
             var words = _wordRepository.FindAll(x => x.CreatedBy == userId, x => x.Tags).ToList();
-            return Task.FromResult(words);
+
+            long totalCount = words.Count();
+            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
+
+            if (pageNumber > totalPageCount)
+            {
+                pageNumber = 1;
+            }
+
+            words = words.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
+
+            return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words));
         }
 
         public Task<Word> GetByKey(string key)
@@ -98,16 +118,38 @@ namespace SetLocale.Client.Web.Services
             var items = _wordRepository.FindAll();
 
             long totalCount = items.Count();
+            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
+
+            if (pageNumber > totalPageCount)
+            {
+                pageNumber = 1;
+            }
 
             items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber)).Take(ConstHelper.PageSize);
 
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
         }
 
-        public Task<List<Word>> GetNotTranslated()
+        public Task<PagedList<Word>> GetNotTranslated(int pageNumber = 1)
         {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
             var words = _wordRepository.FindAll(x => x.IsTranslated == false).ToList();
-            return Task.FromResult(words);
+
+            long totalCount = words.Count();
+            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
+
+            if (pageNumber > totalPageCount)
+            {
+                pageNumber = 1;
+            }
+
+            words = words.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
+
+            return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words));
         }
 
         public Task<bool> Translate(string key, string language, string translation)
@@ -137,9 +179,8 @@ namespace SetLocale.Client.Web.Services
             word.IsTranslated = true;
 
             _wordRepository.Update(word);
-            _wordRepository.SaveChanges();
 
-            return Task.FromResult(true);
+            return Task.FromResult(_wordRepository.SaveChanges());
         }
 
         public Task<bool> Tag(string key, string tagName)
@@ -166,15 +207,8 @@ namespace SetLocale.Client.Web.Services
             word.Tags = new List<Tag> { tag };
 
             _wordRepository.Update(word);
-            _wordRepository.SaveChanges();
 
-            return Task.FromResult(true);
-        }
-
-        public Task<List<Word>> GetAll()        // Bunun yerine GetWords Methodu geliştirildi. Gerekli mi diye kontrol et sonra sil.
-        {
-            var words = _wordRepository.FindAll().ToList();
-            return Task.FromResult(words);
-        }
+            return Task.FromResult(_wordRepository.SaveChanges());
+        } 
     }
 }

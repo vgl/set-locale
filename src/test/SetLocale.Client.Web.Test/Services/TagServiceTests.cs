@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+
 using Moq;
 using NUnit.Framework;
+
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Repositories;
@@ -15,27 +17,7 @@ namespace SetLocale.Client.Web.Test.Services
     public class TagServiceTests
     {
         [Test]
-        public async void should_return_words()
-        {
-            //arrange
-            var wordRepository = new Mock<IRepository<Word>>();
-            wordRepository.Setup(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>()))
-                          .Returns(new List<Word> { new Word{Id = 1, Key="key"} }.AsQueryable());
-
-            //act
-            var sut = new TagServiceBuilder().WithWordRepository(wordRepository.Object)
-                                             .Build();
-
-            var result = await sut.GetWords(string.Empty);
-
-            //assert
-            Assert.AreEqual(1, result.Count);
-            
-            wordRepository.Verify(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>()), Times.AtLeastOnce);
-        }
-
-        [Test]
-        public async void should_set_pagenumber_to_one_if_it_less()
+        public async void should_set_pagenumber_to_one_if_it_is_less()
         {
             //arrange
             var wordRepository = new Mock<IRepository<Word>>();
@@ -49,7 +31,7 @@ namespace SetLocale.Client.Web.Test.Services
             var result = await sut.GetWords(string.Empty, 0);
 
             //assert
-            Assert.AreEqual(0, result.Number);
+            Assert.AreEqual(result.Number, 1);
         }
 
         [Test]
@@ -71,14 +53,14 @@ namespace SetLocale.Client.Web.Test.Services
             var result = await sut.GetWords(string.Empty, 2);
 
             //assert
-            Assert.AreEqual(1, result.Number);
-            Assert.AreEqual(ConstHelper.PageSize, result.Size);
-            Assert.AreEqual(ConstHelper.PageSize * 4, result.TotalCount);
-            Assert.AreEqual(true, result.HasPreviousPage);
-            Assert.AreEqual(true, result.HasNextPage);
-            Assert.AreEqual(ConstHelper.PageSize, result.Items.Count);
-            Assert.AreEqual((ConstHelper.PageSize * 4) - (ConstHelper.PageSize), result.Items.First().Id);
-            Assert.AreEqual((ConstHelper.PageSize * 4) - (ConstHelper.PageSize * 2) + 1, result.Items.Last().Id);
+            Assert.AreEqual(result.Number, 2);
+            Assert.AreEqual(result.Size, ConstHelper.PageSize);
+            Assert.AreEqual(result.TotalCount, ConstHelper.PageSize * 4);
+            Assert.AreEqual(result.HasPreviousPage, true);
+            Assert.AreEqual(result.HasNextPage, true);
+            Assert.AreEqual(result.Items.Count, ConstHelper.PageSize);
+            Assert.AreEqual(result.Items.First().Id, (ConstHelper.PageSize * 4) - (ConstHelper.PageSize));
+            Assert.AreEqual(result.Items.Last().Id, (ConstHelper.PageSize * 4) - (ConstHelper.PageSize * 2) + 1);
         }
     }
 }

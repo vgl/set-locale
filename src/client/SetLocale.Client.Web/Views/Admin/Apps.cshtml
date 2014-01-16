@@ -1,8 +1,7 @@
-﻿@using SetLocale.Client.Web.Helpers
-@model List<SetLocale.Client.Web.Models.AppModel>
+﻿@model PageModel<AppModel>
 
 @{
-    ViewBag.Title = Html.LocalizationString("menu_settings_apps");
+    ViewBag.Title = Html.LocalizationString("all_apps_title");
 }
 
 <h3>@ViewBag.Title</h3>
@@ -14,14 +13,14 @@
             <tr>
                 <th></th>
                 <th>@Html.LocalizationString("app_owner_email")</th>
-                <th>@Html.LocalizationString("application_name")</th>
+                <th>@Html.LocalizationString("app_name")</th>
                 <th>@Html.LocalizationString("description")</th>
                 <th>@Html.LocalizationString("url")</th>
                 <th>@Html.LocalizationString("usage_count")</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
                 var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
                 var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
@@ -36,6 +35,28 @@
                     <td>@item.UsageCount</td>
                 </tr>
             }
+            @{
+                if (Model.HasNextPage || Model.HasPreviousPage)
+                {
+                    <tr>
+                        <td colspan="6" align="center">
+                            <ul class="pagination">
+                                @if (Model.HasPreviousPage)
+                                {
+                                    <li><a href="~/admin/apps/@(Model.Number-1)">&laquo;</a></li>
+                                }
+                                <li><a href="~/admin/apps/@(Model.Number)">@(Model.Number)</a></li>
+                                @if (Model.HasNextPage)
+                                {
+                                    <li><a href="~/admin/apps/@(Model.Number+1)">&raquo;</a></li>
+                                }
+                            </ul>
+                            <br />
+                            <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
+                        </td>
+                    </tr>
+                }
+            }  
         </tbody>
     </table>
     @Html.AntiForgeryToken()

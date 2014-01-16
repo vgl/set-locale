@@ -1,5 +1,6 @@
 ﻿﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Linq;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -12,7 +13,6 @@ namespace SetLocale.Client.Web.Controllers
     public class UserController : BaseController
     {
         private readonly IAppService _appService;
-        private readonly IUserService _userService;
         private readonly IWordService _wordService;
 
         public UserController(
@@ -23,42 +23,76 @@ namespace SetLocale.Client.Web.Controllers
             : base(userService, formsAuthenticationService)
         {
             _appService = appService;
-            _userService = userService;
             _wordService = wordService;
         }
 
         [HttpGet]
-        public async Task<ActionResult> Apps(int id = 0)
+        public async Task<ActionResult> Apps(int id = 0, int page = 1)
         {
+            var pageNumber = page;
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
             if (id == 0)
             {
                 id = User.Identity.GetUserId();
             }
 
-            var apps = await _appService.GetByUserId(id);
-            var model = new List<AppModel>();
-            foreach (var app in apps)
+            ViewBag.UserId = id;
+
+            var apps = await _appService.GetByUserId(id, pageNumber);
+
+            if (apps == null)
             {
-                model.Add(AppModel.MapFromEntity(app));
+                return RedirectToHome();
             }
+
+            var list = apps.Items.Select(AppModel.MapFromEntity).ToList();
+
+            var model = new PageModel<AppModel>
+            {
+                Items = list,
+                HasNextPage = apps.HasNextPage,
+                HasPreviousPage = apps.HasPreviousPage,
+                Number = apps.Number,
+                TotalCount = apps.TotalCount,
+                TotalPageCount = apps.TotalPageCount
+            };
+
             return View(model);
         }
 
         [HttpGet]
-        public async Task<ViewResult> Words(int id = 0)
+        public async Task<ViewResult> Words(int id = 0, int page = 1)
         {
+            var pageNumber = page;
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
             if (id == 0)
             {
                 id = User.Identity.GetUserId();
             }
 
-            var entities = await _wordService.GetByUserId(id);
-            var model = new List<WordModel>();
-            foreach (var entity in entities)
-            {
-                model.Add(WordModel.MapEntityToModel(entity));
-            }
+            ViewBag.UserId = id;
 
+            var words = await _wordService.GetByUserId(id, pageNumber);     
+            var list = words.Items.Select(WordModel.MapEntityToModel).ToList();
+
+            var model = new PageModel<WordModel>
+            {
+                Items = list,
+                HasNextPage = words.HasNextPage,
+                HasPreviousPage = words.HasPreviousPage,
+                Number = words.Number,
+                TotalCount = words.TotalCount,
+                TotalPageCount = words.TotalPageCount
+            };
+            
             return View(model);
         }
 

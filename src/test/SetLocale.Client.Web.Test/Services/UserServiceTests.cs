@@ -17,59 +17,60 @@ namespace SetLocale.Client.Web.Test.Services
         [Test]
         public void should_create_a_user()
         {
-            // Arrange
+            //arrange
             var userModel = new UserModel { Email = "test@test.com", Password = "password" };
 
             var userRepository = new Mock<IRepository<User>>();
             userRepository.Setup(x => x.Create(It.IsAny<User>())).Returns(It.IsAny<User>());
             userRepository.Setup(x => x.SaveChanges()).Returns(true);
 
-            // Act
+            //act
             var userService = new UserService(userRepository.Object);
             var userId = userService.Create(userModel);
 
-            // Assert
-            userRepository.Verify(x => x.Create(It.IsAny<User>()), Times.Once);
-            userRepository.Verify(x => x.SaveChanges(), Times.AtLeastOnce);
-
+           //assert
             Assert.NotNull(userId);
+
+            userRepository.Verify(x => x.Create(It.IsAny<User>()), Times.Once);
+            userRepository.Verify(x => x.SaveChanges(), Times.AtLeastOnce); 
         }
 
         [Test]
         public async void should_get_user_by_email()
         {
-            // Arrange
+            //arrange
             const string email = "test@test.com";
 
             var userRepository = new Mock<IRepository<User>>();
             userRepository.Setup(x => x.FindOne(It.IsAny<Expression<Func<User, bool>>>())).Returns(new User { Email = email });
 
-            // Act
+            //act
             var userService = new UserService(userRepository.Object);
             var user = await userService.GetByEmail(email);
 
-            // Assert
+           //assert
             Assert.NotNull(user);
             Assert.AreEqual(email, user.Email);
+
             userRepository.Verify(x => x.FindOne(It.IsAny<Expression<Func<User, bool>>>()), Times.Once);
         }
 
         [Test]
         public void should_authenticate_user()
         {
-            // Arrange
+            //arrange
             var userModel = new UserModel { Email = "test@test.com", Password = "password" };
             var userRepository = new Mock<IRepository<User>>();
 
-            // Act
+            //act
             var userService = new UserService(userRepository.Object);
             var userId = userService.Create(userModel);
 
-            // Assert
+           //assert
+            Assert.NotNull(userId);
+            
             userRepository.Verify(x => x.Create(It.IsAny<User>()), Times.Once);
             userRepository.Verify(x => x.SaveChanges(), Times.AtLeastOnce);
-
-            Assert.NotNull(userId);
         }
     }
 }

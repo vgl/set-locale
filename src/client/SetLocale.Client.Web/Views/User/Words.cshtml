@@ -1,8 +1,7 @@
-﻿@using SetLocale.Client.Web.Helpers
-@model List<SetLocale.Client.Web.Models.WordModel>
+﻿@model PageModel<WordModel>
 
 @{
-    ViewBag.Title = Html.LocalizationString("menu_words_my_words_key_listing");
+    ViewBag.Title = Html.LocalizationString("words_my_key_listing_title");
 }
 
 <h3>@ViewBag.Title</h3>
@@ -12,14 +11,14 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th>@Html.LocalizationString("menu_words_my_words_key")</th>
-                <th>@Html.LocalizationString("menu_words_my_words_description")</th>
-                <th>@Html.LocalizationString("menu_words_my_words_tag")</th>
-                <th>@Html.LocalizationString("menu_words_my_words_translated_lang")</th>
+                <th>@Html.LocalizationString("word_key")</th>
+                <th>@Html.LocalizationString("description")</th>
+                <th>@Html.LocalizationString("tag")</th>
+                <th>@Html.LocalizationString("translated_language")</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
                 <tr>
                     <td><a href="/word/detail/@item.Key">@item.Key</a></td>
@@ -37,6 +36,30 @@
                 </tr>
             }
 
+            @{
+                if (Model.HasNextPage || Model.HasPreviousPage)
+                {
+                    <tr>
+                        <td colspan="4" align="center">
+                            <ul class="pagination">
+                                @if (Model.HasPreviousPage)
+                                {
+                                    <li><a href="~/user/words/@ViewBag.UserId?page=@(Model.Number-1)">&laquo;</a></li>
+                                }
+
+                                <li><a href="~/user/words/@ViewBag.UserId?page=@(Model.Number)">@(Model.Number)</a></li>
+
+                                @if (Model.HasNextPage)
+                                {
+                                    <li><a href="~/user/words/@ViewBag.UserId?page=@(Model.Number+1)">&raquo;</a></li>
+                                }
+                            </ul>
+                            <br />
+                            <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
+                        </td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
 </div>

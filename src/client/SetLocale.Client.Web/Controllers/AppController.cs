@@ -34,6 +34,8 @@ namespace SetLocale.Client.Web.Controllers
                 return Redirect("/user/apps");
             }
 
+            ViewBag.IsActive = entity.IsActive;
+
             var model = AppModel.MapFromEntity(entity);
             return View(model);
         }
@@ -58,7 +60,7 @@ namespace SetLocale.Client.Web.Controllers
             model.Email = User.Identity.GetUserEmail();
 
             var appId = await _appService.Create(model);
-            if (appId == 0)
+            if (appId == null)
             {
                 model.Msg = "bir sorun oluştu...";
                 return View(model);
