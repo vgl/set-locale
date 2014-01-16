@@ -33,6 +33,7 @@ namespace SetLocale.Client.Web
         private void PrepareLocalizationStrings()
         {
             var enTexts = new Dictionary<string, string>();
+            var trTexts = new Dictionary<string, string>();
 
             #region EN
 
@@ -178,7 +179,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("btn_cancel", "İptal");
             trTexts.Add("btn_ok", "Tamam");
 
-            trTexts.Add("SetLocale uygulamasında <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong>{3}</strong> farklı kelime için <strong>{4}</strong> adet çeviri eklenmiştir.");
+            trTexts.Add("home_summary", "SetLocale uygulamasında <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong>{3}</strong> farklı kelime için <strong>{4}</strong> adet çeviri eklenmiştir.");
 
             trTexts.Add("home_title", "Set-locale Servisine Hoş Geldiniz");
             trTexts.Add("words_key_listing_title", "Anahtar Listesi");
@@ -203,10 +204,6 @@ namespace SetLocale.Client.Web
             trTexts.Add("modal_body_users", "Durumu Değiştirmek İstediğinize Emin misiniz?");
 
             #endregion
-
-
-            var trTexts = new Dictionary<string, string>();
-            #region TR            
 
             Application.Add(ConstHelper.en_txt, enTexts);
             Application.Add(ConstHelper.tr_txt, trTexts);
