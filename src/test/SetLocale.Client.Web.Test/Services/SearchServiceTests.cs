@@ -53,15 +53,15 @@ namespace SetLocale.Client.Web.Test.Services
             var result = await sut.Query("k1_k3");
 
             //assert
-            Assert.AreEqual(result.Count, 1);
+            Assert.AreEqual(1, result.Count);
 
             var searchResult = result.First();
             
             Assert.IsNotNull(searchResult);
 
-            Assert.AreEqual(searchResult.Url, string.Format(_wordDetail, "k1_k3"));
-            Assert.AreEqual(searchResult.Name, string.Format(_name, "k1_k3", "eng3"));
-            Assert.AreEqual(searchResult.ImgUrl, _imgUrl);
+            Assert.AreEqual(string.Format(_wordDetail, "k1_k3"), searchResult.Url);
+            Assert.AreEqual(string.Format(_name, "k1_k3", "eng3"), searchResult.Name);
+            Assert.AreEqual(_imgUrl, searchResult.ImgUrl);
         }
 
         [Test]
@@ -77,10 +77,10 @@ namespace SetLocale.Client.Web.Test.Services
             var result = await sut.Query("k1 k2");
 
             //assert
-            Assert.AreEqual(result.Count, 1);
+            Assert.AreEqual(1, result.Count);
 
             var searchResult = result.First();
-            Assert.AreEqual(searchResult.Name, string.Format(_name, "k1_k2", _exp.Substring(0, expMaxlength)));
+            Assert.AreEqual(string.Format(_name, "k1_k2", _exp.Substring(0, expMaxlength)), searchResult.Name);
         }
         
         [Test]
@@ -93,13 +93,13 @@ namespace SetLocale.Client.Web.Test.Services
             var result = await sut.Query("k1");
 
             //assert
-            Assert.AreEqual(result.Count, 3);
+            Assert.AreEqual(3, result.Count);
 
             var firstResult = result.First();
-            Assert.AreEqual(firstResult.Url, string.Format(_wordDetail, "k1_k3"));
+            Assert.AreEqual(string.Format(_wordDetail, "k1_k3"), firstResult.Url);
 
             var lastResult = result.Last();
-            Assert.AreEqual(lastResult.Url, string.Format(_wordDetail, "k1"));
+            Assert.AreEqual(string.Format(_wordDetail, "k1"), lastResult.Url);
         }
     }
 }

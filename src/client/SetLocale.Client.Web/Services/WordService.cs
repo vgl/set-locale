@@ -70,13 +70,10 @@ namespace SetLocale.Client.Web.Services
             };
 
             _wordRepository.Create(word);
-            _wordRepository.SaveChanges();
-
-            if (word.Id < 1)
-            {
+            
+            if (!_wordRepository.SaveChanges())
                 return null;
-            }
-
+            
             return Task.FromResult(word.Key);
         }
 
@@ -98,12 +95,14 @@ namespace SetLocale.Client.Web.Services
             {
                 pageNumber = 1;
             }
-              
+
+            pageNumber--;
+  
             var items = _wordRepository.FindAll();
 
             long totalCount = items.Count();
 
-            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber -1)).Take(ConstHelper.PageSize);
+            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber)).Take(ConstHelper.PageSize);
 
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
         }
@@ -131,6 +130,11 @@ namespace SetLocale.Client.Web.Services
 
             var type = word.GetType();
             var propInfo = type.GetProperty(string.Format("Translation_{0}", language.ToUpperInvariant()), new Type[0]);
+            if (propInfo == null)
+            {
+                return Task.FromResult(false);
+            }
+
             propInfo.SetValue(word, translation);
             word.TranslationCount++;
             word.IsTranslated = true;
