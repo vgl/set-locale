@@ -34,8 +34,7 @@ namespace SetLocale.Client.Web.Test.ApiContollers
             Assert.IsInstanceOf<IHttpActionResult>(result);
             Assert.IsAssignableFrom<OkNegotiatedContentResult<List<WordItemModel>>>(result);
             Assert.IsAssignableFrom<LocalesController>(sut);
-            Assert.IsInstanceOf<BaseApiController>(sut);
-
+            Assert.IsInstanceOf<BaseApiController>(sut); 
         }
 
         [Test]
@@ -54,8 +53,7 @@ namespace SetLocale.Client.Web.Test.ApiContollers
             Assert.IsInstanceOf<IHttpActionResult>(result);
             Assert.IsAssignableFrom<OkNegotiatedContentResult<List<WordItemModel>>>(result);  
             Assert.IsAssignableFrom<LocalesController>(sut);
-            Assert.IsInstanceOf<BaseApiController>(sut);
-
+            Assert.IsInstanceOf<BaseApiController>(sut); 
         }
     }
 }

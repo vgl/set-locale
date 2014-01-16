@@ -21,7 +21,7 @@ namespace SetLocale.Client.Web.Test.ApiContollers
         {
             //arrange
             var wordService = new Mock<IWordService>();
-            wordService.Setup(x => x.GetByKey("key")).Returns(() => null);      // Null geri dönüşü nasıl yapacağız ?
+            wordService.Setup(x => x.GetByKey("key")).Returns(() => null);   
 
             //act
             var sut = new LocaleControllerBuilder().WithWordService(wordService.Object)
@@ -71,7 +71,7 @@ namespace SetLocale.Client.Web.Test.ApiContollers
             Assert.IsNotNull(task);
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<IHttpActionResult>(result);
-            Assert.IsAssignableFrom<OkNegotiatedContentResult<LocaleModel>>(result);   // 3 string'i nasıl verebiliriz ?
+            Assert.IsAssignableFrom<OkNegotiatedContentResult<LocaleModel>>(result); 
             Assert.IsAssignableFrom<LocaleController>(sut);
             Assert.IsInstanceOf<BaseApiController>(sut);
 
