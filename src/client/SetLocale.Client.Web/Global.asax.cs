@@ -198,7 +198,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("modal_title_apps", "Uygulama Durumu");
             trTexts.Add("modal_body_apps", "Silmek İstediğinize Emin misiniz?");
             trTexts.Add("modal_title_delete_token", "Token Sil");
-            trTexts.Add("modal_body_delete_token", "Token'i Silmek İstediğinize Emin misiniz?");
+            trTexts.Add("modal_body_delete_token", "Bu Simgeyi Silmek İstediğinize Emin misiniz?");
             trTexts.Add("modal_title_users", "Kullanıcı Durumu");
             trTexts.Add("modal_body_users", "Durumu Değiştirmek İstediğinize Emin misiniz?");
 
@@ -206,10 +206,7 @@ namespace SetLocale.Client.Web
 
 
             var trTexts = new Dictionary<string, string>();
-            #region TR
-            trTexts.Add("app_name", "Set Locale");
-
-            
+            #region TR            
 
             Application.Add(ConstHelper.en_txt, enTexts);
             Application.Add(ConstHelper.tr_txt, trTexts);
