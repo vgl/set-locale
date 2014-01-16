@@ -117,13 +117,40 @@ namespace SetLocale.Client.Web.Test.Controllers
         [Test]
         public async void translate_should_return_with_response_model()
         {
-            //todo: Translate(string key, string language, string translation) kontrolü yapılacak.
+            //arrange
+            var wordService = new Mock<IWordService>();
+            wordService.Setup(x => x.Translate("key", "EN", "translation")).Returns(Task.FromResult(true));
+
+            //act
+            var sut = new WordControllerBuilder().WithWordService(wordService.Object)
+                                                .Build();
+
+            var json = await sut.Translate("key", "EN", "translation");
+            var model = json.Data as ResponseModel;
+
+            //assert
+            Assert.NotNull(model);
+            Assert.AreEqual(true, model.Ok);
+
         }
 
         [Test]
         public async void tag_should_return_with_response_model()
         {
-            //todo: Tag(string key, string tag) kontrolü yapılacak.
+            //arrange
+            var wordService = new Mock<IWordService>();
+            wordService.Setup(x => x.Tag("key", "tag")).Returns(Task.FromResult(true));
+
+            //act
+            var sut = new WordControllerBuilder().WithWordService(wordService.Object)
+                                                .Build();
+
+            var json = await sut.Tag("key", "tag");
+            var model = json.Data as ResponseModel;
+
+            //assert
+            Assert.NotNull(model);
+            Assert.AreEqual(true, model.Ok);
         }
     }
 }
