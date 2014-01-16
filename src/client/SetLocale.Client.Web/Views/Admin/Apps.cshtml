@@ -1,8 +1,7 @@
-﻿@using SetLocale.Client.Web.Helpers
-@model SetLocale.Client.Web.Models.PageModel<SetLocale.Client.Web.Models.AppModel>
+﻿@model PageModel<AppModel>
 
 @{
-    ViewBag.Title = Html.LocalizationString("menu_settings_apps");
+    ViewBag.Title = Html.LocalizationString("all_apps_title");
 }
 
 <h3>@ViewBag.Title</h3>
@@ -14,7 +13,7 @@
             <tr>
                 <th></th>
                 <th>@Html.LocalizationString("app_owner_email")</th>
-                <th>@Html.LocalizationString("application_name")</th>
+                <th>@Html.LocalizationString("app_name")</th>
                 <th>@Html.LocalizationString("description")</th>
                 <th>@Html.LocalizationString("url")</th>
                 <th>@Html.LocalizationString("usage_count")</th>
