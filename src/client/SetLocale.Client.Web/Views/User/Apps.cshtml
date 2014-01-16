@@ -1,8 +1,7 @@
-﻿@using SetLocale.Client.Web.Helpers
-@model SetLocale.Client.Web.Models.PageModel<SetLocale.Client.Web.Models.AppModel>
+﻿@model PageModel<AppModel>
 
 @{
-    ViewBag.Title = Html.LocalizationString("menu_user_apps");
+    ViewBag.Title = Html.LocalizationString("user_apps_title");
 }
 
 <h3>@ViewBag.Title</h3>
@@ -13,7 +12,7 @@
         <thead>
             <tr>
                 <th></th>
-                <th>@Html.LocalizationString("application_name")</th>
+                <th>@Html.LocalizationString("app_name")</th>
                 <th>@Html.LocalizationString("description")</th>
                 <th>@Html.LocalizationString("url")</th>
                 <th>@Html.LocalizationString("usage_count")</th>
@@ -26,7 +25,7 @@
                 var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
                 <tr>
                     <td>
-                         <a class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
+                        <a class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
                     </td>
                     <td><a href="/app/detail/@item.Id">@item.Name</a></td>
                     <td>@item.Description</td>
@@ -62,7 +61,7 @@
 
         </tbody>
     </table>
- @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 </div>
 <div class="modal fade" id="DeactivateModal" tabindex="-1" role="dialog" aria-labelledby="lblDeactivateModal" aria-hidden="true">
     <div class="modal-dialog">

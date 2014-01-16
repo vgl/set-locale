@@ -1,8 +1,7 @@
-﻿@using SetLocale.Client.Web.Helpers
-@model SetLocale.Client.Web.Models.PageModel<SetLocale.Client.Web.Models.WordModel>
+﻿@model PageModel<WordModel>
 
 @{
-    ViewBag.Title = Html.LocalizationString("menu_words_my_words_key_listing");
+    ViewBag.Title = Html.LocalizationString("words_my_key_listing_title");
 }
 
 <h3>@ViewBag.Title</h3>
@@ -12,10 +11,10 @@
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th>@Html.LocalizationString("menu_words_my_words_key")</th>
-                <th>@Html.LocalizationString("menu_words_my_words_description")</th>
-                <th>@Html.LocalizationString("menu_words_my_words_tag")</th>
-                <th>@Html.LocalizationString("menu_words_my_words_translated_lang")</th>
+                <th>@Html.LocalizationString("word_key")</th>
+                <th>@Html.LocalizationString("description")</th>
+                <th>@Html.LocalizationString("tag")</th>
+                <th>@Html.LocalizationString("translated_language")</th>
             </tr>
         </thead>
         <tbody>

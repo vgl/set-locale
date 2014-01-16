@@ -1,8 +1,7 @@
-﻿@using SetLocale.Client.Web.Helpers
-@model SetLocale.Client.Web.Models.PageModel<SetLocale.Client.Web.Models.UserModel>
+﻿@model PageModel<UserModel>
 
 @{
-    ViewBag.Title = Html.LocalizationString("menu_settings_users");
+    ViewBag.Title = Html.LocalizationString("all_users_title");
 }
 
 <h3>@ViewBag.Title</h3>
@@ -14,7 +13,7 @@
             <tr>
                 <th></th>
                 <th>@Html.LocalizationString("name")</th>
-                <th>@Html.LocalizationString("user_email")</th>
+                <th>@Html.LocalizationString("email")</th>
                 <th>@Html.LocalizationString("user_role")</th>
             </tr>
         </thead>

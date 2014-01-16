@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>@ViewBag.Title - @Html.LocalizationString("app_name")</title>
+    <title>@ViewBag.Title - Set Locale</title>
 
     <link rel="shortcut icon" href="/public/img/favicon.ico" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
@@ -19,7 +19,7 @@
                         <li style="margin-left: -5px; margin-top: -2px;"><a href="/lang/change/tr"><img src="/public/img/flag/tr.png" alt="Türkçe" /></a></li>
                         <li style="margin-left: -20px; margin-right: -20px; margin-top: -2px;"><a href="/lang/change/en"><img src="/public/img/flag/en.png" alt="English" /></a></li>
 
-                        <li><a href="/">@Html.LocalizationString("app_name")</a></li>
+                        <li><a href="/">Set Locale</a></li>
                         @if (User.Identity.IsAuthenticated)
                         {
                         <li class="dropdown">

@@ -34,6 +34,8 @@ namespace SetLocale.Client.Web.Controllers
                 return Redirect("/user/apps");
             }
 
+            ViewBag.IsActive = entity.IsActive;
+
             var model = AppModel.MapFromEntity(entity);
             return View(model);
         }

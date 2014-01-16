@@ -13,8 +13,8 @@ namespace SetLocale.Client.Web.Controllers
 
         public TagController(
             ITagService tagService,
-            IUserService userService, 
-            IFormsAuthenticationService formsAuthenticationService) 
+            IUserService userService,
+            IFormsAuthenticationService formsAuthenticationService)
             : base(userService, formsAuthenticationService)
         {
             _tagService = tagService;
@@ -25,7 +25,7 @@ namespace SetLocale.Client.Web.Controllers
         {
             ViewBag.Key = id;
 
-            var words = await _tagService.GetWords(id,page);
+            var words = await _tagService.GetWords(id, page);
 
             var list = words.Items.Select(WordModel.MapEntityToModel).ToList();
 
