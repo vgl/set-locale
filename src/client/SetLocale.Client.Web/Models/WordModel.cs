@@ -38,7 +38,8 @@ namespace SetLocale.Client.Web.Models
 
         public bool IsValidForNew()
         {
-            return !string.IsNullOrEmpty(Key);
+            return !string.IsNullOrEmpty(Key)
+                   && !string.IsNullOrEmpty(Tag);
         }
 
         public static WordModel MapEntityToModel(Word entity)

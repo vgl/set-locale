@@ -44,18 +44,15 @@ namespace SetLocale.Client.Web.Services
             }
 
             var tags = new List<Tag>();
-            if (!string.IsNullOrEmpty(model.Tag))
+            var items = model.Tag.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var item in items)
             {
-                var items = model.Tag.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var item in items)
+                tags.Add(new Tag
                 {
-                    tags.Add(new Tag
-                    {
-                        CreatedBy = model.CreatedBy,
-                        Name = item,
-                        UrlName = item.ToUrlSlug()
-                    });
-                }
+                    CreatedBy = model.CreatedBy,
+                    Name = item,
+                    UrlName = item.ToUrlSlug()
+                });
             }
 
             var word = new Word
