@@ -66,10 +66,10 @@ namespace SetLocale.Client.Web.Test.Controllers
                                                  .Build();
 
             var view = await sut.Detail("key") as ViewResult;
+            var model = view.Model as WordModel;
 
             //assert
-            Assert.NotNull(view);
-            var model = view.Model as WordModel;
+            Assert.NotNull(view); 
             Assert.NotNull(model);
 
             sut.AssertGetAttribute(ActionNameDetail, new[] { typeof(string) });
@@ -77,7 +77,7 @@ namespace SetLocale.Client.Web.Test.Controllers
         }
 
         [Test]
-        public void get_words_return_with_paged_list_word()
+        public void all_words_return_with_paged_list_word()
         {
             //arrange
             const string tag = "set-locale";

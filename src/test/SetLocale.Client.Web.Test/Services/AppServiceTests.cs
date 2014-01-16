@@ -17,7 +17,7 @@ namespace SetLocale.Client.Web.Test.Services
     public class AppServiceTests
     {
         [Test]
-        public async void should_create_return_with_app_id_if_model_is_valid()
+        public async void create_should_return_with_app_id_if_model_is_valid()
         {
             //arrange
             var appModel = new AppModel { Name = "test", Url = "test.com", Description = "test_desc" };
@@ -40,7 +40,7 @@ namespace SetLocale.Client.Web.Test.Services
         }
 
         [Test]
-        public async void should_create_return_null_if_model_is_invalid()
+        public async void create_should_return_null_if_model_is_invalid()
         {
             //arrange
             var invalidModel = new AppModel { Name = "invalidApp" };
@@ -54,7 +54,7 @@ namespace SetLocale.Client.Web.Test.Services
         }
 
         [Test]
-        public async void should_get_apps_return_with_paged_list_app()
+        public async void get_apps_should_return_with_paged_list_app()
         {
             //arrange 
             var appRepository = new Mock<IRepository<App>>();
@@ -73,7 +73,7 @@ namespace SetLocale.Client.Web.Test.Services
         }
 
         [Test]
-        public async void should_get_by_user_id_return_with_paged_list_app()
+        public async void get_by_user_id_should_return_with_paged_list_app()
         {
             //arrange 
             var appRepository = new Mock<IRepository<App>>();
@@ -92,7 +92,7 @@ namespace SetLocale.Client.Web.Test.Services
         }
 
         [Test]
-        public async void should_get_return_with_app()
+        public async void get_should_return_with_app()
         {
             //arrange 
             var appRepository = new Mock<IRepository<App>>();
@@ -111,7 +111,7 @@ namespace SetLocale.Client.Web.Test.Services
         }
 
         [Test]
-        public async void should_create_token_return_false_if_token_model_is_invalid()
+        public async void create_token_should_return_false_if_token_model_is_invalid()
         {
             //arrange 
             var invalidModel = new TokenModel();
@@ -126,7 +126,7 @@ namespace SetLocale.Client.Web.Test.Services
         }
 
         [Test]
-        public async void should_create_token_return_false_if_app_is_not_exist()
+        public async void create_token_should_return_false_if_app_is_not_exist()
         {
             //arrange 
             var validModel = new TokenModel { AppId = 1, Token = "token" };
@@ -153,7 +153,7 @@ namespace SetLocale.Client.Web.Test.Services
         }
 
         [Test]
-        public async void should_create_token_return_true_if_app_is_exist()
+        public async void create_token_should_return_true_if_app_is_exist()
         {
             //arrange 
             var validModel = new TokenModel { AppId = 1, Token = "token" };
@@ -183,7 +183,7 @@ namespace SetLocale.Client.Web.Test.Services
         }
 
         [Test]
-        public async void should_create_token_return_true_if_token_model_is_valid()
+        public async void create_token_should_return_true_if_token_model_is_valid()
         {
             //arrange 
             var validModel = new TokenModel { AppId = 1, Token = "token" };
@@ -209,7 +209,7 @@ namespace SetLocale.Client.Web.Test.Services
         }
 
         [Test]
-        public async void should_change_status_return_with_true_if_app_is_exist()
+        public async void change_status_should_return_with_true_if_app_is_exist()
         {
             //arrange 
             var appRepository = new Mock<IRepository<App>>();
@@ -227,7 +227,7 @@ namespace SetLocale.Client.Web.Test.Services
         }
 
         [Test]
-        public async void should_change_status_return_with_false_if_app_is_not_exist()
+        public async void hange_status_should_return_with_false_if_app_is_not_exist()
         {
             //arrange  
             //act
