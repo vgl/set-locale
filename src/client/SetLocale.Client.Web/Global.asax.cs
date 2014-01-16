@@ -178,7 +178,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("btn_cancel", "İptal");
             trTexts.Add("btn_ok", "Tamam");
 
-            SetLocale uygulamasında <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong>{3}</strong> farklı kelime için <strong>{4}</strong> adet çeviri eklenmiştir.
+            trTexts.Add("SetLocale uygulamasında <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong>{3}</strong> farklı kelime için <strong>{4}</strong> adet çeviri eklenmiştir.");
 
             trTexts.Add("home_title", "Set-locale Servisine Hoş Geldiniz");
             trTexts.Add("words_key_listing_title", "Anahtar Listesi");
@@ -198,7 +198,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("modal_title_apps", "Uygulama Durumu");
             trTexts.Add("modal_body_apps", "Silmek İstediğinize Emin misiniz?");
             trTexts.Add("modal_title_delete_token", "Token Sil");
-            trTexts.Add("modal_body_delete_token", "Bu Simgeyi Silmek İstediğinize Emin misiniz?");
+            trTexts.Add("modal_body_delete_token", "Bu Anahtarı Silmek İstediğinize Emin misiniz?");
             trTexts.Add("modal_title_users", "Kullanıcı Durumu");
             trTexts.Add("modal_body_users", "Durumu Değiştirmek İstediğinize Emin misiniz?");
 
