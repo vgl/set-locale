@@ -42,7 +42,9 @@ namespace SetLocale.Client.Web.Repositories
 
             #region Menu
 
-            AddWord(context, "app_name", "Uygulama ismi", "Set Locale", "Set Locale", "set-locale");
+            AddWord(context, "email", string.Empty, "E-posta", "Email", "set-locale");
+
+
 
             #region Main
             AddWord(context, "search", "genel arama textboxı için", "Ara", "Search", "set-locale");
