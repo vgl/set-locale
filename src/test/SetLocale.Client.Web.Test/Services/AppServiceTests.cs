@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
@@ -31,7 +32,7 @@ namespace SetLocale.Client.Web.Test.Services
                                              .Build();
             var appId = await sut.Create(appModel);
 
-           //assert
+            //assert
             Assert.NotNull(appId);
             Assert.IsAssignableFrom<int>(appId);
 
@@ -49,7 +50,7 @@ namespace SetLocale.Client.Web.Test.Services
             var sut = new AppServiceBuilder().Build();
             var task = await sut.Create(invalidModel);
 
-           //assert
+            //assert
             Assert.Null(task);
         }
 
@@ -65,7 +66,7 @@ namespace SetLocale.Client.Web.Test.Services
                                              .Build();
             var list = await sut.GetApps(1);
 
-           //assert
+            //assert
             Assert.NotNull(list);
             Assert.IsAssignableFrom<PagedList<App>>(list);
 
@@ -84,7 +85,7 @@ namespace SetLocale.Client.Web.Test.Services
                                              .Build();
             var list = await sut.GetByUserId(1, 1);
 
-           //assert
+            //assert
             Assert.NotNull(list);
             Assert.IsAssignableFrom<PagedList<App>>(list);
 
@@ -103,7 +104,7 @@ namespace SetLocale.Client.Web.Test.Services
                                              .Build();
             var entity = await sut.Get(1);
 
-           //assert
+            //assert
             Assert.NotNull(entity);
             Assert.IsAssignableFrom<App>(entity);
 
@@ -120,7 +121,7 @@ namespace SetLocale.Client.Web.Test.Services
             var sut = new AppServiceBuilder().Build();
             var result = await sut.CreateToken(invalidModel);
 
-           //assert
+            //assert
             Assert.IsFalse(result);
             Assert.IsInstanceOf<IAppService>(sut);
         }
@@ -142,7 +143,7 @@ namespace SetLocale.Client.Web.Test.Services
                                              .Build();
             var result = await sut.CreateToken(validModel);
 
-           //assert
+            //assert
             Assert.IsFalse(result);
             Assert.IsAssignableFrom<bool>(result);
             Assert.IsInstanceOf<IAppService>(sut);
@@ -172,7 +173,7 @@ namespace SetLocale.Client.Web.Test.Services
                                              .Build();
             var result = await sut.CreateToken(validModel);
 
-           //assert
+            //assert
             Assert.IsTrue(result);
             Assert.IsAssignableFrom<bool>(result);
             Assert.IsInstanceOf<IAppService>(sut);
@@ -203,7 +204,7 @@ namespace SetLocale.Client.Web.Test.Services
                                              .Build();
             var result = await sut.CreateToken(validModel);
 
-           //assert
+            //assert
             Assert.IsTrue(result);
             Assert.IsInstanceOf<IAppService>(sut);
         }
@@ -213,17 +214,27 @@ namespace SetLocale.Client.Web.Test.Services
         {
             //arrange 
             var appRepository = new Mock<IRepository<App>>();
-            appRepository.Setup(x => x.FindOne(It.IsAny<Expression<Func<App, bool>>>())).Returns(new App());
+            appRepository.Setup(x => x.FindOne(It.IsAny<Expression<Func<App, bool>>>(), It.IsAny<Expression<Func<App, object>>>()))
+                         .Returns(new App { Tokens = new List<Token>() });
+
+            appRepository.Setup(x => x.Update(It.IsAny<App>()))
+                         .Returns(new App());
+
+            appRepository.Setup(x => x.SaveChanges())
+                         .Returns(true);
 
             //act
             var sut = new AppServiceBuilder().WithAppRepository(appRepository.Object)
                                              .Build();
+
             var result = await sut.ChangeStatus(1, true);
 
-           //assert
+            //assert
             Assert.IsTrue(result);
 
-            appRepository.Verify(x => x.FindOne(It.IsAny<Expression<Func<App, bool>>>()), Times.Once);
+            appRepository.Verify(x => x.FindOne(It.IsAny<Expression<Func<App, bool>>>(), It.IsAny<Expression<Func<App, object>>>()), Times.Once);
+            appRepository.Verify(x => x.Update(It.IsAny<App>()), Times.Once);
+            appRepository.Verify(x => x.SaveChanges(), Times.Once);
         }
 
         [Test]
@@ -234,7 +245,7 @@ namespace SetLocale.Client.Web.Test.Services
             var sut = new AppServiceBuilder().Build();
             var result = await sut.ChangeStatus(0, true);
 
-           //assert
+            //assert
             Assert.IsFalse(result);
         }
 
