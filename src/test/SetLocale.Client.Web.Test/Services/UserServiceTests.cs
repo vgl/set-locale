@@ -50,7 +50,7 @@ namespace SetLocale.Client.Web.Test.Services
 
            //assert
             Assert.NotNull(user);
-            Assert.AreEqual(user.Email, email);
+            Assert.AreEqual(email, user.Email);
 
             userRepository.Verify(x => x.FindOne(It.IsAny<Expression<Func<User, bool>>>()), Times.Once);
         }
