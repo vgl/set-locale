@@ -13,12 +13,14 @@ namespace SetLocale.Client.Web.Services
     public interface IAppService
     {
         Task<int?> Create(AppModel model);
-        Task<PagedList<App>> GetApps(int pageNumber); 
+        Task<PagedList<App>> GetApps(int pageNumber);
         Task<PagedList<App>> GetByUserId(int userId, int pageNumber);
         Task<App> Get(int appId);
         Task<bool> CreateToken(TokenModel token);
         Task<bool> ChangeStatus(int appId, bool isActive);
         Task<bool> DeleteToken(string token, int deletedBy);
+
+        Task<bool> IsTokenValid(string token);
     }
 
     public class AppService : IAppService
@@ -78,7 +80,8 @@ namespace SetLocale.Client.Web.Services
                 CreatedBy = model.CreatedBy,
                 AppId = model.AppId,
                 Key = model.Token,
-                UsageCount = 0
+                UsageCount = 0,
+                IsAppActive = true
             };
             _tokenRepository.Create(entity);
             _tokenRepository.SaveChanges();
@@ -108,8 +111,8 @@ namespace SetLocale.Client.Web.Services
             items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
 
             return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
-        } 
-       
+        }
+
         public Task<PagedList<App>> GetByUserId(int userId, int pageNumber)
         {
             if (pageNumber < 1)
@@ -147,25 +150,23 @@ namespace SetLocale.Client.Web.Services
             var app = _appRepository.FindOne(x => x.Id == appId, x => x.Tokens);
             return Task.FromResult(app);
         }
-         
+
         public Task<bool> ChangeStatus(int appId, bool isActive)
         {
-            if (appId < 1)
-            {
-                return Task.FromResult(false);
-            }
+            if (appId < 1) return Task.FromResult(false);
 
-            var app = _appRepository.FindOne(x => x.Id == appId);
-            if (app == null)
-            {
-                return Task.FromResult(false);
-            }
+            var app = _appRepository.FindOne(x => x.Id == appId, x => x.Tokens);
+            if (app == null) return Task.FromResult(false);
 
+            foreach (var token in app.Tokens)
+            {
+                token.IsAppActive = !isActive;
+            }
+            
             app.IsActive = !isActive;
             _appRepository.Update(app);
-            _appRepository.SaveChanges();
 
-            return Task.FromResult(true);
+            return Task.FromResult(_appRepository.SaveChanges());
         }
 
         public Task<bool> DeleteToken(string token, int deletedBy)
@@ -184,6 +185,11 @@ namespace SetLocale.Client.Web.Services
             _tokenRepository.SaveChanges();
 
             return Task.FromResult(true);
+        }
+
+        public Task<bool> IsTokenValid(string token)
+        {
+            return Task.FromResult(_tokenRepository.Any(x => x.Key == token && x.IsAppActive));
         }
     }
 }

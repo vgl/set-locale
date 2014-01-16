@@ -65,9 +65,9 @@ namespace SetLocale.Client.Web.Repositories
             return Context.Set<T>();
         }
 
-        public bool Any(Expression<Func<TEntity, bool>> @where = null, params Expression<Func<TEntity, object>>[] includeProperties)
+        public bool Any(Expression<Func<TEntity, bool>> where = null, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return FindAll(@where, includeProperties).Any();
+            return FindAll(where, includeProperties).Any();
         }
 
         public virtual TEntity FindOne(Expression<Func<TEntity, bool>> where = null, params Expression<Func<TEntity, object>>[] includeProperties)

@@ -201,6 +201,7 @@
     <Compile Include="Entities\App.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\PagedList.cs" />
+    <Compile Include="Entities\RequestLog.cs" />
     <Compile Include="Entities\Tag.cs" />
     <Compile Include="Entities\Token.cs" />
     <Compile Include="Entities\Word.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Repositories\SetLocaleDbMigrationConfiguration.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\FormsAuthenticationService.cs" />
+    <Compile Include="Services\RequestLogService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\TagService.cs" />

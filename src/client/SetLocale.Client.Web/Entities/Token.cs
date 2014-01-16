@@ -7,5 +7,6 @@
 
         public string Key { get; set; }
         public int UsageCount { get; set; }
+        public bool IsAppActive { get; set; }
     }
 }
