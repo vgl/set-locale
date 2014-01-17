@@ -99,7 +99,8 @@ namespace SetLocale.Client.Web.Configurations
                 Component.For<ITagService>().ImplementedBy<TagService>().LifestylePerWebRequest(),
                 Component.For<IReportService>().ImplementedBy<ReportService>().LifestylePerWebRequest(),
                 Component.For<IWordService>().ImplementedBy<WordService>().LifestylePerWebRequest(),
-                Component.For<ISearchService>().ImplementedBy<SearchService>().LifestylePerWebRequest());
+                Component.For<ISearchService>().ImplementedBy<SearchService>().LifestylePerWebRequest(),
+                Component.For<IRequestLogService>().ImplementedBy<RequestLogService>().LifestylePerWebRequest());
         }
     }
 }
