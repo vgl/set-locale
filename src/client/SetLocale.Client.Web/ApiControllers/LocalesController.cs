@@ -13,7 +13,8 @@ namespace SetLocale.Client.Web.ApiControllers
     {
         private readonly IWordService _wordService;
 
-        public LocalesController(IWordService wordService)
+        public LocalesController(IWordService wordService, IAppService appService, IRequestLogService requestLogService)
+                          : base(appService, requestLogService)
         {
             _wordService = wordService;
         }
@@ -23,6 +24,8 @@ namespace SetLocale.Client.Web.ApiControllers
         Route("locales/{lang}/{page}")]
         public async Task<IHttpActionResult> Get(string lang, int page)
         {
+            await base.IsTokenCheckedAndLoged();
+
             var result = new List<WordItemModel>();
             if (!LanguageModel.IsValidLanguageKey(lang))
             {
