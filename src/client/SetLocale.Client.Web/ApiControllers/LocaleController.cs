@@ -1,9 +1,9 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Net;
 using System.Threading.Tasks;
 
-using SetLocale.Client.Web.Helpers;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 
@@ -14,8 +14,7 @@ namespace SetLocale.Client.Web.ApiControllers
     {
         private readonly IWordService _wordService;
 
-        public LocaleController(IWordService wordService, IAppService appService, IRequestLogService requestLogService)
-                         : base(appService, requestLogService)
+        public LocaleController(IWordService wordService)
         {
             _wordService = wordService;
         }
@@ -25,23 +24,23 @@ namespace SetLocale.Client.Web.ApiControllers
          Route("locale/{lang}/{key}")]
         public async Task<IHttpActionResult> Get(string lang, string key)
         {
-            await base.IsTokenCheckedAndLoged();
-
             var word = await _wordService.GetByKey(key);
             if (word == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            switch (lang)
+            var model = new LocaleModel { Key = word.Key, Lang = lang, Value = word.Key };
+            
+            var type = word.GetType();
+            var translationFieldName = string.Format("Translation_{0}", lang.ToUpperInvariant());
+            var propInfo = type.GetProperty(translationFieldName, new Type[0]);
+            if (propInfo != null)
             {
-                case ConstHelper.en:
-                    return Ok(new LocaleModel { Key = word.Key, Lang = ConstHelper.en, Value = word.Translation_EN });
-                case ConstHelper.tr:
-                    return Ok(new LocaleModel { Key = word.Key, Lang = ConstHelper.tr, Value = word.Translation_TR });
+                model.Value = propInfo.GetValue(word).ToString();
             }
 
-            return BadRequest(string.Format("word found but has no translation for {0}", lang));
+            return Ok(model);
         }
     }
 }
