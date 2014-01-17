@@ -37,7 +37,7 @@ namespace SetLocale.Client.Web.ApiControllers
             var propInfo = type.GetProperty(translationFieldName, new Type[0]);
             if (propInfo != null)
             {
-                model.Value = propInfo.GetValue(word).ToString();
+                model.Value = propInfo.GetValue(word, null) != null ? propInfo.GetValue(word, null).ToString() : string.Empty;
             }
 
             return Ok(model);
