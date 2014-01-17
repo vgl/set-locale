@@ -8,7 +8,7 @@
     <h3>@ViewBag.Title</h3>
     <hr />
 
-    <form action="/user/login?ReturnUrl=@Request.QueryString["ReturnUrl"]" method="post">
+    <form id="frm" action="/user/login?ReturnUrl=@Request.QueryString["ReturnUrl"]" method="post">
 
         <div class="row">
             <strong>@Html.LocalizationString("email")</strong>
