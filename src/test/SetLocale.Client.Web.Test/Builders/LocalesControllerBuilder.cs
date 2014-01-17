@@ -6,14 +6,10 @@ namespace SetLocale.Client.Web.Test.Builders
     public class LocalesControllerBuilder
     {
         private IWordService _wordService;
-        private IAppService _appService;
-        private IRequestLogService _requestLogService;
 
         public LocalesControllerBuilder()
         {
             _wordService = null;
-            _appService = null;
-            _requestLogService = null;
         }
 
         internal LocalesControllerBuilder WithWordService(IWordService wordService)
@@ -21,20 +17,10 @@ namespace SetLocale.Client.Web.Test.Builders
             _wordService = wordService;
             return this;
         }
-        internal LocalesControllerBuilder WithAppService(IAppService appService)
-        {
-            _appService = appService;
-            return this;
-        }
-
-        internal LocalesControllerBuilder WithRequestLogService(IRequestLogService requestLogService)
-        {
-            _requestLogService = requestLogService;
-            return this;
-        }
+   
         internal LocalesController Build()
         {
-            return new LocalesController(_wordService, _appService, _requestLogService);
+            return new LocalesController(_wordService);
         }
     }
 }

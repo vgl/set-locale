@@ -13,8 +13,7 @@ namespace SetLocale.Client.Web.ApiControllers
     {
         private readonly IWordService _wordService;
 
-        public LocalesController(IWordService wordService, IAppService appService, IRequestLogService requestLogService)
-                          : base(appService, requestLogService)
+        public LocalesController(IWordService wordService)
         {
             _wordService = wordService;
         }
@@ -24,8 +23,6 @@ namespace SetLocale.Client.Web.ApiControllers
         Route("locales/{lang}/{page}")]
         public async Task<IHttpActionResult> Get(string lang, int page)
         {
-            await base.IsTokenCheckedAndLoged();
-
             var result = new List<WordItemModel>();
             if (!LanguageModel.IsValidLanguageKey(lang))
             {
@@ -52,6 +49,17 @@ namespace SetLocale.Client.Web.ApiControllers
                     {
                         Key = item.Key,
                         Value = item.Translation_EN
+                    });
+                }
+            }
+            else if (lang == LanguageModel.IT().Key)
+            {
+                foreach (var item in items.Items)
+                {
+                    result.Add(new WordItemModel
+                    {
+                        Key = item.Key,
+                        Value = item.Translation_IT
                     });
                 }
             }

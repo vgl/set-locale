@@ -25,35 +25,15 @@ namespace SetLocale.Client.Web.Test.ApiContollers
 
             //act
             var sut = new LocaleControllerBuilder().WithWordService(wordService.Object)
-                                                .Build();
+                                                   .Build();
+
             var task = sut.Get("invalidLang", "***invalidKey***");
               
+            //assert
             Assert.IsNotNull(task);
             Assert.IsAssignableFrom<HttpResponseException>(task.Exception.InnerException);  
         }
-
-        [Test]
-        public void get_should_return_bad_request_error_msg_result_if_lang_is_invalid()
-        {
-            //arrange
-            var wordService = new Mock<IWordService>();
-            wordService.Setup(x => x.GetByKey("key")).Returns(Task.FromResult(new Word()));
-
-            //act
-            var sut = new LocaleControllerBuilder().WithWordService(wordService.Object)
-                                                .Build();
-            var task = sut.Get("invalidLang","key");
-            var result = task.Result;
-
-            //assert
-            Assert.IsNotNull(task);
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<IHttpActionResult>(result); 
-            Assert.IsAssignableFrom<BadRequestErrorMessageResult>(result);
-            Assert.IsAssignableFrom<LocaleController>(sut);
-            Assert.IsInstanceOf<BaseApiController>(sut); 
-        }
-
+        
         [Test]
         public void get_should_return_http_result_ok_if_lang_is_valid()
         {
@@ -63,7 +43,7 @@ namespace SetLocale.Client.Web.Test.ApiContollers
 
             //act
             var sut = new LocaleControllerBuilder().WithWordService(wordService.Object)
-                                                .Build();
+                                                   .Build();
             var task = sut.Get("en", "key");
             var result = task.Result;
              
