@@ -77,6 +77,8 @@ namespace SetLocale.Client.Web
             enTexts.Add("word_key", "Key");
             enTexts.Add("tag", "Tag");
             enTexts.Add("translated_language", "Translated Language");
+            enTexts.Add("translation", "Translation");
+            enTexts.Add("language", "Language");
             enTexts.Add("forgot_your_password", "Forgot your password?");
             enTexts.Add("total_page_count", "Total Page Count");
             enTexts.Add("translator_name", "Translator Name");
@@ -162,6 +164,8 @@ namespace SetLocale.Client.Web
             trTexts.Add("word_key", "Anahtar");
             trTexts.Add("tag", "Etiket");
             trTexts.Add("translated_language", "Çevrilmiş Dil");
+            enTexts.Add("translation", "Çeviri");
+            trTexts.Add("language", "Dil");
             trTexts.Add("forgot_your_password", "Şifremi Unuttum");
             trTexts.Add("total_page_count", "Toplam Sayfa Sayısı");
             trTexts.Add("translator_name", "İsmi");
