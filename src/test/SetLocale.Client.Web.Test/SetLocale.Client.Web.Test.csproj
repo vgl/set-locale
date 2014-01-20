@@ -88,15 +88,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiContollers\LocaleControllerTest.cs" />
-    <Compile Include="ApiContollers\LocalesControllerTest.cs" />
     <Compile Include="Builders\AdminControllerBuilder.cs" />
     <Compile Include="Builders\AppControllerBuilder.cs" />
     <Compile Include="Builders\AppServiceBuilder.cs" />
     <Compile Include="Builders\HomeControllerBuilder.cs" />
     <Compile Include="Builders\LangControllerBuilder.cs" />
-    <Compile Include="Builders\LocaleControllerBuilder.cs" />
-    <Compile Include="Builders\LocalesControllerBuilder.cs" />
     <Compile Include="Builders\ReportServiceBuilder.cs" />
     <Compile Include="Builders\RequestLogServiceBuilder.cs" />
     <Compile Include="Builders\SearchServiceBuilder.cs" />

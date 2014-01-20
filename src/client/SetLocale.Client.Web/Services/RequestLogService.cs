@@ -48,6 +48,7 @@ namespace SetLocale.Client.Web.Services
             };
             _requestLogRepository.Create(log);
             _tokenRepository.Update(tokenEntity);
+            _tokenRepository.SaveChanges();
 
             return Task.FromResult(_requestLogRepository.SaveChanges());
         }
