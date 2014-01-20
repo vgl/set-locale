@@ -164,7 +164,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("word_key", "Anahtar");
             trTexts.Add("tag", "Etiket");
             trTexts.Add("translated_language", "Çevrilmiş Dil");
-            enTexts.Add("translation", "Çeviri");
+            trTexts.Add("translation", "Çeviri");
             trTexts.Add("language", "Dil");
             trTexts.Add("forgot_your_password", "Şifremi Unuttum");
             trTexts.Add("total_page_count", "Toplam Sayfa Sayısı");
