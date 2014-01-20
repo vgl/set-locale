@@ -114,11 +114,11 @@ namespace SetLocale.Client.Web
             enTexts.Add("tag_keys_title", "Keys Listing Tagged With ");
 
             enTexts.Add("modal_title_apps", "App Status");
-            enTexts.Add("modal_body_apps", "Are you sure want to change the user's status?");
+            enTexts.Add("modal_body_apps", "Are you sure want to change the application's status?");
             enTexts.Add("modal_title_delete_token", "Token Delete");
             enTexts.Add("modal_body_delete_token", "Are you sure want to delete the token?");
             enTexts.Add("modal_title_users", "User Status");
-            enTexts.Add("modal_body_users", "Are you sure want to change the application's status?");
+            enTexts.Add("modal_body_users", "Are you sure want to change the user's status?");
 
             #endregion
 
@@ -201,7 +201,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("tag_keys_title", "Tag Anahtar Listesi ");
 
             trTexts.Add("modal_title_apps", "Uygulama Durumu");
-            trTexts.Add("modal_body_apps", "Silmek İstediğinize Emin misiniz?");
+            trTexts.Add("modal_body_apps", "Değiştirmek İstediğinize Emin misiniz?");
             trTexts.Add("modal_title_delete_token", "Token Sil");
             trTexts.Add("modal_body_delete_token", "Bu Anahtarı Silmek İstediğinize Emin misiniz?");
             trTexts.Add("modal_title_users", "Kullanıcı Durumu");
