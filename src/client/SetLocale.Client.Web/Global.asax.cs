@@ -194,7 +194,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("all_apps_title", "Tüm Uygulamalar");
             trTexts.Add("all_users_title", "Tüm Kullanıcılar");
             trTexts.Add("word_new_key_title", "Yeni Anahtar");
-            trTexts.Add("words_my_key_listing_title", "Anahatar Listesi");
+            trTexts.Add("words_my_key_listing_title", "Anahtar Listesi");
             trTexts.Add("words_not_translated_key_listing_title", "Anahtar Listesi");
             trTexts.Add("new_app_title", "Yeni Uygulama");
             trTexts.Add("new_translator_title", "Yeni Çevirmen");
