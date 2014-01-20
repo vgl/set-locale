@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
@@ -24,9 +25,9 @@ namespace SetLocale.Client.Web.ApiControllers
         }
 
         [HttpGet,
-        EnableCors(origins: "*", headers: "*", methods: "GET"),
-        Route("locales/{lang}/{tag}/{page}")]
-        public async Task<IHttpActionResult> Get(string lang, string tag = "", int page = 1)
+         Route("locales/{lang?}/{tag?}/{page:int?}"),
+         EnableCors(origins: "*", headers: "*", methods: "GET")]
+        public async Task<IHttpActionResult> Get(string lang = "tr", string tag = "set-locale", int page = 1)
         {
             var result = new List<WordItemModel>();
             if (!LanguageModel.IsValidLanguageKey(lang)) return Ok(result);
@@ -45,36 +46,33 @@ namespace SetLocale.Client.Web.ApiControllers
 
             if (lang == LanguageModel.TR().Key)
             {
-                foreach (var item in items.Items)
-                {
-                    result.Add(new WordItemModel
-                    {
-                        Key = item.Key,
-                        Value = item.Translation_TR
-                    });
-                }
+                result.AddRange(
+                    items.Items.Select(
+                        item => new WordItemModel
+                        {
+                            Key = item.Key,
+                            Value = item.Translation_TR
+                        }));
             }
             else if (lang == LanguageModel.EN().Key)
             {
-                foreach (var item in items.Items)
-                {
-                    result.Add(new WordItemModel
-                    {
-                        Key = item.Key,
-                        Value = item.Translation_EN
-                    });
-                }
+                result.AddRange(
+                    items.Items.Select(
+                        item => new WordItemModel
+                        {
+                            Key = item.Key,
+                            Value = item.Translation_EN
+                        }));
             }
             else if (lang == LanguageModel.IT().Key)
             {
-                foreach (var item in items.Items)
-                {
-                    result.Add(new WordItemModel
-                    {
-                        Key = item.Key,
-                        Value = item.Translation_IT
-                    });
-                }
+                result.AddRange(
+                    items.Items.Select(
+                        item => new WordItemModel
+                        {
+                            Key = item.Key,
+                            Value = item.Translation_IT
+                        }));
             }
 
             return Ok(result);

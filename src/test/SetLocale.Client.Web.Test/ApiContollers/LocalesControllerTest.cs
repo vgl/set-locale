@@ -25,7 +25,7 @@ namespace SetLocale.Client.Web.Test.ApiContollers
             //act
             var sut = new LocalesControllerBuilder().WithWordService(wordService.Object)
                                                     .Build();
-            var task = sut.Get("tr");
+            var task = sut.Get();
             var result = task.Result;
 
             //assert

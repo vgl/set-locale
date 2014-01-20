@@ -20,10 +20,12 @@ namespace SetLocale.Client.Web.ApiControllers
         }
 
         [HttpGet,
-         EnableCors(origins: "*", headers: "*", methods: "GET"),
-         Route("locale/{lang}/{key}")]
-        public async Task<IHttpActionResult> Get(string lang, string key)
+         Route("locale/{lang?}/{key?}"),
+         EnableCors(origins: "*", headers: "*", methods: "GET")]
+        public async Task<IHttpActionResult> Get(string key, string lang = "tr")
         {
+            if (string.IsNullOrEmpty(key)) throw new HttpResponseException(HttpStatusCode.NotFound);
+
             var word = await _wordService.GetByKey(key);
             if (word == null)
             {
@@ -31,7 +33,7 @@ namespace SetLocale.Client.Web.ApiControllers
             }
 
             var model = new LocaleModel { Key = word.Key, Lang = lang, Value = word.Key };
-            
+
             var type = word.GetType();
             var translationFieldName = string.Format("Translation_{0}", lang.ToUpperInvariant());
             var propInfo = type.GetProperty(translationFieldName, new Type[0]);
