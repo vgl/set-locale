@@ -238,11 +238,9 @@ namespace SetLocale.Client.Web.Controllers
 
                 var fileData = p.GetAsByteArray();
 
-                var currentDateTime = DateTime.Now;
+                var currentDateTime = DateTime.Now.ToString("s").Replace(':','-');
 
-                var fileName = String.Format("{0}-{1}-{2}-{3}-{4}-{5}-{6}.xlsx", tagName,
-                                             currentDateTime.Year, currentDateTime.Month, currentDateTime.Day, currentDateTime.Hour,
-                                             currentDateTime.Minute, currentDateTime.Second);
+                var fileName = String.Format("{0}-{1}.xlsx", tagName, currentDateTime);
 
                 var filePath = String.Format("/public/files/{0}", fileName);
 
