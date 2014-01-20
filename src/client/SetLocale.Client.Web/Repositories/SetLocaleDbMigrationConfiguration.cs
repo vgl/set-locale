@@ -100,6 +100,17 @@ namespace SetLocale.Client.Web.Repositories
             AddWord(context, "btn_cancel", string.Empty, "İptal", "Cancel", "set-locale");
             AddWord(context, "btn_ok", string.Empty, "Tamam", "Ok", "set-locale");
             AddWord(context, "btn_export_to_excel", string.Empty, "Excel", "Excel", "set-locale");
+            AddWord(context, "column_header_translation_tr", string.Empty, "Tükçe", "Turkish", "set-locale");
+            AddWord(context, "column_header_translation_az", string.Empty, "Azerbeycan", "Azerbaijan", "set-locale");
+            AddWord(context, "column_header_translation_cn", string.Empty, "Çince", "Chinese", "set-locale");
+            AddWord(context, "column_header_translation_fr", string.Empty, "Fransızca", "Français", "set-locale");
+            AddWord(context, "column_header_translation_gr", string.Empty, "Yunanca", "Greek", "set-locale");
+            AddWord(context, "column_header_translation_it", string.Empty, "İtalyanca", "İtaliano", "set-locale");
+            AddWord(context, "column_header_translation_kz", string.Empty, "Kazakça", "Kazakh", "set-locale");
+            AddWord(context, "column_header_translation_ru", string.Empty, "Rusça", "Russian", "set-locale");
+            AddWord(context, "column_header_translation_sp", string.Empty, "İspanyolca", "Espanol", "set-locale");
+            AddWord(context, "column_header_translation_tk", string.Empty, "Türkmençe", "Turkic", "set-locale");
+
 
             AddWord(context, "home_title", string.Empty, "Set-locale Servisine Hoş Geldiniz.", "Welcome To Set-locale.", "set-locale");
             AddWord(context, "words_key_listing_title", string.Empty, "Anahtar Listesi", "Key Listing", "set-locale");
