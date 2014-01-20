@@ -1,8 +1,9 @@
-﻿using System.Web.Http;
+﻿using System.Linq;
+using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 
@@ -12,24 +13,36 @@ namespace SetLocale.Client.Web.ApiControllers
     public class LocalesController : BaseApiController
     {
         private readonly IWordService _wordService;
+        private readonly ITagService _tagService;
 
-        public LocalesController(IWordService wordService)
+        public LocalesController(
+            IWordService wordService,
+            ITagService tagService)
         {
             _wordService = wordService;
+            _tagService = tagService;
         }
 
         [HttpGet,
         EnableCors(origins: "*", headers: "*", methods: "GET"),
-        Route("locales/{lang}/{page}")]
-        public async Task<IHttpActionResult> Get(string lang, int page)
+        Route("locales/{lang}/{tag}/{page}")]
+        public async Task<IHttpActionResult> Get(string lang, string tag = "", int page = 1)
         {
             var result = new List<WordItemModel>();
-            if (!LanguageModel.IsValidLanguageKey(lang))
+            if (!LanguageModel.IsValidLanguageKey(lang)) return Ok(result);
+
+            PagedList<Word> items;
+            if (string.IsNullOrWhiteSpace(tag))
             {
-                return Ok(result);
+                items = await _tagService.GetWords(tag, page);
+            }
+            else
+            {
+                items = await _wordService.GetWords(page);
             }
 
-            var items = await _wordService.GetWords(page);
+            if (items == null || !items.Items.Any()) return Ok(result);
+
             if (lang == LanguageModel.TR().Key)
             {
                 foreach (var item in items.Items)
