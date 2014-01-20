@@ -95,6 +95,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("btn_edit", "Edit");
             enTexts.Add("btn_cancel", "Cancel");
             enTexts.Add("btn_ok", "Ok");
+            enTexts.Add("btn_export_to_excel", "Export to Excel");
 
             enTexts.Add("home_summary", "SetLocale's <strong>{2}</strong> translator provided <strong>{4}</strong> translation for <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> keys and <strong>{0}</strong> developer is consuming this service with <strong>{1}</strong> application");
 
@@ -114,11 +115,11 @@ namespace SetLocale.Client.Web
             enTexts.Add("tag_keys_title", "Keys Listing Tagged With ");
 
             enTexts.Add("modal_title_apps", "App Status");
-            enTexts.Add("modal_body_apps", "Are you sure want to change the user's status?");
+            enTexts.Add("modal_body_apps", "Are you sure want to change the application's status?");
             enTexts.Add("modal_title_delete_token", "Token Delete");
             enTexts.Add("modal_body_delete_token", "Are you sure want to delete the token?");
             enTexts.Add("modal_title_users", "User Status");
-            enTexts.Add("modal_body_users", "Are you sure want to change the application's status?");
+            enTexts.Add("modal_body_users", "Are you sure want to change the user's status?");
 
             #endregion
 
@@ -182,6 +183,8 @@ namespace SetLocale.Client.Web
             trTexts.Add("btn_edit", "Düzenle");
             trTexts.Add("btn_cancel", "İptal");
             trTexts.Add("btn_ok", "Tamam");
+            //todo: translation needed
+            trTexts.Add("btn_export_to_excel", "translationneeded");
 
             trTexts.Add("home_summary", "SetLocale uygulamasında <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> farklı kelime için <strong>{4}</strong> adet çeviri eklenmiştir.");
 
@@ -194,14 +197,14 @@ namespace SetLocale.Client.Web
             trTexts.Add("all_apps_title", "Tüm Uygulamalar");
             trTexts.Add("all_users_title", "Tüm Kullanıcılar");
             trTexts.Add("word_new_key_title", "Yeni Anahtar");
-            trTexts.Add("words_my_key_listing_title", "Anahatar Listesi");
+            trTexts.Add("words_my_key_listing_title", "Anahtar Listesi");
             trTexts.Add("words_not_translated_key_listing_title", "Anahtar Listesi");
             trTexts.Add("new_app_title", "Yeni Uygulama");
             trTexts.Add("new_translator_title", "Yeni Çevirmen");
             trTexts.Add("tag_keys_title", "Tag Anahtar Listesi ");
 
             trTexts.Add("modal_title_apps", "Uygulama Durumu");
-            trTexts.Add("modal_body_apps", "Silmek İstediğinize Emin misiniz?");
+            trTexts.Add("modal_body_apps", "Değiştirmek İstediğinize Emin misiniz?");
             trTexts.Add("modal_title_delete_token", "Token Sil");
             trTexts.Add("modal_body_delete_token", "Bu Anahtarı Silmek İstediğinize Emin misiniz?");
             trTexts.Add("modal_title_users", "Kullanıcı Durumu");

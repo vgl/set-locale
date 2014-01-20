@@ -5,7 +5,6 @@ set-locale is a localization string provider as a service...
 
 ## api request examples
 
-### http://setlocale.azurewebsites.net/api/locales/tr/1
 ### http://setlocale.azurewebsites.net/api/locales/tr/set-locale/2
 
 {
@@ -38,7 +37,7 @@ set-locale is a localization string provider as a service...
 }
 
 
-### http://setlocale.azurewebsites.net/api/locale/tr/save_and_close
+### http://setlocale.azurewebsites.net/api/locale/tr/btn_save
 
 {
     "Key": "save_and_close",

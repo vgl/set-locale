@@ -115,11 +115,11 @@ namespace SetLocale.Client.Web.Repositories
             AddWord(context, "tag_keys_title", string.Empty, "Tag Anahtar Listesi", "Tag Keys Listing", "set-locale");
 
             AddWord(context, "modal_title_apps", string.Empty, "Uygulama Durumu", "Application Status", "set-locale");
-            AddWord(context, "modal_body_apps", string.Empty, "Silmek İstediğinize Emin misiniz?", "Are You Sure You Want To Delete?", "set-locale");
+            AddWord(context, "modal_body_apps", string.Empty, "Değiştirmek İstediğinize Emin misiniz?", "Are You Sure Want To Change The Application's Status?", "set-locale");
             AddWord(context, "modal_title_delete_token", string.Empty, "Token Sil", "Delete Token", "set-locale");
             AddWord(context, "modal_body_delete_token", string.Empty, "Bu Anahtarı Silmek İstediğinize Emin misiniz?", "Are You Sure You Want To Delete This Token?", "set-locale");
             AddWord(context, "modal_title_users", string.Empty, "Kullanıcı Durumu", "User Status", "set-locale");
-            AddWord(context, "modal_body_users", string.Empty, "Durumu Değiştirmek İstediğinize Emin misiniz?", "Are You Sure You Want To Change The Status", "set-locale"); 
+            AddWord(context, "modal_body_users", string.Empty, "Durumu Değiştirmek İstediğinize Emin misiniz?", "Are You Sure You Want To Change The User's Status?", "set-locale"); 
             #endregion
         }
 
