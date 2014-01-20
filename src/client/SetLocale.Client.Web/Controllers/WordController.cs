@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using Castle.Core.Internal;
+
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
+
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
@@ -22,8 +19,8 @@ namespace SetLocale.Client.Web.Controllers
         private readonly IWordService _wordService;
         public WordController(
             IWordService wordService,
-            IUserService userService, 
-            IFormsAuthenticationService formsAuthenticationService) 
+            IUserService userService,
+            IFormsAuthenticationService formsAuthenticationService)
             : base(userService, formsAuthenticationService)
         {
             _wordService = wordService;
@@ -40,7 +37,7 @@ namespace SetLocale.Client.Web.Controllers
             var model = WordModel.MapEntityToModel(entity);
             return View(model);
         }
-          
+
         [HttpGet, AllowAnonymous]
         public async Task<ViewResult> All(int id = 0)
         {
@@ -49,7 +46,7 @@ namespace SetLocale.Client.Web.Controllers
             {
                 pageNumber = 1;
             }
-             
+
             var items = await _wordService.GetWords(pageNumber);
             var list = items.Items.Select(WordModel.MapEntityToModel).ToList();
 
@@ -62,12 +59,12 @@ namespace SetLocale.Client.Web.Controllers
                 TotalCount = items.TotalCount,
                 TotalPageCount = items.TotalPageCount
             };
-              
+
             return View(model);
         }
 
         [HttpGet]
-        public  async Task<ViewResult> NotTranslated(int id = 1)
+        public async Task<ViewResult> NotTranslated(int id = 1)
         {
             var pageNumber = id;
             if (pageNumber < 1)
@@ -77,7 +74,7 @@ namespace SetLocale.Client.Web.Controllers
 
             var words = await _wordService.GetNotTranslated(pageNumber);
             var list = words.Items.Select(WordModel.MapEntityToModel).ToList();
-            
+
             var model = new PageModel<WordModel>
             {
                 Items = list,
@@ -90,7 +87,7 @@ namespace SetLocale.Client.Web.Controllers
 
             return View(model);
         }
-         
+
         [HttpGet]
         public ViewResult New()
         {
@@ -108,7 +105,7 @@ namespace SetLocale.Client.Web.Controllers
             }
 
             model.CreatedBy = User.Identity.GetUserId();
-            
+
             var key = await _wordService.Create(model);
             if (key == null)
             {
@@ -156,9 +153,9 @@ namespace SetLocale.Client.Web.Controllers
 
             using (var p = new ExcelPackage())
             {
-                p.Workbook.Properties.Title = "Exported words";
+                p.Workbook.Properties.Title = _htmlHelper.LocalizationString("exported_words");
 
-                p.Workbook.Worksheets.Add("words");
+                p.Workbook.Worksheets.Add(_htmlHelper.LocalizationString("exported_words_sheet_name"));
                 var workSheet = p.Workbook.Worksheets[1];
 
                 //display table header
@@ -166,17 +163,17 @@ namespace SetLocale.Client.Web.Controllers
                 workSheet.Cells[1, 2].Value = _htmlHelper.LocalizationString("description");
                 workSheet.Cells[1, 3].Value = _htmlHelper.LocalizationString("tags");
                 workSheet.Cells[1, 4].Value = _htmlHelper.LocalizationString("translation_count");
-                workSheet.Cells[1, 5].Value = _htmlHelper.LocalizationString("translation_tr");
-                workSheet.Cells[1, 6].Value = _htmlHelper.LocalizationString("translation_en");
-                workSheet.Cells[1, 7].Value = _htmlHelper.LocalizationString("translation_az");
-                workSheet.Cells[1, 8].Value = _htmlHelper.LocalizationString("translation_cn");
-                workSheet.Cells[1, 9].Value = _htmlHelper.LocalizationString("translation_fr");
-                workSheet.Cells[1, 10].Value = _htmlHelper.LocalizationString("translation_gr");
-                workSheet.Cells[1, 11].Value = _htmlHelper.LocalizationString("translation_it");
-                workSheet.Cells[1, 12].Value = _htmlHelper.LocalizationString("translation_kz");
-                workSheet.Cells[1, 13].Value = _htmlHelper.LocalizationString("translation_ru");
-                workSheet.Cells[1, 14].Value = _htmlHelper.LocalizationString("translation_sp");
-                workSheet.Cells[1, 15].Value = _htmlHelper.LocalizationString("translation_tk");
+                workSheet.Cells[1, 5].Value = _htmlHelper.LocalizationString("column_header_translation_tr");
+                workSheet.Cells[1, 6].Value = _htmlHelper.LocalizationString("column_header_translation_en");
+                workSheet.Cells[1, 7].Value = _htmlHelper.LocalizationString("column_header_translation_az");
+                workSheet.Cells[1, 8].Value = _htmlHelper.LocalizationString("column_header_translation_cn");
+                workSheet.Cells[1, 9].Value = _htmlHelper.LocalizationString("column_header_translation_fr");
+                workSheet.Cells[1, 10].Value = _htmlHelper.LocalizationString("column_header_translation_gr");
+                workSheet.Cells[1, 11].Value = _htmlHelper.LocalizationString("column_header_translation_it");
+                workSheet.Cells[1, 12].Value = _htmlHelper.LocalizationString("column_header_translation_kz");
+                workSheet.Cells[1, 13].Value = _htmlHelper.LocalizationString("column_header_translation_ru");
+                workSheet.Cells[1, 14].Value = _htmlHelper.LocalizationString("column_header_translation_sp");
+                workSheet.Cells[1, 15].Value = _htmlHelper.LocalizationString("column_header_translation_tk");
 
                 //set styling of header
                 workSheet.Cells[1, 1, 1, 15].Style.Font.Bold = true;
@@ -188,31 +185,31 @@ namespace SetLocale.Client.Web.Controllers
                     var result = string.Empty;
                     foreach (var tag in tags)
                     {
-                        if (result.IsNullOrEmpty())
+                        if (string.IsNullOrEmpty(result))
                         {
                             result = tag.Name;
                         }
                         else
                         {
-                            result += string.Format(", {0}", tag.Name);   
+                            result += string.Format(", {0}", tag.Name);
                         }
                     }
                     return result;
                 };
 
                 var tagName = string.Empty;
-                for (int i = 0; i < words.Count; i++)
+                for (var i = 0; i < words.Count; i++)
                 {
                     var row = i + 2;
                     var word = words[i];
 
-                    workSheet.Cells[i + 2, 1].Value = word.Key;
-                    workSheet.Cells[i + 2, 2].Value = word.Description;
+                    workSheet.Cells[row, 1].Value = word.Key;
+                    workSheet.Cells[row, 2].Value = word.Description;
 
                     var tags = tagsToString(word.Tags);
-                    if (tagName.IsNullOrEmpty())
+                    if (string.IsNullOrEmpty(tagName))
                     {
-                        tagName = tags;   
+                        tagName = tags;
                     }
 
                     workSheet.Cells[row, 3].Value = tags;
@@ -230,25 +227,16 @@ namespace SetLocale.Client.Web.Controllers
                     workSheet.Cells[row, 15].Value = word.Translation_TK;
                 }
 
-                //set autofit of the columns
-                for (int i = 1; i <= 15; i++)
+                for (var i = 1; i <= 15; i++)
                 {
-                    workSheet.Column(i).AutoFit();   
+                    workSheet.Column(i).AutoFit();
                 }
 
-                var fileData = p.GetAsByteArray();
-
-                var currentDateTime = DateTime.Now.ToString("s").Replace(':','-');
-
-                var fileName = String.Format("{0}-{1}.xlsx", tagName, currentDateTime);
-
-                var filePath = String.Format("/public/files/{0}", fileName);
-
+                var fileName = string.Format("{0}-{1}.xlsx", tagName, DateTime.Now.ToString("s").Replace(':', '-').Replace("T", "-"));
+                var filePath = string.Format("/public/files/{0}", fileName);
                 var mapPath = Server.MapPath(filePath);
 
-                var sw = new StreamWriter(mapPath);
-                sw.Write(fileData);
-                sw.Close();
+                System.IO.File.WriteAllBytes(mapPath, p.GetAsByteArray());
 
                 return fileName;
             }
@@ -259,7 +247,7 @@ namespace SetLocale.Client.Web.Controllers
         {
             var model = new ResponseModel { Ok = false };
             var fileName = await ExportWordsToExcel();
-            
+
             model.Ok = true;
             model.Result = fileName;
 
