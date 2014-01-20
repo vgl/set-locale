@@ -4,6 +4,13 @@
     ViewBag.Title = Html.LocalizationString("words_key_listing_title");
 }
 
+<div class="row">
+    <iframe id="downloadFrame" style="display:none"></iframe>
+    <img id="waitSpinner" class="pull-right" src="/Public/img/select2-spinner.gif"/>
+    <input type="button" id="btnExport" value="@Html.LocalizationString("btn_export_to_excel")" class="btn btn-success btn-sm pull-right" />
+    @Html.AntiForgeryToken()
+</div>
+
 <h3>@ViewBag.Title</h3>
 <hr />
 
@@ -16,7 +23,7 @@
                 <th>@Html.LocalizationString("tag")</th>
                 <th>@Html.LocalizationString("translated_language")</th>
             </tr>
-        </thead>
+        </thead>    
         <tbody>
             @foreach (var item in Model.Items)
             {
@@ -60,3 +67,36 @@
         </tbody>
     </table>
 </div>
+
+@section script
+{
+    <script>
+
+        $(document).ready(function () {
+            $('#waitSpinner').hide();
+            
+            $("#btnExport").click(function () {
+                var token = $(this).data("id");
+                
+                $('#btnExport').hide();
+                $('#waitSpinner').show();
+                
+                $.ajax({
+                    url: "/Word/Export",
+                    type: "POST",
+                    data: "token=" + token + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                    success: function (r) {
+                        if (r && r.Ok) {
+                            $('#waitSpinner').hide();
+                            $('#btnExport').show();
+                            var iframe = document.getElementById("downloadFrame");
+                            iframe.src = "../public/files/" + r.Result;
+                        } else {
+                            //todo:warning
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}
