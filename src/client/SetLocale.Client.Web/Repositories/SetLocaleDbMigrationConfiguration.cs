@@ -81,6 +81,8 @@ namespace SetLocale.Client.Web.Repositories
             AddWord(context, "word_key", string.Empty, "Anahtar", "Key", "set-locale");
             AddWord(context, "tag", string.Empty, "Etiket", "Tag", "set-locale");
             AddWord(context, "translated_language", string.Empty, "Çevrilmiş Dil", "Translated Language", "set-locale");
+            AddWord(context, "translation", string.Empty, "Çeviri", "Translation", "set-locale");
+            AddWord(context, "language", string.Empty, "Dil", "Language", "set-locale");
             AddWord(context, "forgot_your_password", string.Empty, "Şifremi Unuttum", "Forgot My Password", "set-locale");
             AddWord(context, "total_page_count", string.Empty, "Toplam Sayfa Sayısı", "Total Page Count", "set-locale");
             AddWord(context, "translator_name", string.Empty, "İsim", "Name", "set-locale");
