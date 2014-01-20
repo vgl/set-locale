@@ -99,6 +99,7 @@ namespace SetLocale.Client.Web.Repositories
             AddWord(context, "btn_edit", string.Empty, "Düzenle", "Edit", "set-locale");
             AddWord(context, "btn_cancel", string.Empty, "İptal", "Cancel", "set-locale");
             AddWord(context, "btn_ok", string.Empty, "Tamam", "Ok", "set-locale");
+            AddWord(context, "btn_export_to_excel", string.Empty, "Excel", "Excel", "set-locale");
 
             AddWord(context, "home_title", string.Empty, "Set-locale Servisine Hoş Geldiniz.", "Welcome To Set-locale.", "set-locale");
             AddWord(context, "words_key_listing_title", string.Empty, "Anahtar Listesi", "Key Listing", "set-locale");
