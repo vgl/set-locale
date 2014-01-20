@@ -1,8 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Mvc; 
-
+using System.Web;
+using System.Web.Mvc;
+using Castle.Core.Internal;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
 using SetLocale.Client.Web.Helpers;
@@ -141,6 +149,99 @@ namespace SetLocale.Client.Web.Controllers
             model.Ok = await _wordService.Tag(key, tag);
             return Json(model, JsonRequestBehavior.DenyGet);
         }
-        
+
+        private Stream CreateFile()
+        {
+            var words = _wordService.GetAll().Result;
+
+            using (var p = new ExcelPackage())
+            {
+                p.Workbook.Properties.Title = "Exported words";
+
+                p.Workbook.Worksheets.Add("words");
+                var workSheet = p.Workbook.Worksheets[1];
+
+                //display table header
+                workSheet.Cells[1, 1].Value = _htmlHelper.LocalizationString("Key");
+                workSheet.Cells[1, 2].Value = _htmlHelper.LocalizationString("Description");
+                workSheet.Cells[1, 3].Value = _htmlHelper.LocalizationString("Tags");
+                workSheet.Cells[1, 4].Value = _htmlHelper.LocalizationString("TranslationCount");
+                workSheet.Cells[1, 5].Value = _htmlHelper.LocalizationString("Translation_TR");
+                workSheet.Cells[1, 6].Value = _htmlHelper.LocalizationString("Translation_EN");
+                workSheet.Cells[1, 7].Value = _htmlHelper.LocalizationString("Translation_AZ");
+                workSheet.Cells[1, 8].Value = _htmlHelper.LocalizationString("Translation_CN");
+                workSheet.Cells[1, 9].Value = _htmlHelper.LocalizationString("Translation_FR");
+                workSheet.Cells[1, 10].Value = _htmlHelper.LocalizationString("Translation_GR");
+                workSheet.Cells[1, 11].Value = _htmlHelper.LocalizationString("Translation_IT");
+                workSheet.Cells[1, 12].Value = _htmlHelper.LocalizationString("Translation_KZ");
+                workSheet.Cells[1, 13].Value = _htmlHelper.LocalizationString("Translation_RU");
+                workSheet.Cells[1, 14].Value = _htmlHelper.LocalizationString("Translation_SP");
+                workSheet.Cells[1, 15].Value = _htmlHelper.LocalizationString("Translation_TK");
+
+                //set styling of header
+                workSheet.Cells[1, 1, 1, 15].Style.Font.Bold = true;
+                workSheet.Cells[1, 1, 1, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                //fill table data
+                Func<ICollection<Tag>, string> tagsToString = (tags) =>
+                {
+                    var result = string.Empty;
+                    foreach (var tag in tags)
+                    {
+                        if (result.IsNullOrEmpty())
+                            result = tag.Name;
+                        else
+                            result += string.Format(", {0}", tag.Name);
+                    }
+                    return result;
+                };
+
+                for (int i = 0; i < words.Count; i++)
+                {
+                    var word = words[i];
+
+                    workSheet.Cells[i + 2, 1].Value = word.Key;
+                    workSheet.Cells[i + 2, 2].Value = word.Description;
+                    workSheet.Cells[i + 2, 3].Value = tagsToString(word.Tags);
+                    workSheet.Cells[i + 2, 4].Value = word.TranslationCount;
+                    workSheet.Cells[i + 2, 5].Value = word.Translation_TR;
+                    workSheet.Cells[i + 2, 6].Value = word.Translation_EN;
+                    workSheet.Cells[i + 2, 7].Value = word.Translation_AZ;
+                    workSheet.Cells[i + 2, 8].Value = word.Translation_CN;
+                    workSheet.Cells[i + 2, 9].Value = word.Translation_FR;
+                    workSheet.Cells[i + 2, 10].Value = word.Translation_GR;
+                    workSheet.Cells[i + 2, 11].Value = word.Translation_IT;
+                    workSheet.Cells[i + 2, 12].Value = word.Translation_KZ;
+                    workSheet.Cells[i + 2, 13].Value = word.Translation_RU;
+                    workSheet.Cells[i + 2, 14].Value = word.Translation_SP;
+                    workSheet.Cells[i + 2, 15].Value = word.Translation_TK;
+                }
+
+                //set autofit of the columns
+                for (int i = 1; i <= 15; i++)
+                    workSheet.Column(i).AutoFit();
+
+                var fileData = p.GetAsByteArray();
+                
+
+                //var file = File(fileData, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+
+                return new FileStreamResult(new MemoryStream(fileData), System.Net.Mime.MediaTypeNames.Application.Octet).FileStream;
+            }
+        }
+
+        [HttpPost, AllowAnonymous]
+        public ActionResult Export()
+        {
+            //adding cookie
+            /*var newcookie = new HttpCookie("fileDownloadToken", "token");
+            newcookie.Expires = DateTime.UtcNow.AddDays(3);
+            Response.SetCookie(newcookie);*/
+
+            Thread.Sleep(new TimeSpan(0,0,0,1));
+            var file = CreateFile();
+            var fileName = Guid.NewGuid() + ".xlsx";
+            return File(file, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
     }
 }
