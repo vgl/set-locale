@@ -43,7 +43,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("menu_words_words", "All Words");
             enTexts.Add("menu_words_my_words", "My Words");
             enTexts.Add("menu_words_new_word", "New Word");
-            enTexts.Add("menu_words_not_translated", "NotTranslated");
+            enTexts.Add("menu_words_not_translated", "Not Translated");
 
             enTexts.Add("menu_apps", "Applications");
             enTexts.Add("menu_apps_apps", "My Applications");
@@ -64,8 +64,8 @@ namespace SetLocale.Client.Web
             #endregion
 
             enTexts.Add("name", "Name");
-            enTexts.Add("email", "Email");
-            enTexts.Add("app_owner_email", "Owner Email");
+            enTexts.Add("email", "E-mail");
+            enTexts.Add("app_owner_email", "Owner E-mail");
             enTexts.Add("password", "Password");
             enTexts.Add("app_name", "Application Name");
             enTexts.Add("description", "Description");
@@ -183,8 +183,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("btn_edit", "Düzenle");
             trTexts.Add("btn_cancel", "İptal");
             trTexts.Add("btn_ok", "Tamam");
-            //todo: translation needed
-            trTexts.Add("btn_export_to_excel", "translationneeded");
+            trTexts.Add("btn_export_to_excel", "Excel'e Çıkar");
 
             trTexts.Add("home_summary", "SetLocale uygulamasında <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> farklı kelime için <strong>{4}</strong> adet çeviri eklenmiştir.");
 
