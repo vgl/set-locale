@@ -4,11 +4,12 @@
     ViewBag.Title = Html.LocalizationString("words_key_listing_title");
 }
 
-<form id="frmExport" name="frm" action="/word/export" method="post">
-    <div class="row">
-        <input type="submit" id="btnExport" value="@Html.LocalizationString("btn_export_to_excel")" class="btn btn-success btn-sm pull-right"/>
-    </div>
-</form>
+<div class="row">
+    <iframe id="downloadFrame" style="display:none"></iframe>
+    <img id="waitSpinner" class="pull-right" src="/Public/img/select2-spinner.gif"/>
+    <input type="button" id="btnExport" value="@Html.LocalizationString("btn_export_to_excel")" class="btn btn-success btn-sm pull-right" />
+    @Html.AntiForgeryToken()
+</div>
 
 <h3>@ViewBag.Title</h3>
 <hr />
@@ -69,49 +70,33 @@
 
 @section script
 {
-    <script src="/Scripts/jquery.cookie.js" type="text/javascript"></script>
     <script>
-        //try using cookie
-    /*$(document).ready(function () {
-            $('#frmExport').submit(function () {
-                $.cookie('fileDownloadToken', '0');
-                blockUIForDownload();
+
+        $(document).ready(function () {
+            $('#waitSpinner').hide();
+            
+            $("#btnExport").click(function () {
+                var token = $(this).data("id");
+                
+                $('#btnExport').hide();
+                $('#waitSpinner').show();
+                
+                $.ajax({
+                    url: "/Word/Export",
+                    type: "POST",
+                    data: "token=" + token + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                    success: function (r) {
+                        if (r && r.Ok) {
+                            $('#waitSpinner').hide();
+                            $('#btnExport').show();
+                            var iframe = document.getElementById("downloadFrame");
+                            iframe.src = "../public/files/" + r.Result;
+                        } else {
+                            //todo:warning
+                        }
+                    }
+                });
             });
         });
-
-        var fileDownloadCheckTimer;
-        function blockUIForDownload() {
-            $('#btnExport').hide();
-            fileDownloadCheckTimer = window.setInterval(function () {
-                var cookieValue = $.cookie('fileDownloadToken');
-                alert(cookieValue);
-                if (cookieValue == 'token')
-                    $('#btnExport').show();
-            }, 10000);
-        }
-
-        function finishDownload() {
-            window.clearInterval(fileDownloadCheckTimer);
-            $.cookie('fileDownloadToken', null); //clears this cookie value
-            $('#btnExport').show();
-        }*/
-        
-        //try using xmlrequest
-    //$(document).ready(function () {
-    //        $('#btnExport').click(function () {
-                
-    //            $("#btnExport").hide();
-                
-    //            var req = new XMLHttpRequest();
-    //            req.open('POST', '/Word/Export', true);
-    //            req.overrideMimeType('text/plain; charset=x-user-defined');
-    //            req.onreadystatechange = function (aEvt) {
-    //                if (req.readyState == 4) {
-    //                    $("#btnExport").show();
-    //                }
-    //            };
-    //            req.send();
-    //        });
-    //    });
     </script>
 }

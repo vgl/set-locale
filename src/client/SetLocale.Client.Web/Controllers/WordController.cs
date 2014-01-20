@@ -150,9 +150,9 @@ namespace SetLocale.Client.Web.Controllers
             return Json(model, JsonRequestBehavior.DenyGet);
         }
 
-        private Stream CreateFile()
+        private async Task<string> ExportWordsToExcel()
         {
-            var words = _wordService.GetAll().Result;
+            var words = await _wordService.GetAll();
 
             using (var p = new ExcelPackage())
             {
@@ -162,21 +162,21 @@ namespace SetLocale.Client.Web.Controllers
                 var workSheet = p.Workbook.Worksheets[1];
 
                 //display table header
-                workSheet.Cells[1, 1].Value = _htmlHelper.LocalizationString("Key");
-                workSheet.Cells[1, 2].Value = _htmlHelper.LocalizationString("Description");
-                workSheet.Cells[1, 3].Value = _htmlHelper.LocalizationString("Tags");
-                workSheet.Cells[1, 4].Value = _htmlHelper.LocalizationString("TranslationCount");
-                workSheet.Cells[1, 5].Value = _htmlHelper.LocalizationString("Translation_TR");
-                workSheet.Cells[1, 6].Value = _htmlHelper.LocalizationString("Translation_EN");
-                workSheet.Cells[1, 7].Value = _htmlHelper.LocalizationString("Translation_AZ");
-                workSheet.Cells[1, 8].Value = _htmlHelper.LocalizationString("Translation_CN");
-                workSheet.Cells[1, 9].Value = _htmlHelper.LocalizationString("Translation_FR");
-                workSheet.Cells[1, 10].Value = _htmlHelper.LocalizationString("Translation_GR");
-                workSheet.Cells[1, 11].Value = _htmlHelper.LocalizationString("Translation_IT");
-                workSheet.Cells[1, 12].Value = _htmlHelper.LocalizationString("Translation_KZ");
-                workSheet.Cells[1, 13].Value = _htmlHelper.LocalizationString("Translation_RU");
-                workSheet.Cells[1, 14].Value = _htmlHelper.LocalizationString("Translation_SP");
-                workSheet.Cells[1, 15].Value = _htmlHelper.LocalizationString("Translation_TK");
+                workSheet.Cells[1, 1].Value = _htmlHelper.LocalizationString("key");
+                workSheet.Cells[1, 2].Value = _htmlHelper.LocalizationString("description");
+                workSheet.Cells[1, 3].Value = _htmlHelper.LocalizationString("tags");
+                workSheet.Cells[1, 4].Value = _htmlHelper.LocalizationString("translation_count");
+                workSheet.Cells[1, 5].Value = _htmlHelper.LocalizationString("translation_tr");
+                workSheet.Cells[1, 6].Value = _htmlHelper.LocalizationString("translation_en");
+                workSheet.Cells[1, 7].Value = _htmlHelper.LocalizationString("translation_az");
+                workSheet.Cells[1, 8].Value = _htmlHelper.LocalizationString("translation_cn");
+                workSheet.Cells[1, 9].Value = _htmlHelper.LocalizationString("translation_fr");
+                workSheet.Cells[1, 10].Value = _htmlHelper.LocalizationString("translation_gr");
+                workSheet.Cells[1, 11].Value = _htmlHelper.LocalizationString("translation_it");
+                workSheet.Cells[1, 12].Value = _htmlHelper.LocalizationString("translation_kz");
+                workSheet.Cells[1, 13].Value = _htmlHelper.LocalizationString("translation_ru");
+                workSheet.Cells[1, 14].Value = _htmlHelper.LocalizationString("translation_sp");
+                workSheet.Cells[1, 15].Value = _htmlHelper.LocalizationString("translation_tk");
 
                 //set styling of header
                 workSheet.Cells[1, 1, 1, 15].Style.Font.Bold = true;
@@ -189,59 +189,83 @@ namespace SetLocale.Client.Web.Controllers
                     foreach (var tag in tags)
                     {
                         if (result.IsNullOrEmpty())
+                        {
                             result = tag.Name;
+                        }
                         else
-                            result += string.Format(", {0}", tag.Name);
+                        {
+                            result += string.Format(", {0}", tag.Name);   
+                        }
                     }
                     return result;
                 };
 
+                var tagName = string.Empty;
                 for (int i = 0; i < words.Count; i++)
                 {
+                    var row = i + 2;
                     var word = words[i];
 
                     workSheet.Cells[i + 2, 1].Value = word.Key;
                     workSheet.Cells[i + 2, 2].Value = word.Description;
-                    workSheet.Cells[i + 2, 3].Value = tagsToString(word.Tags);
-                    workSheet.Cells[i + 2, 4].Value = word.TranslationCount;
-                    workSheet.Cells[i + 2, 5].Value = word.Translation_TR;
-                    workSheet.Cells[i + 2, 6].Value = word.Translation_EN;
-                    workSheet.Cells[i + 2, 7].Value = word.Translation_AZ;
-                    workSheet.Cells[i + 2, 8].Value = word.Translation_CN;
-                    workSheet.Cells[i + 2, 9].Value = word.Translation_FR;
-                    workSheet.Cells[i + 2, 10].Value = word.Translation_GR;
-                    workSheet.Cells[i + 2, 11].Value = word.Translation_IT;
-                    workSheet.Cells[i + 2, 12].Value = word.Translation_KZ;
-                    workSheet.Cells[i + 2, 13].Value = word.Translation_RU;
-                    workSheet.Cells[i + 2, 14].Value = word.Translation_SP;
-                    workSheet.Cells[i + 2, 15].Value = word.Translation_TK;
+
+                    var tags = tagsToString(word.Tags);
+                    if (tagName.IsNullOrEmpty())
+                    {
+                        tagName = tags;   
+                    }
+
+                    workSheet.Cells[row, 3].Value = tags;
+                    workSheet.Cells[row, 4].Value = word.TranslationCount;
+                    workSheet.Cells[row, 5].Value = word.Translation_TR;
+                    workSheet.Cells[row, 6].Value = word.Translation_EN;
+                    workSheet.Cells[row, 7].Value = word.Translation_AZ;
+                    workSheet.Cells[row, 8].Value = word.Translation_CN;
+                    workSheet.Cells[row, 9].Value = word.Translation_FR;
+                    workSheet.Cells[row, 10].Value = word.Translation_GR;
+                    workSheet.Cells[row, 11].Value = word.Translation_IT;
+                    workSheet.Cells[row, 12].Value = word.Translation_KZ;
+                    workSheet.Cells[row, 13].Value = word.Translation_RU;
+                    workSheet.Cells[row, 14].Value = word.Translation_SP;
+                    workSheet.Cells[row, 15].Value = word.Translation_TK;
                 }
 
                 //set autofit of the columns
                 for (int i = 1; i <= 15; i++)
-                    workSheet.Column(i).AutoFit();
+                {
+                    workSheet.Column(i).AutoFit();   
+                }
 
                 var fileData = p.GetAsByteArray();
-                
 
-                //var file = File(fileData, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+                var currentDateTime = DateTime.Now;
 
-                return new FileStreamResult(new MemoryStream(fileData), System.Net.Mime.MediaTypeNames.Application.Octet).FileStream;
+                var fileName = String.Format("{0}-{1}-{2}-{3}-{4}-{5}-{6}.xlsx", tagName,
+                                             currentDateTime.Year, currentDateTime.Month, currentDateTime.Day, currentDateTime.Hour,
+                                             currentDateTime.Minute, currentDateTime.Second);
+
+                var filePath = String.Format("/public/files/{0}", fileName);
+
+                var mapPath = Server.MapPath(filePath);
+
+                var sw = new StreamWriter(mapPath);
+                sw.Write(fileData);
+                sw.Close();
+
+                return fileName;
             }
         }
 
-        [HttpPost, AllowAnonymous]
-        public ActionResult Export()
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<JsonResult> Export()
         {
-            //adding cookie
-            /*var newcookie = new HttpCookie("fileDownloadToken", "token");
-            newcookie.Expires = DateTime.UtcNow.AddDays(3);
-            Response.SetCookie(newcookie);*/
+            var model = new ResponseModel { Ok = false };
+            var fileName = await ExportWordsToExcel();
+            
+            model.Ok = true;
+            model.Result = fileName;
 
-            Thread.Sleep(new TimeSpan(0,0,0,1));
-            var file = CreateFile();
-            var fileName = Guid.NewGuid() + ".xlsx";
-            return File(file, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+            return Json(model, JsonRequestBehavior.DenyGet);
         }
     }
 }
