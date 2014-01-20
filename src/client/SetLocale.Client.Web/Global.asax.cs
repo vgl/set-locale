@@ -96,6 +96,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("btn_cancel", "Cancel");
             enTexts.Add("btn_ok", "Ok");
             enTexts.Add("btn_export_to_excel", "Export to Excel");
+            enTexts.Add("column_header_translation_en", "English");
 
             enTexts.Add("home_summary", "SetLocale's <strong>{2}</strong> translator provided <strong>{4}</strong> translation for <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> keys and <strong>{0}</strong> developer is consuming this service with <strong>{1}</strong> application");
 
@@ -184,6 +185,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("btn_cancel", "İptal");
             trTexts.Add("btn_ok", "Tamam");
             trTexts.Add("btn_export_to_excel", "Excel'e Çıkar");
+            trTexts.Add("column_header_translation_tr", "Türkçe")
 
             trTexts.Add("home_summary", "SetLocale uygulamasında <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> farklı kelime için <strong>{4}</strong> adet çeviri eklenmiştir.");
 
