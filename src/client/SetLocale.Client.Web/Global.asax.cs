@@ -83,6 +83,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("total_page_count", "Total Page Count");
             enTexts.Add("translator_name", "Translator Name");
 
+
             enTexts.Add("btn_login", "Login");
             enTexts.Add("btn_sign_up", "Sign Up");
             enTexts.Add("btn_password_reset", "Send Reset Password Link");
@@ -97,6 +98,16 @@ namespace SetLocale.Client.Web
             enTexts.Add("btn_ok", "Ok");
             enTexts.Add("btn_export_to_excel", "Export to Excel");
             enTexts.Add("column_header_translation_en", "English");
+            enTexts.Add("column_header_translation_az", "Azerbaijan");
+            enTexts.Add("column_header_translation_cn", "Chinese");
+            enTexts.Add("column_header_translation_fr", "Français");
+            enTexts.Add("column_header_translation_gr", "Greek");
+            enTexts.Add("column_header_translation_it", "İtaliano");
+            enTexts.Add("column_header_translation_kz", "Kazakh");
+            enTexts.Add("column_header_translation_ru", "Russian");
+            enTexts.Add("column_header_translation_sp", "Espanol");
+            enTexts.Add("column_header_translation_tk", "Turkic");
+
 
             enTexts.Add("home_summary", "SetLocale's <strong>{2}</strong> translator provided <strong>{4}</strong> translation for <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> keys and <strong>{0}</strong> developer is consuming this service with <strong>{1}</strong> application");
 
@@ -185,7 +196,17 @@ namespace SetLocale.Client.Web
             trTexts.Add("btn_cancel", "İptal");
             trTexts.Add("btn_ok", "Tamam");
             trTexts.Add("btn_export_to_excel", "Excel'e Çıkar");
-            trTexts.Add("column_header_translation_tr", "Türkçe")
+            trTexts.Add("column_header_translation_tr", "Türkçe");
+            trTexts.Add("column_header_translation_az", "Azerbaycan");
+            trTexts.Add("column_header_translation_cn", "Çince");
+            trTexts.Add("column_header_translation_fr", "Fransızca");
+            trTexts.Add("column_header_translation_gr", "Yunanca");
+            trTexts.Add("column_header_translation_it", "İtalyanca");
+            trTexts.Add("column_header_translation_kz", "Kazakça");
+            trTexts.Add("column_header_translation_ru", "Rusça");
+            trTexts.Add("column_header_translation_sp", "İspanyolca");
+            trTexts.Add("column_header_translation_tk", "Türkmençe");
+
 
             trTexts.Add("home_summary", "SetLocale uygulamasında <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> farklı kelime için <strong>{4}</strong> adet çeviri eklenmiştir.");
 
