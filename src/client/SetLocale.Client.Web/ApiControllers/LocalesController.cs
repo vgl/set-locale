@@ -32,7 +32,7 @@ namespace SetLocale.Client.Web.ApiControllers
             if (!LanguageModel.IsValidLanguageKey(lang)) return Ok(result);
 
             PagedList<Word> items;
-            if (string.IsNullOrWhiteSpace(tag))
+            if (!string.IsNullOrWhiteSpace(tag))
             {
                 items = await _tagService.GetWords(tag, page);
             }
