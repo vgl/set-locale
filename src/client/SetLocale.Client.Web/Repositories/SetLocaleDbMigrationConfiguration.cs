@@ -49,75 +49,89 @@ namespace SetLocale.Client.Web.Repositories
             #endregion
 
             #region Words
-            AddWord(context, "menu_words", string.Empty, "Kelimeler", "Words", "Слова", "set-locale");
-            AddWord(context, "menu_words_words", string.Empty, "Tüm Kelimeler", "All Words", "Все Слова", "set-locale");
-            AddWord(context, "menu_words_my_words", string.Empty, "Kelimelerim", "My Words", "Мои Слова", "set-locale");
-            AddWord(context, "menu_words_new_word", string.Empty, "Yeni Kelime", "New Word", "Новое Слово", "set-locale");
-            AddWord(context, "menu_words_not_translated", string.Empty, "Çevrilmeyen Kelime", "Word Not Translated", "Слово Без Перевода","set-locale");
-            AddWord(context, "menu_apps", string.Empty, "Uygulamalar", "Applications", "Приложения","set-locale");
-            AddWord(context, "menu_apps_apps", string.Empty, "Uygulamalarım", "My Applications", "Мои Приложения", "set-locale");
-            AddWord(context, "menu_apps_new_app", string.Empty, "Yeni Uygulama", "New Application", "Новое Приложение","set-locale");
-            AddWord(context, "menu_settings", string.Empty, "Yönetim", "Administration", "Администратор","set-locale");
-            AddWord(context, "menu_settings_apps", string.Empty, "Tüm Uygulamalar", "All Applications", "Все Приложения","set-locale");
-            AddWord(context, "menu_settings_users", string.Empty, "Tüm Kullanıcılar", "All Users", "Все Пользователи","set-locale");
-            AddWord(context, "menu_settings_new_translator", string.Empty, "Yeni Çevirmen", "New Translator", "Новый Переводчик","set-locale");
-            AddWord(context, "menu_user_login", string.Empty, "Giriş", "Login", "Вход","set-locale");
-            AddWord(context, "menu_user_logout", string.Empty, "Çıkış", "Logout", "Выход","set-locale");
-            AddWord(context, "menu_user_sign_up", string.Empty, "Kayıt Ol", "Sign Up", "Войти","set-locale");
-            AddWord(context, "menu_user_reset", string.Empty, "Şifre Sıfırla", "Reset Password", "Сбросить Пароль","set-locale");
-            AddWord(context, "menu_search", string.Empty, "Ara", "Search", "Поиск","set-locale");
+            AddWord(context, "menu_words", string.Empty, "Kelimeler", "Words", "set-locale");
+            AddWord(context, "menu_words_words", string.Empty, "Tüm Kelimeler", "All Words", "set-locale");
+            AddWord(context, "menu_words_my_words", string.Empty, "Kelimelerim", "My Words", "set-locale");
+            AddWord(context, "menu_words_new_word", string.Empty, "Yeni Kelime", "New Word", "set-locale");
+            AddWord(context, "menu_words_not_translated", string.Empty, "Çevrilmeyen Kelime", "Word Not Translated", "set-locale");
+            AddWord(context, "menu_apps", string.Empty, "Uygulamalar", "Applications", "set-locale");
+            AddWord(context, "menu_apps_apps", string.Empty, "Uygulamalarım", "My Applications", "set-locale");
+            AddWord(context, "menu_apps_new_app", string.Empty, "Yeni Uygulama", "New Application", "set-locale");
+            AddWord(context, "menu_settings", string.Empty, "Yönetim", "Administration", "set-locale");
+            AddWord(context, "menu_settings_apps", string.Empty, "Tüm Uygulamalar", "All Applications", "set-locale");
+            AddWord(context, "menu_settings_users", string.Empty, "Tüm Kullanıcılar", "All Users", "set-locale");
+            AddWord(context, "menu_settings_new_translator", string.Empty, "Yeni Çevirmen", "New Translator", "set-locale");
+            AddWord(context, "menu_user_login", string.Empty, "Giriş", "Login", "set-locale");
+            AddWord(context, "menu_user_logout", string.Empty, "Çıkış", "Logout", "set-locale");
+            AddWord(context, "menu_user_sign_up", string.Empty, "Kayıt Ol", "Sign Up", "set-locale");
+            AddWord(context, "menu_user_reset", string.Empty, "Şifre Sıfırla", "Reset Password", "set-locale");
+            AddWord(context, "menu_search", string.Empty, "Ara", "Search", "set-locale");
 
-            AddWord(context, "email", string.Empty, "E-posta", "Email", "Почта","set-locale");
-            AddWord(context, "name", string.Empty, "İsim", "Name", "Имя","set-locale");
-            AddWord(context, "app_owner_email", string.Empty, "Uygulama Sahibinin E-Postası", "Application of the E-mail owners", "Приложение Пользователей Почты","set-locale");
-            AddWord(context, "password", string.Empty, "Şifre", "Password", "Пароль","set-locale");
-            AddWord(context, "app_name", string.Empty, "Uygulama İsmi", "Application Name", "Название Приложения","set-locale");
-            AddWord(context, "description", string.Empty, "Açıklama", "Description", "Описание","set-locale");
-            AddWord(context, "usage_count", string.Empty, "Kullanım Sayısı", "Usage Count", "Количество Использования","set-locale");
-            AddWord(context, "url", string.Empty, "Url", "Url", "Url","set-locale");
-            AddWord(context, "token", string.Empty, "Token", "Token", "Признак","set-locale");
-            AddWord(context, "cretion_date", string.Empty, "Oluşturma Tarihi", "Creation Date", "Дата Создания","set-locale");
-            AddWord(context, "user_role", string.Empty, "Yetki Grubu", "Role", "Роль","set-locale");
-            AddWord(context, "word_key", string.Empty, "Anahtar", "Key", "Ключь","set-locale");
-            AddWord(context, "tag", string.Empty, "Etiket", "Tag", "Тег","set-locale");
-            AddWord(context, "translated_language", string.Empty, "Çevrilmiş Dil", "Translated Language", "Язык Перевода","set-locale");
-            AddWord(context, "forgot_your_password", string.Empty, "Şifremi Unuttum", "Forgot My Password", "Забыл Пароль","set-locale");
-            AddWord(context, "total_page_count", string.Empty, "Toplam Sayfa Sayısı", "Total Page Count", "Всего Страниц","set-locale");
-            AddWord(context, "translator_name", string.Empty, "İsim", "Name", "Название","set-locale");
+            AddWord(context, "email", string.Empty, "E-posta", "Email", "set-locale");
+            AddWord(context, "name", string.Empty, "İsim", "Name", "set-locale");
+            AddWord(context, "app_owner_email", string.Empty, "Uygulama Sahibinin E-Postası", "Application of the E-mail owners", "set-locale");
+            AddWord(context, "password", string.Empty, "Şifre", "Password", "set-locale");
+            AddWord(context, "app_name", string.Empty, "Uygulama İsmi", "Application Name", "set-locale");
+            AddWord(context, "description", string.Empty, "Açıklama", "Description", "set-locale");
+            AddWord(context, "usage_count", string.Empty, "Kullanım Sayısı", "Usage Count", "set-locale");
+            AddWord(context, "url", string.Empty, "Url", "Url", "set-locale");
+            AddWord(context, "token", string.Empty, "Token", "Token", "set-locale");
+            AddWord(context, "cretion_date", string.Empty, "Oluşturma Tarihi", "Creation Date", "set-locale");
+            AddWord(context, "user_role", string.Empty, "Yetki Grubu", "Role", "set-locale");
+            AddWord(context, "word_key", string.Empty, "Anahtar", "Key", "set-locale");
+            AddWord(context, "tag", string.Empty, "Etiket", "Tag", "set-locale");
+            AddWord(context, "translated_language", string.Empty, "Çevrilmiş Dil", "Translated Language", "set-locale");
+            AddWord(context, "translation", string.Empty, "Çeviri", "Translation", "set-locale");
+            AddWord(context, "language", string.Empty, "Dil", "Language", "set-locale");
+            AddWord(context, "forgot_your_password", string.Empty, "Şifremi Unuttum", "Forgot My Password", "set-locale");
+            AddWord(context, "total_page_count", string.Empty, "Toplam Sayfa Sayısı", "Total Page Count", "set-locale");
+            AddWord(context, "translator_name", string.Empty, "İsim", "Name", "set-locale");
 
-            AddWord(context, "btn_login", string.Empty, "Giriş", "Login", "Вход","set-locale");
-            AddWord(context, "btn_sign_up", string.Empty, "Kayıt Ol", "Sign Up", "Выход","set-locale");
-            AddWord(context, "btn_password_reset", string.Empty, "Şifre Sıfırlama Linki Gönder", "Send Password Reset Link", "Отпарвить Ссылку Для Сброса Пароля","set-locale");
-            AddWord(context, "btn_create_new_token", string.Empty, "Yeni Token Oluştur", "Create New Token", "Новый Признак","set-locale");
-            AddWord(context, "btn_new_word", string.Empty, "Yeni Çeviri Ekle", "Add New Translation", "Добавить Перевод","set-locale");
-            AddWord(context, "btn_deactivate", string.Empty, "Pasif", "Deactivate", "Деактивировать","set-locale");
-            AddWord(context, "btn_activate", string.Empty, "Aktif", "Activate", "Активировать","set-locale");
-            AddWord(context, "btn_delete", string.Empty, "Sil", "Delete", "Удалить","set-locale");
-            AddWord(context, "btn_save", string.Empty, "Kaydet", "Save", "Сохранить","set-locale");
-            AddWord(context, "btn_edit", string.Empty, "Düzenle", "Edit", "Редактировать","set-locale");
-            AddWord(context, "btn_cancel", string.Empty, "İptal", "Cancel", "Отменить","set-locale");
-            AddWord(context, "btn_ok", string.Empty, "Tamam", "Ok", "Да","set-locale");
+            AddWord(context, "btn_login", string.Empty, "Giriş", "Login", "set-locale");
+            AddWord(context, "btn_sign_up", string.Empty, "Kayıt Ol", "Sign Up", "set-locale");
+            AddWord(context, "btn_password_reset", string.Empty, "Şifre Sıfırlama Linki Gönder", "Send Password Reset Link", "set-locale");
+            AddWord(context, "btn_create_new_token", string.Empty, "Yeni Token Oluştur", "Create New Token", "set-locale");
+            AddWord(context, "btn_new_word", string.Empty, "Yeni Çeviri Ekle", "Add New Translation", "set-locale");
+            AddWord(context, "btn_deactivate", string.Empty, "Pasif", "Deactivate", "set-locale");
+            AddWord(context, "btn_activate", string.Empty, "Aktif", "Activate", "set-locale");
+            AddWord(context, "btn_delete", string.Empty, "Sil", "Delete", "set-locale");
+            AddWord(context, "btn_save", string.Empty, "Kaydet", "Save", "set-locale");
+            AddWord(context, "btn_edit", string.Empty, "Düzenle", "Edit", "set-locale");
+            AddWord(context, "btn_cancel", string.Empty, "İptal", "Cancel", "set-locale");
+            AddWord(context, "btn_ok", string.Empty, "Tamam", "Ok", "set-locale");
+            AddWord(context, "btn_export_to_excel", string.Empty, "Excel", "Excel", "set-locale");
+            AddWord(context, "column_header_translation_tr", string.Empty, "Tükçe", "Turkish", "set-locale");
+            AddWord(context, "column_header_translation_az", string.Empty, "Azerbeycan", "Azerbaijan", "set-locale");
+            AddWord(context, "column_header_translation_cn", string.Empty, "Çince", "Chinese", "set-locale");
+            AddWord(context, "column_header_translation_fr", string.Empty, "Fransızca", "Français", "set-locale");
+            AddWord(context, "column_header_translation_gr", string.Empty, "Yunanca", "Greek", "set-locale");
+            AddWord(context, "column_header_translation_it", string.Empty, "İtalyanca", "İtaliano", "set-locale");
+            AddWord(context, "column_header_translation_kz", string.Empty, "Kazakça", "Kazakh", "set-locale");
+            AddWord(context, "column_header_translation_ru", string.Empty, "Rusça", "Russian", "set-locale");
+            AddWord(context, "column_header_translation_sp", string.Empty, "İspanyolca", "Espanol", "set-locale");
+            AddWord(context, "column_header_translation_tk", string.Empty, "Türkmençe", "Turkic", "set-locale");
 
-            AddWord(context, "home_title", string.Empty, "Set-locale Servisine Hoş Geldiniz.", "Welcome To Set-locale.", "Добро Пожаловать В Set-locale.", "set-locale");
-            AddWord(context, "words_key_listing_title", string.Empty, "Anahtar Listesi", "Key Listing", "Список Ключей","set-locale");
-            AddWord(context, "login_view_title", string.Empty, "Sisteme Giriş", "İnto The System", "Вход В Систему","set-locale");
-            AddWord(context, "new_user_title", string.Empty, "Yeni Kullanıcı", "New User", "Новый Пользователь","set-locale");
-            AddWord(context, "password_reset_title", string.Empty, "Şifre Sıfırla", "Reset Password", "Сбросить Пароль","set-locale");
-            AddWord(context, "user_apps_title", string.Empty, "Uygulamalarım", "My Applications", "Мои Приложения","set-locale");
-            AddWord(context, "all_apps_title", string.Empty, "Tüm Uygulamalar", "All Applications", "Все Приложения","set-locale");
-            AddWord(context, "all_users_title", string.Empty, "Tüm Kullanıcılar", "All Users", "Все Пользователи","set-locale");
-            AddWord(context, "word_new_key_title", string.Empty, "Yeni Anahtar", "New Key", "Новый Ключь","set-locale");
-            AddWord(context, "menu_words_my_words_key_listing_title", string.Empty, "Anahtar Listesi", "My Key Listing", "Мой Список Ключей","set-locale");
-            AddWord(context, "new_app_title", string.Empty, "Yeni Uygulama", "New Application", "Новое Приложение","set-locale");
-            AddWord(context, "new_translator_title", string.Empty, "Yeni Çevirmen", "New Translator", "Новый Переводчик","set-locale");
-            AddWord(context, "tag_keys_title", string.Empty, "Tag Anahtar Listesi", "Tag Keys Listing", "Тег Списка Ключей","set-locale");
 
-            AddWord(context, "modal_title_apps", string.Empty, "Uygulama Durumu", "Application Status", "Статус Приложения","set-locale");
-            AddWord(context, "modal_body_apps", string.Empty, "Silmek İstediğinize Emin misiniz?", "Are You Sure You Want To Delete?", "Вы Уверены Что Хотите Удалить?","set-locale");
-            AddWord(context, "modal_title_delete_token", string.Empty, "Token Sil", "Delete Token", "Удалить Признак","set-locale");
-            AddWord(context, "modal_body_delete_token", string.Empty, "Bu Anahtarı Silmek İstediğinize Emin misiniz?", "Are You Sure You Want To Delete This Token?", "Вы Уверены Что Хотите Удалить Этот Признак?","set-locale");
-            AddWord(context, "modal_title_users", string.Empty, "Kullanıcı Durumu", "User Status", "Статус Пользователя","set-locale");
-            AddWord(context, "modal_body_users", string.Empty, "Durumu Değiştirmek İstediğinize Emin misiniz?", "Are You Sure You Want To Change The Status?", "Вы Уверены Что Хотите Изменить Статус?","set-locale"); 
+            AddWord(context, "home_title", string.Empty, "Set-locale Servisine Hoş Geldiniz.", "Welcome To Set-locale.", "set-locale");
+            AddWord(context, "words_key_listing_title", string.Empty, "Anahtar Listesi", "Key Listing", "set-locale");
+            AddWord(context, "login_view_title", string.Empty, "Sisteme Giriş", "İnto The System", "set-locale");
+            AddWord(context, "new_user_title", string.Empty, "Yeni Kullanıcı", "New User", "set-locale");
+            AddWord(context, "password_reset_title", string.Empty, "Şifre Sıfırla", "Reset Password", "set-locale");
+            AddWord(context, "user_apps_title", string.Empty, "Uygulamalarım", "My Applications", "set-locale");
+            AddWord(context, "all_apps_title", string.Empty, "Tüm Uygulamalar", "All Applications", "set-locale");
+            AddWord(context, "all_users_title", string.Empty, "Tüm Kullanıcılar", "All Users", "set-locale");
+            AddWord(context, "word_new_key_title", string.Empty, "Yeni Anahtar", "New Key", "set-locale");
+            AddWord(context, "menu_words_my_words_key_listing_title", string.Empty, "Anahtar Listesi", "My Key Listing", "set-locale");
+            AddWord(context, "new_app_title", string.Empty, "Yeni Uygulama", "New Application", "set-locale");
+            AddWord(context, "new_translator_title", string.Empty, "Yeni Çevirmen", "New Translator", "set-locale");
+            AddWord(context, "tag_keys_title", string.Empty, "Tag Anahtar Listesi", "Tag Keys Listing", "set-locale");
+
+            AddWord(context, "modal_title_apps", string.Empty, "Uygulama Durumu", "Application Status", "set-locale");
+            AddWord(context, "modal_body_apps", string.Empty, "Değiştirmek İstediğinize Emin misiniz?", "Are You Sure Want To Change The Application's Status?", "set-locale");
+            AddWord(context, "modal_title_delete_token", string.Empty, "Token Sil", "Delete Token", "set-locale");
+            AddWord(context, "modal_body_delete_token", string.Empty, "Bu Anahtarı Silmek İstediğinize Emin misiniz?", "Are You Sure You Want To Delete This Token?", "set-locale");
+            AddWord(context, "modal_title_users", string.Empty, "Kullanıcı Durumu", "User Status", "set-locale");
+            AddWord(context, "modal_body_users", string.Empty, "Durumu Değiştirmek İstediğinize Emin misiniz?", "Are You Sure You Want To Change The User's Status?", "set-locale"); 
             #endregion
         }
 
@@ -178,7 +192,7 @@ namespace SetLocale.Client.Web.Repositories
             context.Apps.Add(app);
         }
 
-        private static void AddWord(SetLocaleDbContext context, string key, string description, string tr, string en, string ru, string tagName)
+        private static void AddWord(SetLocaleDbContext context, string key, string description, string tr, string en, string tagName)
         {
             var word = new Word
             {
@@ -187,7 +201,6 @@ namespace SetLocale.Client.Web.Repositories
                 IsTranslated = true,
                 Translation_EN = en,
                 Translation_TR = tr,
-                Translation_RU = ru,
                 CreatedBy = 1,
                 TranslationCount = 2,
                 Tags = new List<Tag>
