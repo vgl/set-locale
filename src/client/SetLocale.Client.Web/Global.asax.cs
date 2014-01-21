@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using System.Web.Http;
-using System.Web.Http.Dispatcher;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -22,8 +20,6 @@ namespace SetLocale.Client.Web
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
-            GlobalConfiguration.Configuration.EnsureInitialized();
 
             PrepareIocContainer();
 
@@ -43,7 +39,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("menu_words_words", "All Words");
             enTexts.Add("menu_words_my_words", "My Words");
             enTexts.Add("menu_words_new_word", "New Word");
-            enTexts.Add("menu_words_not_translated", "NotTranslated");
+            enTexts.Add("menu_words_not_translated", "Not Translated");
 
             enTexts.Add("menu_apps", "Applications");
             enTexts.Add("menu_apps_apps", "My Applications");
@@ -64,8 +60,8 @@ namespace SetLocale.Client.Web
             #endregion
 
             enTexts.Add("name", "Name");
-            enTexts.Add("email", "Email");
-            enTexts.Add("app_owner_email", "Owner Email");
+            enTexts.Add("email", "E-mail");
+            enTexts.Add("app_owner_email", "Owner E-mail");
             enTexts.Add("password", "Password");
             enTexts.Add("app_name", "Application Name");
             enTexts.Add("description", "Description");
@@ -77,9 +73,12 @@ namespace SetLocale.Client.Web
             enTexts.Add("word_key", "Key");
             enTexts.Add("tag", "Tag");
             enTexts.Add("translated_language", "Translated Language");
+            enTexts.Add("translation", "Translation");
+            enTexts.Add("language", "Language");
             enTexts.Add("forgot_your_password", "Forgot your password?");
             enTexts.Add("total_page_count", "Total Page Count");
             enTexts.Add("translator_name", "Translator Name");
+
 
             enTexts.Add("btn_login", "Login");
             enTexts.Add("btn_sign_up", "Sign Up");
@@ -94,8 +93,19 @@ namespace SetLocale.Client.Web
             enTexts.Add("btn_cancel", "Cancel");
             enTexts.Add("btn_ok", "Ok");
             enTexts.Add("btn_export_to_excel", "Export to Excel");
+            enTexts.Add("column_header_translation_en", "English");
+            enTexts.Add("column_header_translation_az", "Azerbaijan");
+            enTexts.Add("column_header_translation_cn", "Chinese");
+            enTexts.Add("column_header_translation_fr", "Français");
+            enTexts.Add("column_header_translation_gr", "Greek");
+            enTexts.Add("column_header_translation_it", "İtaliano");
+            enTexts.Add("column_header_translation_kz", "Kazakh");
+            enTexts.Add("column_header_translation_ru", "Russian");
+            enTexts.Add("column_header_translation_sp", "Espanol");
+            enTexts.Add("column_header_translation_tk", "Turkic");
 
-            enTexts.Add("home_summary", "SetLocale's <strong>{2}</strong> translator provided <strong>{4}</strong> translation for <strong><a href='/word/all' style='text-decoration:underline;color:red;'>{3}</a></strong> keys and <strong>{0}</strong> developer is consuming this service with <strong>{1}</strong> application");
+
+            enTexts.Add("home_summary", "SetLocale's <strong>{2}</strong> translator provided <strong>{4}</strong> translation for <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> keys and <strong>{0}</strong> developer is consuming this service with <strong>{1}</strong> application");
 
             enTexts.Add("home_title", "Localization as a service");
             enTexts.Add("words_key_listing_title", "Key Listing");
@@ -113,11 +123,11 @@ namespace SetLocale.Client.Web
             enTexts.Add("tag_keys_title", "Keys Listing Tagged With ");
 
             enTexts.Add("modal_title_apps", "App Status");
-            enTexts.Add("modal_body_apps", "Are you sure want to change the user's status?");
+            enTexts.Add("modal_body_apps", "Are you sure want to change the application's status?");
             enTexts.Add("modal_title_delete_token", "Token Delete");
             enTexts.Add("modal_body_delete_token", "Are you sure want to delete the token?");
             enTexts.Add("modal_title_users", "User Status");
-            enTexts.Add("modal_body_users", "Are you sure want to change the application's status?");
+            enTexts.Add("modal_body_users", "Are you sure want to change the user's status?");
 
             #endregion
 
@@ -163,6 +173,8 @@ namespace SetLocale.Client.Web
             trTexts.Add("word_key", "Anahtar");
             trTexts.Add("tag", "Etiket");
             trTexts.Add("translated_language", "Çevrilmiş Dil");
+            trTexts.Add("translation", "Çeviri");
+            trTexts.Add("language", "Dil");
             trTexts.Add("forgot_your_password", "Şifremi Unuttum");
             trTexts.Add("total_page_count", "Toplam Sayfa Sayısı");
             trTexts.Add("translator_name", "İsmi");
@@ -179,10 +191,20 @@ namespace SetLocale.Client.Web
             trTexts.Add("btn_edit", "Düzenle");
             trTexts.Add("btn_cancel", "İptal");
             trTexts.Add("btn_ok", "Tamam");
-            //todo: translation needed
-            trTexts.Add("btn_export_to_excel", "translationneeded");
+            trTexts.Add("btn_export_to_excel", "Excel'e Çıkar");
+            trTexts.Add("column_header_translation_tr", "Türkçe");
+            trTexts.Add("column_header_translation_az", "Azerbaycan");
+            trTexts.Add("column_header_translation_cn", "Çince");
+            trTexts.Add("column_header_translation_fr", "Fransızca");
+            trTexts.Add("column_header_translation_gr", "Yunanca");
+            trTexts.Add("column_header_translation_it", "İtalyanca");
+            trTexts.Add("column_header_translation_kz", "Kazakça");
+            trTexts.Add("column_header_translation_ru", "Rusça");
+            trTexts.Add("column_header_translation_sp", "İspanyolca");
+            trTexts.Add("column_header_translation_tk", "Türkmençe");
 
-            trTexts.Add("home_summary", "SetLocale uygulamasında <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong>{3}</strong> farklı kelime için <strong>{4}</strong> adet çeviri eklenmiştir.");
+
+            trTexts.Add("home_summary", "SetLocale uygulamasında <strong>{0}</strong> geliştirici tarafından eklenen <strong>{1}</strong> uygulamaya <strong>{2}</strong> çevirmen ile <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> farklı kelime için <strong>{4}</strong> adet çeviri eklenmiştir.");
 
             trTexts.Add("home_title", "Set-locale Servisine Hoş Geldiniz");
             trTexts.Add("words_key_listing_title", "Anahtar Listesi");
@@ -193,14 +215,14 @@ namespace SetLocale.Client.Web
             trTexts.Add("all_apps_title", "Tüm Uygulamalar");
             trTexts.Add("all_users_title", "Tüm Kullanıcılar");
             trTexts.Add("word_new_key_title", "Yeni Anahtar");
-            trTexts.Add("words_my_key_listing_title", "Anahatar Listesi");
+            trTexts.Add("words_my_key_listing_title", "Anahtar Listesi");
             trTexts.Add("words_not_translated_key_listing_title", "Anahtar Listesi");
             trTexts.Add("new_app_title", "Yeni Uygulama");
             trTexts.Add("new_translator_title", "Yeni Çevirmen");
             trTexts.Add("tag_keys_title", "Tag Anahtar Listesi ");
 
             trTexts.Add("modal_title_apps", "Uygulama Durumu");
-            trTexts.Add("modal_body_apps", "Silmek İstediğinize Emin misiniz?");
+            trTexts.Add("modal_body_apps", "Değiştirmek İstediğinize Emin misiniz?");
             trTexts.Add("modal_title_delete_token", "Token Sil");
             trTexts.Add("modal_body_delete_token", "Bu Anahtarı Silmek İstediğinize Emin misiniz?");
             trTexts.Add("modal_title_users", "Kullanıcı Durumu");
@@ -216,7 +238,6 @@ namespace SetLocale.Client.Web
         {
             var container = new WindsorContainer().Install(FromAssembly.This());
             ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(container.Kernel));
-            GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator), new WindsorAPIControllerFactory(container));
         }
 
         protected void Application_PreSendRequestHeaders(object sender, EventArgs e)

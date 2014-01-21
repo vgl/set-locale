@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Net.Http;
 using System.Web;
-using System.Web.Http.Controllers;
-using System.Web.Http.Dispatcher;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -41,47 +38,11 @@ namespace SetLocale.Client.Web.Configurations
         }
     }
 
-    public class WindsorAPIControllerFactory : IHttpControllerActivator
-    {
-        private readonly IWindsorContainer _container;
-
-        public WindsorAPIControllerFactory(IWindsorContainer container)
-        {
-            _container = container;
-        }
-
-        public IHttpController Create(
-            HttpRequestMessage request,
-            HttpControllerDescriptor controllerDescriptor,
-            Type controllerType)
-        {
-            var controller = (IHttpController)_container.Resolve(controllerType);
-            request.RegisterForDispose(new Release(() => _container.Release(controller)));
-            return controller;
-        }
-
-        private class Release : IDisposable
-        {
-            private readonly Action _release;
-
-            public Release(Action release)
-            {
-                _release = release;
-            }
-
-            public void Dispose()
-            {
-                _release();
-            }
-        }
-    }
-
     public class ControllersInstaller : IWindsorInstaller
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
             container.Register(Classes.FromThisAssembly().BasedOn<IController>().Unless(x => x.Name == "BaseController").LifestyleTransient());
-            container.Register(Classes.FromThisAssembly().BasedOn<IHttpController>().Unless(x => x.Name == "BaseApiController").LifestyleTransient());
         }
     }
 
