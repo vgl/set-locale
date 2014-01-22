@@ -19,6 +19,7 @@ namespace SetLocale.Client.Web.Services
         Task<PagedList<Word>> GetNotTranslated(int pageNumber);
         Task<bool> Translate(string key, string language, string translation);
         Task<bool> Tag(string key, string tag);
+        Task<List<Word>> GetAll();
     }
 
     public class WordService : IWordService
@@ -209,6 +210,13 @@ namespace SetLocale.Client.Web.Services
             _wordRepository.Update(word);
 
             return Task.FromResult(_wordRepository.SaveChanges());
-        } 
+        }
+
+        public Task<List<Word>> GetAll()
+        {
+            var words = _wordRepository.FindAll().ToList();
+
+            return Task.FromResult(words);
+        }
     }
 }
