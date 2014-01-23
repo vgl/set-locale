@@ -67,7 +67,7 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet, AllowAnonymous]
-        public async Task<JsonResult> Locales(string lang = "tr", string tag = "set_locale", int page = 1)
+        public async Task<JsonResult> Locales(string tag, string lang = "tr", int page = 1)
         {
             var model = new List<NameValueModel>();
 
