@@ -251,7 +251,7 @@
                     btnCancel.click(function (r) {
                         var btn = $(this).parent().children(":first");
                         $(btn).removeClass("btn-primary").addClass("btn-warning");
-                        $(btn).val("@Html.LocalizationString("btn_edit")");
+                        $(btn).val("@Html.Raw(Html.LocalizationString("btn_edit"))");
 
                         $(this).remove();
 
