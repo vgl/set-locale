@@ -1,5 +1,4 @@
 ﻿@model UserModel
-
 @{
     ViewBag.Title = Html.LocalizationString("new_user_title");
 }
@@ -52,7 +51,7 @@
                         required: true,
                         email: true
                     },
-                    username: {
+                    name: {
                         required: true,
                       }
                 },
@@ -62,7 +61,7 @@
                         minlength: "*"
                     },
                     email: "*",
-                    username: "*"
+                    name: "*"
                 }
             });
         });
