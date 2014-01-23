@@ -80,7 +80,7 @@ namespace SetLocale.Client.Web.Controllers
 
             ViewBag.UserId = id;
 
-            var words = await _wordService.GetByUserId(id, pageNumber);     
+            var words = await _wordService.GetByUserId(id, pageNumber);
             var list = words.Items.Select(WordModel.MapEntityToModel).ToList();
 
             var model = new PageModel<WordModel>
@@ -92,7 +92,7 @@ namespace SetLocale.Client.Web.Controllers
                 TotalCount = words.TotalCount,
                 TotalPageCount = words.TotalPageCount
             };
-            
+
             return View(model);
         }
 
@@ -102,7 +102,7 @@ namespace SetLocale.Client.Web.Controllers
             var model = new ResponseModel { Ok = false };
             if (id < 1)
             {
-                return Json(model, JsonRequestBehavior.DenyGet);    
+                return Json(model, JsonRequestBehavior.DenyGet);
             }
 
             model.Ok = await _userService.ChangeStatus(id, isActive);
@@ -133,6 +133,8 @@ namespace SetLocale.Client.Web.Controllers
                 model.Msg = "bir sorun oluştu";
                 return View(model);
             }
+
+            _formsAuthenticationService.SignIn(string.Format("{0}|{1}|{2}", userId, model.Name, model.Email), true);
 
             return Redirect("/user/apps");
         }
