@@ -98,7 +98,7 @@
 
                 var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
                 btnSave.val('@Html.LocalizationString("btn_save")');
-                btnSave.data('id', '@Model.Name');
+                btnSave.data('id', '@Model.Key');
 
                 btnSave.click(function() {
                     var lang = $("select#selLanguages").val();
@@ -108,7 +108,7 @@
                     $.ajax({
                         url: "/Word/Translate",
                         type: "POST",
-                        data: "key=@Model.Name&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                        data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
                         success: function(r) {
                             if (r && r.Ok) {
 
@@ -209,7 +209,7 @@
                 $.ajax({
                     url: "/Word/Translate",
                     type: "POST",
-                    data: "key=@Model.Name&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                    data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
                     success: function(r) {
                         if (r && r.Ok) {
                             td.html(translation);
@@ -290,7 +290,7 @@
 
                 var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
                 btnSave.val('@Html.LocalizationString("btn_save")');
-                btnSave.data('id', '@Model.Name');
+                btnSave.data('id', '@Model.Key');
 
                 btnSave.click(function() {
                     var tag = $("input#txtTag").val();
@@ -298,7 +298,7 @@
                     $.ajax({
                         url: "/Word/Tag",
                         type: "POST",
-                        data: "key=@Model.Name&tag=" + tag + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
+                        data: "key=@Model.Key&tag=" + tag + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
                         success: function(r) {
                             if (r && r.Ok) {
                                 var tags = $('<a class="label label-info" style="margin-left:5px;" href="/tag/detail/' + tag + '">' + tag + '</a>');
