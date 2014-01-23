@@ -200,7 +200,7 @@
     <Compile Include="Models\LocaleModel.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\SearchResult.cs" />
-    <Compile Include="Models\WordItemModel.cs" />
+    <Compile Include="Models\NameValueModel.cs" />
     <Compile Include="Models\WordModel.cs" />
     <Compile Include="Models\LanguageModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />

@@ -70,7 +70,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("token", "Token");
             enTexts.Add("creation_date", "Creation Date");
             enTexts.Add("user_role", "User Role");
-            enTexts.Add("word_key", "Key");
+            enTexts.Add("word_key", "Name");
             enTexts.Add("tag", "Tag");
             enTexts.Add("translated_language", "Translated Language");
             enTexts.Add("translation", "Translation");
@@ -108,14 +108,14 @@ namespace SetLocale.Client.Web
             enTexts.Add("home_summary", "SetLocale's <strong>{2}</strong> translator provided <strong>{4}</strong> translation for <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> keys and <strong>{0}</strong> developer is consuming this service with <strong>{1}</strong> application");
 
             enTexts.Add("home_title", "Localization as a service");
-            enTexts.Add("words_key_listing_title", "Key Listing");
+            enTexts.Add("words_key_listing_title", "Name Listing");
             enTexts.Add("login_view_title", "Login to System");
             enTexts.Add("new_user_title", "New User");
             enTexts.Add("password_reset_title", "Reset Password");
             enTexts.Add("user_apps_title", "My Applications");
             enTexts.Add("all_apps_title", "All Applications");
             enTexts.Add("all_users_title", "All Users");
-            enTexts.Add("word_new_key_title", "New Key");
+            enTexts.Add("word_new_key_title", "New Name");
             enTexts.Add("words_my_key_listing_title", "My Keys Listing");
             enTexts.Add("words_not_translated_key_listing_title", "Not Translated Keys Listing");
             enTexts.Add("new_app_title", "New Application");

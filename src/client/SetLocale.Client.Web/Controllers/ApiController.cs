@@ -69,7 +69,7 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet, AllowAnonymous]
         public async Task<JsonResult> Locales(string lang = "tr", string tag = "set_locale", int page = 1)
         {
-            var model = new List<WordItemModel>();
+            var model = new List<NameValueModel>();
 
             if (!LanguageModel.IsValidLanguageKey(lang)) return Json(new { Error = "not valid language!" }, JsonRequestBehavior.AllowGet);
 
@@ -89,9 +89,9 @@ namespace SetLocale.Client.Web.Controllers
             {
                 model.AddRange(
                     items.Items.Select(
-                        item => new WordItemModel
+                        item => new NameValueModel
                         {
-                            Key = item.Key,
+                            Name = item.Key,
                             Value = item.Translation_TR
                         }));
             }
@@ -99,9 +99,9 @@ namespace SetLocale.Client.Web.Controllers
             {
                 model.AddRange(
                     items.Items.Select(
-                        item => new WordItemModel
+                        item => new NameValueModel
                         {
-                            Key = item.Key,
+                            Name = item.Key,
                             Value = item.Translation_EN
                         }));
             }
@@ -109,9 +109,9 @@ namespace SetLocale.Client.Web.Controllers
             {
                 model.AddRange(
                     items.Items.Select(
-                        item => new WordItemModel
+                        item => new NameValueModel
                         {
-                            Key = item.Key,
+                            Name = item.Key,
                             Value = item.Translation_IT
                         }));
             }

@@ -78,7 +78,7 @@ namespace SetLocale.Client.Web.Repositories
             AddWord(context, "token", string.Empty, "Token", "Token", "Признак", "set-locale");
             AddWord(context, "cretion_date", string.Empty, "Oluşturma Tarihi", "Creation Date", "Дата Создания", "set-locale");
             AddWord(context, "user_role", string.Empty, "Yetki Grubu", "Role", "Роль", "set-locale");
-            AddWord(context, "word_key", string.Empty, "Anahtar", "Key", "Ключь", "set-locale");
+            AddWord(context, "word_key", string.Empty, "Anahtar", "Name", "Ключь", "set-locale");
             AddWord(context, "tag", string.Empty, "Etiket", "Tag", "Тег", "set-locale");
             AddWord(context, "translated_language", string.Empty, "Çevrilmiş Dil", "Translated Language", "Язык Перевода", "set-locale");
             AddWord(context, "translation", string.Empty, "Çeviri", "Translation", "Перевод", "set-locale");
@@ -113,15 +113,15 @@ namespace SetLocale.Client.Web.Repositories
 
 
             AddWord(context, "home_title", string.Empty, "Set-locale Servisine Hoş Geldiniz.", "Welcome To Set-locale.", "Добро Пожаловать В Set-locale.", "set-locale");
-            AddWord(context, "words_key_listing_title", string.Empty, "Anahtar Listesi", "Key Listing", "Список Ключей","set-locale");
+            AddWord(context, "words_key_listing_title", string.Empty, "Anahtar Listesi", "Name Listing", "Список Ключей","set-locale");
             AddWord(context, "login_view_title", string.Empty, "Sisteme Giriş", "İnto The System", "Вход В Систему","set-locale");
             AddWord(context, "new_user_title", string.Empty, "Yeni Kullanıcı", "New User", "Новый пользователь","set-locale");
             AddWord(context, "password_reset_title", string.Empty, "Şifre Sıfırla", "Reset Password", "Сбросить Пароль","set-locale");
             AddWord(context, "user_apps_title", string.Empty, "Uygulamalarım", "My Applications", "Мои приложения","set-locale");
             AddWord(context, "all_apps_title", string.Empty, "Tüm Uygulamalar", "All Applications", "Все приложения","set-locale");
             AddWord(context, "all_users_title", string.Empty, "Tüm Kullanıcılar", "All Users", "Все пользователи","set-locale");
-            AddWord(context, "word_new_key_title", string.Empty, "Yeni Anahtar", "New Key", "Новый Ключь","set-locale");
-            AddWord(context, "menu_words_my_words_key_listing_title", string.Empty, "Anahtar Listesi", "My Key Listing", "Мой Список Ключей","set-locale");
+            AddWord(context, "word_new_key_title", string.Empty, "Yeni Anahtar", "New Name", "Новый Ключь","set-locale");
+            AddWord(context, "menu_words_my_words_key_listing_title", string.Empty, "Anahtar Listesi", "My Name Listing", "Мой Список Ключей","set-locale");
             AddWord(context, "new_app_title", string.Empty, "Yeni Uygulama", "New Application", "Новое Приложение","set-locale");
             AddWord(context, "new_translator_title", string.Empty, "Yeni Çevirmen", "New Translator", "Новый Переводчик","set-locale");
             AddWord(context, "tag_keys_title", string.Empty, "Tag Anahtar Listesi", "Tag Keys Listing", "Тег Списка Ключей","set-locale");
