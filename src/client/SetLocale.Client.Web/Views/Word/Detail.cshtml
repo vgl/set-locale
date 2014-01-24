@@ -85,7 +85,7 @@
 
             function addNewTranslationRow() {
                 var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
-                btnCancel.val('@Html.LocalizationString("btn_cancel")');
+                btnCancel.val('@Html.Raw(Html.LocalizationString("btn_cancel"))');
 
                 btnCancel.click(function() {
 
@@ -97,7 +97,7 @@
                 });
 
                 var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
-                btnSave.val('@Html.LocalizationString("btn_save")');
+                btnSave.val('@Html.Raw(Html.LocalizationString("btn_save"))');
                 btnSave.data('id', '@Model.Key');
 
                 btnSave.click(function() {
@@ -111,6 +111,9 @@
                         data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
                         success: function(r) {
                             if (r && r.Ok) {
+
+                                if (translation == "")
+                                    alert("boş");
 
                                 var tr = $('<tr />');
 
@@ -204,7 +207,12 @@
                     }
                 });
 
-                var td = btn.parent().parent().children(":last");
+                if (translation == "") {
+                    $("input#txtEdit").parent().parent().remove();
+                } else {
+                    var td = btn.parent().parent().children(":last");
+                }
+                    
 
                 $.ajax({
                     url: "/Word/Translate",
@@ -240,10 +248,10 @@
 
                 if ($(this).hasClass("btn-warning")) {
                     $(this).removeClass("btn-warning").addClass("btn-primary");
-                    $(this).val("@Html.LocalizationString("btn_save")");
+                    $(this).val("@Html.Raw(Html.LocalizationString("btn_save"))");
 
                     var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
-                    btnCancel.val('@Html.LocalizationString("btn_cancel")');
+                    btnCancel.val('@Html.Raw(Html.LocalizationString("btn_cancel"))');
 
                     $(this).parent().append(btnCancel);
                     prepareEditRow($(this));
@@ -261,7 +269,7 @@
                     });
                 } else if ($(this).hasClass("btn-primary")) {
                     $(this).removeClass("btn-primary").addClass("btn-warning");
-                    $(this).val("@Html.LocalizationString("btn_edit")");
+                    $(this).val("@Html.Raw(Html.LocalizationString("btn_edit"))");
 
                     prepareDataShowingRow($(this));
                 }
@@ -279,7 +287,7 @@
 
             function addNewTagRow() {
                 var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
-                btnCancel.val('@Html.LocalizationString("btn_cancel")');
+                btnCancel.val('@Html.Raw(Html.LocalizationString("btn_cancel"))');
 
                 btnCancel.click(function() {
                     $("h3#hdForm").html('');
@@ -289,7 +297,7 @@
                 });
 
                 var btnSave = $('<input type="button" />').addClass('btn btn-sm btn-primary');
-                btnSave.val('@Html.LocalizationString("btn_save")');
+                btnSave.val('@Html.Raw(Html.LocalizationString("btn_save"))');
                 btnSave.data('id', '@Model.Key');
 
                 btnSave.click(function() {

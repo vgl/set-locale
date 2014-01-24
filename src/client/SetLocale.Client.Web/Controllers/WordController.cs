@@ -122,8 +122,7 @@ namespace SetLocale.Client.Web.Controllers
             var model = new ResponseModel { Ok = false };
 
             if (string.IsNullOrEmpty(key)
-                || string.IsNullOrEmpty(language)
-                || string.IsNullOrEmpty(translation))
+                || string.IsNullOrEmpty(language))
             {
                 return Json(model, JsonRequestBehavior.DenyGet);
             }

@@ -12,7 +12,6 @@ namespace SetLocale.Client.Web.Helpers
         {
             try
             {
-                string temp = ((Dictionary<string, string>) HttpContext.Current.Application[string.Format("{0}_txt", Thread.CurrentThread.CurrentUICulture.Name)])[key]; 
                 return ((Dictionary<string, string>) HttpContext.Current.Application[string.Format("{0}_txt", Thread.CurrentThread.CurrentUICulture.Name)])[key];
             }
             catch (Exception)

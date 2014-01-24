@@ -156,8 +156,7 @@ namespace SetLocale.Client.Web.Services
         public Task<bool> Translate(string key, string language, string translation)
         {
             if (string.IsNullOrEmpty(key)
-               || string.IsNullOrEmpty(language)
-               || string.IsNullOrEmpty(translation))
+               || string.IsNullOrEmpty(language))
             {
                 return Task.FromResult(false);
             }
@@ -170,14 +169,27 @@ namespace SetLocale.Client.Web.Services
 
             var type = word.GetType();
             var propInfo = type.GetProperty(string.Format("Translation_{0}", language.ToUpperInvariant()), new Type[0]);
+
             if (propInfo == null)
             {
                 return Task.FromResult(false);
             }
 
-            propInfo.SetValue(word, translation);
-            word.TranslationCount++;
-            word.IsTranslated = true;
+            if (string.IsNullOrEmpty(translation))
+            {
+                word.TranslationCount--;
+                if(word.TranslationCount > 0)
+                    word.IsTranslated = true;
+
+                propInfo.SetValue(word, null);
+
+            }
+            else
+            {
+                propInfo.SetValue(word, translation);
+                word.TranslationCount++;
+                word.IsTranslated = true;
+            }
 
             _wordRepository.Update(word);
 
@@ -218,5 +230,6 @@ namespace SetLocale.Client.Web.Services
 
             return Task.FromResult(words);
         }
+
     }
 }
