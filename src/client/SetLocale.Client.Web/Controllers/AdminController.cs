@@ -117,6 +117,8 @@ namespace SetLocale.Client.Web.Controllers
 
             var list = apps.Items.Select(AppModel.MapFromEntity).ToList();
 
+
+
             var model = new PageModel<AppModel>
             {
                 Items = list,

@@ -11,7 +11,12 @@ namespace SetLocale.Client.Web.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Url { get; set; }
-        public int UsageCount { get; set; }
+
+        public int UsageCount
+        {
+            get { return Tokens.Sum(x => x.UsageCount); }
+        }
+
         public bool IsActive { get; set; }
 
         public List<TokenModel> Tokens { get; set; }
