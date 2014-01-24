@@ -24,15 +24,19 @@ namespace SetLocale.Client.Web.Test.Services
             userRepository.Setup(x => x.Create(It.IsAny<User>())).Returns(It.IsAny<User>());
             userRepository.Setup(x => x.SaveChanges()).Returns(true);
 
+            var appRepository = new Mock<IRepository<App>>();
+            appRepository.Setup(x => x.Create(It.IsAny<App>())).Returns(It.IsAny<App>());
+            appRepository.Setup(x => x.SaveChanges()).Returns(true);
+
             //act
-            var userService = new UserService(userRepository.Object);
+            var userService = new UserService(userRepository.Object, appRepository.Object);
             var userId = userService.Create(userModel);
 
-           //assert
+            //assert
             Assert.NotNull(userId);
 
             userRepository.Verify(x => x.Create(It.IsAny<User>()), Times.Once);
-            userRepository.Verify(x => x.SaveChanges(), Times.AtLeastOnce); 
+            userRepository.Verify(x => x.SaveChanges(), Times.AtLeastOnce);
         }
 
         [Test]
@@ -44,11 +48,15 @@ namespace SetLocale.Client.Web.Test.Services
             var userRepository = new Mock<IRepository<User>>();
             userRepository.Setup(x => x.FindOne(It.IsAny<Expression<Func<User, bool>>>())).Returns(new User { Email = email });
 
+            var appRepository = new Mock<IRepository<App>>();
+            appRepository.Setup(x => x.Create(It.IsAny<App>())).Returns(It.IsAny<App>());
+            appRepository.Setup(x => x.SaveChanges()).Returns(true);
+
             //act
-            var userService = new UserService(userRepository.Object);
+            var userService = new UserService(userRepository.Object, appRepository.Object);
             var user = await userService.GetByEmail(email);
 
-           //assert
+            //assert
             Assert.NotNull(user);
             Assert.AreEqual(email, user.Email);
 
@@ -62,13 +70,18 @@ namespace SetLocale.Client.Web.Test.Services
             var userModel = new UserModel { Email = "test@test.com", Password = "password" };
             var userRepository = new Mock<IRepository<User>>();
 
+            var appRepository = new Mock<IRepository<App>>();
+            appRepository.Setup(x => x.Create(It.IsAny<App>())).Returns(It.IsAny<App>());
+            appRepository.Setup(x => x.SaveChanges()).Returns(true);
+
             //act
-            var userService = new UserService(userRepository.Object);
+            var userService = new UserService(userRepository.Object, appRepository.Object);
+
             var userId = userService.Create(userModel);
 
-           //assert
+            //assert
             Assert.NotNull(userId);
-            
+
             userRepository.Verify(x => x.Create(It.IsAny<User>()), Times.Once);
             userRepository.Verify(x => x.SaveChanges(), Times.AtLeastOnce);
         }
