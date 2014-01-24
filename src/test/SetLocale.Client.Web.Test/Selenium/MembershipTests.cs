@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+
 using NUnit.Framework;
 using OpenQA.Selenium.Firefox;
 
@@ -7,40 +9,43 @@ namespace SetLocale.Client.Web.Test.Selenium
     [TestFixture]
     public class MembershipTests
     {
-        FirefoxDriver _browser;
         private const string BaseUrl = "http://localhost:8011/";
 
-        [TestFixtureSetUp]
-        public void Setup()
+        [Test]
+        public async void should_login()
         {
-            _browser = new FirefoxDriver();
+            await Task.Factory.StartNew(() =>
+            {
+                var browser = new FirefoxDriver();
+
+                browser.Navigate().GoToUrl(string.Format("{0}/user/logout", BaseUrl));
+
+                browser.Navigate().GoToUrl(string.Format("{0}/user/login", BaseUrl));
+
+                browser.FindElementById("email").SendKeys("hserdarb@gmail.com");
+                browser.FindElementById("password").SendKeys("password");
+                browser.FindElementById("frm").Submit();
+
+                browser.Close();
+            });
         }
 
         [Test]
-        public void should_login()
+        public async void should_signup()
         {
-            _browser.Navigate().GoToUrl(string.Format("{0}/user/logout", BaseUrl));
+            await Task.Factory.StartNew(() =>
+            {
+                var browser = new FirefoxDriver();
 
-            _browser.Navigate().GoToUrl(string.Format("{0}/user/login", BaseUrl));
+                browser.Navigate().GoToUrl(string.Format("{0}/user/new", BaseUrl));
 
-            _browser.FindElementById("email").SendKeys("hserdarb@gmail.com");
-            _browser.FindElementById("password").SendKeys("password");
-            _browser.FindElementById("frm").Submit();
+                browser.FindElementById("name").SendKeys(Guid.NewGuid().ToString().Replace("-", ""));
+                browser.FindElementById("email").SendKeys(Guid.NewGuid().ToString().Replace("-", "") + "@gmail.com");
+                browser.FindElementById("password").SendKeys("password");
+                browser.FindElementById("frm").Submit();
 
-            _browser.Close();
-        }
-
-        [Test]
-        public void should_signup()
-        {
-            _browser.Navigate().GoToUrl(string.Format("{0}/user/new", BaseUrl));
-
-            _browser.FindElementById("name").SendKeys(Guid.NewGuid().ToString().Replace("-", ""));
-            _browser.FindElementById("email").SendKeys(Guid.NewGuid().ToString().Replace("-", "") + "@gmail.com");
-            _browser.FindElementById("password").SendKeys("password");
-            _browser.FindElementById("frm").Submit();
-
-            _browser.Close();
+                browser.Close();
+            });
         }
     }
 }
