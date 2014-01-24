@@ -203,16 +203,16 @@
                 $.each(translations, function(i, txt) {
                     if ($(txt).data("lang") == lang) {
                         translation = $(txt).val();
+
+                        if (translation == "") {
+                            $(txt).parent().parent().remove();
+                        }
+
                         return;
                     }
                 });
 
-                if (translation == "") {
-                    $("input#txtEdit").parent().parent().remove();
-                } else {
-                    var td = btn.parent().parent().children(":last");
-                }
-                    
+                var td = btn.parent().parent().children(":last");
 
                 $.ajax({
                     url: "/Word/Translate",
