@@ -112,9 +112,6 @@
                         success: function(r) {
                             if (r && r.Ok) {
 
-                                if (translation == "")
-                                    alert("boş");
-
                                 var tr = $('<tr />');
 
                                 var tdBtn = $('<td />');
@@ -250,7 +247,7 @@
                     $(this).removeClass("btn-warning").addClass("btn-primary");
                     $(this).val("@Html.Raw(Html.LocalizationString("btn_save"))");
 
-                    var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
+                    var btnCancel = $('<input type="button" style ="margin-left:5px" />').addClass('btn btn-sm btn-danger');
                     btnCancel.val('@Html.Raw(Html.LocalizationString("btn_cancel"))');
 
                     $(this).parent().append(btnCancel);
