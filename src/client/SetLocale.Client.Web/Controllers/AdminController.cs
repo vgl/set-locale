@@ -64,7 +64,7 @@ namespace SetLocale.Client.Web.Controllers
                 return View(model);
             }
 
-            //send mail to translator to welcome and ask for reset password
+            //todo:send mail to translator to welcome and ask for reset password
 
             return Redirect("/admin/users");
         }
@@ -116,8 +116,6 @@ namespace SetLocale.Client.Web.Controllers
             var apps = await _appService.GetApps(pageNumber);
 
             var list = apps.Items.Select(AppModel.MapFromEntity).ToList();
-
-
 
             var model = new PageModel<AppModel>
             {
