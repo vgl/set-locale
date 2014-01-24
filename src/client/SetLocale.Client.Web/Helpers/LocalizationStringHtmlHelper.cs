@@ -12,12 +12,18 @@ namespace SetLocale.Client.Web.Helpers
         {
             try
             {
-                return ((Dictionary<string, string>) HttpContext.Current.Application[string.Format("{0}_txt", Thread.CurrentThread.CurrentUICulture.Name)])[key];
+                var dictionary = (Dictionary<string, string>)HttpContext.Current.Application[string.Format("{0}_txt", Thread.CurrentThread.CurrentUICulture.Name)];
+                return dictionary[key];
             }
             catch (Exception)
             {
                 return key;
             }
+        }
+
+        public static string LocalizationString(string key)
+        {
+            return LocalizationString(null, key);
         }
     }
 }

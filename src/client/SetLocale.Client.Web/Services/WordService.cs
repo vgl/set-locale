@@ -178,9 +178,9 @@ namespace SetLocale.Client.Web.Services
             if (string.IsNullOrEmpty(translation))
             {
                 word.TranslationCount--;
-                if(word.TranslationCount > 0)
-                    word.IsTranslated = true;
 
+                word.IsTranslated = word.TranslationCount > 0;
+                    
                 propInfo.SetValue(word, null);
 
             }
