@@ -127,14 +127,18 @@ namespace SetLocale.Client.Web.Test.Controllers
             var userService = new Mock<IUserService>();
             userService.Setup(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Developer.Value)).Returns(() => Task.FromResult<int?>(1));
 
+            var formsAuthenticationService = new Mock<IFormsAuthenticationService>();
+            formsAuthenticationService.Setup(x => x.SignIn(string.Format("{0}|{1}|{2}", 1, validModel.Name, validModel.Email), true));
+
             //act
             var sut = new UserControllerBuilder().WithUserService(userService.Object)
+                                                 .WithFormsAuthenticationService(formsAuthenticationService.Object)
                                                  .Build();
-            var view = await sut.New(validModel) as RedirectResult;
+            var view = await sut.New(validModel);
 
             //assert
             Assert.NotNull(view);
-            Assert.AreEqual(view.Url, "/user/apps");
+            Assert.AreEqual(((RedirectResult)view).Url, "/user/apps");
             userService.Verify(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Developer.Value), Times.Once);
 
             sut.AssertPostAttribute("New", new[] { typeof(UserModel) });

@@ -1,7 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
 using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
 
 namespace SetLocale.Client.Web.Test.Selenium
 {
@@ -9,7 +8,7 @@ namespace SetLocale.Client.Web.Test.Selenium
     public class MembershipTests
     {
         FirefoxDriver _browser;
-        private const string BaseUrl = "http://localhost:3881/";
+        private const string BaseUrl = "http://localhost:8011/";
 
         [TestFixtureSetUp]
         public void Setup()
@@ -40,6 +39,8 @@ namespace SetLocale.Client.Web.Test.Selenium
             _browser.FindElementById("email").SendKeys(Guid.NewGuid().ToString().Replace("-", "") + "@gmail.com");
             _browser.FindElementById("password").SendKeys("password");
             _browser.FindElementById("frm").Submit();
+
+            _browser.Close();
         }
     }
 }

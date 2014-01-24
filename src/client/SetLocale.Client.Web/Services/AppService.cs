@@ -53,7 +53,7 @@ namespace SetLocale.Client.Web.Services
                 Description = model.Description ?? string.Empty,
                 Tokens = new List<Token>
                 {
-                    new Token { CreatedBy = model.CreatedBy, Key = Guid.NewGuid().ToString().Replace("-", string.Empty), UsageCount = 0 }
+                    new Token { CreatedBy = model.CreatedBy, Key = Guid.NewGuid().ToString().Replace("-", string.Empty), UsageCount = 0,IsAppActive = true }
                 }
             };
 

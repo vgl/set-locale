@@ -14,8 +14,8 @@ namespace SetLocale.Client.Web.Services
     {
         Task<int?> Create(UserModel model, int roleId = 3);
         Task<User> GetByEmail(string email);
-        Task<bool> Authenticate(string email, string password); 
-        Task<PagedList<User>> GetUsers(int pageNumber);  
+        Task<bool> Authenticate(string email, string password);
+        Task<PagedList<User>> GetUsers(int pageNumber);
         Task<PagedList<User>> GetAllByRoleId(int roleId, int pageNumber);
         Task<bool> ChangeStatus(int userId, bool isActive);
     }
@@ -23,9 +23,14 @@ namespace SetLocale.Client.Web.Services
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepo;
-        public UserService(IRepository<User> userRepo)
+        private readonly IRepository<App> _appRepository;
+
+        public UserService(
+            IRepository<User> userRepo,
+            IRepository<App> appRepository)
         {
             _userRepo = userRepo;
+            _appRepository = appRepository;
         }
 
         /// <summary>
@@ -49,6 +54,24 @@ namespace SetLocale.Client.Web.Services
                 Language = model.Language
             };
             _userRepo.Create(user);
+
+            if (roleId == SetLocaleRole.Developer.Value)
+            {
+                var app = new App
+                {
+                    UserEmail = model.Email,
+                    Name = model.Name,
+                    Url = "example.com",
+                    IsActive = true,
+                    Tokens = new List<Token>
+                    {
+                        new Token {Key = Guid.NewGuid().ToString().Replace("-", string.Empty), UsageCount = 0,IsAppActive = true}
+                    }
+                };
+
+                _appRepository.Create(app);
+                _appRepository.SaveChanges();
+            }
 
             if (!_userRepo.SaveChanges()) return null;
 
@@ -88,7 +111,7 @@ namespace SetLocale.Client.Web.Services
             _userRepo.SaveChanges();
 
             return Task.FromResult(result);
-        } 
+        }
 
         public Task<PagedList<User>> GetUsers(int pageNumber)
         {
@@ -110,7 +133,7 @@ namespace SetLocale.Client.Web.Services
             items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
 
             return Task.FromResult(new PagedList<User>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
-        } 
+        }
 
         public Task<PagedList<User>> GetAllByRoleId(int roleId, int pageNumber)
         {
@@ -148,7 +171,7 @@ namespace SetLocale.Client.Web.Services
             }
 
             user.IsActive = !isActive;
-            _userRepo.Update(user); 
+            _userRepo.Update(user);
 
             return Task.FromResult(_userRepo.SaveChanges());
         }
