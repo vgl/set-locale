@@ -5,7 +5,7 @@ set-locale is a localization string provider as a service...
 
 ## api request examples
 
-### http://setlocale.azurewebsites.net/api/locales/tr/set-locale/2
+### http://setlocale.azurewebsites.net/api/locales?lang=tr&tag=setcrm&page=1
 
 {
     "Key": "btn_activate",
