@@ -40,6 +40,12 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpGet]
+        public ActionResult Import()
+        {
+            return Redirect("/admin/import");
+        }
+
+        [HttpGet]
         public ViewResult NewTranslator()
         {
             var model = new UserModel();
