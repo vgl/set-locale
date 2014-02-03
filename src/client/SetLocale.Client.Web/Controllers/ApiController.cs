@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
+using ServiceStack.Text;
+
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
@@ -141,6 +143,20 @@ namespace SetLocale.Client.Web.Controllers
             }
 
             return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async void AddKeys(string keys, string tag)
+        {
+
+            var items = JsonSerializer.DeserializeFromString<List<string>>(keys);
+
+            foreach (var item in items)
+            {
+                var key = await _wordService.Create(new WordModel { Key = item, Tag = tag });
+            }
+
+           // return Json(model, JsonRequestBehavior.AllowGet);
         }
     }
 }

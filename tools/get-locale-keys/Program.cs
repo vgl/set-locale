@@ -2,86 +2,106 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using ServiceStack.Text;
 
 namespace GetLocaleKeys
 {
     class Program
     {
         static void Main()
-        {
+        {  
             try
             {
-                const string localizationstring = "LocalizationString";
-                var regex = new Regex(string.Format("{0}\\(\".*\"\\)", localizationstring));
+                const string path = @"C:\work\set-meta\sources";
+                const string tag = "set-meta";
 
-                var keyList = new List<string>();
+                //string path = args[0];
+                //string tag = args[1];
 
-                const string path = @"C:\Work\set-meta\sources";
-                var viewFiles = new DirectoryInfo(string.Format(@"{0}\Views", path)).GetFiles("*.cshtml", SearchOption.AllDirectories).ToList();
-                var controllerFiles = new DirectoryInfo(string.Format(@"{0}\Controllers", path)).GetFiles("*.cs", SearchOption.AllDirectories).ToList();
-
-                var files = new List<FileInfo>();
-                files.AddRange(viewFiles);
-                files.AddRange(controllerFiles);
-
-                foreach (var file in files)
+                if (!Directory.Exists(path))
                 {
-                    var content = File.ReadAllText(file.FullName);
+                    Console.WriteLine("{0} is not a valid directory.", path);
+                }
+                else if (tag.Trim() == "")
+                {
+                    Console.WriteLine("Tag shouldnt be empty.");
+                }
+                else
+                {
 
-                    if (!content.Contains(localizationstring)) continue;
+                    const string localizationstring = "LocalizationString";
+                    var regex = new Regex(string.Format("{0}\\(\".*\"\\)", localizationstring));
 
-                    var m = regex.Match(content);
-                    while (m.Success)
+                    var keyList = new List<string>();
+
+                    var viewFiles = new DirectoryInfo(string.Format(@"{0}\Views", path)).GetFiles("*.cshtml", SearchOption.AllDirectories).ToList();
+                    var controllerFiles = new DirectoryInfo(string.Format(@"{0}\Controllers", path)).GetFiles("*.cs", SearchOption.AllDirectories).ToList();
+
+                    var files = new List<FileInfo>();
+                    files.AddRange(viewFiles);
+                    files.AddRange(controllerFiles);
+
+                    foreach (var file in files)
                     {
-                        var key = m.Groups[0].Value;
-                        if (key.LastIndexOf(localizationstring, StringComparison.Ordinal) > 0)
+                        var content = File.ReadAllText(file.FullName);
+
+                        if (!content.Contains(localizationstring)) continue;
+
+                        var m = regex.Match(content);
+                        while (m.Success)
                         {
-                            var items = key.Split(new[] { localizationstring }, StringSplitOptions.RemoveEmptyEntries);
-                            foreach (var item in items)
+                            var key = m.Groups[0].Value;
+                            if (key.LastIndexOf(localizationstring, StringComparison.Ordinal) > 0)
                             {
-                                if (item.StartsWith("("))
+                                var items = key.Split(new[] { localizationstring }, StringSplitOptions.RemoveEmptyEntries);
+                                foreach (var item in items)
                                 {
-                                    var theKey = item.Replace("(\"", string.Empty);
-                                    theKey = theKey.Substring(0, theKey.IndexOf('"'));
-                                    if (!keyList.Contains(theKey))
+                                    if (item.StartsWith("("))
                                     {
-                                        keyList.Add(theKey);
-                                        Console.WriteLine(theKey);
+                                        var theKey = item.Replace("(\"", string.Empty);
+                                        theKey = theKey.Substring(0, theKey.IndexOf('"'));
+                                        if (!keyList.Contains(theKey))
+                                        {
+                                            keyList.Add(theKey);
+                                            Console.WriteLine(theKey);
+                                        }
                                     }
                                 }
                             }
-                        }
-                        else
-                        {
-                            var theKey = key.Replace(localizationstring + "(\"", string.Empty);
-                            theKey = theKey.Substring(0, theKey.IndexOf('"'));
-                            if (!keyList.Contains(theKey))
+                            else
                             {
-                                keyList.Add(theKey);
-                                Console.WriteLine(theKey);
+                                var theKey = key.Replace(localizationstring + "(\"", string.Empty);
+                                theKey = theKey.Substring(0, theKey.IndexOf('"'));
+                                if (!keyList.Contains(theKey))
+                                {
+                                    keyList.Add(theKey);
+                                    Console.WriteLine(theKey);
+                                }
                             }
+
+                            m = m.NextMatch();
                         }
-
-                        m = m.NextMatch();
                     }
+
+                    var newKeyList = PrepareLocalizationStrings(keyList,tag);
+                     
+                    PrepareExcel(newKeyList, tag);
+
+                    Console.WriteLine("total " + keyList.Count);
                 }
-
-                PrepareExcel(keyList, "set-locale");
-
-                
-
-                Console.WriteLine("total " + keyList.Count);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message + "testt1");
             }
 
-            Console.Read();
+            Console.Read(); 
         }
 
         private static void PrepareExcel(List<string> keyList, string tag)
@@ -100,7 +120,7 @@ namespace GetLocaleKeys
                 //set styling of header
                 workSheet.Cells[1, 1, 1, 2].Style.Font.Bold = true;
                 workSheet.Cells[1, 1, 1, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                
+
                 for (var i = 0; i < keyList.Count; i++)
                 {
                     var row = i + 2;
@@ -115,6 +135,71 @@ namespace GetLocaleKeys
 
                 File.WriteAllBytes(string.Format("{0}-{1}.xlsx", tag, DateTime.Now.ToString("s").Replace(':', '-').Replace("T", "-")), p.GetAsByteArray());
             }
+        }
+
+        private static List<string> PrepareLocalizationStrings(List<string> keyList, string tag)
+        { 
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("943066caef5747cbbbfc5ad7bdb28f8d");
+
+                return SetLocalizationStringsDictionary(client, keyList, tag); 
+            }
+             
+        }
+
+        private static List<string> SetLocalizationStringsDictionary(HttpClient client, List<string> keylList, string tag)
+        {
+            var currentKeyList = new List<string>();
+
+            var items = new List<NameValue>();
+
+            try
+            {
+                var page = 1;
+                while (page > 0)
+                {
+                    var response = client.GetStringAsync(string.Format("http://setlocale.azurewebsites.net/api/locales?page={0}",  page));
+                    response.Wait();
+
+                    var responseBody = response.Result;
+
+                    var responseItems = JsonSerializer.DeserializeFromString<List<NameValue>>(responseBody);
+
+                    if (responseItems == null || !responseItems.Any())
+                    {
+                        page = 0;
+                        continue;
+                    }
+
+                    items.AddRange(responseItems);
+                      
+                    page++;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + "testt2");
+            }
+
+            foreach (var key in keylList)
+            {
+                if (!items.Exists(value => value.Name == key))
+                {
+                    currentKeyList.Add(key);
+                }
+            }
+
+            var returnValue = JsonSerializer.SerializeToString(currentKeyList);
+
+            var asd = client.GetStringAsync(string.Format("http://setlocale.azurewebsites.net/api/AddKeys?keys={0}&tag={1}", returnValue, tag));
+             
+            var qwe = asd.Result;
+
+            var zxc = JsonSerializer.DeserializeFromString<List<NameValue>>(qwe);
+
+            return currentKeyList;
         }
     }
 }
