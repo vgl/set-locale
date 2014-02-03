@@ -42,7 +42,7 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult Import()
         {
-            return Redirect("/admin/import");
+            return View();
         }
 
         [HttpGet]
