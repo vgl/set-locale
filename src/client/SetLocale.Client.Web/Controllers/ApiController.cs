@@ -146,21 +146,21 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<JsonResult> AddKey(string key, string tag)
+        public async Task<JsonResult> AddKey(string key, string tag, string desc)
         {
-            var item = await _wordService.Create(new WordModel { Key = key, Tag = tag });
+            var item = await _wordService.Create(new WordModel { Key = key, Tag = tag , Description = desc});
 
             return Json(item, JsonRequestBehavior.DenyGet);
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost]
         public async Task<JsonResult> AddKeys(string keys, string tag)
         {
-            var returnValue = JsonSerializer.DeserializeFromString<List<string>>(keys);
+            var returnValue = keys.Split(',');
 
             foreach (var key in returnValue)
             {
-                var item = await _wordService.Create(new WordModel { Key = key, Tag = tag }); 
+                var item = _wordService.Create(new WordModel { Key = key, Tag = tag }); 
             }
 
             return Json(true, JsonRequestBehavior.DenyGet);

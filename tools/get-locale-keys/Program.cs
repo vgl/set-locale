@@ -15,7 +15,7 @@ namespace GetLocaleKeys
     class Program
     {
         static void Main()
-        {  
+        {
             try
             {
                 const string path = @"C:\work\set-meta\sources";
@@ -89,8 +89,8 @@ namespace GetLocaleKeys
                         }
                     }
 
-                    var newKeyList = PrepareLocalizationStrings(keyList,tag);
-                     
+                    var newKeyList = PrepareLocalizationStrings(keyList, tag);
+
                     PrepareExcel(newKeyList, tag);
 
                     Console.WriteLine("total " + keyList.Count);
@@ -101,7 +101,7 @@ namespace GetLocaleKeys
                 Console.WriteLine(ex.Message + "testt1");
             }
 
-            Console.Read(); 
+            Console.Read();
         }
 
         private static void PrepareExcel(List<string> keyList, string tag)
@@ -138,15 +138,15 @@ namespace GetLocaleKeys
         }
 
         private static List<string> PrepareLocalizationStrings(List<string> keyList, string tag)
-        { 
+        {
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("943066caef5747cbbbfc5ad7bdb28f8d");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("d9138ef257d94e56bf76cbab056800ff");
 
-                return SetLocalizationStringsDictionary(client, keyList, tag); 
+                return SetLocalizationStringsDictionary(client, keyList, tag);
             }
-             
+
         }
 
         private static List<string> SetLocalizationStringsDictionary(HttpClient client, List<string> keylList, string tag)
@@ -160,7 +160,7 @@ namespace GetLocaleKeys
                 var page = 1;
                 while (page > 0)
                 {
-                    var response = client.GetStringAsync(string.Format("http://setlocale.azurewebsites.net/api/locales?page={0}",  page));
+                    var response = client.GetStringAsync(string.Format("http://setlocale.azurewebsites.net/api/locales?page={0}", page));
                     response.Wait();
 
                     var responseBody = response.Result;
@@ -174,7 +174,7 @@ namespace GetLocaleKeys
                     }
 
                     items.AddRange(responseItems);
-                      
+
                     page++;
                 }
             }
@@ -183,21 +183,35 @@ namespace GetLocaleKeys
                 Console.WriteLine(ex.Message + "testt2");
             }
 
-            foreach (var key in keylList)
+            try
             {
-                if (!items.Exists(value => value.Name == key))
+                foreach (var key in keylList)
                 {
-                    currentKeyList.Add(key);
+                    if (!items.Exists(value => value.Name == key))
+                    {
+                        currentKeyList.Add(key);
+                    }
                 }
+
+                var keys = "";
+
+                foreach (var item in currentKeyList)
+                {
+                    keys = keys + item + ",";
+                }
+
+                var asd = client.GetStringAsync(string.Format("http://setlocale.azurewebsites.net/api/AddKeys?keys={0}&tag={1}", keys, tag));
+
+                var qwe = asd.Result;
+
+                var zxc = JsonSerializer.DeserializeFromString<bool>(qwe);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
             }
 
-            var returnValue = JsonSerializer.SerializeToString(currentKeyList);
-
-            var asd = client.GetStringAsync(string.Format("http://setlocale.azurewebsites.net/api/AddKeys?keys={0}&tag={1}", returnValue, tag));
-             
-            var qwe = asd.Result;
-
-            var zxc = JsonSerializer.DeserializeFromString<List<NameValue>>(qwe);
+            
 
             return currentKeyList;
         }
