@@ -2,11 +2,19 @@
     ViewBag.Title = "Import";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Import</h2>
-
-
-    <table>
-        <tr><td>Excel file</td><td><input type="file" id="FileUpload1" name="FileUpload1" /></td></tr>
-        <tr><td></td><td><input type="submit" id="Submit" name="Submit" value="Submit" /></td></tr>
-    </table>
+<div class="col-lg-12">
+    <h2>Import</h2>
+   
+        @using (Html.BeginForm("Importexcel", "Admin", FormMethod.Post, new {enctype = "multipart/form-data"}))
+        {
+            <div class="col-lg-12">
+                <span>@Html.LocalizationString("excel_file")</span>
+                <input id="import_excel" name="import_excel" class="btn-primary import_excel" type="file" />
+            </div>
+            <br/>
+            <div class="col-lg-12">
+                <button class="btn btn-sm btn-primary" type="submit" id="Submit" name="Submit" >@Html.LocalizationString("submit") </button>
+            </div>
+        }
+    
+    </div>
