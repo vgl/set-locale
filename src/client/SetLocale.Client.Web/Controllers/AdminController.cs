@@ -45,6 +45,31 @@ namespace SetLocale.Client.Web.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Importexcel()
+        {
+            var excelFileBase = Request.Files["import_excel"];
+            if (excelFileBase != null && excelFileBase.ContentLength > 0)
+            {
+                var excelFile  = Request.Files["import_excel"];
+                if (excelFile != null)
+                {
+                    string extension = System.IO.Path.GetExtension(excelFile.FileName);
+                    var date = DateTime.Now.Date.ToString("dd-MM-yy");
+                    var excelName = date + "-" + Guid.NewGuid();
+
+                    string path1 = string.Format("{0}/{1}", Server.MapPath("~/Public/files"), excelName + extension);
+
+                    if (System.IO.File.Exists(path1))
+                        System.IO.File.Delete(path1);
+
+                    excelFile.SaveAs(path1);
+                }
+            }
+
+            return Redirect("/admin/import");
+        }
+
         [HttpGet]
         public ViewResult NewTranslator()
         {

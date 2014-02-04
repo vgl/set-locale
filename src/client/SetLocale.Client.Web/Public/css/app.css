@@ -28,3 +28,11 @@
 .highlight {
     background-color: #F8F8F8;
 }
+
+.import_excel {
+    text-align: right;
+    position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
