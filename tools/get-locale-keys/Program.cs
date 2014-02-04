@@ -142,7 +142,7 @@ namespace GetLocaleKeys
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("d9138ef257d94e56bf76cbab056800ff");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("418001e2fb1d44e0acbe151dad8f1eca");
 
                 return SetLocalizationStringsDictionary(client, keyList, tag);
             }
@@ -201,6 +201,7 @@ namespace GetLocaleKeys
                 }
 
                 var asd = client.GetStringAsync(string.Format("http://setlocale.azurewebsites.net/api/AddKeys?keys={0}&tag={1}", keys, tag));
+                asd.Wait();
 
                 var qwe = asd.Result;
 

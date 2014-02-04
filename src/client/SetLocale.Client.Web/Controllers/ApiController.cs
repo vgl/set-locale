@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 using ServiceStack.Text;
@@ -154,13 +155,18 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> AddKeys(string keys, string tag)
+        public async Task<JsonResult> AddKey(string key, string tag)
         {
-            var returnValue = keys.Split(',');
-
-            foreach (var key in returnValue)
+            if (string.IsNullOrEmpty(key))
             {
-                var item = _wordService.Create(new WordModel { Key = key, Tag = tag }); 
+                throw new HttpException(400,"keys argument null");
+            }
+
+            var returnValue = key.Split(',');
+
+            foreach (var k in returnValue)
+            {
+                var item = _wordService.Create(new WordModel { Key = k, Tag = tag }); 
             }
 
             return Json(true, JsonRequestBehavior.DenyGet);
