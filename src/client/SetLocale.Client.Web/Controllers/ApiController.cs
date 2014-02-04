@@ -146,30 +146,35 @@ namespace SetLocale.Client.Web.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpPost]
         public async Task<JsonResult> AddKey(string key, string tag, string desc)
         {
-            var item = await _wordService.Create(new WordModel { Key = key, Tag = tag , Description = desc});
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new HttpException(400, "key argument null");
+            }
+
+            var item = await _wordService.Create(new WordModel { Key = key, Tag = tag, Description = desc });
 
             return Json(item, JsonRequestBehavior.DenyGet);
         }
 
-        [HttpGet, AllowAnonymous]
-        public async Task<JsonResult> AddKey(string key, string tag)
+        [HttpPost]
+        public async Task<JsonResult> AddKeys(string keys, string tag)
         {
-            if (string.IsNullOrEmpty(key))
+            if (string.IsNullOrEmpty(keys))
             {
-                throw new HttpException(400,"keys argument null");
+                throw new HttpException(400, "keys argument null");
             }
 
-            var returnValue = key.Split(',');
+            var returnValue = keys.Split(',');
 
-            foreach (var k in returnValue)
+            foreach (var key in returnValue)
             {
-                var item = _wordService.Create(new WordModel { Key = k, Tag = tag }); 
+                var item = _wordService.Create(new WordModel { Key = key, Tag = tag });
             }
 
             return Json(true, JsonRequestBehavior.DenyGet);
-        } 
+        }
     }
 }
