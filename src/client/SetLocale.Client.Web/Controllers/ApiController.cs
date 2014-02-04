@@ -146,7 +146,7 @@ namespace SetLocale.Client.Web.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpGet, AllowAnonymous]
         public async Task<JsonResult> AddKey(string key, string tag, string desc)
         {
             var item = await _wordService.Create(new WordModel { Key = key, Tag = tag , Description = desc});
@@ -154,7 +154,7 @@ namespace SetLocale.Client.Web.Controllers
             return Json(item, JsonRequestBehavior.DenyGet);
         }
 
-        [HttpPost, AllowAnonymous]
+        [HttpGet, AllowAnonymous]
         public async Task<JsonResult> AddKey(string key, string tag)
         {
             if (string.IsNullOrEmpty(key))
