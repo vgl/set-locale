@@ -154,7 +154,7 @@ namespace SetLocale.Client.Web.Controllers
             return Json(item, JsonRequestBehavior.DenyGet);
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public async Task<JsonResult> AddKey(string key, string tag)
         {
             if (string.IsNullOrEmpty(key))
@@ -170,6 +170,6 @@ namespace SetLocale.Client.Web.Controllers
             }
 
             return Json(true, JsonRequestBehavior.DenyGet);
-        }
+        } 
     }
 }
