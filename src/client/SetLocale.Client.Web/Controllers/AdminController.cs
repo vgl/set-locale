@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Data;
+using System.Data.OleDb;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -55,21 +59,108 @@ namespace SetLocale.Client.Web.Controllers
                 if (excelFile != null)
                 {
                     string extension = System.IO.Path.GetExtension(excelFile.FileName);
-                    var date = DateTime.Now.Date.ToString("dd-MM-yy");
-                    var excelName = date + "-" + Guid.NewGuid();
+                    if (extension == ".xls" || extension == ".xlsx")
+                    {
+                        var date = DateTime.Now.Date.ToString("dd-MM-yy");
+                        var excelName = date + "-" + Guid.NewGuid();
 
-                    string path1 = string.Format("{0}/{1}", Server.MapPath("~/Public/files"), excelName + extension);
+                        string path1 = string.Format("{0}/{1}", Server.MapPath("~/Public/files"), excelName + extension);
 
-                    if (System.IO.File.Exists(path1))
-                        System.IO.File.Delete(path1);
+                        if (System.IO.File.Exists(path1))
+                            System.IO.File.Delete(path1);
 
-                    excelFile.SaveAs(path1);
+                        excelFile.SaveAs(path1);
+
+                        string excelConnectionString = string.Empty;
+
+                    excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path1 + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                    if (extension == ".xls")
+                    {
+                        excelConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path1 + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
+                    }
+                    else if (extension == ".xlsx")
+                    {
+                        
+                        excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path1 + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                    }
+
+                    var excelConnection = new OleDbConnection(excelConnectionString);
+                    excelConnection.Open();
+                    var dt = new DataTable();
+
+                    dt = excelConnection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                    if (dt == null)
+                    {
+                        return null;
+                    }
+
+                    var excelSheets = new String[dt.Rows.Count];
+                    int t = 0;
+                    //excel data saves in temp file here.
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        excelSheets[t] = row["TABLE_NAME"].ToString();
+                        t++;
+                    }
+                    var excelConnection1 = new OleDbConnection(excelConnectionString);
+                    var ds = new DataSet();
+
+                    string query = string.Format("Select * from [{0}]", excelSheets[0]);
+                    using (var dataAdapter = new OleDbDataAdapter(query, excelConnection1))
+                    {
+                        dataAdapter.Fill(ds);
+                    }
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                   
+                       var word = new Word
+                       {
+                           Key = ds.Tables[0].Rows[i]["key"].ToString(),
+                           Description = ds.Tables[0].Rows[i]["Description"].ToString(),
+                           Translation_TR = ds.Tables[0].Rows[i]["Translation_TR"].ToString(),
+                           Translation_EN = ds.Tables[0].Rows[i]["Translation_EN"].ToString(),
+                           Translation_AZ = ds.Tables[0].Rows[i]["Translation_AZ"].ToString(),
+                           Translation_CN = ds.Tables[0].Rows[i]["Translation_CN"].ToString(),
+                           Translation_FR = ds.Tables[0].Rows[i]["Translation_FR"].ToString(),
+                           Translation_GR = ds.Tables[0].Rows[i]["Translation_GR"].ToString(),
+                           Translation_IT = ds.Tables[0].Rows[i]["Translation_IT"].ToString(),
+                           Translation_KZ = ds.Tables[0].Rows[i]["Translation_KZ"].ToString(),
+                           Translation_RU = ds.Tables[0].Rows[i]["Translation_RU"].ToString(),
+                           Translation_SP = ds.Tables[0].Rows[i]["Translation_SP"].ToString(),
+                           Translation_TK = ds.Tables[0].Rows[i]["Translation_TK"].ToString()
+                       };
+                        //word.Tag = ds.Tables[0].Rows[i]["tags"].ToString();
+
+                        var streampost = new MemoryStream();
+                        var clientpost = new WebClient();
+                        clientpost.Headers["Content-type"] = "application/json";
+
+                        //DataContractJsonSerializer serializerpost = new
+                        // DataContractJsonSerializer(typeof(WordModel));
+                        //serializerpost.WriteObject(streampost, model);
+
+                        //string url1 = string.Format("{0}SavePlayerDetailsAPI", serviceUrl);
+                        //byte[] datapost = clientpost.UploadData(url1, "Post", streampost.ToArray());
+
+                        //streampost = new MemoryStream(datapost);
+                        //serializerpost = new DataContractJsonSerializer(typeof(string));
+                        //var result = (string)serializerpost.ReadObject(streampost);
+
+                    }
+                    ViewBag.message = "Information saved successfully.";
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Plese select Excel File.");
                 }
             }
-
+                     ModelState.AddModelError("", "Plese select Excel File.");  
+                    }
             return Redirect("/admin/import");
         }
+      
 
+            
         [HttpGet]
         public ViewResult NewTranslator()
         {
