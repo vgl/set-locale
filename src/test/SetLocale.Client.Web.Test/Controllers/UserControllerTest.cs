@@ -96,7 +96,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(model);
             Assert.IsAssignableFrom(typeof(ResponseModel), model);
 
-            sut.AssertPostAttribute("ChangeStatus", new[] { typeof(int), typeof(bool) });
+            sut.AssertPostAndAntiForgeryTokenAttribute("ChangeStatus", new[] { typeof(int), typeof(bool) });
             userService.Verify(x => x.ChangeStatus(1, true), Times.Once);
         }
 
@@ -141,7 +141,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.AreEqual(((RedirectResult)view).Url, "/user/apps");
             userService.Verify(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Developer.Value), Times.Once);
 
-            sut.AssertPostAttribute("New", new[] { typeof(UserModel) });
+            sut.AssertPostAndAntiForgeryTokenAttribute("New", new[] { typeof(UserModel) });
             sut.AssertAllowAnonymousAttribute("New", new[] { typeof(UserModel) });
         }
 
@@ -161,7 +161,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(model);
             Assert.IsAssignableFrom(typeof(UserModel), model);
 
-            sut.AssertPostAttribute("New", new[] { typeof(UserModel) });
+            sut.AssertPostAndAntiForgeryTokenAttribute("New", new[] { typeof(UserModel) });
             sut.AssertAllowAnonymousAttribute("New", new[] { typeof(UserModel) });
         }
 
@@ -232,7 +232,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.AreEqual(view.Url, "/user/apps");
             userService.Verify(x => x.Authenticate(validModel.Email, validModel.Password), Times.Once);
 
-            sut.AssertPostAttribute("Login", new[] { typeof(LoginModel) });
+            sut.AssertPostAndAntiForgeryTokenAttribute("Login", new[] { typeof(LoginModel) });
             sut.AssertAllowAnonymousAttribute("Login", new[] { typeof(LoginModel) });
         }
 
@@ -252,7 +252,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(model);
             Assert.IsAssignableFrom(typeof(LoginModel), model);
 
-            sut.AssertPostAttribute("Login", new[] { typeof(LoginModel) });
+            sut.AssertPostAndAntiForgeryTokenAttribute("Login", new[] { typeof(LoginModel) });
             sut.AssertAllowAnonymousAttribute("Login", new[] { typeof(LoginModel) });
         }
 

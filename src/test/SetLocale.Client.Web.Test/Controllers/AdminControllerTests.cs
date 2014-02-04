@@ -68,7 +68,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.IsInstanceOf<BaseController>(sut);
 
             userService.Verify(x => x.Create(It.IsAny<UserModel>(), SetLocaleRole.Translator.Value), Times.Once);
-            sut.AssertPostAttribute("NewTranslator", new[] { typeof(UserModel) });
+            sut.AssertPostAndAntiForgeryTokenAttribute("NewTranslator", new[] { typeof(UserModel) });
 
         }
 
@@ -87,7 +87,7 @@ namespace SetLocale.Client.Web.Test.Controllers
             Assert.NotNull(view.Model);
             Assert.IsAssignableFrom(typeof(UserModel), view.Model);
 
-            sut.AssertPostAttribute("NewTranslator", new[] { typeof(UserModel) });
+            sut.AssertPostAndAntiForgeryTokenAttribute("NewTranslator", new[] { typeof(UserModel) });
         }
 
         [Test]

@@ -27,10 +27,15 @@ namespace SetLocale.Client.Web.Test.TestHelpers
             AssertAttribute(controller, actionMethodName, typeof(AllowAnonymousAttribute), parameterTypes);
         }
 
-        public static void AssertPostAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
+        public static void AssertPostAndAntiForgeryTokenAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
         {
             AssertAttribute(controller, actionMethodName, typeof(HttpPostAttribute), parameterTypes);
             AssertAttribute(controller, actionMethodName, typeof(ValidateAntiForgeryTokenAttribute), parameterTypes);
+        }
+
+        public static void AssertPostAttribute(this Controller controller, string actionMethodName, Type[] parameterTypes = null)
+        {
+            AssertAttribute(controller, actionMethodName, typeof(HttpPostAttribute), parameterTypes); 
         }
     }
 }

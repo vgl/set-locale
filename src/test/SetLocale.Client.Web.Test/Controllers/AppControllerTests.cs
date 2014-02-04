@@ -93,7 +93,7 @@ namespace SetLocale.Client.Web.Test.Controllers
 
             Assert.NotNull(model);
 
-            sut.AssertPostAttribute(ActionNameNew, new[] { typeof(AppModel) });
+            sut.AssertPostAndAntiForgeryTokenAttribute(ActionNameNew, new[] { typeof(AppModel) });
         }
     }
      

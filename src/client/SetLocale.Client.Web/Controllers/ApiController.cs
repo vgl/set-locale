@@ -13,6 +13,7 @@ using SetLocale.Client.Web.Services;
 
 namespace SetLocale.Client.Web.Controllers
 {
+    [AllowAnonymous]
     public class ApiController : BaseController
     {
         private readonly IWordService _wordService;
@@ -69,7 +70,7 @@ namespace SetLocale.Client.Web.Controllers
             filterContext.RequestContext.HttpContext.Response.End();
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<JsonResult> Locales(string tag, string lang = "tr", int page = 1)
         {
             var model = new List<NameValueModel>();
@@ -122,7 +123,7 @@ namespace SetLocale.Client.Web.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async Task<JsonResult> Locale(string lang = "tr", string key = "name")
         {
             if (!LanguageModel.IsValidLanguageKey(lang)) return Json(new { Error = "not valid language!" }, JsonRequestBehavior.AllowGet);
@@ -156,7 +157,7 @@ namespace SetLocale.Client.Web.Controllers
 
             var item = await _wordService.Create(new WordModel { Key = key, Tag = tag, Description = desc });
 
-            return Json(item, JsonRequestBehavior.DenyGet);
+            return Json(true, JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]

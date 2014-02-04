@@ -109,6 +109,8 @@
     <Compile Include="Builders\WordControllerBuilder.cs" />
     <Compile Include="Builders\WordServiceBuilder.cs" />
     <Compile Include="Controllers\AdminControllerTests.cs" />
+    <Compile Include="Builders\ApiControllerBuilder.cs" />
+    <Compile Include="Controllers\ApiControllerTests.cs" />
     <Compile Include="Controllers\AppControllerTests.cs" />
     <Compile Include="Controllers\HomeControllerTests.cs" />
     <Compile Include="Controllers\WordControllerTests.cs" />
