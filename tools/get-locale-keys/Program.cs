@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
-
+using System.Threading.Tasks;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using ServiceStack.Text;
@@ -158,9 +158,11 @@ namespace GetLocaleKeys
             try
             {
                 var page = 1;
+                Task<string> response;
+
                 while (page > 0)
                 {
-                    var response = client.GetStringAsync(string.Format("http://setlocale.azurewebsites.net/api/locales?page={0}", page));
+                    response = client.GetStringAsync(string.Format("http://setlocale.azurewebsites.net/api/locales?page={0}", page));
                     response.Wait();
 
                     var responseBody = response.Result;
@@ -177,14 +179,7 @@ namespace GetLocaleKeys
 
                     page++;
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + "testt2");
-            }
 
-            try
-            {
                 foreach (var key in keylList)
                 {
                     if (!items.Exists(value => value.Name == key))
@@ -200,18 +195,15 @@ namespace GetLocaleKeys
                     keys = keys + item + ",";
                 }
 
-                var asd = client.GetStringAsync(string.Format("http://setlocale.azurewebsites.net/api/AddKeys?keys={0}&tag={1}", keys, tag));
-                asd.Wait();
+                response = client.GetStringAsync(string.Format("http://setlocale.azurewebsites.net/api/AddKeys?keys={0}&tag={1}", keys, tag));
+                response.Wait();
 
-                var qwe = asd.Result;
-
-                var zxc = JsonSerializer.DeserializeFromString<bool>(qwe);
             }
             catch (Exception ex)
             {
-                throw (ex);
+                Console.WriteLine(ex.Message);
             }
-
+             
             
 
             return currentKeyList;
