@@ -202,6 +202,7 @@
     <Compile Include="Helpers\IdentityHelper.cs" />
     <Compile Include="Helpers\LocalizationStringHtmlHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Models\ExcelImportModel.cs" />
     <Compile Include="Models\AppModel.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\HomeStatsModel.cs" />

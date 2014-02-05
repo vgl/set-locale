@@ -54,16 +54,16 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet]
         public ActionResult Import()
         {
-            return View(new BaseModel());
+            return View(new ExcelImportModel());
         }
 
         [HttpPost]
         public async Task<ActionResult> Import(string isOverWrite, HttpPostedFileBase file)
         {
-            BaseModel model;
+            ExcelImportModel model;
             if (file == null || file.ContentLength <= 0)
             {
-                model = new BaseModel { Msg = _htmlHelper.LocalizationString("please_select_file") };
+                model = new ExcelImportModel { Msg = _htmlHelper.LocalizationString("please_select_file"),MsgId = false};
                 return View(model);
             }
 
@@ -171,10 +171,10 @@ namespace SetLocale.Client.Web.Controllers
             }
             else
             {
-                model = new BaseModel { Msg = _htmlHelper.LocalizationString("please_select_excel_file") };
+                model = new ExcelImportModel { Msg = _htmlHelper.LocalizationString("please_select_excel_file"), MsgId = false };
                 return View(model);
             }
-            model = new BaseModel { Msg = _htmlHelper.LocalizationString("import_successful_operation") };
+            model = new ExcelImportModel { Msg = _htmlHelper.LocalizationString("import_successful_operation"), MsgId = true };
             return View(model);
         }
 

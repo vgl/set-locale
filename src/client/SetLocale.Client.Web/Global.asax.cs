@@ -49,6 +49,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("menu_settings_apps", "All Applications");
             enTexts.Add("menu_settings_users", "All Users");
             enTexts.Add("menu_settings_new_translator", "New Translator");
+            enTexts.Add("menu_settings_import", "Data Import");  
 
             enTexts.Add("menu_user_login", "Login");
             enTexts.Add("menu_user_logout", "Logout");
@@ -153,6 +154,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("menu_settings_apps", "Tüm Uygulamalar");
             trTexts.Add("menu_settings_users", "Tüm Kullanıcılar");
             trTexts.Add("menu_settings_new_translator", "Yeni Çevirmen");
+            trTexts.Add("menu_settings_import", "Veri Yükle");           
 
             trTexts.Add("menu_user_login", "Giriş");
             trTexts.Add("menu_user_logout", "Çıkış");
