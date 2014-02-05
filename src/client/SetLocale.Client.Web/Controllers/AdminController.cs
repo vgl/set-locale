@@ -58,123 +58,102 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Import(string isOverWrite, HttpPostedFileBase file)
+        public async Task<ActionResult> Import(HttpPostedFileBase file, bool isOverWrite = false)
         {
-            ExcelImportModel model;
-            if (file == null || file.ContentLength <= 0)
+            var model = new ExcelImportModel();
+
+            if (file == null
+                || file.ContentLength <= 0)
             {
-                model = new ExcelImportModel { Msg = _htmlHelper.LocalizationString("please_select_file"),MsgId = false};
+                model.Msg = _htmlHelper.LocalizationString("please_select_file");
                 return View(model);
             }
 
-            var excelFile = file;
-
-            string extension = Path.GetExtension(excelFile.FileName);
-            if (extension == ".xls" || extension == ".xlsx")
+            var extension = Path.GetExtension(file.FileName);
+            if (extension != ".xls"
+                && extension != ".xlsx")
             {
-                var date = DateTime.Now.Date.ToString("dd-MM-yy");
-                var excelName = date + "-" + Guid.NewGuid();
+                model.Msg = _htmlHelper.LocalizationString("please_select_excel_file");
+                return View(model);
+            }
 
-                string path1 = string.Format("{0}/{1}", Server.MapPath("~/Public/files"), excelName + extension);
+            var excelName = string.Format("{0:yyyy-MM-dd}-{1}", DateTime.Now, Guid.NewGuid());
+            var path = string.Format("{0}/{1}{2}", Server.MapPath("~/Public/files"), excelName, extension);
 
-                if (System.IO.File.Exists(path1))
-                    System.IO.File.Delete(path1);
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
 
-                excelFile.SaveAs(path1);
-                var existingFile = new FileInfo(path1);
+            file.SaveAs(path);
 
-                using (var package = new ExcelPackage(existingFile))
+            var existingFile = new FileInfo(path);
+            using (var package = new ExcelPackage(existingFile))
+            {
+                var workBook = package.Workbook;
+                if (workBook == null
+                    || workBook.Worksheets.Count <= 0)
                 {
-                    ExcelWorkbook workBook = package.Workbook;
-                    if (workBook == null) return Redirect("/admin/import");
-                    if (workBook.Worksheets.Count <= 0) return Redirect("/admin/import");
-                    ExcelWorksheet currentWorksheet = workBook.Worksheets.First();
+                    model.Msg = _htmlHelper.LocalizationString("excel_file_has_problems");
+                    return View(model);
+                }
 
-                    const string tR = "TR";
-                    const string eN = "EN";
-                    const string aZ = "AZ";
-                    const string cN = "CN";
-                    const string fR = "FR";
-                    const string gR = "GR";
-                    const string iT = "IT";
-                    const string kZ = "KZ";
-                    const string rU = "RU";
-                    const string sP = "SP";
-                    const string tK = "TK";
+                var currentWorksheet = workBook.Worksheets.First();
 
-                    for (int i = 2; i < currentWorksheet.Dimension.End.Row; i++)
+                for (var i = 2; i < currentWorksheet.Dimension.End.Row; i++)
+                {
+                    var key = currentWorksheet.Cells[i, 1].Value.ToString();
+                    var desc = currentWorksheet.Cells[i, 2].Value.ToString();
+                    var tag = currentWorksheet.Cells[i, 3].Value.ToString();
+
+                    var translationTR = currentWorksheet.Cells[i, 4].Value.ToString();
+                    var translationEN = currentWorksheet.Cells[i, 5].Value.ToString();
+                    var translationAZ = currentWorksheet.Cells[i, 6].Value.ToString();
+                    var translationCN = currentWorksheet.Cells[i, 7].Value.ToString();
+                    var translationFR = currentWorksheet.Cells[i, 8].Value.ToString();
+                    var translationGR = currentWorksheet.Cells[i, 9].Value.ToString();
+                    var translationIT = currentWorksheet.Cells[i, 10].Value.ToString();
+                    var translationKZ = currentWorksheet.Cells[i, 11].Value.ToString();
+                    var translationRU = currentWorksheet.Cells[i, 12].Value.ToString();
+                    var translationSP = currentWorksheet.Cells[i, 13].Value.ToString();
+                    var translationTK = currentWorksheet.Cells[i, 14].Value.ToString();
+
+                    var wordModel = new WordModel { Key = key, Description = desc, Tag = tag, CreatedBy = User.Identity.GetUserId() };
+
+                    try
                     {
-                        var key = currentWorksheet.Cells[i, 1].Value.ToString();
-                        var desc = currentWorksheet.Cells[i, 2].Value.ToString();
-                        var tag = currentWorksheet.Cells[i, 3].Value.ToString();
-
-                        var translationTr = currentWorksheet.Cells[i, 4].Value.ToString();
-                        var translationEn = currentWorksheet.Cells[i, 5].Value.ToString();
-                        var translationAz = currentWorksheet.Cells[i, 6].Value.ToString();
-                        var translationCn = currentWorksheet.Cells[i, 7].Value.ToString();
-                        var translationFr = currentWorksheet.Cells[i, 8].Value.ToString();
-                        var translationGr = currentWorksheet.Cells[i, 9].Value.ToString();
-                        var translationIt = currentWorksheet.Cells[i, 10].Value.ToString();
-                        var translationKz = currentWorksheet.Cells[i, 11].Value.ToString();
-                        var translationRu = currentWorksheet.Cells[i, 12].Value.ToString();
-                        var translationSp = currentWorksheet.Cells[i, 13].Value.ToString();
-                        var translationTk = currentWorksheet.Cells[i, 14].Value.ToString();
-                        string item;
-
-                        try
+                        if (isOverWrite)
                         {
-                            if (isOverWrite == "true")
-                            {
-                                item =
-                                    await
-                                        _wordService.Update(new WordModel
-                                        {
-                                            Key = key,
-                                            Description = desc,
-                                            Tag = tag
-                                        });
-                            }
-                            else
-                            {
-                                item =
-                                    await
-                                        _wordService.Create(new WordModel
-                                        {
-                                            Key = key,
-                                            Description = desc,
-                                            Tag = tag
-                                        });
-                            }
-                            await _wordService.Translate(key, tR, translationTr);
-                            await _wordService.Translate(key, eN, translationEn);
-                            await _wordService.Translate(key, aZ, translationAz);
-                            await _wordService.Translate(key, cN, translationCn);
-                            await _wordService.Translate(key, fR, translationFr);
-                            await _wordService.Translate(key, gR, translationGr);
-                            await _wordService.Translate(key, iT, translationIt);
-                            await _wordService.Translate(key, kZ, translationKz);
-                            await _wordService.Translate(key, rU, translationRu);
-                            await _wordService.Translate(key, sP, translationSp);
-                            await _wordService.Translate(key, tK, translationTk);
+                            await _wordService.Update(wordModel);
                         }
-                        catch (Exception)
+                        else
                         {
-                            //do nothing
+                            await _wordService.Create(wordModel);
                         }
-                        finally
-                        {
 
-                        }
+                        await _wordService.Translate(key, "TR", translationTR);
+                        await _wordService.Translate(key, "EN", translationEN);
+                        await _wordService.Translate(key, "AZ", translationAZ);
+                        await _wordService.Translate(key, "CN", translationCN);
+                        await _wordService.Translate(key, "FR", translationFR);
+                        await _wordService.Translate(key, "GR", translationGR);
+                        await _wordService.Translate(key, "IT", translationIT);
+                        await _wordService.Translate(key, "KZ", translationKZ);
+                        await _wordService.Translate(key, "RU", translationRU);
+                        await _wordService.Translate(key, "SP", translationSP);
+                        await _wordService.Translate(key, "TK", translationTK);
+                    }
+                    catch
+                    {
+                        model.Msg = _htmlHelper.LocalizationString("please_try_again");
+                        return View(model);
                     }
                 }
-                
             }
-            else
-            {
-                model = new ExcelImportModel { Msg = _htmlHelper.LocalizationString("please_select_excel_file"), MsgId = false };
-                return View(model);
-            }
-            model = new ExcelImportModel { Msg = _htmlHelper.LocalizationString("import_successful"), MsgId = true };
+
+            model.Msg = _htmlHelper.LocalizationString("import_successful");
+            model.IsSuccess = true;
+
             return View(model);
         }
 

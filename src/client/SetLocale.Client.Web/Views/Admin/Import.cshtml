@@ -2,11 +2,12 @@
 @{
     ViewBag.Title = @Html.LocalizationString("import_excel_title");
 }
+
 <div class="col-lg-12">
     <h3>@ViewBag.Title</h3>
-    @if (!string.IsNullOrEmpty(@Model.Msg))
+    @if (!string.IsNullOrEmpty(Model.Msg))
     {
-        var buttonCss = Model.MsgId ? "alert-success" : "alert-danger";
+        var buttonCss = Model.IsSuccess ? "alert-success" : "alert-danger";
         <div class="alert @buttonCss col-lg-12" id="dvAlert" style="text-align: center" data-dismiss="alert">
             @Model.Msg
         </div>
@@ -31,8 +32,10 @@
         </div>
         <div class="col-lg-6">
             <br />
-            <input type="checkbox" name="IsOverWrite" id="IsOverWrite" checked="checked" value="true">@Html.LocalizationString("overwrite_existing_data")
-            <input name="IsOverWrite" id="IsOverWrite" type="hidden" value="false">
+            <label for="IsOverWrite">
+                <input type="checkbox" name="IsOverWrite" id="IsOverWrite" value="false" />&nbsp;@Html.LocalizationString("overwrite_existing_data")    
+            </label>
+            
         </div>
         <div class="clearfix">
             <br />
@@ -49,6 +52,10 @@
     <script>
         $(document).ready(function () {
             $("#dvAlert").delay(200).fadeIn().delay(3000).fadeOut();
+
+            $('#IsOverWrite').change(function () {
+                $(this).val($(this).is(':checked'));
+            });
         });
     </script>
 }
