@@ -15,7 +15,7 @@ namespace SetLocale.Client.Web.Services
         Task<string> Create(WordModel model);
         Task<string> Update(WordModel model);
         Task<PagedList<Word>> GetByUserId(int userId, int pageNumber);
-        Task<Word> GetByKey(string key); 
+        Task<Word> GetByKey(string key);
         Task<PagedList<Word>> GetWords(int pageNumber);
         Task<PagedList<Word>> GetNotTranslated(int pageNumber);
         Task<bool> Translate(string key, string language, string translation);
@@ -25,7 +25,7 @@ namespace SetLocale.Client.Web.Services
 
     public class WordService : IWordService
     {
-        private readonly IRepository<Word> _wordRepository; 
+        private readonly IRepository<Word> _wordRepository;
         public WordService(IRepository<Word> wordRepository)
         {
             _wordRepository = wordRepository;
@@ -68,14 +68,14 @@ namespace SetLocale.Client.Web.Services
             };
 
             _wordRepository.Create(word);
-            
+
             if (!_wordRepository.SaveChanges())
                 return null;
-            
+
             return Task.FromResult(word.Key);
         }
 
-        public Task<PagedList<Word>> GetByUserId(int userId,int pageNumber)
+        public Task<PagedList<Word>> GetByUserId(int userId, int pageNumber)
         {
             if (pageNumber < 1)
             {
@@ -114,7 +114,7 @@ namespace SetLocale.Client.Web.Services
             {
                 pageNumber = 1;
             }
-              
+
             var items = _wordRepository.FindAll();
 
             long totalCount = items.Count();
@@ -125,7 +125,7 @@ namespace SetLocale.Client.Web.Services
                 pageNumber = 1;
             }
 
-            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber-1)).Take(ConstHelper.PageSize);
+            items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
 
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, items.ToList()));
         }
@@ -179,7 +179,7 @@ namespace SetLocale.Client.Web.Services
                 word.TranslationCount--;
 
                 word.IsTranslated = word.TranslationCount > 0;
-                    
+
                 propInfo.SetValue(word, null);
 
             }
@@ -238,18 +238,14 @@ namespace SetLocale.Client.Web.Services
             }
 
             var slug = model.Key.ToUrlSlug();
+
             var wordEntity = _wordRepository.FindOne(x => x.Key == slug);
-            if (wordEntity!=null)
-            {
-                _wordRepository.Update(wordEntity);
+            if (wordEntity == null) return Create(model);
 
-                if (!_wordRepository.SaveChanges())
-                    return null;
+            _wordRepository.SoftDelete(wordEntity.Id, model.CreatedBy);
+            _wordRepository.SaveChanges();
 
-                return Task.FromResult(wordEntity.Key);
-            }
-
-         return Create(model);
+            return Create(model);
         }
     }
 }
