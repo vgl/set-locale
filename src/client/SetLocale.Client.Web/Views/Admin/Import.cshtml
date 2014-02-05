@@ -6,7 +6,7 @@
     <h3>@ViewBag.Title</h3>
     @if (!string.IsNullOrEmpty(@Model.Msg))
     {
-        var buttonCss = Model.MsgId ? "alert-success" : "alert-warning";
+        var buttonCss = Model.MsgId ? "alert-success" : "alert-danger";
         <div class="alert @buttonCss col-lg-12" id="dvAlert" style="text-align: center" data-dismiss="alert">
             @Model.Msg
         </div>
