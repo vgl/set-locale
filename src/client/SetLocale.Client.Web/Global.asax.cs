@@ -78,7 +78,11 @@ namespace SetLocale.Client.Web
             enTexts.Add("forgot_your_password", "Forgot your password?");
             enTexts.Add("total_page_count", "Total Page Count");
             enTexts.Add("translator_name", "Translator Name");
-
+            enTexts.Add("excel_file", "Excel File");
+            enTexts.Add("explanation_excel_file", "can be downloaded");
+            enTexts.Add("sample_excel", "Sample excel");
+            enTexts.Add("overwrite_existing_data", "Overwrite existing data");
+            enTexts.Add("btn_upload", "Upload"); 
 
             enTexts.Add("btn_login", "Login");
             enTexts.Add("btn_sign_up", "Sign Up");
@@ -104,7 +108,6 @@ namespace SetLocale.Client.Web
             enTexts.Add("column_header_translation_sp", "Espanol");
             enTexts.Add("column_header_translation_tk", "Turkic");
 
-
             enTexts.Add("home_summary", "SetLocale's <strong>{2}</strong> translator provided <strong>{4}</strong> translation for <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> keys and <strong>{0}</strong> developer is consuming this service with <strong>{1}</strong> application");
 
             enTexts.Add("home_title", "Localization as a service");
@@ -121,6 +124,7 @@ namespace SetLocale.Client.Web
             enTexts.Add("new_app_title", "New Application");
             enTexts.Add("new_translator_title", "New Translator");
             enTexts.Add("tag_keys_title", "Keys Listing Tagged With ");
+            enTexts.Add("import_excel_title", "Import Excel File");
 
             enTexts.Add("modal_title_apps", "App Status");
             enTexts.Add("modal_body_apps", "Are you sure want to change the application's status?");
@@ -178,6 +182,11 @@ namespace SetLocale.Client.Web
             trTexts.Add("forgot_your_password", "Şifremi Unuttum");
             trTexts.Add("total_page_count", "Toplam Sayfa Sayısı");
             trTexts.Add("translator_name", "İsmi");
+            trTexts.Add("excel_file", "Excel Dosyası");
+            trTexts.Add("explanation_excel_file", "dosyasını indirebilirsiniz");
+            trTexts.Add("sample_excel", "Örnek excel");
+            trTexts.Add("overwrite_existing_data", "Var olan verinin üzerine yaz");
+            trTexts.Add("btn_upload", "Yükle");   
 
             trTexts.Add("btn_login", "Giriş");
             trTexts.Add("btn_sign_up", "Kayıt Ol");
@@ -220,6 +229,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("new_app_title", "Yeni Uygulama");
             trTexts.Add("new_translator_title", "Yeni Çevirmen");
             trTexts.Add("tag_keys_title", "Tag Anahtar Listesi ");
+            trTexts.Add("import_excel_title", "Excel'den Veri Yükle");
 
             trTexts.Add("modal_title_apps", "Uygulama Durumu");
             trTexts.Add("modal_body_apps", "Değiştirmek İstediğinize Emin misiniz?");

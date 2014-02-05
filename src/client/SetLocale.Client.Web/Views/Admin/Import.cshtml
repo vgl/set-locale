@@ -1,26 +1,43 @@
 ﻿@{
-    ViewBag.Title = "Import";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = @Html.LocalizationString("import_excel_title");
+
 }
 <div class="col-lg-12">
-    <h2>Import</h2>
-
-    @using (Html.BeginForm("Importexcel", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <div class="col-lg-12">
-            <span>@Html.LocalizationString("excel_file")</span>
-            <input id="import_excel" name="import_excel" class="btn-primary import_excel" type="file" />
-        </div>
-        <br />
-        <input type="checkbox" name="updateCheckbox" id="updateCheckbox" checked="checked" value="true">@Html.LocalizationString("import_update_words")
-        <input name="updateCheckbox" id="updateCheckbox" type="hidden" value="false" />
-        <br />
+    <h3>@ViewBag.Title</h3>
+    
     <div class="col-lg-12">
-        <a href="/public/files/set-locale-upload-sample.xlsx">@Html.LocalizationString("sample_excel")</a>
-
-        
-        <button class="btn btn-sm btn-primary" type="submit" id="Submit" name="Submit">@Html.LocalizationString("submit")  </button>
+        @Model.Msg
     </div>
-    }
 
+    <form action="/Admin/Import" enctype="multipart/form-data" method="post">
+        <div class="col-lg-6">
+            <a class="btnright" href="/public/files/set-locale-upload-sample.xlsx">@Html.LocalizationString("sample_excel")</a>
+
+            <span>@Html.LocalizationString("explanation_excel_file")</span>
+        </div>
+        <div class="clearfix">
+            <br/>
+            <br />
+        </div>
+        <div class="col-lg-6">
+            <span>@Html.LocalizationString("excel_file")</span>
+            <input id="file" name="file" class="form-control" type="file" />
+        </div>
+        <div class="clearfix">
+            <br/>
+        </div>
+        <div class="col-lg-6">
+            <br />
+            <input type="checkbox" name="IsOverWrite" id="IsOverWrite" checked="checked" value="true">@Html.LocalizationString("overwrite_existing_data")
+            <input name="IsOverWrite" id="IsOverWrite" type="hidden" value="false">
+        </div>
+        <div class="clearfix">
+            <br/>
+            <br />
+        </div>
+        <div class="col-lg-6">
+            <br />
+            <button class="btn btn-sm btn-primary" type="submit" id="btn_upload" name="btn_upload">@Html.LocalizationString("btn_upload")</button>
+        </div>
+    </form>
 </div>

@@ -63,7 +63,7 @@ namespace SetLocale.Client.Web.Repositories
 
             AddWord(context, "email", string.Empty, "E-posta", "Email", "Почта", "set-locale");
             AddWord(context, "name", string.Empty, "İsim", "Name", "Имя", "set-locale");
-            AddWord(context, "app_owner_email", string.Empty, "Uygulama Sahibinin E-Postası", "Application of the E-mail owners", "Приложение Пользователей Почты", "set-locale");
+            AddWord(context, "app_owner_email", string.Empty, "Uygulama Sahibinin E-Postası", "Owner's E-mail", "Приложение Пользователей Почты", "set-locale");
             AddWord(context, "password", string.Empty, "Şifre", "Password", "Пароль", "set-locale");
             AddWord(context, "app_name", string.Empty, "Uygulama İsmi", "Application Name", "Название Приложения", "set-locale");
             AddWord(context, "description", string.Empty, "Açıklama", "Description", "Описание", "set-locale");
