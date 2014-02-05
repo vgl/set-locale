@@ -31,7 +31,7 @@
                     <div id="dvForm"></div>
                 </div>
 
-                @if (Model.Translations.Count < 11)
+                @if (Model.Translations.Count < ConstHelper.MaxLanguageCount)
                 {
                     <input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
                 }
@@ -140,8 +140,12 @@
 
                                 $('table tbody').append(tr);
 
+                                var trCount = $('table tbody')[0].childElementCount;
 
-                                $("input.btnNewTranslate").show();
+                                if (trCount < "@ConstHelper.MaxLanguageCount") {
+                                    $("input.btnNewTranslate").show(); 
+                                }
+
                                 $("div#dvForm").html('');
                             } else {
                                 //todo:warning
