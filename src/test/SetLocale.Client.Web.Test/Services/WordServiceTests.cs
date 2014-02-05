@@ -164,7 +164,7 @@ namespace SetLocale.Client.Web.Test.Services
             var result = await sut.GetWords(0);
 
             //assert
-            Assert.AreEqual(0, result.Number);
+            Assert.AreEqual(1, result.Number);
         }
 
         [Test]
@@ -186,7 +186,7 @@ namespace SetLocale.Client.Web.Test.Services
             var result = await sut.GetWords(2);
 
             //assert
-            Assert.AreEqual(1, result.Number);
+            Assert.AreEqual(2, result.Number);
             Assert.AreEqual(ConstHelper.PageSize, result.Size);
             Assert.AreEqual(ConstHelper.PageSize * 4, result.TotalCount);
             Assert.AreEqual(true, result.HasPreviousPage);
