@@ -12,11 +12,12 @@
             <input id="import_excel" name="import_excel" class="btn-primary import_excel" type="file" />
         </div>
         <br />
-    <input type="checkbox" name="update_checkbox" id="update_checkbox" checked="checked" value="true">@Html.LocalizationString("import_update_words")
-    <input name="update_checkbox" id="update_checkbox" type="hidden" value="false" />
+        <input type="checkbox" name="updateCheckbox" id="updateCheckbox" checked="checked" value="true">@Html.LocalizationString("import_update_words")
+        <input name="updateCheckbox" id="updateCheckbox" type="hidden" value="false" />
         <br />
         <div class="col-lg-12">
-            <button class="btn btn-sm btn-primary" type="submit" id="Submit" name="Submit">@Html.LocalizationString("submit") </button>
+            <button class="btn btn-sm btn-primary" type="button" id="simple_file" onclick="window.location = '../public/files/Simple_Excel.xlsx'">@Html.LocalizationString("simple_excel") </button>
+            <button class="btn btn-sm btn-primary" type="submit" id="Submit" name="Submit">@Html.LocalizationString("submit")  </button>
         </div>
     }
 

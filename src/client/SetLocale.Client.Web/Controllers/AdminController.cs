@@ -56,7 +56,7 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<RedirectResult> Importexcel(string update_checkbox)
+        public async Task<ActionResult> Importexcel(string updateCheckbox)
         {
             var excelFileBase = Request.Files["import_excel"];
             if (excelFileBase != null && excelFileBase.ContentLength > 0)
@@ -80,11 +80,11 @@ namespace SetLocale.Client.Web.Controllers
 
                         using (var package = new ExcelPackage(existingFile))
                         {
-
                             ExcelWorkbook workBook = package.Workbook;
                             if (workBook == null) return Redirect("/admin/import");
                             if (workBook.Worksheets.Count <= 0) return Redirect("/admin/import");
                             ExcelWorksheet currentWorksheet = workBook.Worksheets.First();
+
                             const string tR = "TR";
                             const string eN = "EN";
                             const string aZ = "AZ";
@@ -116,11 +116,10 @@ namespace SetLocale.Client.Web.Controllers
                                 var translationSp = currentWorksheet.Cells[i, 13].Value.ToString();
                                 var translationTk = currentWorksheet.Cells[i, 14].Value.ToString();
                                 string item;
-                                //bool checkedValue = Form["update"].Contains("true");
 
                                 try
                                 {
-                                    if (update_checkbox == "true")
+                                    if (updateCheckbox == "true")
                                     {
                                         item =
                                             await
@@ -158,12 +157,10 @@ namespace SetLocale.Client.Web.Controllers
                                 {
                                     //do nothing
                                 }
-                                finally  
+                                finally
                                 {
-                                   
-                                }
-                                 
 
+                                }
                             }
 
                         }
