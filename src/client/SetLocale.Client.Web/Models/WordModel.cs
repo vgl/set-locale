@@ -11,7 +11,7 @@ namespace SetLocale.Client.Web.Models
         public int Count { get; set; }
         public string Description { get; set; }
         public string Tag { get; set; }
-        public bool IsTranslated { get; set; }
+        public bool IsTranslated { get; set; } 
         public List<TagModel> Tags { get; set; }
         public List<LanguageModel> Languages { get; set; }
         public List<TranslationModel> Translations { get; set; }
@@ -48,7 +48,7 @@ namespace SetLocale.Client.Web.Models
             {
                 Key = entity.Key,
                 Description = entity.Description,
-                IsTranslated = entity.IsTranslated,
+                IsTranslated = entity.IsTranslated, 
                 CreatedBy = entity.CreatedBy
             };
 

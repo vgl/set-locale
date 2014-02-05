@@ -31,7 +31,7 @@ namespace SetLocale.Client.Web.Controllers
         {
             if (string.IsNullOrEmpty(id)) return RedirectToHome();
 
-            var entity = await _wordService.GetByKey(id);           // Entity null kontrolü Test tarafında yapılmadı.
+            var entity = await _wordService.GetByKey(id);  
             if (entity == null) return RedirectToHome();
 
             var model = WordModel.MapEntityToModel(entity);

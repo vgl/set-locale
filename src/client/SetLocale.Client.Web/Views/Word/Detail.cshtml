@@ -31,7 +31,10 @@
                     <div id="dvForm"></div>
                 </div>
 
-                <input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
+                @if (Model.Translations.Count < 10)
+                {
+                    <input type="button" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
+                }
                 <input type="button" class="btn btn-sm btn-info btnNewTag pull-right" value="@Html.LocalizationString("btn_new_tag")" data-id="@Model.Key" />
 
                 @Html.AntiForgeryToken()
@@ -80,14 +83,14 @@
     <script src="/public/js/select2.js"></script>
 
     <script>
-        $(function() {
+        $(function () {
             var translatedLanguages = [@Html.Raw(Model.LanguagesStr)];
 
             function addNewTranslationRow() {
                 var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
                 btnCancel.val('@Html.Raw(Html.LocalizationString("btn_cancel"))');
 
-                btnCancel.click(function() {
+                btnCancel.click(function () {
 
                     $("h3#hdForm").html('');
                     $("div#dvForm").html('');
@@ -100,7 +103,7 @@
                 btnSave.val('@Html.Raw(Html.LocalizationString("btn_save"))');
                 btnSave.data('id', '@Model.Key');
 
-                btnSave.click(function() {
+                btnSave.click(function () {
                     var lang = $("select#selLanguages").val();
                     var translation = $("input#txtTranslation").val();
                     $("input.btnNewTag").show();
@@ -109,7 +112,7 @@
                         url: "/Word/Translate",
                         type: "POST",
                         data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
-                        success: function(r) {
+                        success: function (r) {
                             if (r && r.Ok) {
 
                                 var tr = $('<tr />');
@@ -123,7 +126,7 @@
                                 tdBtn.append(btnEdit);
                                 tdFlag.append($("<img class='flag' style='margin:5px;margin-left: 0;margin-top: 0;' alt='flag' src='/public/img/flag/" + lang + ".png'/>"));
 
-                                $.each(allLanguages, function(i, l) {
+                                $.each(allLanguages, function (i, l) {
                                     if (l.id == lang) {
                                         tdFlag.append($('<span>' + l.text + '</span>'));
                                         translatedLanguages.push(l);
@@ -148,10 +151,10 @@
                 });
 
                 var inputLanguages = $('<select id="selLanguages" name="selLanguages" />');
-                $.each(allLanguages, function(i, lang) {
+                $.each(allLanguages, function (i, lang) {
 
                     var isExisting = false;
-                    $.each(translatedLanguages, function(j, l) {
+                    $.each(translatedLanguages, function (j, l) {
                         if (lang.id === l.id) {
                             isExisting = true;
                             return;
@@ -197,7 +200,7 @@
                 btn.parent().children(":last-child").remove();
 
                 var translation = "";
-                $.each(translations, function(i, txt) {
+                $.each(translations, function (i, txt) {
                     if ($(txt).data("lang") == lang) {
                         translation = $(txt).val();
 
@@ -215,7 +218,7 @@
                     url: "/Word/Translate",
                     type: "POST",
                     data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
-                    success: function(r) {
+                    success: function (r) {
                         if (r && r.Ok) {
                             td.html(translation);
                         } else {
@@ -225,7 +228,7 @@
                 });
             }
 
-            $("input.btnNewTranslate").click(function() {
+            $("input.btnNewTranslate").click(function () {
                 $(this).hide();
                 $("input.btnNewTag").hide();
 
@@ -236,10 +239,10 @@
                     return "<img class='flag' alt='flag' style='margin:5px;' src='/public/img/flag/" + state.id.toLowerCase() + ".png'/>" + state.text;
                 }
 
-                $("select#selLanguages").select2({ formatResult: format, formatSelection: format, escapeMarkup: function(m) { return m; } });
+                $("select#selLanguages").select2({ formatResult: format, formatSelection: format, escapeMarkup: function (m) { return m; } });
             });
 
-            var fnEdit = function() {
+            var fnEdit = function () {
                 var td = $(this).parent().parent().children(":last");
                 var oldText = td.html();
 
@@ -252,7 +255,7 @@
 
                     $(this).parent().append(btnCancel);
                     prepareEditRow($(this));
-                    
+
                     btnCancel.click(function (r) {
                         var btn = $(this).parent().children(":first");
                         $(btn).removeClass("btn-primary").addClass("btn-warning");
@@ -275,7 +278,7 @@
             $("input.btnEdit").click(fnEdit);
 
 
-            $("input.btnNewTag").click(function() {
+            $("input.btnNewTag").click(function () {
                 $(this).hide();
                 $("input.btnNewTranslate").hide();
                 addNewTagRow();
@@ -286,7 +289,7 @@
                 var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
                 btnCancel.val('@Html.Raw(Html.LocalizationString("btn_cancel"))');
 
-                btnCancel.click(function() {
+                btnCancel.click(function () {
                     $("h3#hdForm").html('');
                     $("div#dvForm").html('');
                     $("input.btnNewTag").show();
@@ -297,14 +300,14 @@
                 btnSave.val('@Html.Raw(Html.LocalizationString("btn_save"))');
                 btnSave.data('id', '@Model.Key');
 
-                btnSave.click(function() {
+                btnSave.click(function () {
                     var tag = $("input#txtTag").val();
 
                     $.ajax({
                         url: "/Word/Tag",
                         type: "POST",
                         data: "key=@Model.Key&tag=" + tag + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
-                        success: function(r) {
+                        success: function (r) {
                             if (r && r.Ok) {
                                 var tags = $('<a class="label label-info" style="margin-left:5px;" href="/tag/detail/' + tag + '">' + tag + '</a>');
                                 $("div#dvTag").append(tags);
