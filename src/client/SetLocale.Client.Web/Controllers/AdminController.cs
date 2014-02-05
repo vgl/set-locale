@@ -8,6 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
@@ -17,24 +20,27 @@ namespace SetLocale.Client.Web.Controllers
     public class AdminController : BaseController
     {
         private readonly IAppService _appService;
+        private readonly IWordService _wordService;
 
         public AdminController(
-            IUserService userService, 
-            IFormsAuthenticationService formsAuthenticationService, 
+            IUserService userService,
+             IWordService wordService,
+            IFormsAuthenticationService formsAuthenticationService,
             IAppService appService)
             : base(userService, formsAuthenticationService)
         {
             _appService = appService;
+            _wordService = wordService;
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (CurrentUser.RoleId != SetLocaleRole.Admin.Value)
             {
-                filterContext.Result = RedirectToHome();    
+                filterContext.Result = RedirectToHome();
             }
 
-            base.OnActionExecuting(filterContext); 
+            base.OnActionExecuting(filterContext);
         }
 
         [HttpGet]
@@ -50,12 +56,12 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Importexcel()
+        public async Task<RedirectResult> Importexcel(string update_checkbox)
         {
             var excelFileBase = Request.Files["import_excel"];
             if (excelFileBase != null && excelFileBase.ContentLength > 0)
             {
-                var excelFile  = Request.Files["import_excel"];
+                var excelFile = Request.Files["import_excel"];
                 if (excelFile != null)
                 {
                     string extension = System.IO.Path.GetExtension(excelFile.FileName);
@@ -70,97 +76,77 @@ namespace SetLocale.Client.Web.Controllers
                             System.IO.File.Delete(path1);
 
                         excelFile.SaveAs(path1);
+                        var existingFile = new FileInfo(path1);
 
-                        string excelConnectionString = string.Empty;
+                        using (var package = new ExcelPackage(existingFile))
+                        {
 
-                    excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path1 + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
-                    if (extension == ".xls")
-                    {
-                        excelConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path1 + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
+                            ExcelWorkbook workBook = package.Workbook;
+                            if (workBook == null) return Redirect("/admin/import");
+                            if (workBook.Worksheets.Count <= 0) return Redirect("/admin/import");
+                            ExcelWorksheet currentWorksheet = workBook.Worksheets.First();
+                            const string tR = "TR";
+                            const string eN = "EN";
+                            const string aZ = "AZ";
+                            const string cN = "CN";
+                            const string fR = "FR";
+                            const string gR = "GR";
+                            const string iT = "IT";
+                            const string kZ = "KZ";
+                            const string rU = "RU";
+                            const string sP = "SP";
+                            const string tK = "TK";
+
+                            for (int i = 2; i < currentWorksheet.Dimension.End.Row; i++)
+                            {
+
+                                var key = currentWorksheet.Cells[i, 1].Value.ToString();
+                                var desc = currentWorksheet.Cells[i, 2].Value.ToString();
+                                var tag = currentWorksheet.Cells[i, 3].Value.ToString();
+
+                                var translationTr = currentWorksheet.Cells[i, 4].Value.ToString();
+                                var translationEn = currentWorksheet.Cells[i, 5].Value.ToString();
+                                var translationAz = currentWorksheet.Cells[i, 6].Value.ToString();
+                                var translationCn = currentWorksheet.Cells[i, 7].Value.ToString();
+                                var translationFr = currentWorksheet.Cells[i, 8].Value.ToString();
+                                var translationGr = currentWorksheet.Cells[i, 9].Value.ToString();
+                                var translationIt = currentWorksheet.Cells[i, 10].Value.ToString();
+                                var translationKz = currentWorksheet.Cells[i, 11].Value.ToString();
+                                var translationRu = currentWorksheet.Cells[i, 12].Value.ToString();
+                                var translationSp = currentWorksheet.Cells[i, 13].Value.ToString();
+                                var translationTk = currentWorksheet.Cells[i, 14].Value.ToString();
+                                string item;
+                                //bool checkedValue = Form["update"].Contains("true");
+                                if (!string.IsNullOrEmpty(update_checkbox = "true"))
+                                {
+                                    item = await _wordService.Update(new WordModel { Key = key, Description = desc, Tag = tag });
+                                }
+                                else
+                                {
+                                    item = await _wordService.Create(new WordModel { Key = key, Description = desc, Tag = tag });                                    
+                                }
+                                var itemTransTR = await _wordService.Translate(key, tR, translationTr);
+                                var itemTransEN = await _wordService.Translate(key, eN, translationEn);
+                                var itemTransAZ = await _wordService.Translate(key, aZ, translationAz);
+                                var itemTransCN = await _wordService.Translate(key, cN, translationCn);
+                                var itemTransFR = await _wordService.Translate(key, fR, translationFr);
+                                var itemTransGR = await _wordService.Translate(key, gR, translationGr);
+                                var itemTransIT = await _wordService.Translate(key, iT, translationIt);
+                                var itemTransKZ = await _wordService.Translate(key, kZ, translationKz);
+                                var itemTransRU = await _wordService.Translate(key, rU, translationRu);
+                                var itemTransSP = await _wordService.Translate(key, sP, translationSp);
+                                var itemTransTK = await _wordService.Translate(key, tK, translationTk);
+
+                            }
+
+                        }
                     }
-                    else if (extension == ".xlsx")
-                    {
-                        
-                        excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + path1 + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
-                    }
-
-                    var excelConnection = new OleDbConnection(excelConnectionString);
-                    excelConnection.Open();
-                    var dt = new DataTable();
-
-                    dt = excelConnection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                    if (dt == null)
-                    {
-                        return null;
-                    }
-
-                    var excelSheets = new String[dt.Rows.Count];
-                    int t = 0;
-                    //excel data saves in temp file here.
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        excelSheets[t] = row["TABLE_NAME"].ToString();
-                        t++;
-                    }
-                    var excelConnection1 = new OleDbConnection(excelConnectionString);
-                    var ds = new DataSet();
-
-                    string query = string.Format("Select * from [{0}]", excelSheets[0]);
-                    using (var dataAdapter = new OleDbDataAdapter(query, excelConnection1))
-                    {
-                        dataAdapter.Fill(ds);
-                    }
-                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                    {
-                   
-                       var word = new Word
-                       {
-                           Key = ds.Tables[0].Rows[i]["key"].ToString(),
-                           Description = ds.Tables[0].Rows[i]["Description"].ToString(),
-                           Translation_TR = ds.Tables[0].Rows[i]["Translation_TR"].ToString(),
-                           Translation_EN = ds.Tables[0].Rows[i]["Translation_EN"].ToString(),
-                           Translation_AZ = ds.Tables[0].Rows[i]["Translation_AZ"].ToString(),
-                           Translation_CN = ds.Tables[0].Rows[i]["Translation_CN"].ToString(),
-                           Translation_FR = ds.Tables[0].Rows[i]["Translation_FR"].ToString(),
-                           Translation_GR = ds.Tables[0].Rows[i]["Translation_GR"].ToString(),
-                           Translation_IT = ds.Tables[0].Rows[i]["Translation_IT"].ToString(),
-                           Translation_KZ = ds.Tables[0].Rows[i]["Translation_KZ"].ToString(),
-                           Translation_RU = ds.Tables[0].Rows[i]["Translation_RU"].ToString(),
-                           Translation_SP = ds.Tables[0].Rows[i]["Translation_SP"].ToString(),
-                           Translation_TK = ds.Tables[0].Rows[i]["Translation_TK"].ToString()
-                       };
-                        //word.Tag = ds.Tables[0].Rows[i]["tags"].ToString();
-
-                        var streampost = new MemoryStream();
-                        var clientpost = new WebClient();
-                        clientpost.Headers["Content-type"] = "application/json";
-
-                        //DataContractJsonSerializer serializerpost = new
-                        // DataContractJsonSerializer(typeof(WordModel));
-                        //serializerpost.WriteObject(streampost, model);
-
-                        //string url1 = string.Format("{0}SavePlayerDetailsAPI", serviceUrl);
-                        //byte[] datapost = clientpost.UploadData(url1, "Post", streampost.ToArray());
-
-                        //streampost = new MemoryStream(datapost);
-                        //serializerpost = new DataContractJsonSerializer(typeof(string));
-                        //var result = (string)serializerpost.ReadObject(streampost);
-
-                    }
-                    ViewBag.message = "Information saved successfully.";
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Plese select Excel File.");
-                }
+                return Redirect("/admin/import");
             }
-                     ModelState.AddModelError("", "Plese select Excel File.");  
-                    }
             return Redirect("/admin/import");
         }
-      
 
-            
         [HttpGet]
         public ViewResult NewTranslator()
         {
@@ -190,7 +176,7 @@ namespace SetLocale.Client.Web.Controllers
 
             return Redirect("/admin/users");
         }
-         
+
         [HttpGet]
         public async Task<ActionResult> Users(int id = 0, int page = 1)
         {
@@ -223,14 +209,14 @@ namespace SetLocale.Client.Web.Controllers
                 TotalCount = users.TotalCount,
                 TotalPageCount = users.TotalPageCount
             };
-             
+
             return View(model);
         }
-          
+
         [HttpGet]
         public async Task<ActionResult> Apps(int id = 0)
         {
-            var pageNumber = id; 
+            var pageNumber = id;
             if (pageNumber < 1)
             {
                 pageNumber = 1;
@@ -251,5 +237,6 @@ namespace SetLocale.Client.Web.Controllers
 
             return View(model);
         }
+
     }
 }

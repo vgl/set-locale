@@ -13,6 +13,7 @@ namespace SetLocale.Client.Web.Services
     public interface IWordService
     {
         Task<string> Create(WordModel model);
+        Task<string> Update(WordModel model);
         Task<PagedList<Word>> GetByUserId(int userId, int pageNumber);
         Task<Word> GetByKey(string key); 
         Task<PagedList<Word>> GetWords(int pageNumber);
@@ -229,5 +230,25 @@ namespace SetLocale.Client.Web.Services
             return Task.FromResult(words);
         }
 
+        public Task<string> Update(WordModel model)
+        {
+            if (!model.IsValidForNew())
+            {
+                return null;
+            }
+
+            var slug = model.Key.ToUrlSlug();
+            var wordEntity = _wordRepository.FindOne(x => x.Key == slug);
+            if (wordEntity!=null)
+            {
+                _wordRepository.Update(wordEntity);
+
+                if (!_wordRepository.SaveChanges())
+                    return null;
+
+                return Task.FromResult(wordEntity.Key);
+            }
+         return Create(model);
+        }
     }
 }

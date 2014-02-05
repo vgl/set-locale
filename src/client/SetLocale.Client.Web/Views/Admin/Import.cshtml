@@ -4,17 +4,20 @@
 }
 <div class="col-lg-12">
     <h2>Import</h2>
-   
-        @using (Html.BeginForm("Importexcel", "Admin", FormMethod.Post, new {enctype = "multipart/form-data"}))
-        {
-            <div class="col-lg-12">
-                <span>@Html.LocalizationString("excel_file")</span>
-                <input id="import_excel" name="import_excel" class="btn-primary import_excel" type="file" />
-            </div>
-            <br/>
-            <div class="col-lg-12">
-                <button class="btn btn-sm btn-primary" type="submit" id="Submit" name="Submit" >@Html.LocalizationString("submit") </button>
-            </div>
-        }
-    
-    </div>
+
+    @using (Html.BeginForm("Importexcel", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="col-lg-12">
+            <span>@Html.LocalizationString("excel_file")</span>
+            <input id="import_excel" name="import_excel" class="btn-primary import_excel" type="file" />
+        </div>
+        <br />
+        <input type="checkbox" name="update_checkbox" id="update" checked="checked" value="true">@Html.LocalizationString("import_update_words")
+    <input name="update_checkbox" id="create" type="hidden" value="false" />
+        <br />
+        <div class="col-lg-12">
+            <button class="btn btn-sm btn-primary" type="submit" id="Submit" name="Submit">@Html.LocalizationString("submit") </button>
+        </div>
+    }
+
+</div>
