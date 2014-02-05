@@ -56,12 +56,12 @@
                             <ul class="pagination">
                                 @if (Model.HasPreviousPage)
                                 {
-                                    <li><a href="~/word/all/@(Model.Number-1)">&laquo;</a></li>
+                                    <li><a id="prevPage" href="~/word/all/@(Model.Number-1)">&laquo;</a></li>
                                 }
                                 <li><a href="~/word/all/@(Model.Number)">@(Model.Number)</a></li>
                                 @if (Model.HasNextPage)
                                 {
-                                    <li><a href="~/word/all/@(Model.Number+1)">&raquo;</a></li>
+                                    <li><a id="nextPage" href="~/word/all/@(Model.Number+1)">&raquo;</a></li>
                                 }
                             </ul>
                             <br />

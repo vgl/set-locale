@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web.Mvc;
-using System.Web.UI.WebControls;
+
 using Moq;
 using NUnit.Framework;
 
 using SetLocale.Client.Web.Entities;
 using SetLocale.Client.Web.Models;
 using SetLocale.Client.Web.Services;
-using SetLocale.Client.Web.Test.Builders;
 using SetLocale.Client.Web.Test.TestHelpers;
 
 namespace SetLocale.Client.Web.Test.Controllers

@@ -1,35 +1,26 @@
 ﻿using System;
 
 using NUnit.Framework;
-using OpenQA.Selenium.Firefox;
 
 namespace SetLocale.Client.Web.Test.Selenium
 {
     [TestFixture]
-    public class NewWordTests
+    public class NewWordTests : BaseUITest
     {
-        private const string BaseUrl = "http://localhost:8011/";
-
         [Test]
         public void should_add_new_word()
         {
-            var browser = new FirefoxDriver();
+            LogOut();
+            LoginAsAdmin();
 
-            browser.Navigate().GoToUrl(string.Format("{0}/user/logout", BaseUrl));
-            browser.Navigate().GoToUrl(string.Format("{0}/user/login", BaseUrl));
+            GoTo(string.Format("{0}{1}", BASE_URL, ACTION_NEW_WORD));
 
-            browser.FindElementById("email").SendKeys("mehmet.sabancioglu@gmail.com");
-            browser.FindElementById("password").SendKeys("password");
-            browser.FindElementById("frm").Submit();
+            _browser.FindElementById("key").SendKeys(Guid.NewGuid().ToString().Replace("-", ""));
+            _browser.FindElementById("tag").SendKeys(Guid.NewGuid().ToString().Replace("-", ""));
+            _browser.FindElementById("description").SendKeys(Guid.NewGuid().ToString().Replace("-", ""));
+            _browser.FindElementById("frm").Submit();
 
-            browser.Navigate().GoToUrl(string.Format("{0}/word/new", BaseUrl));
-
-            browser.FindElementById("key").SendKeys(Guid.NewGuid().ToString().Replace("-", ""));
-            browser.FindElementById("tag").SendKeys(Guid.NewGuid().ToString().Replace("-", ""));
-            browser.FindElementById("description").SendKeys(Guid.NewGuid().ToString().Replace("-", ""));
-            browser.FindElementById("frm").Submit();
-
-            browser.Close();
+            _browser.Close();
         }
     }
 }

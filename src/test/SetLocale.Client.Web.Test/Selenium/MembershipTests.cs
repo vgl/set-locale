@@ -1,43 +1,35 @@
 ﻿using System;
 
 using NUnit.Framework;
-using OpenQA.Selenium.Firefox;
 
 namespace SetLocale.Client.Web.Test.Selenium
 {
     [TestFixture]
-    public class MembershipTests
+    public class MembershipTests : BaseUITest
     {
-        private const string BaseUrl = "http://localhost:8011/";
-
         [Test]
         public void should_login()
-        {
-            var browser = new FirefoxDriver();
+        { 
+            LogOut();
 
-            browser.Navigate().GoToUrl(string.Format("{0}/user/logout", BaseUrl));
-            browser.Navigate().GoToUrl(string.Format("{0}/user/login", BaseUrl));
+            LoginAsAdmin();
 
-            browser.FindElementById("email").SendKeys("hserdarb@gmail.com");
-            browser.FindElementById("password").SendKeys("password");
-            browser.FindElementById("frm").Submit();
-
-            browser.Close();
+            _browser.Close();
         }
 
         [Test]
         public void should_signup()
         {
-            var browser = new FirefoxDriver();
+            LogOut();
 
-            browser.Navigate().GoToUrl(string.Format("{0}/user/new", BaseUrl));
+            GoTo(string.Format("{0}{1}", BASE_URL, ACTION_NEW));
 
-            browser.FindElementById("name").SendKeys(Guid.NewGuid().ToString().Replace("-", ""));
-            browser.FindElementById("email").SendKeys(Guid.NewGuid().ToString().Replace("-", "") + "@gmail.com");
-            browser.FindElementById("password").SendKeys("password");
-            browser.FindElementById("frm").Submit();
+            _browser.FindElementById("name").SendKeys(Guid.NewGuid().ToString().Replace("-", ""));
+            _browser.FindElementById("email").SendKeys(Guid.NewGuid().ToString().Replace("-", "") + "@gmail.com");
+            _browser.FindElementById("password").SendKeys("password");
+            _browser.FindElementById("frm").Submit();
 
-            browser.Close();
+            _browser.Close();
         }
     }
 }

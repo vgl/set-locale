@@ -118,10 +118,12 @@
     <Compile Include="Controllers\TagControllerTests.cs" />
     <Compile Include="Controllers\UserControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Selenium\BaseUITests.cs" />
     <Compile Include="Selenium\NewTranslatorTests.cs" />
     <Compile Include="Selenium\NewWordTests.cs" />
     <Compile Include="Selenium\NewAppTests.cs" />
     <Compile Include="Selenium\MembershipTests.cs" />
+    <Compile Include="Selenium\PagingUITests.cs" />
     <Compile Include="Services\AppServiceTests.cs" />
     <Compile Include="Services\ReportServiceTests.cs" />
     <Compile Include="Services\RequestLogServiceTests.cs" />
