@@ -56,7 +56,7 @@ namespace SetLocale.Client.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Importexcel(string updateCheckbox)
+        public async Task<ActionResult> Importexcel(string isOverWrite)
         {
             var excelFileBase = Request.Files["import_excel"];
             if (excelFileBase != null && excelFileBase.ContentLength > 0)
@@ -119,7 +119,7 @@ namespace SetLocale.Client.Web.Controllers
 
                                 try
                                 {
-                                    if (updateCheckbox == "true")
+                                    if (isOverWrite == "true")
                                     {
                                         item =
                                             await
@@ -141,17 +141,17 @@ namespace SetLocale.Client.Web.Controllers
                                                     Tag = tag
                                                 });
                                     }
-                                    var itemTransTR = await _wordService.Translate(key, tR, translationTr);
-                                    var itemTransEN = await _wordService.Translate(key, eN, translationEn);
-                                    var itemTransAZ = await _wordService.Translate(key, aZ, translationAz);
-                                    var itemTransCN = await _wordService.Translate(key, cN, translationCn);
-                                    var itemTransFR = await _wordService.Translate(key, fR, translationFr);
-                                    var itemTransGR = await _wordService.Translate(key, gR, translationGr);
-                                    var itemTransIT = await _wordService.Translate(key, iT, translationIt);
-                                    var itemTransKZ = await _wordService.Translate(key, kZ, translationKz);
-                                    var itemTransRU = await _wordService.Translate(key, rU, translationRu);
-                                    var itemTransSP = await _wordService.Translate(key, sP, translationSp);
-                                    var itemTransTK = await _wordService.Translate(key, tK, translationTk);
+                                   await _wordService.Translate(key, tR, translationTr);
+                                   await _wordService.Translate(key, eN, translationEn);
+                                   await _wordService.Translate(key, aZ, translationAz);
+                                   await _wordService.Translate(key, cN, translationCn);
+                                   await _wordService.Translate(key, fR, translationFr);
+                                   await _wordService.Translate(key, gR, translationGr);
+                                   await _wordService.Translate(key, iT, translationIt);
+                                   await _wordService.Translate(key, kZ, translationKz);
+                                   await _wordService.Translate(key, rU, translationRu);
+                                   await _wordService.Translate(key, sP, translationSp);
+                                   await _wordService.Translate(key, tK, translationTk);
                                 }
                                 catch (Exception ex)
                                 {
