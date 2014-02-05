@@ -96,7 +96,7 @@ namespace SetLocale.Client.Web.Test.Selenium
         {
             GoTo(string.Format("{0}{1}", BASE_URL, ACTION_LOGIN));
 
-            _browser.FindElementById("email").SendKeys("admim@test.com");
+            _browser.FindElementById("email").SendKeys("admin@test.com");
             _browser.FindElementById("password").SendKeys("password");
             _browser.FindElementById("frm").Submit();
         }
