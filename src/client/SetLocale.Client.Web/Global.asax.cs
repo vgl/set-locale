@@ -79,9 +79,9 @@ namespace SetLocale.Client.Web
             enTexts.Add("total_page_count", "Total Page Count");
             enTexts.Add("translator_name", "Translator Name");
             enTexts.Add("excel_file", "Excel File");
-            enTexts.Add("explanation_excel_file", "Click Download Link.");
-            enTexts.Add("sample_excel", "Sample Excel");
-            enTexts.Add("overwrite_existing_data", "Overwrite Existing Data");
+            enTexts.Add("explanation_excel_file", "can be downloaded");
+            enTexts.Add("sample_excel", "Sample excel");
+            enTexts.Add("overwrite_existing_data", "Overwrite existing data");
             enTexts.Add("btn_upload", "Upload"); 
 
             enTexts.Add("btn_login", "Login");
@@ -183,9 +183,9 @@ namespace SetLocale.Client.Web
             trTexts.Add("total_page_count", "Toplam Sayfa Sayısı");
             trTexts.Add("translator_name", "İsmi");
             trTexts.Add("excel_file", "Excel Dosyası");
-            trTexts.Add("explanation_excel_file", "Dosyasını Burdan İndirebilirsiniz...");
-            trTexts.Add("sample_excel", "Örnek Excel");
-            trTexts.Add("overwrite_existing_data", "Var olan Verinin Üstüne Yaz");
+            trTexts.Add("explanation_excel_file", "dosyasını indirebilirsiniz");
+            trTexts.Add("sample_excel", "Örnek excel");
+            trTexts.Add("overwrite_existing_data", "Var olan verinin üzerine yaz");
             trTexts.Add("btn_upload", "Yükle");   
 
             trTexts.Add("btn_login", "Giriş");
@@ -229,7 +229,7 @@ namespace SetLocale.Client.Web
             trTexts.Add("new_app_title", "Yeni Uygulama");
             trTexts.Add("new_translator_title", "Yeni Çevirmen");
             trTexts.Add("tag_keys_title", "Tag Anahtar Listesi ");
-            trTexts.Add("import_excel_title", "Excel'den Veri Al");
+            trTexts.Add("import_excel_title", "Excel'den Veri Yükle");
 
             trTexts.Add("modal_title_apps", "Uygulama Durumu");
             trTexts.Add("modal_body_apps", "Değiştirmek İstediğinize Emin misiniz?");
