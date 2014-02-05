@@ -15,8 +15,7 @@ namespace SetLocale.Client.Web.Test.Selenium
         public const string ACTION_APPLICATION_NEW = "/app/new";
         public const string ACTION_NEW_TRANSLATOR = "/admin/newtranslator";
         public const string ACTION_NEW_WORD = "/word/new";
-        public const string ACTION_WORD_ALL = "/word/all";
-        public const string ERROR_PREV_PAGE_NOT_EXIS = "There is no prevPageButton in page.";
+        public const string ACTION_WORD_ALL = "/word/all"; 
 
         public FirefoxDriver _browser;
 
@@ -71,7 +70,7 @@ namespace SetLocale.Client.Web.Test.Selenium
                 }
                 else
                 {
-                    var err = new AssertionException(ERROR_PREV_PAGE_NOT_EXIS);
+                    var err = new AssertionException("There is no prevPageButton in page.");
                     throw err;
                 } 
             } 
