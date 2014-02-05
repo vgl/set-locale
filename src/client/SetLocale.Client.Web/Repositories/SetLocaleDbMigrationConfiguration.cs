@@ -22,14 +22,8 @@ namespace SetLocale.Client.Web.Repositories
 
             #region Users
 
-            AddAdmin(context, "Serdar Büyüktemiz", "hserdarb@gmail.com");
-            AddAdmin(context, "Caner Çavuş", "canercvs@gmail.com");
-            AddAdmin(context, "Ramiz Sümer", "ramiz.sumerr@gmail.com");
-            AddAdmin(context, "Mehmet Sabancıoğlu", "mehmet.sabancioglu@gmail.com");
-            AddAdmin(context, "Cihan Çoşkun", "cihancoskun@gmail.com");
-            AddAdmin(context, "Kemal Çolak", "kml.colak@gmail.com");
-            AddAdmin(context, "Duygu Sevim", "sevimduygu@gmail.com");
-
+            AddAdmin(context, "Admin", "admin@test.com");
+            AddDeveloper(context, "Developer", "dev@test.com");  
             AddTranslator(context, "Translator", "translator@test.com");
 
             #endregion
@@ -143,6 +137,22 @@ namespace SetLocale.Client.Web.Repositories
                 Name = name,
                 RoleId = SetLocaleRole.Admin.Value,
                 RoleName = SetLocaleRole.Admin.ToString(),
+                ImageUrl = GravatarHelper.GetGravatarURL(email, 35),
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword("password"),
+                LastLoginAt = DateTime.Now,
+                IsActive = true
+            };
+            context.Users.Add(user);
+        }
+
+        private static void AddDeveloper(SetLocaleDbContext context, string name, string email)
+        {
+            var user = new User
+            {
+                Email = email,
+                Name = name,
+                RoleId = SetLocaleRole.Developer.Value,
+                RoleName = SetLocaleRole.Developer.ToString(),
                 ImageUrl = GravatarHelper.GetGravatarURL(email, 35),
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword("password"),
                 LastLoginAt = DateTime.Now,
