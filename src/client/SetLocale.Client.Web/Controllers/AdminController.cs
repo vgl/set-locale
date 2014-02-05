@@ -64,7 +64,7 @@ namespace SetLocale.Client.Web.Controllers
                 var excelFile = Request.Files["import_excel"];
                 if (excelFile != null)
                 {
-                    string extension = System.IO.Path.GetExtension(excelFile.FileName);
+                    string extension = Path.GetExtension(excelFile.FileName);
                     if (extension == ".xls" || extension == ".xlsx")
                     {
                         var date = DateTime.Now.Date.ToString("dd-MM-yy");
