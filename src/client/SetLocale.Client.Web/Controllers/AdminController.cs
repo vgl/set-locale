@@ -117,25 +117,52 @@ namespace SetLocale.Client.Web.Controllers
                                 var translationTk = currentWorksheet.Cells[i, 14].Value.ToString();
                                 string item;
                                 //bool checkedValue = Form["update"].Contains("true");
-                                if (!string.IsNullOrEmpty(update_checkbox = "true"))
+
+                                try
                                 {
-                                    item = await _wordService.Update(new WordModel { Key = key, Description = desc, Tag = tag });
+                                    if (update_checkbox == "true")
+                                    {
+                                        item =
+                                            await
+                                                _wordService.Update(new WordModel
+                                                {
+                                                    Key = key,
+                                                    Description = desc,
+                                                    Tag = tag
+                                                });
+                                    }
+                                    else
+                                    {
+                                        item =
+                                            await
+                                                _wordService.Create(new WordModel
+                                                {
+                                                    Key = key,
+                                                    Description = desc,
+                                                    Tag = tag
+                                                });
+                                    }
+                                    var itemTransTR = await _wordService.Translate(key, tR, translationTr);
+                                    var itemTransEN = await _wordService.Translate(key, eN, translationEn);
+                                    var itemTransAZ = await _wordService.Translate(key, aZ, translationAz);
+                                    var itemTransCN = await _wordService.Translate(key, cN, translationCn);
+                                    var itemTransFR = await _wordService.Translate(key, fR, translationFr);
+                                    var itemTransGR = await _wordService.Translate(key, gR, translationGr);
+                                    var itemTransIT = await _wordService.Translate(key, iT, translationIt);
+                                    var itemTransKZ = await _wordService.Translate(key, kZ, translationKz);
+                                    var itemTransRU = await _wordService.Translate(key, rU, translationRu);
+                                    var itemTransSP = await _wordService.Translate(key, sP, translationSp);
+                                    var itemTransTK = await _wordService.Translate(key, tK, translationTk);
                                 }
-                                else
+                                catch (Exception ex)
                                 {
-                                    item = await _wordService.Create(new WordModel { Key = key, Description = desc, Tag = tag });
+                                    //do nothing
                                 }
-                                var itemTransTR = await _wordService.Translate(key, tR, translationTr);
-                                var itemTransEN = await _wordService.Translate(key, eN, translationEn);
-                                var itemTransAZ = await _wordService.Translate(key, aZ, translationAz);
-                                var itemTransCN = await _wordService.Translate(key, cN, translationCn);
-                                var itemTransFR = await _wordService.Translate(key, fR, translationFr);
-                                var itemTransGR = await _wordService.Translate(key, gR, translationGr);
-                                var itemTransIT = await _wordService.Translate(key, iT, translationIt);
-                                var itemTransKZ = await _wordService.Translate(key, kZ, translationKz);
-                                var itemTransRU = await _wordService.Translate(key, rU, translationRu);
-                                var itemTransSP = await _wordService.Translate(key, sP, translationSp);
-                                var itemTransTK = await _wordService.Translate(key, tK, translationTk);
+                                finally  
+                                {
+                                   
+                                }
+                                 
 
                             }
 
