@@ -6,7 +6,7 @@ namespace SetLocale.Client.Web.Test.Selenium
     public class PagingUITests : BaseUITest
     {
         [Test]
-        public void should_open_next_page_if_exist()
+        public void word_all_should_open_next_page_if_exist()
         {
             LogOut();
             LoginAsAdmin();
@@ -17,7 +17,7 @@ namespace SetLocale.Client.Web.Test.Selenium
         }
 
         [Test]
-        public void should_open_previous_page_if_exist()
+        public void word_all_should_open_previous_page_if_exist()
         {
             LogOut();
             LoginAsAdmin();
