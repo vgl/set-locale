@@ -9,7 +9,7 @@
         @Model.Msg
     </div>
 
-    <form action="/Admin/Importexcel" enctype="multipart/form-data" method="post">
+    <form action="/Admin/Import" enctype="multipart/form-data" method="post">
         <div class="col-lg-6">
             <a class="btnright" href="/public/files/set-locale-upload-sample.xlsx">@Html.LocalizationString("sample_excel")</a>
 
@@ -21,7 +21,7 @@
         </div>
         <div class="col-lg-6">
             <span>@Html.LocalizationString("excel_file")</span>
-            <input id="import_excel" name="import_excel" class="form-control" type="file" />
+            <input id="file" name="file" class="form-control" type="file" />
         </div>
         <div class="clearfix">
             <br/>
