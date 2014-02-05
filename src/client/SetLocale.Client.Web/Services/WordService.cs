@@ -248,6 +248,7 @@ namespace SetLocale.Client.Web.Services
 
                 return Task.FromResult(wordEntity.Key);
             }
+
          return Create(model);
         }
     }

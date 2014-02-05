@@ -174,7 +174,7 @@ namespace SetLocale.Client.Web.Controllers
                 model = new ExcelImportModel { Msg = _htmlHelper.LocalizationString("please_select_excel_file"), MsgId = false };
                 return View(model);
             }
-            model = new ExcelImportModel { Msg = _htmlHelper.LocalizationString("import_successful_operation"), MsgId = true };
+            model = new ExcelImportModel { Msg = _htmlHelper.LocalizationString("import_successful"), MsgId = true };
             return View(model);
         }
 

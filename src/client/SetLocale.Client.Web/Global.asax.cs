@@ -83,7 +83,10 @@ namespace SetLocale.Client.Web
             enTexts.Add("explanation_excel_file", "can be downloaded");
             enTexts.Add("sample_excel", "Sample excel");
             enTexts.Add("overwrite_existing_data", "Overwrite existing data");
-            enTexts.Add("btn_upload", "Upload"); 
+            enTexts.Add("btn_upload", "Upload");
+            enTexts.Add("please_select_file", "Please Select File");
+            enTexts.Add("please_select_excel_file", "Please Select Excel File");
+            enTexts.Add("import_successful", "Excel Import Successful");
 
             enTexts.Add("btn_login", "Login");
             enTexts.Add("btn_sign_up", "Sign Up");
@@ -188,7 +191,11 @@ namespace SetLocale.Client.Web
             trTexts.Add("explanation_excel_file", "dosyasını indirebilirsiniz");
             trTexts.Add("sample_excel", "Örnek excel");
             trTexts.Add("overwrite_existing_data", "Var olan verinin üzerine yaz");
-            trTexts.Add("btn_upload", "Yükle");   
+            trTexts.Add("btn_upload", "Yükle");
+            trTexts.Add("please_select_file", "Lütfen Dosya Seçiniz...");
+            trTexts.Add("please_select_excel_file", "Seçtiğiniz Dosya Excel Dosyası Değildir.");
+            trTexts.Add("import_successful_operation", "Excel'den Veri Ekleme Başarılı.");
+            
 
             trTexts.Add("btn_login", "Giriş");
             trTexts.Add("btn_sign_up", "Kayıt Ol");
