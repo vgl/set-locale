@@ -7,6 +7,7 @@ namespace SetLocale.Client.Web.Test.Builders
     {
         private IFormsAuthenticationService _formAuthenticationService;
         private IUserService _userService;
+        private IWordService _wordService;
         private IAppService _appService;
     
         public AdminControllerBuilder()
@@ -28,6 +29,12 @@ namespace SetLocale.Client.Web.Test.Builders
             return this;
         }
 
+        internal AdminControllerBuilder WithWordService(IWordService wordService)
+        {
+            _wordService = wordService;
+            return this;
+        }
+
         internal AdminControllerBuilder WithAppService(IAppService appService)
         {
             _appService = appService;
@@ -36,7 +43,7 @@ namespace SetLocale.Client.Web.Test.Builders
 
         internal AdminController Build()
         {
-            return new AdminController(_userService, _formAuthenticationService, _appService);
+            return new AdminController(_userService,_wordService, _formAuthenticationService, _appService);
         }
     }
 }

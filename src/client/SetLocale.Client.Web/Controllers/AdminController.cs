@@ -24,7 +24,7 @@ namespace SetLocale.Client.Web.Controllers
 
         public AdminController(
             IUserService userService,
-             IWordService wordService,
+            IWordService wordService,
             IFormsAuthenticationService formsAuthenticationService,
             IAppService appService)
             : base(userService, formsAuthenticationService)
@@ -123,7 +123,7 @@ namespace SetLocale.Client.Web.Controllers
                                 }
                                 else
                                 {
-                                    item = await _wordService.Create(new WordModel { Key = key, Description = desc, Tag = tag });                                    
+                                    item = await _wordService.Create(new WordModel { Key = key, Description = desc, Tag = tag });
                                 }
                                 var itemTransTR = await _wordService.Translate(key, tR, translationTr);
                                 var itemTransEN = await _wordService.Translate(key, eN, translationEn);
