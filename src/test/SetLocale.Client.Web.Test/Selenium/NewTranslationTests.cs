@@ -45,6 +45,8 @@ namespace SetLocale.Client.Web.Test.Selenium
             var newtranslatedLangCount = _browser.FindElement(By.Id("tbodyLanguage")).FindElements(By.TagName("tr")).Count();
 
             Assert.AreEqual(translatedLangCount + 1, newtranslatedLangCount); 
+
+            _browser.Close();
         }
 
         [Test]
@@ -78,6 +80,8 @@ namespace SetLocale.Client.Web.Test.Selenium
             var newtagCount = _browser.FindElement(By.Id("dvTag")).FindElements(By.TagName("a")).Count();
 
             Assert.AreEqual(tagCount + 1, newtagCount);
+
+            _browser.Close();
         }
     }
 }
