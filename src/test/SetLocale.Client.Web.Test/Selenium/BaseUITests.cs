@@ -7,7 +7,7 @@ namespace SetLocale.Client.Web.Test.Selenium
 {
     public class BaseUITest
     {
-        public const string BASE_URL = "http://localhost:8011";
+        public const string BASE_URL = "http://localhost:3881";
 
         public const string ACTION_LOGIN = "/user/login";
         public const string ACTION_LOGOUT = "/user/logout";

@@ -30,7 +30,7 @@
                 <th>@Html.LocalizationString("translated_language")</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tbodyModelItems">
             @foreach (var item in Model.Items)
             {
                 <tr>

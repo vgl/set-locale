@@ -119,6 +119,7 @@
     <Compile Include="Controllers\UserControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Selenium\BaseUITests.cs" />
+    <Compile Include="Selenium\NewTranslationTests.cs" />
     <Compile Include="Selenium\NewTranslatorTests.cs" />
     <Compile Include="Selenium\NewWordTests.cs" />
     <Compile Include="Selenium\NewAppTests.cs" />
