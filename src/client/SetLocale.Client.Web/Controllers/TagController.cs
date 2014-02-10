@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 
@@ -40,6 +42,14 @@ namespace SetLocale.Client.Web.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet, AllowAnonymous]
+        public async Task<JsonResult> JsonTags()
+        {
+            var tags = await _tagService.GetTags();
+            var result = tags.Select(x => x.Name.Trim()).Distinct().ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }
