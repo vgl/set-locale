@@ -160,7 +160,7 @@ a way to consume this service is getting all the strings on app start.
 
 
 ```
-model.Msg = SetHtmlHelper.LocalizationString("please_check_the_fields_and_try_again");
+model.Msg = LocalizationHelper.LocalizationString("please_check_the_fields_and_try_again");
 ```
 
 
