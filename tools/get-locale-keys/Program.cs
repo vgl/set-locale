@@ -18,8 +18,8 @@ namespace GetLocaleKeys
         {
             try
             {
-                const string path = @"C:\work\set-meta\sources";
-                const string tag = "set-meta";
+                const string path = @"C:\Work\set-web\sources\set.web";
+                const string tag = "set-web";
 
                 //string path = args[0];
                 //string tag = args[1];
@@ -89,9 +89,9 @@ namespace GetLocaleKeys
                         }
                     }
 
-                    var newKeyList = PrepareLocalizationStrings(keyList, tag);
+                    //var newKeyList = PrepareLocalizationStrings(keyList, tag);
 
-                    PrepareExcel(newKeyList, tag);
+                    PrepareExcel(keyList, tag);
 
                     Console.WriteLine("total " + keyList.Count);
                 }
