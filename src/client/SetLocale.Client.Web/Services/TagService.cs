@@ -12,16 +12,20 @@ namespace SetLocale.Client.Web.Services
     public interface ITagService
     {
         Task<PagedList<Word>> GetWords(string tagUrlName, int pageNumber);
+        Task<List<Tag>> GetTags();
     }
 
     public class TagService : ITagService
     {
         private readonly IRepository<Word> _wordRepository;
+        private readonly IRepository<Tag> _tagRepository;
 
         public TagService(
-            IRepository<Word> wordRepository)
+            IRepository<Word> wordRepository,
+            IRepository<Tag> tagRepository)
         {
             _wordRepository = wordRepository;
+            _tagRepository = tagRepository;
         }
 
         public Task<PagedList<Word>> GetWords(string tagUrlName, int pageNumber)
@@ -43,8 +47,16 @@ namespace SetLocale.Client.Web.Services
                 items = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
                 itemsList = items.ToList();
             }
-            
+
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, itemsList));
+        }
+
+
+        public Task<List<Tag>> GetTags()
+        {
+            var tags = _tagRepository.FindAll().ToList();
+
+            return Task.FromResult(tags);
         }
     }
 }

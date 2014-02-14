@@ -24,8 +24,12 @@ namespace SetLocale.Client.Web.Test.Services
             wordRepository.Setup(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>()))
                           .Returns(new List<Word> { new Word { Id = 1, Key = "key" } }.AsQueryable());
 
+            var tagRepository = new Mock<IRepository<Tag>>();
+            tagRepository.Setup(x => x.FindAll(It.IsAny<Expression<Func<Tag, bool>>>()))
+                          .Returns(new List<Tag> { new Tag { Id = 1, Name = "name" } }.AsQueryable());
+
             //act
-            var sut = new TagServiceBuilder().WithWordRepository(wordRepository.Object)
+            var sut = new TagServiceBuilder().WithWordRepository(wordRepository.Object, tagRepository.Object)
                                              .Build();
 
             var result = await sut.GetWords(string.Empty, 0);
@@ -46,8 +50,16 @@ namespace SetLocale.Client.Web.Test.Services
             wordRepository.Setup(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>(), It.IsAny<Expression<Func<Word, object>>>()))
                           .Returns(words.AsQueryable());
 
+            var tags = new List<Tag>();
+            for (var i = 1; i <= ConstHelper.PageSize * 4; i++)
+                tags.Add(new Tag { Id = i });
+
+            var tagRepository = new Mock<IRepository<Tag>>();
+            tagRepository.Setup(x => x.FindAll(It.IsAny<Expression<Func<Tag, bool>>>(), It.IsAny<Expression<Func<Tag, object>>>()))
+                          .Returns(tags.AsQueryable());
+
             //act
-            var sut = new TagServiceBuilder().WithWordRepository(wordRepository.Object)
+            var sut = new TagServiceBuilder().WithWordRepository(wordRepository.Object, tagRepository.Object)
                                              .Build();
 
             var result = await sut.GetWords("url", 2);
