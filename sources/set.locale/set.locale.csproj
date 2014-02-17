@@ -143,6 +143,7 @@
     <Content Include="Views\Word\New.cshtml" />
     <Content Include="Views\App\New.cshtml" />
     <Content Include="Views\App\Detail.cshtml" />
+    <Content Include="Views\User\Apps.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
