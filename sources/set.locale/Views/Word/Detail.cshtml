@@ -1,14 +1,13 @@
 ﻿@model WordModel
 
-
 @{
-    ViewBag.Title = Model.Key;
+    ViewBag.Title = Html.LocalizationString("words_key_detail_page_title");
 }
 
-
-<h3>@ViewBag.Title</h3>
-<hr />
-
+<div class="row">
+    <h3>@ViewBag.Title</h3>
+    <hr />
+</div>
 
 <div class="row">
     <p>
@@ -81,7 +80,6 @@
         </table>
     </div>
 </div>
-
 
 
 
@@ -421,7 +419,3 @@
         });
     </script>
 }
-
-
-
-
