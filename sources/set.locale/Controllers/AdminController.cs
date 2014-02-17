@@ -14,6 +14,7 @@ namespace set.locale.Controllers
     {
         private readonly IUserService _userService;
         private readonly IFeedbackService _feedbackService;
+        private readonly IAppService _appService;
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -25,10 +26,11 @@ namespace set.locale.Controllers
             base.OnActionExecuting(filterContext);
         }
 
-        public AdminController(IUserService userService, IFeedbackService feedbackService)
+        public AdminController(IUserService userService, IFeedbackService feedbackService, IAppService appService)
         {
             _userService = userService;
             _feedbackService = feedbackService;
+            _appService = appService;
         }
 
         [HttpGet]
@@ -136,6 +138,31 @@ namespace set.locale.Controllers
                 //todo:send mail to translator to welcome and ask for reset password
                 return Redirect("/admin/users");
             }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Apps(int id = 0)
+        {
+            var pageNumber = id;
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+            var apps = await _appService.GetApps(pageNumber);
+
+            var list = apps.Items.Select(AppModel.Map).ToList();
+
+            var model = new PageModel<AppModel>
+            {
+                Items = list,
+                HasNextPage = apps.HasNextPage,
+                HasPreviousPage = apps.HasPreviousPage,
+                Number = apps.Number,
+                TotalCount = apps.TotalCount,
+                TotalPageCount = apps.TotalPageCount
+            };
 
             return View(model);
         }
