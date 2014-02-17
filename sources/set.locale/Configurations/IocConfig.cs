@@ -60,7 +60,9 @@ namespace set.locale.Configurations
                 Component.For<IUserService>().ImplementedBy<UserService>().LifestylePerWebRequest(),
 
                 Component.For<IDomainObjectService>().ImplementedBy<DomainObjectService>().LifestylePerWebRequest(),
-                Component.For<IAppService>().ImplementedBy<AppService>().LifestylePerWebRequest());
+                Component.For<IAppService>().ImplementedBy<AppService>().LifestylePerWebRequest(),
+                Component.For<IWordService>().ImplementedBy<WordServices>().LifestylePerWebRequest());
+               
         }
     }
 }
