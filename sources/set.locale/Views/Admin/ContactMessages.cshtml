@@ -1,0 +1,63 @@
+﻿@model PageModel<ContactMessageModel>
+
+@{
+    ViewBag.Title = Html.LocalizationString("contactmessages_listing_title");
+    const string link = "/admin/contactmessages";
+}
+
+<div class="row">
+    <h3>@ViewBag.Title</h3>
+    <hr />
+</div>
+
+<div class="row">
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>@Html.LocalizationString("email")</th>
+                    <th>@Html.LocalizationString("subject")</th>
+                    <th>@Html.LocalizationString("message")</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyModelItems">
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.Email</td>
+                        <td>@item.Subject</td>
+                        <td>@item.Message</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <div>
+                            @{
+                                if (Model.TotalPageCount > 1)
+                                {
+                                    <ul class="pagination">
+                                        @if (Model.HasPreviousPage)
+                                        {
+                                            <li><a id="prevPage" href="@link/@(Model.Number-1)">&laquo;</a></li>
+                                        }
+                                        <li><a href="@link/@(Model.Number)">@(Model.Number)</a></li>
+                                        @if (Model.HasNextPage)
+                                        {
+                                            <li><a id="nextPage" href="@link/@(Model.Number+1)">&raquo;</a></li>
+                                        }
+                                    </ul>
+                                    <br />
+                                    <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
+                                }
+                            }
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+</div>

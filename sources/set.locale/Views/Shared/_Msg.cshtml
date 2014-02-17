@@ -1,0 +1,18 @@
+﻿@if (Model != null
+     && !string.IsNullOrWhiteSpace(Model.Msg))
+{
+    var cssClass = Model.IsOk ? "success" : "danger";
+    <div id="_Msg" class="row">
+        <div class="alert alert-@cssClass alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <span>@Model.Msg</span>
+        </div>
+    </div>
+    <script>
+        setTimeout(function () {
+            $(function () {
+                $('#_Msg').fadeOut('slow');
+            });
+        }, 3500);
+    </script>
+}

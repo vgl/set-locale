@@ -1,0 +1,150 @@
+﻿@model PageModel<UserModel>
+
+@{
+    ViewBag.Title = Html.LocalizationString("all_users_title");
+    const string link = "/admin/users";
+}
+
+<div class="row">
+    <h3>@ViewBag.Title</h3>
+    <hr />
+</div>
+
+<div class="row">
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>@Html.LocalizationString("name")</th>
+                    <th>@Html.LocalizationString("email")</th>
+                    <th>@Html.LocalizationString("user_role")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
+                    var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
+                    <tr>
+                        <td>
+                            @if (User.Identity.GetId() != item.Id)
+                            {
+                                <button class="btn btn-sm @buttonCss btnAction" data-toggle="modal" data-target="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</button>
+                            }
+                        </td>
+                        <td>@item.Name</td>
+                        <td>@item.Email</td>
+                        <td>@item.RoleName</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        <div>
+                            @{
+                                if (Model.TotalPageCount > 1)
+                                {
+                                    <ul class="pagination">
+                                        @if (Model.HasPreviousPage)
+                                        {
+                                            <li><a href="@link/@(Model.Number-1)">&laquo;</a></li>
+                                        }
+
+                                        <li><a href="@link/@(Model.Number)">@(Model.Number)</a></li>
+
+                                        @if (Model.HasNextPage)
+                                        {
+                                            <li><a href="@link/@(Model.Number+1)">&raquo;</a></li>
+                                        }
+                                    </ul>
+                                    <br />
+                                    <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
+                                }
+                            }
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        @Html.AntiForgeryToken()
+    </div>
+
+</div>
+
+<div class="modal fade" id="DeactivateModal" tabindex="-1" role="dialog" aria-labelledby="lblDeactivateModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="button" class="close" data-dismiss="modal" aria-hidden="true" value="&times;" />
+                <h4 class="modal-title">@Html.LocalizationString("modal_title_users")</h4>
+            </div>
+            <div class="modal-body">
+                @Html.LocalizationString("modal_body_users")
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("btn_cancel")" />
+                <input type="button" class="btn" value="@Html.LocalizationString("btn_ok")" id="btnModalAction" data-id="" data-isactive="" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $(function () {
+            var textActivate = "@Html.LocalizationString("btn_activate")";
+            var textDeactivate = "@Html.LocalizationString("btn_deactivate")";
+
+            var textBtnDanger = "btn-danger";
+            var textBtnSuccess = "btn-success";
+            var textId = "id";
+            var textIsActive = "isactive";
+
+            $(".btnAction").click(function () {
+                var textBtn = "#btnModalAction";
+
+                var id = $(this).data(textId);
+                var isActive = $(this).data(textIsActive);
+
+                console.log(isActive);
+
+                $(textBtn).removeClass(textBtnDanger).removeClass(textBtnSuccess);
+                if (isActive == "True") {
+                    $(textBtn).addClass(textBtnDanger);
+                } else {
+                    $(textBtn).addClass(textBtnSuccess);
+                }
+
+                $(textBtn).data(textId, id).data(textIsActive, isActive);
+            });
+
+            $("#btnModalAction").click(function () {
+                var id = $(this).data("id");
+                var isActive = $(this).data("isactive");
+
+                $.ajax({
+                    url: "/Admin/ChangeUserStatus",
+                    type: "POST",
+                    data: "id=" + id + "&isActive=" + isActive + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
+                }).done(function (r) {
+                    if (r && r.IsOk) {
+                        if (isActive) {
+                            $("button[data-id='" + id + "']").removeClass("btn-warning").addClass("btn-success").data("isactive", false).html(textActivate);
+                        }
+                        else {
+                            $("button[data-id='" + id + "']").removeClass("btn-success").addClass("btn-warning").data("isactive", true).html(textDeactivate);
+                        }
+
+                        $("#DeactivateModal").modal('hide');
+                    } else {
+                        //todo:warning
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>@ViewBag.Title / Set</title>
+    <link rel="shortcut icon" href="/public/img/favicon.ico" />
+    <link rel="stylesheet" href="//s.setcrm.com/css/boot.css?v=1" />
+    <link rel="stylesheet" href="/public/css/app.css?v=1" />
+    @RenderSection("Css", false)
+</head>
+<body>
+    <div class="navbar navbar-default">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            <a class="navbar-brand" href="/">Set</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("menu_domain_object") <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/domainobject/new">@Html.LocalizationString("menu_domain_object_new")</a></li>
+                            <li><a href="/domainobject/list">@Html.LocalizationString("menu_domain_object_list")</a></li>
+                            <li class="divider"></li>
+                        </ul>
+                    </li>
+
+                    if (User.Identity.GetRoleName() == ConstHelper.Admin)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Html.LocalizationString("admin") <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/admin/users">@Html.LocalizationString("menu_users")</a></li>
+                                <li><a href="/admin/feedbacks">@Html.LocalizationString("menu_feedbacks")</a></li>
+                                <li><a href="/admin/contactmessages">@Html.LocalizationString("menu_contactmessages")</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                        </li>
+                    }
+                }
+            </ul>
+            <div class="navbar-form navbar-left">
+                <input id="txtSearch" type="text" class="form-control col-lg-8" placeholder="@Html.LocalizationString("search")">
+                <div id="dvSearchResults"></div>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/lang/change/tr"><img src="/public/img/flag/tr.png" alt="Türkçe" /></a></li>
+                <li><a href="/lang/change/en"><img src="/public/img/flag/en.png" alt="English"></a></li>
+                <li><a href="/home/contact">@Html.LocalizationString("menu_contact")</a></li>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="@Url.Gravatar(User.Identity.GetEmail(), 25)" alt="@User.Identity.GetFullName()" class="img-circle" />
+                            @User.Identity.GetFullName() <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/user/detail">@Html.LocalizationString("menu_user_profile")</a></li>
+                            <li><a href="/user/logout">@Html.LocalizationString("menu_user_logout")</a></li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li><a href="/user/login">@Html.LocalizationString("menu_login")</a></li>
+                    <li><a href="/user/new">@Html.LocalizationString("menu_signup")</a></li>
+                }
+
+            </ul>
+        </div><!-- /.nav-collapse -->
+    </div>
+    <div style="padding: 3px;">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10">
+            @RenderBody()
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="clearfix"></div>
+        <footer style="padding: 3px;"><hr /><p>&copy; Argeset Yazılım</p></footer>
+    </div>
+
+    <div id="feedback"><button class="btn btn-success" id="btnOpenFeedBack" data-toggle="modal" data-target="#modalFeedback">@Html.LocalizationString("btn_open_feedback_popup")</button></div>
+    <div class="modal fade" id="modalFeedback">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">@Html.LocalizationString("feedback_popup_title")</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="wrnFeedback"></div>
+                    <form name="frmFeedback" id="frmFeedback">
+                        <div class="form-group">
+                            <textarea id="FeedbackMessage" name="FeedbackMessage" class="form-control" rows="6" required></textarea>
+                        </div>
+                        <div id="feedbackReturnMessage"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCancelFeedback" name="btnCancelFeedback" class="btn btn-danger" data-dismiss="modal">@Html.LocalizationString("btn_cancel")</button>
+                    <button id="btnSaveFeedback" name="btnSaveFeedback" class="btn btn-success">@Html.LocalizationString("btn_save")</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+
+    <script src="//s.setcrm.com/js/jquery.2.1.0.js"></script>
+    <script src="//s.setcrm.com/js/bootstrap.3.0.3.js"></script>
+    <script>
+        var textNoResult = '@Html.LocalizationString("nothing_found")';
+        var textPleaseWait = '@Html.LocalizationString("please_wait")';
+    </script>
+    <script src="/public/js/app.js?v=1"></script>
+    @RenderSection("Script", false)
+
+</body>
+</html>

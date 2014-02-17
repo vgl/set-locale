@@ -1,0 +1,22 @@
+﻿@model DomainObjectModel
+
+@{
+    ViewBag.Title = Html.LocalizationString("domainobject_detail_view_title");
+}
+
+<div class="row">
+    <h3>@ViewBag.Title</h3>
+    <hr />
+</div>
+
+@Html.Partial("_Msg")
+
+<div class="row">
+    <div class="col-md-6">
+
+        <label for="Name">@Html.LocalizationString("name")</label>
+        <div>@Model.Name</div>
+
+    </div>
+
+</div>

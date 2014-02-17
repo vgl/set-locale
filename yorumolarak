@@ -1,1 +1,0 @@
-trTexts.Add("home_summary", "SetLocale's <strong>{2}</strong> geliştirici tarafından eklenen <strong>{4}</strong> çevirmen ile <strong><a href='/word/all' style='text-decoration:underline;color:red;'>{3}</a></strong> anahtarlar ve <strong>{0}</strong> developer is consuming this service with <strong>{1}</strong> application");
