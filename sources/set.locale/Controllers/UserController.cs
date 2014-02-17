@@ -15,14 +15,16 @@ namespace set.locale.Controllers
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
         private readonly IAppService _appService;
+        private readonly IWordService _wordService;
 
         public UserController(
             IAuthService authService,
-            IUserService userService, IAppService appService)
+            IUserService userService, IAppService appService, IWordService wordService)
         {
             _authService = authService;
             _userService = userService;
             _appService = appService;
+            _wordService = wordService;
         }
 
         [HttpGet]
@@ -73,6 +75,44 @@ namespace set.locale.Controllers
 
             return View(model);
         }
+
+        public async Task<ViewResult> Words(string id, int page = 1)
+        {
+            var pageNumber = page;
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+
+            if (string.IsNullOrEmpty(id))
+            {
+                id = User.Identity.GetId();
+            }
+
+
+            ViewBag.UserId = id;
+
+
+            var words = await _wordService.GetByUserId(id, pageNumber);
+            var list = words.Items.Select(WordModel.Map).ToList();
+
+
+            var model = new PageModel<WordModel>
+            {
+                Items = list,
+                HasNextPage = words.HasNextPage,
+                HasPreviousPage = words.HasPreviousPage,
+                Number = words.Number,
+                TotalCount = words.TotalCount,
+                TotalPageCount = words.TotalPageCount
+            };
+
+
+            return View(model);
+        }
+
+
 
         #region Membership
         [HttpGet, AllowAnonymous]
