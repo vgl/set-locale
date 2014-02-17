@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+
 using set.locale.Data.Entities;
 
 namespace set.locale.Models
@@ -11,30 +12,32 @@ namespace set.locale.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Url { get; set; }
-
-        public int UsageCount
-        {
-            get { return Tokens.Sum(x => x.UsageCount); }
-        }
-
         public bool IsActive { get; set; }
-
-        public List<TokenModel> Tokens { get; set; }
         public string CreatedBy { get; set; }
+        public List<TokenModel> Tokens { get; set; }
 
-        public AppModel()
-        {
-            Tokens = new List<TokenModel>();
-        }
 
-        public bool IsValidForNew()
+        public bool IsValid()
         {
             return !string.IsNullOrEmpty(Name)
                    && !string.IsNullOrEmpty(Url)
                    && !string.IsNullOrEmpty(Description);
 
         }
+        public bool IsNotValid()
+        {
+            return !IsValid();
 
+        }
+
+        public int UsageCount
+        {
+            get { return Tokens.Sum(x => x.UsageCount); }
+        }
+        public AppModel()
+        {
+            Tokens = new List<TokenModel>();
+        }
         public static AppModel Map(App entity)
         {
             var model = new AppModel

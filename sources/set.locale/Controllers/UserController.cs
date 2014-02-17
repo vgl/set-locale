@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,13 +14,15 @@ namespace set.locale.Controllers
     {
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
+        private readonly IAppService _appService;
 
         public UserController(
             IAuthService authService,
-            IUserService userService)
+            IUserService userService, IAppService appService)
         {
             _authService = authService;
             _userService = userService;
+            _appService = appService;
         }
 
         [HttpGet]
@@ -30,6 +33,44 @@ namespace set.locale.Controllers
             if (result == null) return RedirectToHome();
 
             var model = UserModel.Map(result);
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Apps(string id, int page = 1)
+        {
+            var pageNumber = page;
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            if (string.IsNullOrEmpty(id))
+            {
+                id = User.Identity.GetId();
+            }
+
+            ViewBag.UserId = id;
+
+            var apps = await _appService.GetByUserId(id, pageNumber);
+
+            if (apps == null)
+            {
+                return RedirectToHome();
+            }
+
+            var list = apps.Items.Select(AppModel.Map).ToList();
+
+            var model = new PageModel<AppModel>
+            {
+                Items = list,
+                HasNextPage = apps.HasNextPage,
+                HasPreviousPage = apps.HasPreviousPage,
+                Number = apps.Number,
+                TotalCount = apps.TotalCount,
+                TotalPageCount = apps.TotalPageCount
+            };
+
             return View(model);
         }
 

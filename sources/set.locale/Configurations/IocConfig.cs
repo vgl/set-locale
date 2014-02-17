@@ -59,7 +59,8 @@ namespace set.locale.Configurations
                 Component.For<ISearchService>().ImplementedBy<SearchService>().LifestylePerWebRequest(),
                 Component.For<IUserService>().ImplementedBy<UserService>().LifestylePerWebRequest(),
 
-                Component.For<IDomainObjectService>().ImplementedBy<DomainObjectService>().LifestylePerWebRequest());
+                Component.For<IDomainObjectService>().ImplementedBy<DomainObjectService>().LifestylePerWebRequest(),
+                Component.For<IAppService>().ImplementedBy<AppService>().LifestylePerWebRequest());
         }
     }
 }

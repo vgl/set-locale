@@ -4,39 +4,37 @@
     ViewBag.Title = Html.LocalizationString("new_user_title");
 }
 
-<div role="main">
+<div class="row">
+    <h3>@ViewBag.Title</h3>
+    <hr />
+</div>
 
-    <div class="row">
-        <div class="col-md-5">
-            <h3>@ViewBag.Title</h3>
-            <hr />
+@Html.Partial("_Msg")
 
-            <form method="post">
-                <div class="form-group">
-                    <label for="Name">@Html.LocalizationString("name")</label>
-                    <input type="text" id="Name" name="Name" class="form-control" required value="@Model.Name" />
-                </div>
+<div class="row">
+    <div class="col-md-5">
 
-                <div class="form-group">
-                    <label for="Email">@Html.LocalizationString("email")</label>
-                    <input type="email" id="Email" name="Email" class="form-control" required value="@Model.Email" />
-                </div>
+        <form method="post">
+            <div class="form-group">
+                <label for="Name">@Html.LocalizationString("name")</label>
+                <input type="text" id="Name" name="Name" class="form-control" value="@Model.Name" required />
+            </div>
 
-                <div class="form-group">
-                    <label for="Password">@Html.LocalizationString("password")</label>
-                    <input type="password" id="Password" name="Password" class="form-control" required value="@Model.Password" />
-                </div>
+            <div class="form-group">
+                <label for="Email">@Html.LocalizationString("email")</label>
+                <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" required />
+            </div>
 
-                @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="Password">@Html.LocalizationString("password")</label>
+                <input type="password" id="Password" name="Password" class="form-control" value="@Model.Password" required />
+            </div>
 
-                <button type="submit" class="btn btn-primary">@Html.LocalizationString("btn_sign_up")</button>
+            @Html.AntiForgeryToken()
 
-                <div class="error">
-                    @Model.Msg
-                </div>
-            </form>
+            <button type="submit" class="btn btn-primary">@Html.LocalizationString("btn_sign_up")</button>
 
-        </div>
+        </form>
+
     </div>
-
 </div>

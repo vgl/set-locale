@@ -11,6 +11,7 @@ namespace set.locale.test.Shared.Builders
     {
         private IUserService _userService;
         private IAuthService _authService;
+        private IAppService _appService;
 
         public UserControllerBuilder()
         {
@@ -44,7 +45,7 @@ namespace set.locale.test.Shared.Builders
 
         internal UserController Build()
         {
-            return new UserController(_authService, _userService);
+            return new UserController(_authService, _userService, _appService);
         }
     }
 }
