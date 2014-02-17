@@ -34,9 +34,12 @@ namespace set.locale.Data.Services
             };
 
             Context.Apps.Add(app);
-            if (Context.SaveChanges() > 0) return null;
+            if (Context.SaveChanges() > 0)
+            {
+                return await Task.FromResult(app.Id);
+            }
 
-            return await Task.FromResult(app.Id);
+            return null;
         }
 
         public Task<bool> CreateToken(TokenModel model)
