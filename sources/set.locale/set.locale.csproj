@@ -129,6 +129,7 @@
     <Content Include="Views\Admin\ContactMessages.cshtml" />
     <Content Include="Views\DomainObject\Detail.cshtml" />
     <Content Include="Views\App\New.cshtml" />
+    <Content Include="Views\App\Detail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
