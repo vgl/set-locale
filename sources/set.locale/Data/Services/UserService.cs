@@ -24,7 +24,6 @@ namespace set.locale.Data.Services
             var img = model.Email.ToGravatar();
             var user = new User
             {
-                Id = model.Id,
                 Email = model.Email,
                 Name = model.Name,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password, 15),
@@ -33,7 +32,7 @@ namespace set.locale.Data.Services
                 RoleName = roleName,
                 Language = model.Language
             };
-            Context.Set<User>().Add(user);
+            Context.Users.Add(user);
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }

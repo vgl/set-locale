@@ -149,7 +149,6 @@
     <Content Include="Views\Admin\Feedbacks.cshtml" />
     <Content Include="Views\Admin\ContactMessages.cshtml" />
     <Content Include="Views\DomainObject\Detail.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Word\Detail.cshtml" />
     <Content Include="Views\Word\All.cshtml" />
     <Content Include="Views\Word\NotTranslated.cshtml" />
@@ -157,6 +156,7 @@
     <Content Include="Views\App\New.cshtml" />
     <Content Include="Views\App\Detail.cshtml" />
     <Content Include="Views\User\Apps.cshtml" />
+    <Content Include="Views\Admin\NewTranslator.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

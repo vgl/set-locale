@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-
+using set.locale.Data.Entities;
 using set.locale.Data.Services;
 using set.locale.Helpers;
 using set.locale.Models;
@@ -106,5 +108,37 @@ namespace set.locale.Controllers
             };
             return View(model);
         }
+
+        [HttpGet]
+        public ViewResult NewTranslator()
+        {
+            var model = new UserModel();
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> NewTranslator(UserModel model)
+        {
+            SetPleaseTryAgain(model);
+
+
+            model.Password = Guid.NewGuid().ToNoDashString();
+
+            if (model.IsNotValid())
+            {
+                return View(model);
+            }
+
+            model.Language = Thread.CurrentThread.CurrentUICulture.Name;
+            var status = await _userService.Create(model, SetLocaleRole.Translator.ToString());
+            if (status)
+            {
+                //todo:send mail to translator to welcome and ask for reset password
+                return Redirect("/admin/users");
+            }
+
+            return View(model);
+        }
+
     }
 }
