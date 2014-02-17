@@ -68,5 +68,28 @@ namespace set.locale.test.Interface
 
             CloseBrowser();
         }
+
+        [Test]
+        public void should_save_new_word()
+        {
+            LoginAsAdmin();
+
+            var url = string.Format("{0}{1}", BASE_URL, ACTION_NEW_WORD);
+            var returnUrl = string.Format("{0}{1}", BASE_URL, ACTION_NEW_WORD);
+
+            GoTo(url);
+
+            Browser.FindElementById("key").SendKeys("test_word");
+            Browser.FindElementById("tag").SendKeys("test, tag");
+            Browser.FindElementById("description").SendKeys("test desc");
+            Browser.FindElementById("btn_save").Click();
+
+            Assert.IsNotNull(Browser);
+            // todo: detail id ile yapay test
+            //Assert.AreEqual(Browser.Url, returnUrl);
+
+            CloseBrowser();
+        }
+
     }
 }

@@ -106,25 +106,22 @@ namespace set.locale.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> New(WordModel model)
         {
-            if (!model.IsValidForNew())
+            SetPleaseTryAgain(model);
+
+            if (model.IsValid())
             {
-                model.Msg = "bir sorun oluştu";
                 return View(model);
             }
 
-
-           model.CreatedBy = User.Identity.GetId();
-
+            model.CreatedBy = User.Identity.GetId();
 
             var key = await _wordService.Create(model);
-            if (key == null)
+            if (key != null)
             {
-                model.Msg = "bir sorun oluştu, daha önce eklenmiş olabilir";
-                return View(model);
+                return Redirect("/word/detail/" + key);
             }
 
-
-            return Redirect("/word/detail/" + key);
+            return View(model);
         }
 
 

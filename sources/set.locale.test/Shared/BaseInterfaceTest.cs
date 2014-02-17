@@ -20,6 +20,17 @@ namespace set.locale.test.Shared
         public const string ACTION_LIST_DOMAIN_OBJECTS = "/domainobject/list";
         public const string ACTION_DOMAIN_OBJECT_DETAIL = "/domainobject/detail";
 
+        public const string ACTION_NEW_WORD = "/word/new";
+        public const string ACTION_LIST_ALL_WORDS = "/word/all";
+        public const string ACTION_LIST_NOT_TRANSLATED = "/word/nottranslated";
+        public const string ACTION_LIST_USER_WORDS = "/user/words";
+        public const string ACTION_NEW_APP = "/app/new";
+        public const string ACTION_LIST_USER_APP = "/user/apps";
+
+        public const string ACTION_NEW_TRANSLATOR = "admin/newtranslator";
+        public const string ACTION_LIST_ADMIN_APPS = "/admin/apps";
+        public const string ACTION_ADMIN_EXCEL_IMPORT = "/admin/import";
+
         public const string ACTION_ADMIN_USER_LISTING = "/admin/users";
         public const string ACTION_ADMIN_FEEDBACK_LISTING = "/admin/feedbacks";
         public const string ACTION_ADMIN_CONTACT_MESSAGES_LISTING = "/admin/contactmessages";

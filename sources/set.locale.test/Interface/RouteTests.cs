@@ -24,7 +24,15 @@ namespace set.locale.test.Interface
 
         [TestCase(ACTION_USER_PROFILE),
          TestCase(ACTION_NEW_DOMAIN_OBJECT),
-         TestCase(ACTION_LIST_DOMAIN_OBJECTS)]
+         TestCase(ACTION_LIST_DOMAIN_OBJECTS),
+         TestCase(ACTION_NEW_WORD),
+         TestCase(ACTION_LIST_ALL_WORDS),
+         TestCase(ACTION_LIST_NOT_TRANSLATED),
+         TestCase(ACTION_LIST_USER_WORDS),
+         TestCase(ACTION_NEW_APP),
+         TestCase(ACTION_LIST_USER_APP),
+         TestCase(ACTION_LIST_DOMAIN_OBJECTS),
+        ]
         public void should_view_after_login_as_user(string view)
         {
             LoginAsUser();
@@ -58,6 +66,15 @@ namespace set.locale.test.Interface
 
         [TestCase(ACTION_ADMIN_USER_LISTING),
          TestCase(ACTION_ADMIN_FEEDBACK_LISTING),
+         TestCase(ACTION_NEW_WORD),
+         TestCase(ACTION_LIST_ALL_WORDS),
+         TestCase(ACTION_LIST_NOT_TRANSLATED),
+         TestCase(ACTION_LIST_USER_WORDS),
+         TestCase(ACTION_NEW_APP),
+         TestCase(ACTION_LIST_USER_APP),
+         TestCase(ACTION_NEW_TRANSLATOR),
+         TestCase(ACTION_LIST_ADMIN_APPS),
+         TestCase(ACTION_ADMIN_EXCEL_IMPORT),
          TestCase(ACTION_ADMIN_CONTACT_MESSAGES_LISTING)]
         public void should_view_after_login_as_admin(string view)
         {
@@ -73,6 +90,15 @@ namespace set.locale.test.Interface
 
         [TestCase(ACTION_ADMIN_USER_LISTING),
          TestCase(ACTION_ADMIN_FEEDBACK_LISTING),
+         TestCase(ACTION_NEW_WORD),
+         TestCase(ACTION_LIST_ALL_WORDS),
+         TestCase(ACTION_LIST_NOT_TRANSLATED),
+         TestCase(ACTION_LIST_USER_WORDS),
+         TestCase(ACTION_NEW_APP),
+         TestCase(ACTION_LIST_USER_APP),
+         TestCase(ACTION_NEW_TRANSLATOR),
+         TestCase(ACTION_LIST_ADMIN_APPS),
+         TestCase(ACTION_ADMIN_EXCEL_IMPORT),
          TestCase(ACTION_ADMIN_CONTACT_MESSAGES_LISTING)]
         public void should_redirect_to_home_if_not_admin(string view)
         {
