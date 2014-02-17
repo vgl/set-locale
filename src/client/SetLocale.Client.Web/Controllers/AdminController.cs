@@ -84,7 +84,6 @@ namespace SetLocale.Client.Web.Controllers
             {
                 System.IO.File.Delete(path);
             }
-
             file.SaveAs(path);
 
             var existingFile = new FileInfo(path);
@@ -99,56 +98,85 @@ namespace SetLocale.Client.Web.Controllers
                 }
 
                 var currentWorksheet = workBook.Worksheets.First();
-
-                for (var i = 2; i < currentWorksheet.Dimension.End.Row; i++)
+                var count = currentWorksheet.Dimension.End.Column;
+                if (count <= 2)
                 {
-                    var key = currentWorksheet.Cells[i, 1].Value.ToString();
-                    var desc = currentWorksheet.Cells[i, 2].Value.ToString();
-                    var tag = currentWorksheet.Cells[i, 3].Value.ToString();
-
-                    var translationTR = currentWorksheet.Cells[i, 4].Value.ToString();
-                    var translationEN = currentWorksheet.Cells[i, 5].Value.ToString();
-                    var translationAZ = currentWorksheet.Cells[i, 6].Value.ToString();
-                    var translationCN = currentWorksheet.Cells[i, 7].Value.ToString();
-                    var translationFR = currentWorksheet.Cells[i, 8].Value.ToString();
-                    var translationGR = currentWorksheet.Cells[i, 9].Value.ToString();
-                    var translationIT = currentWorksheet.Cells[i, 10].Value.ToString();
-                    var translationKZ = currentWorksheet.Cells[i, 11].Value.ToString();
-                    var translationRU = currentWorksheet.Cells[i, 12].Value.ToString();
-                    var translationSP = currentWorksheet.Cells[i, 13].Value.ToString();
-                    var translationTK = currentWorksheet.Cells[i, 14].Value.ToString();
-
-                    var wordModel = new WordModel { Key = key, Description = desc, Tag = tag, CreatedBy = User.Identity.GetUserId() };
-
-                    try
+                    for (var i = 2; i < currentWorksheet.Dimension.End.Row; i++)
                     {
-                        if (isOverWrite)
+                        var key = currentWorksheet.Cells[i, 1].Value.ToString();
+                        var tag = currentWorksheet.Cells[i, 2].Value.ToString();
+                        var wordModels = new WordModel { Key = key, Tag = tag, CreatedBy = User.Identity.GetUserId() };
+                        try
                         {
-                            await _wordService.Update(wordModel);
+                            if (isOverWrite)
+                            {
+                                await _wordService.Update(wordModels);
+                            }
+                            else
+                            {
+                                await _wordService.Create(wordModels);
+                            }
                         }
-                        else
+                        catch
                         {
-                            await _wordService.Create(wordModel);
+                            model.Msg = _htmlHelper.LocalizationString("please_try_again");
+                            return View(model);
                         }
-
-                        await _wordService.Translate(key, "TR", translationTR);
-                        await _wordService.Translate(key, "EN", translationEN);
-                        await _wordService.Translate(key, "AZ", translationAZ);
-                        await _wordService.Translate(key, "CN", translationCN);
-                        await _wordService.Translate(key, "FR", translationFR);
-                        await _wordService.Translate(key, "GR", translationGR);
-                        await _wordService.Translate(key, "IT", translationIT);
-                        await _wordService.Translate(key, "KZ", translationKZ);
-                        await _wordService.Translate(key, "RU", translationRU);
-                        await _wordService.Translate(key, "SP", translationSP);
-                        await _wordService.Translate(key, "TK", translationTK);
-                    }
-                    catch
-                    {
-                        model.Msg = _htmlHelper.LocalizationString("please_try_again");
-                        return View(model);
                     }
                 }
+                else
+                {
+                    for (var i = 2; i < currentWorksheet.Dimension.End.Row; i++)
+                    {
+                        var key = currentWorksheet.Cells[i, 1].Value.ToString();
+                        var desc = currentWorksheet.Cells[i, 2].Value.ToString();
+                        var tag = currentWorksheet.Cells[i, 3].Value.ToString();
+
+                        var translationTR = currentWorksheet.Cells[i, 4].Value.ToString();
+                        var translationEN = currentWorksheet.Cells[i, 5].Value.ToString();
+                        var translationAZ = currentWorksheet.Cells[i, 6].Value.ToString();
+                        var translationCN = currentWorksheet.Cells[i, 7].Value.ToString();
+                        var translationFR = currentWorksheet.Cells[i, 8].Value.ToString();
+                        var translationGR = currentWorksheet.Cells[i, 9].Value.ToString();
+                        var translationIT = currentWorksheet.Cells[i, 10].Value.ToString();
+                        var translationKZ = currentWorksheet.Cells[i, 11].Value.ToString();
+                        var translationRU = currentWorksheet.Cells[i, 12].Value.ToString();
+                        var translationSP = currentWorksheet.Cells[i, 13].Value.ToString();
+                        var translationTK = currentWorksheet.Cells[i, 14].Value.ToString();
+
+                        var wordModel = new WordModel { Key = key, Description = desc, Tag = tag, CreatedBy = User.Identity.GetUserId() };
+
+                        try
+                        {
+                            if (isOverWrite)
+                            {
+                                await _wordService.Update(wordModel);
+                            }
+                            else
+                            {
+                                await _wordService.Create(wordModel);
+                            }
+
+                            await _wordService.Translate(key, "TR", translationTR);
+                            await _wordService.Translate(key, "EN", translationEN);
+                            await _wordService.Translate(key, "AZ", translationAZ);
+                            await _wordService.Translate(key, "CN", translationCN);
+                            await _wordService.Translate(key, "FR", translationFR);
+                            await _wordService.Translate(key, "GR", translationGR);
+                            await _wordService.Translate(key, "IT", translationIT);
+                            await _wordService.Translate(key, "KZ", translationKZ);
+                            await _wordService.Translate(key, "RU", translationRU);
+                            await _wordService.Translate(key, "SP", translationSP);
+                            await _wordService.Translate(key, "TK", translationTK);
+                        }
+                        catch
+                        {
+                            model.Msg = _htmlHelper.LocalizationString("please_try_again");
+                            return View(model);
+                        }
+                    }
+                }
+
             }
 
             model.Msg = _htmlHelper.LocalizationString("import_successful");
