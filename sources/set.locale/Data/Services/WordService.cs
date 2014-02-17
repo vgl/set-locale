@@ -9,27 +9,11 @@ using System.Web;
 
 namespace set.locale.Data.Services
 {
-
-    public interface IWordService
-    {
-        Task<string> Create(WordModel model);
-        Task<string> Update(WordModel model);
-        Task<PagedList<Word>> GetByUserId(string userId, int pageNumber);
-        Task<Word> GetByKey(string key);
-        Task<PagedList<Word>> GetWords(int pageNumber);
-        Task<PagedList<Word>> GetNotTranslated(int pageNumber);
-        Task<bool> Translate(string key, string language, string translation);
-        Task<bool> Tag(string key, string tag);
-        Task<List<Word>> GetAll();
-    }
-
-
     public class WordService : BaseService, IWordService
     {
-       
         public async Task<string> Create(WordModel model)
         {
-            if (!model.IsValidForNew())
+            if (!model.IsValid())
             {
                 return null;
             }
@@ -47,7 +31,7 @@ namespace set.locale.Data.Services
                 });
             }
 
-            if(Context.Words.Any(x => x.Key == slug))
+            if (Context.Words.Any(x => x.Key == slug))
             {
                 return null;
             }
@@ -71,11 +55,7 @@ namespace set.locale.Data.Services
             }
 
             return null;
-
-            
-
         }
-
         public Task<Word> GetByKey(string key)
         {
             if (key == string.Empty)
@@ -86,8 +66,6 @@ namespace set.locale.Data.Services
 
             return Task.FromResult(word);
         }
-
-
         public Task<PagedList<Word>> GetWords(int pageNumber)
         {
             if (pageNumber < 1)
@@ -112,8 +90,6 @@ namespace set.locale.Data.Services
 
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words.ToList()));
         }
-
-
         public Task<PagedList<Word>> GetNotTranslated(int pageNumber = 1)
         {
             if (pageNumber < 1)
@@ -138,8 +114,6 @@ namespace set.locale.Data.Services
 
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, notTranslatedwords.ToList()));
         }
-
-
         public Task<bool> Translate(string key, string language, string translation)
         {
             if (string.IsNullOrEmpty(key)
@@ -187,8 +161,6 @@ namespace set.locale.Data.Services
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
-
-
         public Task<bool> Tag(string key, string tagName)
         {
             if (string.IsNullOrEmpty(key)
@@ -205,12 +177,12 @@ namespace set.locale.Data.Services
             }
 
 
-           var tag = new Tag
-           {
-               Name = tagName,
-               UrlName = tagName.ToUrlSlug(),
-               CreatedBy = "1"
-           };
+            var tag = new Tag
+            {
+                Name = tagName,
+                UrlName = tagName.ToUrlSlug(),
+                CreatedBy = "1"
+            };
 
 
             word.Tags = new List<Tag> { tag };
@@ -218,19 +190,15 @@ namespace set.locale.Data.Services
             return Task.FromResult(Context.SaveChanges() > 0);
 
         }
-
-
         public Task<List<Word>> GetAll()
         {
             var words = Context.Set<Word>().ToList();
 
             return Task.FromResult(words);
         }
-
-
         public Task<string> Update(WordModel model)
         {
-            if (!model.IsValidForNew())
+            if (!model.IsValid())
             {
                 return null;
             }
@@ -246,9 +214,6 @@ namespace set.locale.Data.Services
 
             return Create(model);
         }
-
-
-
         public Task<PagedList<Word>> GetByUserId(string userId, int pageNumber)
         {
             if (pageNumber < 1)
@@ -273,7 +238,20 @@ namespace set.locale.Data.Services
             var words = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
 
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words));
-           
+
         }
+    }
+
+    public interface IWordService
+    {
+        Task<string> Create(WordModel model);
+        Task<string> Update(WordModel model);
+        Task<PagedList<Word>> GetByUserId(string userId, int pageNumber);
+        Task<Word> GetByKey(string key);
+        Task<PagedList<Word>> GetWords(int pageNumber);
+        Task<PagedList<Word>> GetNotTranslated(int pageNumber);
+        Task<bool> Translate(string key, string language, string translation);
+        Task<bool> Tag(string key, string tag);
+        Task<List<Word>> GetAll();
     }
 }

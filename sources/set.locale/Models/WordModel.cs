@@ -43,10 +43,14 @@ namespace set.locale.Models
         }
 
 
-        public bool IsValidForNew()
+        public bool IsValid()
         {
             return !string.IsNullOrEmpty(Key)
                    && !string.IsNullOrEmpty(Tag);
+        }
+        public bool IsNotValid()
+        {
+            return !IsValid();
         }
 
 
