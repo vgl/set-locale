@@ -6,6 +6,10 @@ namespace set.locale.Models
     {
         public string Token { get; set; }
         public DateTime CreationDate { get; set; }
+        public string CreatedBy { get; set; }
+        public string AppId { get; set; }
+        public int UsageCount { get; set; }
+
         public string CreationDateStr
         {
             get
@@ -13,14 +17,13 @@ namespace set.locale.Models
                 return CreationDate.ToString("f");
             }
         }
-
-        public int UsageCount { get; set; }
-        public string CreatedBy { get; set; }
-        public string AppId { get; set; }
-
         public bool IsValid()
         {
             return !string.IsNullOrEmpty(Token);
+        }
+        internal bool IsNotValid()
+        {
+            return !IsValid();
         }
     }
 }

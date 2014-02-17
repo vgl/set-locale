@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Contexts;
+using System.Data.Entity;
 using System.Threading.Tasks;
 
 using set.locale.Data.Entities;
@@ -14,7 +14,7 @@ namespace set.locale.Data.Services
     {
         public async Task<string> Create(AppModel model)
         {
-            if (!model.IsValidForNew())
+            if (model.IsNotValid())
             {
                 return null;
             }
@@ -41,7 +41,7 @@ namespace set.locale.Data.Services
 
         public Task<bool> CreateToken(TokenModel model)
         {
-            if (!model.IsValid())
+            if (model.IsNotValid())
             {
                 return Task.FromResult(false);
             }
@@ -73,7 +73,7 @@ namespace set.locale.Data.Services
                 pageNumber = 1;
             }
 
-            var items = Context.Set<App>();
+            var items = Context.Apps;
 
             long totalCount = items.Count();
             var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
@@ -85,7 +85,7 @@ namespace set.locale.Data.Services
 
             var model = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
 
-            return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, model.ToList()));
+            return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, model));
         }
 
         public Task<PagedList<App>> GetByUserId(string userId, int pageNumber)
@@ -100,7 +100,7 @@ namespace set.locale.Data.Services
                 return null;
             }
 
-            var apps = Context.Set<App>().Where(x => x.CreatedBy == userId).ToList();
+            var apps = Context.Apps.Where(x => x.CreatedBy == userId);
 
             long totalCount = apps.Count();
             var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
@@ -110,9 +110,9 @@ namespace set.locale.Data.Services
                 pageNumber = 1;
             }
 
-            apps = apps.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
+            var model = apps.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
 
-            return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, apps));
+            return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, model));
         }
 
         public Task<App> Get(string appId)
@@ -122,7 +122,7 @@ namespace set.locale.Data.Services
                 return null;
             }
 
-            var app = Context.Set<App>().FirstOrDefault(x => x.Id == appId && x.Tokens.Any());
+            var app = Context.Apps.Include(x => x.Tokens).FirstOrDefault(x => x.Id == appId);
             return Task.FromResult(app);
         }
 
@@ -130,7 +130,7 @@ namespace set.locale.Data.Services
         {
             if (string.IsNullOrEmpty(appId)) return Task.FromResult(false);
 
-            var app = Context.Set<App>().FirstOrDefault(x => x.Id == appId && x.Tokens.Any());
+            var app = Context.Apps.Include(x => x.Tokens).FirstOrDefault(x => x.Id == appId);
             if (app == null) return Task.FromResult(false);
 
             foreach (var token in app.Tokens)
@@ -150,12 +150,12 @@ namespace set.locale.Data.Services
                 return Task.FromResult(false);
             }
 
-            if (!Context.Set<Token>().Any(x => x.Key == token))
+            if (!Context.Tokens.Any(x => x.Key == token))
             {
                 return Task.FromResult(false);
             }
 
-            var softDelete = Context.Set<Token>().FirstOrDefault(x => x.Key == token);
+            var softDelete = Context.Tokens.FirstOrDefault(x => x.Key == token);
             if (softDelete != null)
             {
                 softDelete.IsDeleted = true;
@@ -168,7 +168,7 @@ namespace set.locale.Data.Services
 
         public Task<bool> IsTokenValid(string token)
         {
-            return Task.FromResult(Context.Set<Token>().Any(x => x.Key == token && x.IsAppActive));
+            return Task.FromResult(Context.Tokens.Any(x => x.Key == token && x.IsAppActive));
         }
     }
 
