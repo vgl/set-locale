@@ -7,5 +7,6 @@ namespace set.locale.Data.Services
 {
     public class WordServices
     {
+
     }
 }

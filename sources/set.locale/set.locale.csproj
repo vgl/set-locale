@@ -147,10 +147,10 @@
     <Compile Include="Configurations\IocConfig.cs" />
     <Compile Include="Configurations\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DomainObjectController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
-    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LangController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -158,13 +158,14 @@
     <Compile Include="Data\Entities\DomainObject.cs" />
     <Compile Include="Data\Entities\SetLocaleRole.cs" />
     <Compile Include="Data\Entities\Tag.cs" />
-    <Compile Include="Data\Entities\Word.cs" />
     <Compile Include="Data\Entities\Token.cs" />
+    <Compile Include="Data\Entities\Word.cs" />
     <Compile Include="Data\Services\AppService.cs" />
     <Compile Include="Data\Services\AuthService.cs" />
     <Compile Include="Data\Services\DomainObjectService.cs" />
     <Compile Include="Data\Services\MsgService.cs" />
     <Compile Include="Data\Services\SearchService.cs" />
+    <Compile Include="Data\Services\WordServices.cs" />
     <Compile Include="Models\AppModel.cs" />
     <Compile Include="Models\DomainObjectModel.cs" />
     <Compile Include="Models\FeedbackModel.cs" />
@@ -189,8 +190,8 @@
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Models\TagModel.cs" />
-    <Compile Include="Models\TranslationModel.cs" />
     <Compile Include="Models\TokenModel.cs" />
+    <Compile Include="Models\TranslationModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\WordModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
