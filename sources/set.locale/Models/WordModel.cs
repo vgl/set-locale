@@ -9,8 +9,7 @@ namespace set.locale.Models
 {
     public class WordModel : BaseModel
     {
-        public string Name { get; set; }
-        public bool IsButtonSaveAndNew { get; set; }
+
         public string Key { get; set; }
         public int Count { get; set; }
         public string Description { get; set; }
@@ -19,7 +18,7 @@ namespace set.locale.Models
         public List<TagModel> Tags { get; set; }
         public List<LanguageModel> Languages { get; set; }
         public List<TranslationModel> Translations { get; set; }
-        public int CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
         public string LanguagesStr
         {
             get
@@ -43,15 +42,13 @@ namespace set.locale.Models
             Translations = new List<TranslationModel>();
         }
 
-        internal bool IsValid()
+
+        public bool IsValidForNew()
         {
-            return !string.IsNullOrWhiteSpace(Name);
+            return !string.IsNullOrEmpty(Key)
+                   && !string.IsNullOrEmpty(Tag);
         }
 
-        internal bool IsNotValid()
-        {
-            return !IsValid();
-        }
 
         public static WordModel Map(Word entity)
         {
@@ -59,7 +56,8 @@ namespace set.locale.Models
             {
                 Key = entity.Key,
                 Description = entity.Description,
-                IsTranslated = entity.IsTranslated
+                IsTranslated = entity.IsTranslated,
+                CreatedBy = entity.CreatedBy
             };
 
 
@@ -225,8 +223,6 @@ namespace set.locale.Models
 
             return model;
         }
-
-
 
     }
 }

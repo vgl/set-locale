@@ -39,5 +39,6 @@ namespace set.locale.Helpers
         };
 
         public const int PageSize = 100;
+        public const int MaxLanguageCount = 11;
     }
 }
