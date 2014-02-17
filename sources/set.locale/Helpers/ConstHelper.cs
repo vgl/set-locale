@@ -31,11 +31,14 @@ namespace set.locale.Helpers
         public const string Admin = "Admin";
         public const string Developer = "Developer";
         public const string User = "User";
+        public const string Translator = "Translator";
+
         public static Dictionary<string, int> BasicRoles = new Dictionary<string, int>
         {
             {Admin, 1},
             {Developer, 2},
-            {User, 3}
+            {User, 3},
+            {Translator, 4}
         };
 
         public const int PageSize = 100;
