@@ -169,6 +169,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LangController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\WordController.cs" />
     <Compile Include="Data\Entities\App.cs" />
     <Compile Include="Data\Entities\DomainObject.cs" />
@@ -181,7 +182,8 @@
     <Compile Include="Data\Services\DomainObjectService.cs" />
     <Compile Include="Data\Services\MsgService.cs" />
     <Compile Include="Data\Services\SearchService.cs" />
-    <Compile Include="Data\Services\WordServices.cs" />
+    <Compile Include="Data\Services\TagService.cs" />
+    <Compile Include="Data\Services\WordService.cs" />
     <Compile Include="Models\AppModel.cs" />
     <Compile Include="Models\DomainObjectModel.cs" />
     <Compile Include="Models\FeedbackModel.cs" />

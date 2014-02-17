@@ -24,7 +24,7 @@ namespace set.locale.Data.Services
     }
 
 
-    public class WordServices : BaseService, IWordService
+    public class WordService : BaseService, IWordService
     {
        
         public async Task<string> Create(WordModel model)
@@ -65,9 +65,14 @@ namespace set.locale.Data.Services
 
 
             Context.Words.Add(word);
-            if (Context.SaveChanges() > 0) return null;
+            if (Context.SaveChanges() > 0)
+            {
+                return await Task.FromResult(word.Id);
+            }
 
-            return await Task.FromResult(word.Id);
+            return null;
+
+            
 
         }
 

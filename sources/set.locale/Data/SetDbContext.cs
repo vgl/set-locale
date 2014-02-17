@@ -23,5 +23,6 @@ namespace set.locale.Data
         public DbSet<App> Apps { get; set; }
         public DbSet<Token> Tokens { get; set; }
         public DbSet<Word> Words { get; set; }
+        public DbSet<Tag> Tags { get; set; }
     }
 }
