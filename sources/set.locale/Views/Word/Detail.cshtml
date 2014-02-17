@@ -34,12 +34,17 @@
                     <div id="dvForm"></div>
                 </div>
 
+                <div>
+                    @if (Model.Translations.Count < ConstHelper.MaxLanguageCount)
+                    {
+                        <input type="button" id="btnNewTranslate" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
 
-                @if (Model.Translations.Count < ConstHelper.MaxLanguageCount)
-                {
-                    <input type="button" id="btnNewTranslate" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
-                }
-                <input type="button" id="btnNewTag" class="btn btn-sm btn-info btnNewTag pull-right" value="@Html.LocalizationString("btn_new_tag")" data-id="@Model.Key" />
+                    }
+                    <input type="button" id="btnNewTag" class="btn btn-sm btn-info btnNewTag pull-right" value="@Html.LocalizationString("btn_new_tag")" data-id="@Model.Key" />
+                </div>
+                <br /><br />
+
+
 
 
                 @Html.AntiForgeryToken()
@@ -129,7 +134,7 @@
                         type: "POST",
                         data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
                         success: function (r) {
-                            if (r && r.Ok) {
+                            if (r && r.IsOk) {
 
 
                                 var tr = $('<tr />');
@@ -170,8 +175,9 @@
                                     $("input.btnNewTranslate").show();
                                 }
 
-
+                                
                                 $("div#dvForm").html('');
+                               
                             } else {
                                 //todo:warning
                             }
@@ -265,7 +271,7 @@
                     type: "POST",
                     data: "key=@Model.Key&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
                     success: function (r) {
-                        if (r && r.Ok) {
+                        if (r && r.IsOk) {
                             td.html(translation);
                         } else {
                             //todo:warning
@@ -376,14 +382,15 @@
                         type: "POST",
                         data: "key=@Model.Key&tag=" + tag + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
                         success: function (r) {
-                            if (r && r.Ok) {
+                            if (r && r.IsOk) {
                                 var tags = $('<a class="label label-info" style="margin-left:5px;" href="/tag/detail/' + tag + '">' + tag + '</a>');
                                 $("div#dvTag").append(tags);
 
-
+                               
                                 $("div#dvForm").html('');
                                 $("input.btnNewTag").show();
                                 $("input.btnNewTranslate").show();
+                                $("#hdForm").html('');
 
 
                             } else {
