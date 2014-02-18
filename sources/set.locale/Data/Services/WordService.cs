@@ -45,7 +45,7 @@ namespace set.locale.Data.Services
 
             if (Context.SaveChanges() > 0)
             {
-                return Task.FromResult(word.Key);
+                return Task.FromResult(word.Id);
             }
 
             return null;
@@ -81,6 +81,12 @@ namespace set.locale.Data.Services
         public Task<Word> GetByKey(string key)
         {
             var word = Context.Words.FirstOrDefault(x => x.Key == key);
+            return Task.FromResult(word);
+        }
+
+        public Task<Word> GetById(string id)
+        {
+            var word = Context.Words.FirstOrDefault(x => x.Id == id);
             return Task.FromResult(word);
         }
 
@@ -252,6 +258,7 @@ namespace set.locale.Data.Services
         Task<string> Update(WordModel model);
         Task<PagedList<Word>> GetByUserId(string userId, int pageNumber);
         Task<Word> GetByKey(string key);
+        Task<Word> GetById(string id);
         Task<PagedList<Word>> GetWords(int pageNumber);
         Task<PagedList<Word>> GetWords(string appId, int pageNumber);
         Task<PagedList<Word>> GetNotTranslated(int pageNumber);
