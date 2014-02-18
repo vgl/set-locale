@@ -38,9 +38,8 @@
                     @if (Model.Translations.Count < ConstHelper.MaxLanguageCount)
                     {
                         <input type="button" id="btnNewTranslate" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
-
                     }
-                    <input type="button" id="btnNewTag" class="btn btn-sm btn-info btnNewTag pull-right" value="@Html.LocalizationString("btn_new_tag")" data-id="@Model.Key" />
+                    @*<input type="button" id="btnNewTag" class="btn btn-sm btn-info btnNewTag pull-right" value="@Html.LocalizationString("btn_new_tag")" data-id="@Model.Key" />*@
                 </div>
                 <br /><br />
 
@@ -111,7 +110,6 @@
 
                     $("h3#hdForm").html('');
                     $("div#dvForm").html('');
-                    $("input.btnNewTag").show();
                     $("input.btnNewTranslate").show();
 
 
@@ -126,7 +124,6 @@
                 btnSave.click(function () {
                     var lang = $("select#selLanguages").val();
                     var translation = $("input#txtTranslation").val();
-                    $("input.btnNewTag").show();
 
 
                     $.ajax({
@@ -284,7 +281,6 @@
 
             $("input.btnNewTranslate").click(function () {
                 $(this).hide();
-                $("input.btnNewTag").hide();
 
 
                 addNewTranslationRow();
@@ -343,86 +339,6 @@
 
 
             $("input.btnEdit").click(fnEdit);
-
-
-
-
-            $("input.btnNewTag").click(function () {
-                $(this).hide();
-                $("input.btnNewTranslate").hide();
-                addNewTagRow();
-
-
-            });
-
-
-            function addNewTagRow() {
-                var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
-                btnCancel.val('@Html.Raw(Html.LocalizationString("btn_cancel"))');
-
-
-                btnCancel.click(function () {
-                    $("h3#hdForm").html('');
-                    $("div#dvForm").html('');
-                    $("input.btnNewTag").show();
-                    $("input.btnNewTranslate").show();
-                });
-
-
-                var btnSave = $('<input type="button" id="btnSave" />').addClass('btn btn-sm btn-primary');
-                btnSave.val('@Html.Raw(Html.LocalizationString("btn_save"))');
-                btnSave.data('id', '@Model.Key');
-
-
-                btnSave.click(function () {
-                    var tag = $("input#txtTag").val();
-
-
-                    $.ajax({
-                        url: "/Word/Tag",
-                        type: "POST",
-                        data: "key=@Model.Key&tag=" + tag + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
-                        success: function (r) {
-                            if (r && r.IsOk) {
-                                var tags = $('<a class="label label-info" style="margin-left:5px;" href="/tag/detail/' + tag + '">' + tag + '</a>');
-                                $("div#dvTag").append(tags);
-
-                               
-                                $("div#dvForm").html('');
-                                $("input.btnNewTag").show();
-                                $("input.btnNewTranslate").show();
-                                $("#hdForm").html('');
-
-
-                            } else {
-                                //todo:warning
-                            }
-                        }
-                    });
-                });
-
-
-                var inputTag = $('<input type="text" id="txtTag" name="txtTag" class="form-control col-4" />');
-
-
-                var dv1 = $('<div style="margin:5px;float:left;" />');
-
-
-                var dv2 = $('<div style="margin:5px;float:left;" />');
-
-
-                var dv3 = $('<div style="margin:5px;float:left;" />');
-
-
-                dv1.append(inputTag);
-                dv2.append(btnSave);
-                dv3.append(btnCancel);
-
-
-                $("h3#hdForm").html('@Html.LocalizationString("title_new_tag")');
-                $("div#dvForm").append(dv1).append('<br style="display:block;clear:both;"/>').append(dv2).append(dv3);
-            }
-
 
         });
     </script>
