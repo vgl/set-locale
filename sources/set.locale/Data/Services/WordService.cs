@@ -19,10 +19,12 @@ namespace set.locale.Data.Services
             }
 
             var slug = model.Key.ToUrlSlug();
-            if (Context.Words.Any(x => x.Key == slug))
-            {
-                return null;
-            }
+
+            // Farklı uygulamada aynı key ler olabilir diye kaldırıldı.
+            //if (Context.Words.Any(x => x.Key == slug))
+            //{
+            //    return null;
+            //}
 
             var items = model.Tag.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
             var tags = items.Select(item => new Tag { CreatedBy = model.CreatedBy, Name = item, UrlName = item.ToUrlSlug() }).ToList();
