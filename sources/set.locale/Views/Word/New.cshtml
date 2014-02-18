@@ -1,8 +1,8 @@
 ﻿@model WordModel
 
-
 @{
     ViewBag.Title = Html.LocalizationString("word_new_key_title");
+    var appList = ((IEnumerable<AppModel>)ViewBag.Apps).ToList();
 }
 
 <div class="row">
@@ -16,33 +16,33 @@
 
     <form method="post">
 
-        <div class="form-group">
-            <strong>@Html.LocalizationString("application")</strong>
-            <br />
-            <select id="AppId" name="AppId">
-                @foreach (AppModel app in ViewBag.Apps)
-                {
-                    <option value="@app.Id">@app.Name</option>
-                }
-            </select>
-        </div>
+        @if (appList.Count() > 1)
+        {
+            <div class="form-group">
+                <strong>@Html.LocalizationString("application")</strong>
+                <br />
+                <select id="AppId" name="AppId">
+                    @foreach (AppModel app in appList)
+                    {
+                        <option value="@app.Id">@app.Name</option>
+                    }
+                </select>
+            </div>
+        }
+        else if (appList.Any())
+        {
+            <input id="AppId" name="AppId" type="hidden" value="@appList.FirstOrDefault().Id" />
+        }
 
         <div class="form-group">
             <strong>@Html.LocalizationString("word_key")</strong>
             <input id="key" name="key" type="text" class="form-control" value="@Model.Key" required />
         </div>
 
-
-        @*<div class="form-group">
-                <strong>@Html.LocalizationString("tag")</strong>
-                <input id="tag" name="tag" type="text" class="form-control" value="@foreach (var item in Model.Tags){ @Html.Raw(string.Format("{0},",item)) }" required />
-            </div>*@
-
         <div class="form-group">
             <strong>@Html.LocalizationString("description")</strong>
             <input id="description" name="description" type="text" class="form-control" value="@Model.Description" />
         </div>
-
 
         @Html.AntiForgeryToken()
 
@@ -53,30 +53,15 @@
 
 @section css
 {
-    @*<link href="~/Public/_plugin/bootstrap-tokenfield/css/tokenfield-typeahead.css" type="text/css" rel="stylesheet">
-        <link href="~/Public/_plugin/bootstrap-tokenfield/css/bootstrap-tokenfield.css" type="text/css" rel="stylesheet">*@
     <link href="/public/css/select2.css" rel="stylesheet" />
 }
 
 @section script
 {
     <script src="/public/js/select2.js"></script>
-
-    @*<script type="text/javascript" src="~/Public/_plugin/bootstrap-tokenfield/bootstrap-tokenfield.js" charset="UTF-8"></script>
-        <script type="text/javascript" src="~/Public/_plugin/bootstrap-tokenfield/docs-assets/js/scrollspy.js" charset="UTF-8"></script>
-        <script type="text/javascript" src="~/Public/_plugin/bootstrap-tokenfield/docs-assets/js/typeahead.js" charset="UTF-8"></script>*@
     <script>
         $(function () {
             $('#AppId').select2();
         });
-        //$.get('/Tag/JsonTags', function (data) {
-        //    var arr = data;
-        //    $('#tag').tokenfield({
-        //        typeahead: {
-        //            name: 'tags',
-        //            local: arr,
-        //        }
-        //    });
-        //});
     </script>
 }

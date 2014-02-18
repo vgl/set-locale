@@ -108,6 +108,8 @@ namespace set.locale.Controllers
         public async Task<ActionResult> New(WordModel model)
         {
             SetPleaseTryAgain(model);
+            var apps = await _appService.GetByUserId(User.Identity.GetId());
+            ViewBag.Apps = apps.Select(AppModel.Map);
 
             if (model.IsNotValid())
             {
