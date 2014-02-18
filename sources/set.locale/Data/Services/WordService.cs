@@ -253,6 +253,7 @@ namespace set.locale.Data.Services
         Task<PagedList<Word>> GetByUserId(string userId, int pageNumber);
         Task<Word> GetByKey(string key);
         Task<PagedList<Word>> GetWords(int pageNumber);
+        Task<PagedList<Word>> GetWords(string appId, int pageNumber);
         Task<PagedList<Word>> GetNotTranslated(int pageNumber);
         Task<bool> Translate(string key, string language, string translation);
         Task<bool> Tag(string key, string tag);

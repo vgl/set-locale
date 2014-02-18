@@ -124,7 +124,7 @@ namespace set.locale.Controllers
                 p = 1;
             }
 
-            var items = await _wordService.GetWords(p);
+            var items = await _wordService.GetWords(id, p);
             var list = items.Items.Select(WordModel.Map).ToList();
 
             var model = new PageModel<WordModel>
