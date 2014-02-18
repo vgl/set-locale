@@ -161,6 +161,7 @@ namespace set.locale.Data.Services
             var softDelete = Context.Tokens.FirstOrDefault(x => x.Key == token);
             if (softDelete != null)
             {
+                softDelete.DeletedAt = DateTime.Now;
                 softDelete.IsDeleted = true;
                 softDelete.DeletedBy = deletedBy;
                 return Task.FromResult(Context.SaveChanges() > 0);

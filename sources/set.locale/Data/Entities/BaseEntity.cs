@@ -27,5 +27,12 @@ namespace set.locale.Data.Entities
         public string DeletedBy { get; set; }
         public DateTime? DeletedAt { get; set; }
         public bool IsDeleted { get; set; }
+        
+        //public static void SoftDelete()
+        //{
+        //    DeletedAt = DateTime.Now;
+        //    DeletedBy = deletedBy;
+        //    IsDeleted = true;
+        //}
     }
 }

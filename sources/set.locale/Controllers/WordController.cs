@@ -1,4 +1,5 @@
-﻿using set.locale.Data.Entities;
+﻿using System.Web.Routing;
+using set.locale.Data.Entities;
 using set.locale.Data.Services;
 using set.locale.Models;
 using System;
@@ -36,7 +37,6 @@ namespace set.locale.Controllers
             return View(model);
         }
 
-
         [HttpGet, AllowAnonymous]
         public async Task<ViewResult> All(int id = 0)
         {
@@ -64,7 +64,6 @@ namespace set.locale.Controllers
 
             return View(model);
         }
-
 
         [HttpGet]
         public async Task<ViewResult> NotTranslated(int id = 1)
@@ -94,7 +93,6 @@ namespace set.locale.Controllers
             return View(model);
         }
 
-
         [HttpGet]
         public ViewResult New()
         {
@@ -102,13 +100,12 @@ namespace set.locale.Controllers
             return View(model);
         }
 
-
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> New(WordModel model)
         {
             SetPleaseTryAgain(model);
 
-            if (model.IsValid())
+            if (model.IsNotValid())
             {
                 return View(model);
             }
@@ -118,12 +115,11 @@ namespace set.locale.Controllers
             var key = await _wordService.Create(model);
             if (key != null)
             {
-                return Redirect("/word/detail/" + key);
+                return RedirectToAction("detail", "word", new { id = key });
             }
 
             return View(model);
         }
-
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<JsonResult> Translate(string key, string language, string translation)
@@ -142,7 +138,6 @@ namespace set.locale.Controllers
             return Json(model, JsonRequestBehavior.DenyGet);
         }
 
-
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<JsonResult> Tag(string key, string tag)
         {
@@ -159,7 +154,6 @@ namespace set.locale.Controllers
             model.IsOk = await _wordService.Tag(key, tag);
             return Json(model, JsonRequestBehavior.DenyGet);
         }
-
 
         private async Task<string> ExportWordsToExcel()
         {
@@ -268,7 +262,6 @@ namespace set.locale.Controllers
                 return fileName;
             }
         }
-
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<JsonResult> Export()

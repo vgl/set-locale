@@ -1,40 +1,31 @@
-﻿using set.locale.Data.Entities;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using set.locale.Data.Entities;
 using set.locale.Helpers;
 using set.locale.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace set.locale.Data.Services
 {
     public class WordService : BaseService, IWordService
     {
-        public async Task<string> Create(WordModel model)
+        public Task<string> Create(WordModel model)
         {
-            if (!model.IsValid())
+            if (model.IsNotValid())
             {
                 return null;
             }
 
             var slug = model.Key.ToUrlSlug();
-            var tags = new List<Tag>();
-            var items = model.Tag.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var item in items)
-            {
-                tags.Add(new Tag
-                {
-                    CreatedBy = model.CreatedBy,
-                    Name = item,
-                    UrlName = item.ToUrlSlug()
-                });
-            }
-
             if (Context.Words.Any(x => x.Key == slug))
             {
                 return null;
             }
+
+            var items = model.Tag.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            var tags = items.Select(item => new Tag { CreatedBy = model.CreatedBy, Name = item, UrlName = item.ToUrlSlug() }).ToList();
 
             var word = new Word
             {
@@ -47,25 +38,49 @@ namespace set.locale.Data.Services
                 Tags = tags
             };
 
-
             Context.Words.Add(word);
+
             if (Context.SaveChanges() > 0)
             {
-                return await Task.FromResult(word.Id);
+                return Task.FromResult(word.Key);
             }
 
             return null;
         }
+
+        public Task<PagedList<Word>> GetByUserId(string userId, int pageNumber)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return null;
+            }
+
+            var words = Context.Words.Include("Tags").Where(x => x.CreatedBy == userId).ToList();
+
+            long totalCount = words.Count();
+            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
+
+            if (pageNumber > totalPageCount)
+            {
+                pageNumber = 1;
+            }
+
+            words = words.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
+
+            return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words));
+        }
+
         public Task<Word> GetByKey(string key)
         {
-            if (key == string.Empty)
-                return null;
-
-            var items = Context.Words;
-            var word = items.FirstOrDefault(x => x.Key == key);
-
+            var word = Context.Words.FirstOrDefault(x => x.Key == key);
             return Task.FromResult(word);
         }
+
         public Task<PagedList<Word>> GetWords(int pageNumber)
         {
             if (pageNumber < 1)
@@ -73,23 +88,21 @@ namespace set.locale.Data.Services
                 pageNumber = 1;
             }
 
-
-            var items = Context.Words.Where(x => !x.IsDeleted);
+            var items = Context.Words;
 
             long totalCount = items.Count();
             var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
-
 
             if (pageNumber > totalPageCount)
             {
                 pageNumber = 1;
             }
 
+            var model = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
 
-            var words = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
-
-            return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words.ToList()));
+            return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, model));
         }
+
         public Task<PagedList<Word>> GetNotTranslated(int pageNumber = 1)
         {
             if (pageNumber < 1)
@@ -97,23 +110,21 @@ namespace set.locale.Data.Services
                 pageNumber = 1;
             }
 
+            var words = Context.Words.Where(x => x.IsTranslated == false).ToList();
 
-            var items = Context.Words.Where(x => !x.IsTranslated && !x.IsDeleted);
-
-            long totalCount = items.Count();
+            long totalCount = words.Count();
             var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
-
 
             if (pageNumber > totalPageCount)
             {
                 pageNumber = 1;
             }
 
+            words = words.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
 
-            var notTranslatedwords = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
-
-            return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, notTranslatedwords.ToList()));
+            return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words));
         }
+
         public Task<bool> Translate(string key, string language, string translation)
         {
             if (string.IsNullOrEmpty(key)
@@ -122,34 +133,27 @@ namespace set.locale.Data.Services
                 return Task.FromResult(false);
             }
 
-
             var word = Context.Words.FirstOrDefault(x => x.Key == key);
             if (word == null)
             {
                 return Task.FromResult(false);
             }
 
-
             var type = word.GetType();
             var propInfo = type.GetProperty(string.Format("Translation_{0}", language.ToUpperInvariant()), new Type[0]);
-
 
             if (propInfo == null)
             {
                 return Task.FromResult(false);
             }
 
-
             if (string.IsNullOrEmpty(translation))
             {
                 word.TranslationCount--;
 
-
                 word.IsTranslated = word.TranslationCount > 0;
 
-
                 propInfo.SetValue(word, null);
-
 
             }
             else
@@ -161,6 +165,7 @@ namespace set.locale.Data.Services
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
+
         public Task<bool> Tag(string key, string tagName)
         {
             if (string.IsNullOrEmpty(key)
@@ -169,76 +174,50 @@ namespace set.locale.Data.Services
                 return Task.FromResult(false);
             }
 
-
             var word = Context.Words.FirstOrDefault(x => x.Key == key && x.Tags.Count(y => y.Name == tagName) == 0);
             if (word == null)
             {
                 return Task.FromResult(false);
             }
 
-
             var tag = new Tag
             {
                 Name = tagName,
                 UrlName = tagName.ToUrlSlug(),
-                CreatedBy = "1"
             };
-
 
             word.Tags = new List<Tag> { tag };
 
             return Task.FromResult(Context.SaveChanges() > 0);
-
         }
+
         public Task<List<Word>> GetAll()
         {
-            var words = Context.Set<Word>().ToList();
+            var words = Context.Words.ToList();
 
             return Task.FromResult(words);
         }
+
         public Task<string> Update(WordModel model)
         {
-            if (!model.IsValid())
+            if (model.IsNotValid())
             {
                 return null;
             }
 
             var slug = model.Key.ToUrlSlug();
 
+            var softDelete = Context.Words.FirstOrDefault(x => x.Key == slug);
+            if (softDelete == null) return Create(model);
 
-            var wordEntity = Context.Set<Word>().FirstOrDefault(x => x.Key == slug);
-            if (wordEntity == null) return Create(model);
 
-            wordEntity.IsDeleted = true;
+            softDelete.DeletedAt = DateTime.Now;
+            softDelete.IsDeleted = true;
+            softDelete.DeletedBy = model.CreatedBy;
+
             Context.SaveChanges();
 
             return Create(model);
-        }
-        public Task<PagedList<Word>> GetByUserId(string userId, int pageNumber)
-        {
-            if (pageNumber < 1)
-            {
-                pageNumber = 1;
-            }
-
-            if (userId == string.Empty)
-            {
-                return null;
-            }
-
-            var items = Context.Set<Word>().Where(x => x.CreatedBy == userId && !x.IsDeleted);
-            long totalCount = items.Count();
-            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
-
-            if (pageNumber > totalPageCount)
-            {
-                pageNumber = 1;
-            }
-
-            var words = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
-
-            return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words));
-
         }
     }
 

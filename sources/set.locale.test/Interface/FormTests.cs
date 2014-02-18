@@ -86,7 +86,7 @@ namespace set.locale.test.Interface
 
             Assert.IsNotNull(Browser);
             // todo: detail id ile yapay test
-            //Assert.AreEqual(Browser.Url, returnUrl);
+            //Assert.Contains(returnUrl);
 
             CloseBrowser();
         }
