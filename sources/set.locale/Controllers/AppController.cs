@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -11,10 +12,12 @@ namespace set.locale.Controllers
     public class AppController : BaseController
     {
         private readonly IAppService _appService;
+        private readonly IWordService _wordService;
 
-        public AppController(IAppService appService)
+        public AppController(IAppService appService, IWordService wordService)
         {
             _appService = appService;
+            _wordService = wordService;
         }
 
         [HttpGet]
@@ -111,6 +114,30 @@ namespace set.locale.Controllers
 
             model.IsOk = await _appService.DeleteToken(token, User.Identity.GetId());
             return Json(model, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpGet]
+        public async Task<ViewResult> Words(string id, int p = 0)
+        {
+            if (p < 1)
+            {
+                p = 1;
+            }
+
+            var items = await _wordService.GetWords(p);
+            var list = items.Items.Select(WordModel.Map).ToList();
+
+            var model = new PageModel<WordModel>
+            {
+                Items = list,
+                HasNextPage = items.HasNextPage,
+                HasPreviousPage = items.HasPreviousPage,
+                Number = items.Number,
+                TotalCount = items.TotalCount,
+                TotalPageCount = items.TotalPageCount
+            };
+
+            return View(model);
         }
 
     }

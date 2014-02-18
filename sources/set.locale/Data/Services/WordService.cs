@@ -103,6 +103,28 @@ namespace set.locale.Data.Services
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, model));
         }
 
+        public Task<PagedList<Word>> GetWords(string appId, int pageNumber)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+
+            var items = Context.Words.Where(x => x.AppId == appId);
+
+            long totalCount = items.Count();
+            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
+
+            if (pageNumber > totalPageCount)
+            {
+                pageNumber = 1;
+            }
+
+            var model = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
+
+            return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, model));
+        }
+
         public Task<PagedList<Word>> GetNotTranslated(int pageNumber = 1)
         {
             if (pageNumber < 1)

@@ -177,6 +177,7 @@
     <Content Include="Views\Admin\NewTranslator.cshtml" />
     <Content Include="Views\User\Words.cshtml" />
     <Content Include="Views\Admin\Apps.cshtml" />
+    <Content Include="Views\App\Words.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
