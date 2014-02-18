@@ -18,9 +18,11 @@ namespace set.locale.Controllers
     public class WordController : BaseController
     {
         private readonly IWordService _wordService;
-        public WordController(IWordService wordService)
+        private readonly IAppService _appService;
+        public WordController(IWordService wordService, IAppService appService)
         {
             _wordService = wordService;
+            _appService = appService;
         }
 
         [HttpGet, AllowAnonymous]
@@ -94,8 +96,10 @@ namespace set.locale.Controllers
         }
 
         [HttpGet]
-        public ViewResult New()
+        public async Task<ViewResult> New()
         {
+            var apps = await _appService.GetByUserId(User.Identity.GetId());
+            ViewBag.Apps = apps.Select(AppModel.Map);
             var model = new WordModel();
             return View(model);
         }
