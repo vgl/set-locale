@@ -35,7 +35,8 @@ namespace set.locale.Data.Services
                 TranslationCount = 0,
                 CreatedBy = model.CreatedBy,
                 UpdatedBy = model.CreatedBy,
-                Tags = tags
+                Tags = tags,
+                AppId = model.AppId
             };
 
             Context.Words.Add(word);

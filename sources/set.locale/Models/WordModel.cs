@@ -15,6 +15,7 @@ namespace set.locale.Models
         public string Description { get; set; }
         public string Tag { get; set; }
         public bool IsTranslated { get; set; }
+        public string AppId { get; set; }
         public List<TagModel> Tags { get; set; }
         public List<LanguageModel> Languages { get; set; }
         public List<TranslationModel> Translations { get; set; }
@@ -46,7 +47,8 @@ namespace set.locale.Models
         public bool IsValid()
         {
             return !string.IsNullOrEmpty(Key)
-                   && !string.IsNullOrEmpty(Tag);
+                   && !string.IsNullOrEmpty(Tag)
+                   && !string.IsNullOrEmpty(AppId);
         }
         public bool IsNotValid()
         {
@@ -61,9 +63,9 @@ namespace set.locale.Models
                 Key = entity.Key,
                 Description = entity.Description,
                 IsTranslated = entity.IsTranslated,
-                CreatedBy = entity.CreatedBy
+                CreatedBy = entity.CreatedBy,
+                AppId = entity.AppId
             };
-
 
             if (entity.Tags != null
                 && entity.Tags.Any())
