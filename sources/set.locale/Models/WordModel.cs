@@ -9,7 +9,7 @@ namespace set.locale.Models
 {
     public class WordModel : BaseModel
     {
-
+        public string Id { get; set; }
         public string Key { get; set; }
         public int Count { get; set; }
         public string Description { get; set; }
@@ -59,6 +59,7 @@ namespace set.locale.Models
         {
             var model = new WordModel
             {
+                Id = entity.Id,
                 Key = entity.Key,
                 Description = entity.Description,
                 IsTranslated = entity.IsTranslated,
