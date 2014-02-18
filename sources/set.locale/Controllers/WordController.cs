@@ -31,7 +31,7 @@ namespace set.locale.Controllers
             if (string.IsNullOrEmpty(id)) return RedirectToHome();
 
 
-            var entity = await _wordService.GetByKey(id);
+            var entity = await _wordService.GetById(id);
             if (entity == null) return RedirectToHome();
 
 
@@ -120,10 +120,10 @@ namespace set.locale.Controllers
 
             model.Tag = (await _appService.Get(model.AppId)).Name;
 
-            var key = await _wordService.Create(model);
-            if (key != null)
+            var id = await _wordService.Create(model);
+            if (id != null)
             {
-                return RedirectToAction("detail", "word", new { id = key });
+                return RedirectToAction("detail", "word", new { id = id });
             }
 
             return View(model);
