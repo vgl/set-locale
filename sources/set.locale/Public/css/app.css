@@ -36,6 +36,11 @@
     font-weight: bold;
 }
 
+.table tr td {
+    padding: 0;
+    vertical-align: middle !important;
+}
+
 .highlight {
     background-color: #F8F8F8;
 }
@@ -65,7 +70,16 @@
 .import_excel {
     text-align: right;
     position: absolute;
-	top: 0px;
-	left: 0px;
-	z-index: 1;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+}
+
+.label {
+    font-size: 13px;
+}
+
+.panel-heading {
+    font-weight: bold;
+    color: white !important;
 }
