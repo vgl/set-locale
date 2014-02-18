@@ -4,89 +4,84 @@
     ViewBag.Title = Html.LocalizationString("words_key_detail_page_title");
 }
 
-<div class="row">
-    <h3>@ViewBag.Title</h3>
-    <hr />
-</div>
+<div class="panel panel-info">
+    <div class="panel-heading">@ViewBag.Title</div>
+    <div class="panel-body">
 
-<div class="row">
-    <p>
-        @Model.Description
-    </p>
-    <p>
-        <div id="dvTag">
-            @foreach (var tag in Model.Tags)
+        @Html.Partial("_Msg")
+
+        <div class="row">
+            <p>
+                @Model.Description
+            </p>
+            <p>
+                <div id="dvTag">
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <a class="label label-info" href="/tag/detail/@tag.UrlName">@tag.Name</a>
+                    }
+                </div>
+            </p>
+
+
+            @if (User.Identity.IsAuthenticated)
             {
-                <a class="label label-info" href="/tag/detail/@tag.UrlName">@tag.Name</a>
+                <p>
+                    <div>
+                        <div class="pull-left">
+                            <div>
+                                <h3 id="hdForm"></h3>
+                            </div>
+                            <div id="dvForm"></div>
+                        </div>
+
+                        <div>
+                            @if (Model.Translations.Count < ConstHelper.MaxLanguageCount)
+                            {
+                                <input type="button" id="btnNewTranslate" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
+                            }
+                        </div>
+
+                        @Html.AntiForgeryToken()
+                    </div>
+                </p>
             }
         </div>
-    </p>
 
-
-    @if (User.Identity.IsAuthenticated)
-    {
-        <p>
-            <div>
-                <div class="pull-left">
-                    <div>
-                        <h3 id="hdForm"></h3>
-                    </div>
-                    <div id="dvForm"></div>
-                </div>
-
-                <div>
-                    @if (Model.Translations.Count < ConstHelper.MaxLanguageCount)
-                    {
-                        <input type="button" id="btnNewTranslate" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
-                    }
-                </div>
-                <br /><br />
-
-
-
-
-                @Html.AntiForgeryToken()
-            </div>
-        </p>
-    }
-</div>
-
-
-<div class="row">
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <th></th>
-                    }
-                    <th>@Html.LocalizationString("language")</th>
-                    <th>@Html.LocalizationString("translation")</th>
-                </tr>
-            </thead>
-            <tbody id="tbodyLanguage">
-                @foreach (var item in Model.Translations)
-                {
-                    <tr>
-                        @if (User.Identity.IsAuthenticated)
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <th></th>
+                            }
+                            <th>@Html.LocalizationString("language")</th>
+                            <th>@Html.LocalizationString("translation")</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyLanguage">
+                        @foreach (var item in Model.Translations)
                         {
-                            <td>
-                                <input type="button" class="btn btn-sm btn-warning btnEdit" value="@Html.LocalizationString("btn_edit")" data-lang="@item.Language.Key" />
-                            </td>
+                            <tr>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <td>
+                                        <input type="button" class="btn btn-sm btn-warning btnEdit" value="@Html.LocalizationString("btn_edit")" data-lang="@item.Language.Key" />
+                                    </td>
+                                }
+                                <td> <img src="@item.Language.ImageUrl" alt="@item.Language.Name" /> @item.Language.Name</td>
+                                <td>@item.Value</td>
+                            </tr>
                         }
-                        <td> <img src="@item.Language.ImageUrl" alt="@item.Language.Name" /> @item.Language.Name</td>
-                        <td>@item.Value</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </div>
-
-
-
-
 
 @section script
 {

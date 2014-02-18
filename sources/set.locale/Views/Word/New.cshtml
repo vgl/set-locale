@@ -5,51 +5,53 @@
     var appList = ((IEnumerable<AppModel>)ViewBag.Apps).ToList();
 }
 
-<div class="row">
-    <h3>@ViewBag.Title</h3>
-    <hr />
-</div>
+<div class="panel panel-info">
+    <div class="panel-heading">@ViewBag.Title</div>
+    <div class="panel-body">
 
-@Html.Partial("_Msg")
+        @Html.Partial("_Msg")
 
-<div class="row col-lg-5">
+        <div class="row">
+            <div class="col-lg-5">
+                <form method="post">
 
-    <form method="post">
-
-        @if (appList.Count() > 1)
-        {
-            <div class="form-group">
-                <strong>@Html.LocalizationString("application")</strong>
-                <br />
-                <select id="AppId" name="AppId">
-                    @foreach (AppModel app in appList)
+                    @if (appList.Count() > 1)
                     {
-                        <option value="@app.Id">@app.Name</option>
+                        <div class="form-group">
+                            <strong>@Html.LocalizationString("application")</strong>
+                            <br />
+                            <select id="AppId" name="AppId">
+                                @foreach (AppModel app in appList)
+                                {
+                                    <option value="@app.Id">@app.Name</option>
+                                }
+                            </select>
+                        </div>
                     }
-                </select>
+                    else if (appList.Any())
+                    {
+                        <input id="AppId" name="AppId" type="hidden" value="@appList.FirstOrDefault().Id" />
+                    }
+
+                    <div class="form-group">
+                        <strong>@Html.LocalizationString("word_key")</strong>
+                        <input id="key" name="key" type="text" class="form-control" value="@Model.Key" required />
+                    </div>
+
+                    <div class="form-group">
+                        <strong>@Html.LocalizationString("description")</strong>
+                        <input id="description" name="description" type="text" class="form-control" value="@Model.Description" />
+                    </div>
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="submit" value="@Html.LocalizationString("btn_save")" class="btn btn-primary" />
+                </form>
             </div>
-        }
-        else if (appList.Any())
-        {
-            <input id="AppId" name="AppId" type="hidden" value="@appList.FirstOrDefault().Id" />
-        }
-
-        <div class="form-group">
-            <strong>@Html.LocalizationString("word_key")</strong>
-            <input id="key" name="key" type="text" class="form-control" value="@Model.Key" required />
         </div>
 
-        <div class="form-group">
-            <strong>@Html.LocalizationString("description")</strong>
-            <input id="description" name="description" type="text" class="form-control" value="@Model.Description" />
-        </div>
-
-        @Html.AntiForgeryToken()
-
-        <input type="submit" value="@Html.LocalizationString("btn_save")" class="btn btn-primary" />
-    </form>
+    </div>
 </div>
-
 
 @section css
 {

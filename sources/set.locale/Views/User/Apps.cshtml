@@ -1,31 +1,30 @@
 ﻿@model IEnumerable<AppModel>
 
-    @{
-        ViewBag.Title = Html.LocalizationString("user_apps_title");
-    }
+@{
+    ViewBag.Title = Html.LocalizationString("user_apps_title");
+}
 
-    <div class="row">
-        <h3>@ViewBag.Title</h3>
-        <hr />
-    </div>
+<div class="panel panel-info">
+    <div class="panel-heading">@ViewBag.Title</div>
+    <div class="panel-body">
 
-    <div class="row">
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>@Html.LocalizationString("app_name")</th>
-                        <th>@Html.LocalizationString("description")</th>
-                        <th>@Html.LocalizationString("url")</th>
-                        <th>@Html.LocalizationString("usage_count")</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
-                        var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>@Html.LocalizationString("app_name")</th>
+                            <th>@Html.LocalizationString("description")</th>
+                            <th>@Html.LocalizationString("url")</th>
+                            <th>@Html.LocalizationString("usage_count")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
+                            var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
                         <tr>
                             <td>
                                 <a class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
@@ -35,63 +34,66 @@
                             <td><a href="@item.Url">@item.Url</a></td>
                             <td>@item.UsageCountToken</td>
                         </tr>
-                    }
-                </tbody>
-            </table>
-            @Html.AntiForgeryToken()
+                        }
+                    </tbody>
+                </table>
+                @Html.AntiForgeryToken()
+            </div>
         </div>
-    </div>
 
 
-    <div class="modal fade" id="DeactivateModal" tabindex="-1" role="dialog" aria-labelledby="lblDeactivateModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">@Html.LocalizationString("modal_title_apps")</h4>
-                </div>
-                <div class="modal-body">
-                    @Html.LocalizationString("modal_body_apps")
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("btn_cancel")" />
-                    <input type="button" class="btn" value="@Html.LocalizationString("btn_ok")" id="btnModalAction" data-id="" data-isactive="" />
+        <div class="modal fade" id="DeactivateModal" tabindex="-1" role="dialog" aria-labelledby="lblDeactivateModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">@Html.LocalizationString("modal_title_apps")</h4>
+                    </div>
+                    <div class="modal-body">
+                        @Html.LocalizationString("modal_body_apps")
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="@Html.LocalizationString("btn_cancel")" />
+                        <input type="button" class="btn" value="@Html.LocalizationString("btn_ok")" id="btnModalAction" data-id="" data-isactive="" />
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
+</div>
 
-    @section script
+@section script
 {
-        <script>
-            $(function () {
-                var textActivate = "@Html.LocalizationString("btn_activate")";
-                var textDeactivate = "@Html.LocalizationString("btn_deactivate")";
+    <script>
+        $(function () {
+            var textActivate = "@Html.LocalizationString("btn_activate")";
+            var textDeactivate = "@Html.LocalizationString("btn_deactivate")";
 
-                $("input#btnModalAction").click(function () {
-                    var id = $(this).data("id");
-                    var isActive = $(this).data("isactive");
-                    $.ajax({
-                        url: "/App/ChangeStatus",
-                        type: "POST",
-                        data: "id=" + id + "&isActive=" + isActive + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
-                    }).done(function (r) {
-                        if (r && r.IsOk) {
+            $("input#btnModalAction").click(function () {
+                var id = $(this).data("id");
+                var isActive = $(this).data("isactive");
+                $.ajax({
+                    url: "/App/ChangeStatus",
+                    type: "POST",
+                    data: "id=" + id + "&isActive=" + isActive + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val()
+                }).done(function (r) {
+                    if (r && r.IsOk) {
 
-                            if (isActive) {
-                                $("a[data-id='" + id + "']").removeClass("btn-warning").addClass("btn-success").data("isactive", false).html(textActivate);
-                            }
-                            else {
-                                $("a[data-id='" + id + "']").removeClass("btn-success").addClass("btn-warning").data("isactive", true).html(textDeactivate);
-                            }
-
-                            $("#DeactivateModal").modal('hide');
-
-                        } else {
-                            //warning
+                        if (isActive) {
+                            $("a[data-id='" + id + "']").removeClass("btn-warning").addClass("btn-success").data("isactive", false).html(textActivate);
                         }
-                    });
+                        else {
+                            $("a[data-id='" + id + "']").removeClass("btn-success").addClass("btn-warning").data("isactive", true).html(textDeactivate);
+                        }
+
+                        $("#DeactivateModal").modal('hide');
+
+                    } else {
+                        //warning
+                    }
                 });
             });
-        </script>
-    }
+        });
+    </script>
+}

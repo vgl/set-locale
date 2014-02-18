@@ -2,64 +2,66 @@
 @{
     ViewBag.Title = string.Format("{0} - {1}", Html.LocalizationString("user_apps_title"), Model.Name);
 }
-<div class="row">
-    <h3>@ViewBag.Title</h3>
-    <hr />
-</div>
 
-<div class="row">
-    <p>
-        @Model.Description
-    </p>
-    <p>
-        @Html.LocalizationString("word_count"): <a href="/app/words/@Model.Id">@Model.UsageCountWord</a>
-    </p>
-</div>
+<div class="panel panel-info">
+    <div class="panel-heading">@ViewBag.Title</div>
+    <div class="panel-body">
 
-<div class="row">
-    @if (Model.IsActive)
-    {
-        <input type="button" id="btnNewToken" class="btn btn-sm btn-primary pull-right" value="@Html.LocalizationString("btn_create_new_token")" data-id="@Model.Id" required />
-        @Html.AntiForgeryToken()
-    }
-</div>
+        @Html.Partial("_Msg")
 
-<div class="row">
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    @if (ViewBag.IsActive)
-                    {
-                        <th></th>
-                    }
-                    <th>@Html.LocalizationString("token")</th>
-                    <th>@Html.LocalizationString("creation_date")</th>
-                    <th>@Html.LocalizationString("usage_count")</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Tokens)
-                {
-                    <tr>
-                        @if (ViewBag.IsActive)
+        <div class="row">
+            <p>
+                @Model.Description
+            </p>
+            <p>
+                @Html.LocalizationString("word_count"): <a href="/app/words/@Model.Id">@Model.UsageCountWord</a>
+            </p>
+        </div>
+
+        <div class="row">
+            @if (Model.IsActive)
+            {
+                <input type="button" id="btnNewToken" class="btn btn-sm btn-primary pull-right" value="@Html.LocalizationString("btn_create_new_token")" data-id="@Model.Id" required />
+                @Html.AntiForgeryToken()
+            }
+        </div>
+
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            @if (ViewBag.IsActive)
+                            {
+                                <th></th>
+                            }
+                            <th>@Html.LocalizationString("token")</th>
+                            <th>@Html.LocalizationString("creation_date")</th>
+                            <th>@Html.LocalizationString("usage_count")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Tokens)
                         {
-                            <td>
-                                <a class="btn btn-sm btn-warning btnAct" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@Html.LocalizationString("btn_delete")</a>
-                            </td>
+                            <tr>
+                                @if (ViewBag.IsActive)
+                                {
+                                    <td>
+                                        <a class="btn btn-sm btn-warning btnAct" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@Html.LocalizationString("btn_delete")</a>
+                                    </td>
+                                }
+                                <td>@item.Token</td>
+                                <td>@item.CreationDate.ToString("f")</td>
+                                <td>@item.UsageCount</td>
+                            </tr>
                         }
-                        <td>@item.Token</td>
-                        <td>@item.CreationDate.ToString("f")</td>
-                        <td>@item.UsageCount</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 </div>
-
-
-
 
 <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="lblDeleteModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -78,7 +80,6 @@
         </div>
     </div>
 </div>
-
 
 @section script
 {

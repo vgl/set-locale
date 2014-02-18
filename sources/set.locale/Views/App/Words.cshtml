@@ -4,55 +4,52 @@
     ViewBag.Title = Html.LocalizationString("words_key_listing_title");
 }
 
-<div class="row">
-    <div class="pull-left">
-        <h3>@ViewBag.Title</h3>
-    </div>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <div class="pull-right">
-            <iframe id="downloadFrame" style="display:none"></iframe>
-            <img id="waitSpinner" class="pull-right" src="/public/img/select2-spinner.gif" alt="loading" />
-            <input type="button" id="btnExport" value="@Html.LocalizationString("btn_export_to_excel")" class="btn btn-success btn-sm pull-right" />
-            @Html.AntiForgeryToken()
+<div class="panel panel-info">
+    <div class="panel-heading">@ViewBag.Title</div>
+    <div class="panel-body">
+
+        <div class="row">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="col-md-12">
+                    <iframe id="downloadFrame" style="display:none"></iframe>
+                    <img id="waitSpinner" class="pull-right" src="/public/img/select2-spinner.gif" alt="loading" />
+                    <input type="button" id="btnExport" value="@Html.LocalizationString("btn_export_to_excel")" class="btn btn-success btn-sm pull-right" />
+                    @Html.AntiForgeryToken()
+                </div>
+            }
         </div>
-    }
-</div>
-<div class="row">
-    <hr />
-</div>
 
-<div class="row">
-
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>@Html.LocalizationString("word_key")</th>
-                    <th>@Html.LocalizationString("description")</th>
-                    <th>@Html.LocalizationString("tag")</th>
-                    <th>@Html.LocalizationString("translated_language")</th>
-                </tr>
-            </thead>
-            <tbody id="tbodyModelItems">
-                @foreach (var item in Model.Items)
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>@Html.LocalizationString("word_key")</th>
+                            <th>@Html.LocalizationString("description")</th>
+                            <th>@Html.LocalizationString("tag")</th>
+                            <th>@Html.LocalizationString("translated_language")</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyModelItems">
+                        @foreach (var item in Model.Items)
                 {
-                    <tr>
-                        <td><a href="/word/detail/@item.Id">@item.Key</a></td>
-                        <td>@item.Description</td>
-                        <td>
-                            @foreach (var tag in item.Tags)
+                        <tr>
+                            <td><a href="/word/detail/@item.Id">@item.Key</a></td>
+                            <td>@item.Description</td>
+                            <td>
+                                @foreach (var tag in item.Tags)
                             {
                                 <a class="label label-info" href="/tag/detail/@tag.UrlName">@tag.Name</a>
                             }
-                        </td>
-                        <td>
-                            @foreach (var lang in item.Languages)
+                            </td>
+                            <td>
+                                @foreach (var lang in item.Languages)
                             { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                 }
-                @{
+                        @{
                     if (Model.HasNextPage || Model.HasPreviousPage)
                     {
                         <tr>
@@ -60,12 +57,12 @@
                                 <ul class="pagination">
                                     @if (Model.HasPreviousPage)
                                     {
-                                        <li><a id="prevPage" href="@Request.RawUrl.Split('?')[0]?p=@(Model.Number-1)">&laquo;</a></li>
+                                    <li><a id="prevPage" href="@Request.RawUrl.Split('?')[0]?p=@(Model.Number-1)">&laquo;</a></li>
                                     }
                                     <li><a href="@Request.RawUrl.Split('?')[0]?p=@(Model.Number)">@(Model.Number)</a></li>
                                     @if (Model.HasNextPage)
                                     {
-                                        <li><a id="nextPage" href="@Request.RawUrl.Split('?')[0]?p=@(Model.Number+1)">&raquo;</a></li>
+                                    <li><a id="nextPage" href="@Request.RawUrl.Split('?')[0]?p=@(Model.Number+1)">&raquo;</a></li>
                                     }
                                 </ul>
                                 <br />
@@ -73,11 +70,13 @@
                             </td>
                         </tr>
                     }
-                }
-            </tbody>
-        </table>
-    </div>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
+    </div>
 </div>
 
 @section script

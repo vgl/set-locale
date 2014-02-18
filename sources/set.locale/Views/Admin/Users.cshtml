@@ -5,73 +5,73 @@
     const string link = "/admin/users";
 }
 
-<div class="row">
-    <h3>@ViewBag.Title</h3>
-    <hr />
-</div>
+<div class="panel panel-info">
+    <div class="panel-heading">@ViewBag.Title</div>
+    <div class="panel-body">
 
-<div class="row">
-
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>@Html.LocalizationString("name")</th>
-                    <th>@Html.LocalizationString("email")</th>
-                    <th>@Html.LocalizationString("user_role")</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Items)
-                {
-                    var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
-                    var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
-                    <tr>
-                        <td>
-                            @if (User.Identity.GetId() != item.Id)
-                            {
-                                <button class="btn btn-sm @buttonCss btnAction" data-toggle="modal" data-target="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</button>
-                            }
-                        </td>
-                        <td>@item.Name</td>
-                        <td>@item.Email</td>
-                        <td>@item.RoleName</td>
-                    </tr>
-                }
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td>
-                        <div>
-                            @{
-                                if (Model.TotalPageCount > 1)
-                                {
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>@Html.LocalizationString("name")</th>
+                            <th>@Html.LocalizationString("email")</th>
+                            <th>@Html.LocalizationString("user_role")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
+                            var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
+                        <tr>
+                            <td>
+                                @if (User.Identity.GetId() != item.Id)
+                                    {
+                                    <button class="btn btn-sm @buttonCss btnAction" data-toggle="modal" data-target="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</button>
+                                    }
+                            </td>
+                            <td>@item.Name</td>
+                            <td>@item.Email</td>
+                            <td>@item.RoleName</td>
+                        </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>
+                                <div>
+                                    @{
+                                        if (Model.TotalPageCount > 1)
+                                        {
                                     <ul class="pagination">
                                         @if (Model.HasPreviousPage)
-                                        {
-                                            <li><a href="@link/@(Model.Number-1)">&laquo;</a></li>
-                                        }
+                                                {
+                                                <li><a href="@link/@(Model.Number-1)">&laquo;</a></li>
+                                                }
 
                                         <li><a href="@link/@(Model.Number)">@(Model.Number)</a></li>
 
                                         @if (Model.HasNextPage)
-                                        {
-                                            <li><a href="@link/@(Model.Number+1)">&raquo;</a></li>
-                                        }
+                                                {
+                                                <li><a href="@link/@(Model.Number+1)">&raquo;</a></li>
+                                                }
                                     </ul>
                                     <br />
                                     <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
-                                }
-                            }
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
-        @Html.AntiForgeryToken()
-    </div>
+                                        }
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                @Html.AntiForgeryToken()
+            </div>
+        </div>
 
+    </div>
 </div>
 
 <div class="modal fade" id="DeactivateModal" tabindex="-1" role="dialog" aria-labelledby="lblDeactivateModal" aria-hidden="true">
