@@ -44,6 +44,11 @@ namespace set.locale.Controllers
         public ActionResult New()
         {
             var model = new AppModel();
+            if (TempData["newMember"] != null)
+            {
+                model.IsOk = true;
+                model.Msg = TempData["newMember"].ToString();
+            }
             return View(model);
         }
 
