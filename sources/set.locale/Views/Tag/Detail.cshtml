@@ -1,0 +1,70 @@
+﻿@model PageModel<WordModel>
+
+@{
+    ViewBag.Title = string.Format("{0} {1}", Html.LocalizationString("tag_keys_title"), ViewBag.Key);
+}
+
+<div class="row">
+    <h3>@ViewBag.Title</h3>
+    <hr />
+</div>
+
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>@Html.LocalizationString("word_key")</th>
+                    <th>@Html.LocalizationString("description")</th>
+                    <th>@Html.LocalizationString("tag")</th>
+                    <th>@Html.LocalizationString("translated_language")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Items != null
+                 && Model.Items.Any())
+                {
+                    foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td><a href="/word/detail/@item.Key">@item.Key</a></td>
+                            <td>@item.Description</td>
+                            <td>
+                                @foreach (var tag in item.Tags)
+                                {
+                                    <a class="badge badgel-info" href="/tag/detail/@tag.UrlName">@tag.Name</a>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var lang in item.Languages)
+                                { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
+                            </td>
+                        </tr>
+                    }
+                }
+                @{
+                    if (Model.HasNextPage || Model.HasPreviousPage)
+                    {
+                        <tr>
+                            <td colspan="4" align="center">
+                                <ul class="pagination">
+                                    @if (Model.HasPreviousPage)
+                                    {
+                                        <li><a href="~/tag/detail/@ViewBag.Key?page=@(Model.Number-1)">&laquo;</a></li>
+                                    }
+                                    <li><a href="~/tag/detail/@ViewBag.Key?page=@(Model.Number)">@(Model.Number)</a></li>
+                                    @if (Model.HasNextPage)
+                                    {
+                                        <li><a href="~/tag/detail/@ViewBag.Key?page=@(Model.Number+1)">&raquo;</a></li>
+                                    }
+                                </ul>
+                                <br />
+                                <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
