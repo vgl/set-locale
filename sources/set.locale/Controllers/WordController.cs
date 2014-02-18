@@ -116,6 +116,8 @@ namespace set.locale.Controllers
 
             model.CreatedBy = User.Identity.GetId();
 
+            model.Tag = (await _appService.Get(model.AppId)).Name;
+
             var key = await _wordService.Create(model);
             if (key != null)
             {

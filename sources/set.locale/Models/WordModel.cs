@@ -47,7 +47,6 @@ namespace set.locale.Models
         public bool IsValid()
         {
             return !string.IsNullOrEmpty(Key)
-                   && !string.IsNullOrEmpty(Tag)
                    && !string.IsNullOrEmpty(AppId);
         }
         public bool IsNotValid()
