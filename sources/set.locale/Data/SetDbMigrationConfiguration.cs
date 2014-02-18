@@ -32,13 +32,10 @@ namespace set.locale.Data
 
             #endregion
 
-            #region Apps
+            #region Apps & Words
 
-            AddApplication(context, "info@argeset.com", "argeset", "a brand new crm application.", "argeset.com");
+            AddApplication(context, "info@set-locale.com", "set-locale", "a brand new crm application.", "set-locale.com");
 
-            #endregion
-
-            #region Words
             AddWord(context, "menu_words", "Kelimeler", "Words", "Слова", "set-locale");
             AddWord(context, "menu_words_words", "Tüm Kelimeler", "All Words", "Все Слова", "set-locale");
             AddWord(context, "menu_words_my_words", "Kelimelerim", "My Words", "Мои Слова", "set-locale");
@@ -121,6 +118,8 @@ namespace set.locale.Data
             AddWord(context, "modal_body_delete_token", "Bu Anahtarı Silmek İstediğinize Emin misiniz?", "Are You Sure You Want To Delete This Token?", "Вы Уверены Что Хотите Удалить Этот Признак?", "set-locale");
             AddWord(context, "modal_title_users", "Kullanıcı Durumu", "User Status", "Статус Пользователя", "set-locale");
             AddWord(context, "modal_body_users", "Durumu Değiştirmek İstediğinize Emin misiniz?", "Are You Sure You Want To Change The User's Status?", "Вы Уверены Что Хотите Изменить Статус Пользователя?", "set-locale");
+
+            AddApplication(context, "info@set-web.com", "set-web", "a brand new crm application.", "set-web.com");
 
             AddWord(context, "admin", "", "", "", "set-web");
             AddWord(context, "all_users_title", "", "", "", "set-web");
