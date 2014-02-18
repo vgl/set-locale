@@ -1,16 +1,11 @@
-﻿<h1>Welcome to Set Web Template</h1>
-<p>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>
-<hr />
-<p>
-    you may want to add a new domain object!
-    <br />
-    <br />
-    <a href="/domainobject/new" class="btn btn-primary">Add New Domain Object</a>
-</p>
+﻿@model HomeStatsModel
+@{
+    ViewBag.Title = Html.LocalizationString("home_title");
+}
+
+<div id="dvHome" class="row">
+    <h3>@ViewBag.Title</h3>
+    <hr />
+
+    @Html.Raw(Model.Summary)
+</div>

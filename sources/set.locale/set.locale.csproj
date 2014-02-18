@@ -217,12 +217,14 @@
     <Compile Include="Data\Services\AuthService.cs" />
     <Compile Include="Data\Services\DomainObjectService.cs" />
     <Compile Include="Data\Services\MsgService.cs" />
+    <Compile Include="Data\Services\ReportService.cs" />
     <Compile Include="Data\Services\SearchService.cs" />
     <Compile Include="Data\Services\TagService.cs" />
     <Compile Include="Data\Services\WordService.cs" />
     <Compile Include="Models\AppModel.cs" />
     <Compile Include="Models\DomainObjectModel.cs" />
     <Compile Include="Models\FeedbackModel.cs" />
+    <Compile Include="Models\HomeStatsModel.cs" />
     <Compile Include="Models\LanguageModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Controllers\UserController.cs" />

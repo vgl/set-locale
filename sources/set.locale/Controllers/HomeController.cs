@@ -10,22 +10,26 @@ namespace set.locale.Controllers
     public class HomeController : BaseController
     {
         private readonly IFeedbackService _feedbackService;
+        private readonly IReportService _reportService;
 
-        public HomeController(IFeedbackService feedbackService)
+        public HomeController(IFeedbackService feedbackService, IReportService reportService)
         {
             _feedbackService = feedbackService;
+            _reportService = reportService;
         }
 
         [HttpGet, AllowAnonymous]
-        public ActionResult Index()
+        public async Task<ViewResult> Index()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                var id = User.Identity.GetId();
-                //todo: id ile user yoksa sigout...
-            }
+            var model = await _reportService.GetHomeStats();
+            model.Summary = string.Format("SetLocale's <strong>{2}</strong> translator provided <strong>{4}</strong> translation for <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> keys and <strong>{0}</strong> developer is consuming this service with <strong>{1}</strong> application",
+                model.DeveloperCount,
+                model.ApplicationCount,
+                model.TranslatorCount,
+                model.KeyCount,
+                model.TranslationCount);
 
-            return View();
+            return View(model);
         }
 
         [HttpGet, AllowAnonymous]

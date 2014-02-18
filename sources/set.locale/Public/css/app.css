@@ -39,3 +39,33 @@
 .highlight {
     background-color: #F8F8F8;
 }
+
+.row {
+    margin: 10px;
+}
+
+    .row strong {
+        display: block;
+    }
+
+#dvHome {
+    font-size: 35px;
+}
+
+    #dvHome h3 {
+        color: orangered;
+        font-size: 45px;
+    }
+
+    #dvHome strong {
+        display: inline !important;
+        color: red;
+    }
+
+.import_excel {
+    text-align: right;
+    position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}

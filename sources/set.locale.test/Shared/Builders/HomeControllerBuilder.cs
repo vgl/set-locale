@@ -8,10 +8,12 @@ namespace set.locale.test.Shared.Builders
     public class HomeControllerBuilder : BaseBuilder
     {
         private IFeedbackService _feedbackService;
+        private IReportService _reportService;
 
         public HomeControllerBuilder()
         {
             _feedbackService = new Mock<IFeedbackService>().Object;
+            _reportService = new Mock<IReportService>().Object;
         }
 
         internal HomeControllerBuilder WithFeedbackService(IFeedbackService feedbackService)
@@ -22,7 +24,7 @@ namespace set.locale.test.Shared.Builders
 
         internal HomeController Build()
         {
-            return new HomeController(_feedbackService);
+            return new HomeController(_feedbackService, _reportService);
         }
     }
 }

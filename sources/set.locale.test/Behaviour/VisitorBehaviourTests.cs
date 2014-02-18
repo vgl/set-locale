@@ -77,6 +77,7 @@ namespace set.locale.test.Behaviour
             var feedbackService = new Mock<IFeedbackService>();
             feedbackService.Setup(x => x.CreateContactMessage(ValidContactMessageModel.Subject, ValidContactMessageModel.Email, ValidContactMessageModel.Message))
                            .Returns(Task.FromResult(true));
+            var reportService = new Mock<IReportService>();
 
             //act
             var sut = new HomeControllerBuilder().WithFeedbackService(feedbackService.Object)
