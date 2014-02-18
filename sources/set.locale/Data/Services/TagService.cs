@@ -8,12 +8,6 @@ using System.Web;
 
 namespace set.locale.Data.Services
 {
-    public interface ITagService
-    {
-        Task<PagedList<Word>> GetWords(string tagUrlName, int pageNumber);
-        Task<List<Tag>> GetTags();
-    }
-
     public class TagService : BaseService, ITagService
     {
 
@@ -53,5 +47,11 @@ namespace set.locale.Data.Services
             return Task.FromResult(tags);
 
         }
+    }
+
+    public interface ITagService
+    {
+        Task<PagedList<Word>> GetWords(string tagUrlName, int pageNumber);
+        Task<List<Tag>> GetTags();
     }
 }

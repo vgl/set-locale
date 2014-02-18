@@ -20,7 +20,7 @@ namespace set.locale.Controllers
 
 
         [HttpGet, AllowAnonymous]
-        public async Task<ViewResult> Detail(string id = "set-locale", int page = 1)
+        public async Task<ViewResult> Detail(string id = "set-locale", int page = 0)
         {
             ViewBag.Key = id;
 
