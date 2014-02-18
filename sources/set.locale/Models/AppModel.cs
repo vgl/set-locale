@@ -15,7 +15,15 @@ namespace set.locale.Models
         public bool IsActive { get; set; }
         public string CreatedBy { get; set; }
         public List<TokenModel> Tokens { get; set; }
-
+        public List<WordModel> Words { get; set; }
+        public int UsageCountToken
+        {
+            get { return Tokens.Sum(x => x.UsageCount); }
+        }
+        public int UsageCountWord
+        {
+            get { return Words.Count(); }
+        }
 
         public bool IsValid()
         {
@@ -30,14 +38,12 @@ namespace set.locale.Models
 
         }
 
-        public int UsageCount
-        {
-            get { return Tokens.Sum(x => x.UsageCount); }
-        }
         public AppModel()
         {
             Tokens = new List<TokenModel>();
+            Words = new List<WordModel>();
         }
+
         public static AppModel Map(App entity)
         {
             var model = new AppModel
@@ -61,6 +67,10 @@ namespace set.locale.Models
                     Token = token.Key
                 });
             }
+
+            var words = entity.Words;
+            var wm = words.Select(WordModel.Map);
+            model.Words.AddRange(wm.ToList());
 
             return model;
         }
