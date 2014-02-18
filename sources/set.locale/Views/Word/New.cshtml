@@ -18,7 +18,7 @@
                     @if (appList.Count() > 1)
                     {
                         <div class="form-group">
-                            <strong>@Html.LocalizationString("application")</strong>
+                            <label for="AppId">@Html.LocalizationString("application")</label>
                             <br />
                             <select id="AppId" name="AppId">
                                 @foreach (AppModel app in appList)
@@ -34,12 +34,12 @@
                     }
 
                     <div class="form-group">
-                        <strong>@Html.LocalizationString("word_key")</strong>
+                        <label for="key">@Html.LocalizationString("word_key")</label>
                         <input id="key" name="key" type="text" class="form-control" value="@Model.Key" required />
                     </div>
 
                     <div class="form-group">
-                        <strong>@Html.LocalizationString("description")</strong>
+                        <label for="description">@Html.LocalizationString("description")</label>
                         <input id="description" name="description" type="text" class="form-control" value="@Model.Description" />
                     </div>
 

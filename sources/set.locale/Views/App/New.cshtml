@@ -15,18 +15,18 @@
 
                 <form method="post">
                     <div class="form-group">
-                        <strong>@Html.LocalizationString("app_name")</strong>
+                        <label for="name">@Html.LocalizationString("app_name")</label>
                         <input id="name" name="name" type="text" class="form-control" value="@Model.Name" required />
                     </div>
 
                     <div class="form-group">
-                        <strong>@Html.LocalizationString("url")</strong>
-                        <input type="text" class="form-control" name="url" id="url" value="@Model.Url" required />
+                        <label for="url">@Html.LocalizationString("url")</label>
+                        <input id="url" name="url" type="text" class="form-control" value="@Model.Url" required />
                     </div>
 
                     <div class="form-group">
-                        <strong>@Html.LocalizationString("description")</strong>
-                        <input type="text" class="form-control" name="description" id="description" value="@Model.Description" />
+                        <label for="description">@Html.LocalizationString("description")</label>
+                        <input id ="description" name="description" type="text" class="form-control" value="@Model.Description" />
                     </div>
 
                     @Html.AntiForgeryToken()
