@@ -4,6 +4,9 @@ namespace set.locale.Data.Entities
 {
     public class Word : BaseEntity
     {
+        public string AppId { get; set; }
+        public App App { get; set; }
+
         public string Key { get; set; }
         public string Description { get; set; }
         public bool IsTranslated { get; set; }
