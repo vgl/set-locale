@@ -39,7 +39,6 @@
                     {
                         <input type="button" id="btnNewTranslate" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
                     }
-                    @*<input type="button" id="btnNewTag" class="btn btn-sm btn-info btnNewTag pull-right" value="@Html.LocalizationString("btn_new_tag")" data-id="@Model.Key" />*@
                 </div>
                 <br /><br />
 
@@ -125,6 +124,8 @@
                     var lang = $("select#selLanguages").val();
                     var translation = $("input#txtTranslation").val();
 
+                    if (!translation.length > 0)
+                        return;
 
                     $.ajax({
                         url: "/Word/Translate",
@@ -172,10 +173,10 @@
                                     $("input.btnNewTranslate").show();
                                 }
 
-                                
+
                                 $("div#dvForm").html('');
                                 $("#hdForm").html('');
-                               
+
                             } else {
                                 //todo:warning
                             }
