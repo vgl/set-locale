@@ -38,7 +38,7 @@
                 @foreach (var item in Model.Items)
                 {
                     <tr>
-                        <td><a href="/word/detail/@item.Key">@item.Key</a></td>
+                        <td><a href="/word/detail/@item.Id">@item.Key</a></td>
                         <td>@item.Description</td>
                         <td>
                             @foreach (var tag in item.Tags)
