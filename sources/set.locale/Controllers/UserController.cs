@@ -54,24 +54,14 @@ namespace set.locale.Controllers
 
             ViewBag.UserId = id;
 
-            var apps = await _appService.GetByUserId(id, pageNumber);
+            var apps = await _appService.GetByUserId(id);
 
             if (apps == null)
             {
                 return RedirectToHome();
             }
 
-            var list = apps.Items.Select(AppModel.Map).ToList();
-
-            var model = new PageModel<AppModel>
-            {
-                Items = list,
-                HasNextPage = apps.HasNextPage,
-                HasPreviousPage = apps.HasPreviousPage,
-                Number = apps.Number,
-                TotalCount = apps.TotalCount,
-                TotalPageCount = apps.TotalPageCount
-            };
+            var model = apps.Select(AppModel.Map);
 
             return View(model);
         }

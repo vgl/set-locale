@@ -91,31 +91,15 @@ namespace set.locale.Data.Services
             return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, model));
         }
 
-        public Task<PagedList<App>> GetByUserId(string userId, int pageNumber)
+        public Task<List<App>> GetByUserId(string userId)
         {
-            if (pageNumber < 1)
-            {
-                pageNumber = 1;
-            }
-
             if (string.IsNullOrEmpty(userId))
             {
                 return null;
             }
 
             var apps = Context.Apps.Where(x => x.CreatedBy == userId);
-
-            long totalCount = apps.Count();
-            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
-
-            if (pageNumber > totalPageCount)
-            {
-                pageNumber = 1;
-            }
-
-            var model = apps.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
-
-            return Task.FromResult(new PagedList<App>(pageNumber, ConstHelper.PageSize, totalCount, model));
+            return Task.FromResult(apps.ToList());
         }
 
         public Task<App> Get(string appId)
@@ -180,7 +164,7 @@ namespace set.locale.Data.Services
     {
         Task<string> Create(AppModel model);
         Task<PagedList<App>> GetApps(int pageNumber);
-        Task<PagedList<App>> GetByUserId(string userId, int pageNumber);
+        Task<List<App>> GetByUserId(string userId);
         Task<App> Get(string appId);
         Task<bool> CreateToken(TokenModel token);
         Task<bool> ChangeStatus(string appId, bool isActive);
