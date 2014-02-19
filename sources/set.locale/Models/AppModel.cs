@@ -28,8 +28,7 @@ namespace set.locale.Models
         public bool IsValid()
         {
             return !string.IsNullOrEmpty(Name)
-                   && !string.IsNullOrEmpty(Url)
-                   && !string.IsNullOrEmpty(Description);
+                   && !string.IsNullOrEmpty(Url);
 
         }
         public bool IsNotValid()
