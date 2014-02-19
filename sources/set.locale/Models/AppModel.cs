@@ -67,7 +67,7 @@ namespace set.locale.Models
                 });
             }
 
-            var words = entity.Words;
+            var words = entity.Words.Where(x => x.IsActive && !x.IsDeleted);
             var wm = words.Select(WordModel.Map);
             model.Words.AddRange(wm.ToList());
 

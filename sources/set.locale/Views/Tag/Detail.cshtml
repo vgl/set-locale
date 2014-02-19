@@ -3,11 +3,21 @@
 @{
     ViewBag.Title = string.Format("{0} {1}", Html.LocalizationString("tag_keys_title"), ViewBag.Key);
     Model.PagerUrl = "/tag/detail/" + ViewBag.ID + "?page=";
+    var Apps = (IEnumerable<AppModel>)ViewBag.Apps;
 }
 
 <div class="panel panel-info">
     <div class="panel-heading">@ViewBag.Title</div>
     <div class="panel-body">
+
+        <div class="row">
+            @if (User.Identity.IsAuthenticated && Model.Items.Any())
+            {
+                <div class="col-md-12">
+                    <button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#CopyToMyAppModal">@Html.LocalizationString("btn_copy_words_to_my_app")</button>
+                </div>
+            }
+        </div>
 
         <div class="row">
             @if (Model.Items != null && Model.Items.Any())
@@ -30,13 +40,13 @@
                                     <td>@item.Description</td>
                                     <td>
                                         @foreach (var tag in item.Tags)
-                                            {
+                                        {
                                             <a class="label label-warning" href="/tag/detail/@tag.UrlName">@tag.Name</a>
-                                            }
+                                        }
                                     </td>
                                     <td>
                                         @foreach (var lang in item.Languages)
-                                            { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
+                                        { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
                                     </td>
                                 </tr>
                             }
@@ -55,3 +65,90 @@
 
     </div>
 </div>
+
+<div class="modal fade" id="CopyToMyAppModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">@Html.LocalizationString("modal_title_copy_to_my_apps")</h4>
+            </div>
+            <div class="modal-body">
+                @Html.LocalizationString("modal_body_copy_to_my_apps")
+
+                <div class="row">
+                    <div class="list-group">
+                        @foreach (var item in Apps)
+                        {
+                            <a class="list-group-item" style="cursor: pointer;">
+                                <span class="list-group-item-heading">
+                                    <input type="checkbox" value="@item.Id" /> @item.Name
+                                </span>
+                            </a>
+                        }
+                    </div>
+                </div>
+                <div id="copyReturnMessage"></div>
+            </div>
+            <div class="modal-footer">
+                @Html.AntiForgeryToken()
+                <img src="/public/img/select2-spinner.gif" alt="loading" style="margin-right: 10px; display: none" />
+                <input type="button" class="btn btn-danger" data-dismiss="modal" value="@Html.LocalizationString("btn_cancel")" />
+                <input type="button" class="btn btn-success" value="@Html.LocalizationString("btn_ok")" id="btnCopyToMyApp" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        var apps = new Array();
+        $(function () {
+            $('.list-group-item-heading input').prop('checked', false);
+            var mFooter = $('#CopyToMyAppModal .modal-content .modal-footer');
+            var copyReturnMessage = $('#copyReturnMessage');
+            mFooter.find('input.btn-danger').prop('disabled', false);
+            mFooter.find('input.btn-success').prop('disabled', true);
+            var listGroup = $('#CopyToMyAppModal .list-group-item');
+
+            listGroup.click(function () {
+                var $this = $(this);
+                $this.toggleClass('successBG');
+
+                var cb = $this.find('.list-group-item-heading input');
+                if (cb.is(':checked')) {
+                    cb.prop('checked', false);
+                    apps.splice($.inArray(cb.val(), apps), 1);
+                } else {
+                    cb.prop('checked', true);
+                    apps.push(cb.val());
+                }
+
+                if (apps.length > 0) mFooter.find('input.btn-success').prop('disabled', false);
+                else mFooter.find('input.btn-success').prop('disabled', true);
+            });
+
+            $('#btnCopyToMyApp').click(function () {
+                mFooter.find('img').show();
+                mFooter.find('input').prop('disabled', true);
+                $.post('/Tag/Copy/', { copyFromTag: '@ViewBag.ID', appIds: JSON.stringify(apps), force: true, __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() }, function (result) {
+                    mFooter.find('img').hide();
+                    if (result) {
+                        apps = new Array();
+                        $('#CopyToMyAppModal .list-group-item').removeClass('successBG');
+                        copyReturnMessage.html('<div class="alert alert-success"><span>@Html.LocalizationString("tag_copy_success")</span></div>');
+                        setTimeout(function () {
+                            listGroup.find('.list-group-item-heading input').prop('checked', false);
+                            mFooter.find('input.btn-danger').prop('disabled', false);
+                            $("#CopyToMyAppModal").modal('hide');
+                            copyReturnMessage.html(null);
+                        }, 2500);
+                    } else {
+                        copyReturnMessage.html('<div class="alert alert-danger"><span>@Html.LocalizationString("tag_copy_success")</span></div>');
+                    }
+                });
+            });
+        });
+    </script>
+}

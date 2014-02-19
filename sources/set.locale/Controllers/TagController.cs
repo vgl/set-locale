@@ -1,4 +1,7 @@
-﻿using set.locale.Data.Services;
+﻿using ServiceStack.Text;
+using set.locale.Data.Entities;
+using set.locale.Data.Services;
+using set.locale.Helpers;
 using set.locale.Models;
 using System;
 using System.Collections.Generic;
@@ -12,12 +15,18 @@ namespace set.locale.Controllers
     public class TagController : BaseController
     {
         private readonly ITagService _tagService;
+        private readonly IAppService _appService;
+        private readonly IWordService _wordService;
 
-        public TagController(ITagService tagService)
+        public TagController(
+            ITagService tagService,
+            IAppService appService,
+            IWordService wordService)
         {
             _tagService = tagService;
+            _appService = appService;
+            _wordService = wordService;
         }
-
 
         [HttpGet, AllowAnonymous]
         public async Task<ViewResult> Detail(string id = "set-locale", int page = 0)
@@ -41,10 +50,11 @@ namespace set.locale.Controllers
                 TotalPageCount = words.TotalPageCount
             };
 
+            var apps = await _appService.GetByUserId(User.Identity.GetId());
+            ViewBag.Apps = apps.Select(AppModel.Map);
 
             return View(model);
         }
-
 
         [HttpGet, AllowAnonymous]
         public async Task<JsonResult> JsonTags()
@@ -54,5 +64,36 @@ namespace set.locale.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<bool> Copy(string copyFromTag, string appIds, bool force)
+        {
+            var toAppIdList = JsonSerializer.DeserializeFromString<List<string>>(appIds);
+            var fromWordsByTag = await _tagService.GetWords(copyFromTag);
+            foreach (var appId in toAppIdList)
+            {
+                if (force)
+                {
+                    var words = await _wordService.GetByAppId(appId);
+                    foreach (var word in words)
+                    {
+                        _wordService.Delete(WordModel.Map(word));
+                    }
+                    foreach (var item in fromWordsByTag)
+                    {
+                        var word = WordModel.Map(item);
+                        var app = await _appService.Get(appId);
+                        word.AppId = appId;
+                        word.Tag = app.Name;
+                        word.CreatedBy = User.Identity.GetId();
+                        _wordService.Create(word);
+                    }
+                }
+                else
+                {
+
+                }
+            }
+            return true;
+        }
     }
 }

@@ -46,6 +46,42 @@ namespace set.locale.Data.Services
             return null;
         }
 
+        public Task<bool> Delete(WordModel model)
+        {
+            if (model.IsNotValid())
+            {
+                return null;
+            }
+
+            var softDelete = Context.Words.FirstOrDefault(x => x.Id == model.Id);
+            if (softDelete == null) return Task.FromResult(false);
+
+            softDelete.DeletedAt = DateTime.Now;
+            softDelete.IsDeleted = true;
+            softDelete.DeletedBy = model.CreatedBy;
+
+            return Task.FromResult(Context.SaveChanges() > 0);
+        }
+
+        public Task<string> Update(WordModel model)
+        {
+            if (model.IsNotValid())
+            {
+                return null;
+            }
+
+            var softDelete = Context.Words.FirstOrDefault(x => x.Id == model.Id);
+            if (softDelete == null) return Create(model);
+
+            softDelete.DeletedAt = DateTime.Now;
+            softDelete.IsDeleted = true;
+            softDelete.DeletedBy = model.CreatedBy;
+
+            Context.SaveChanges();
+
+            return Create(model);
+        }
+
         public Task<PagedList<Word>> GetByUserId(string userId, int pageNumber)
         {
             if (pageNumber < 1)
@@ -217,33 +253,21 @@ namespace set.locale.Data.Services
             return Task.FromResult(Context.SaveChanges() > 0);
         }
 
-        public Task<List<Word>> GetAll()
+        public Task<List<Word>> GetByAppId(string appId)
         {
-            var words = Context.Words.ToList();
-
+            var words = Context.Words.Where(x => x.AppId == appId).ToList();
             return Task.FromResult(words);
         }
 
-        public Task<string> Update(WordModel model)
+        public Task<List<Word>> GetByAppName(string appName)
         {
-            if (model.IsNotValid())
-            {
-                return null;
-            }
-
-            var slug = model.Key.ToUrlSlug();
-
-            var softDelete = Context.Words.FirstOrDefault(x => x.Key == slug);
-            if (softDelete == null) return Create(model);
-
-
-            softDelete.DeletedAt = DateTime.Now;
-            softDelete.IsDeleted = true;
-            softDelete.DeletedBy = model.CreatedBy;
-
-            Context.SaveChanges();
-
-            return Create(model);
+            var words = Context.Words.Where(x => x.App.Name == appName).ToList();
+            return Task.FromResult(words);
+        }
+        public Task<List<Word>> GetAll()
+        {
+            var words = Context.Words.ToList();
+            return Task.FromResult(words);
         }
     }
 
@@ -251,6 +275,7 @@ namespace set.locale.Data.Services
     {
         Task<string> Create(WordModel model);
         Task<string> Update(WordModel model);
+        Task<bool> Delete(WordModel model);
         Task<PagedList<Word>> GetByUserId(string userId, int pageNumber);
         Task<Word> GetByKey(string key);
         Task<Word> GetById(string id);
@@ -259,6 +284,8 @@ namespace set.locale.Data.Services
         Task<PagedList<Word>> GetNotTranslated(int pageNumber);
         Task<bool> Translate(string key, string language, string translation);
         Task<bool> Tag(string key, string tag);
+        Task<List<Word>> GetByAppId(string appId);
+        Task<List<Word>> GetByAppName(string appName);
         Task<List<Word>> GetAll();
     }
 }

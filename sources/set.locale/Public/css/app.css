@@ -32,7 +32,7 @@
 }
 
 .table tbody tr td {
-    border-bottom: solid 1px #2B3E50!important;
+    border-bottom: solid 1px #2B3E50 !important;
 }
 
 
@@ -91,4 +91,12 @@
 .panel-heading {
     font-weight: bold;
     color: white !important;
+}
+
+.dangerBG {
+    background-color: #D9534F;
+}
+
+.successBG {
+    background-color: #5CB85C !important;
 }

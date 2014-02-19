@@ -20,7 +20,7 @@ namespace set.locale.Data.Services
 
 
             var urlSlug = tagUrlName.ToUrlSlug();
-            var items = Context.Words.Where(x => x.Tags.Any(y => y.UrlName == urlSlug));
+            var items = Context.Words.Where(x => x.IsActive && !x.IsDeleted && x.Tags.Any(y => y.UrlName == urlSlug));
 
 
             long totalCount = items.Count();
@@ -39,19 +39,30 @@ namespace set.locale.Data.Services
 
         }
 
+        public Task<List<Word>> GetWords(string tagUrlName)
+        {
+            var urlSlug = tagUrlName.ToUrlSlug();
+            var items = Context.Words.Where(x => x.Tags.Any(y => y.UrlName == urlSlug));
+            return Task.FromResult(items.ToList());
+        }
+
         public Task<List<Tag>> GetTags()
         {
             var tags = Context.Tags.ToList();
-
-
             return Task.FromResult(tags);
-
+        }
+        public Task<List<Tag>> GetTagsByAppId(string appId)
+        {
+            var tags = Context.Tags.Where(x => x.AppId == appId).ToList();
+            return Task.FromResult(tags);
         }
     }
 
     public interface ITagService
     {
         Task<PagedList<Word>> GetWords(string tagUrlName, int pageNumber);
+        Task<List<Word>> GetWords(string tagUrlName);
         Task<List<Tag>> GetTags();
+        Task<List<Tag>> GetTagsByAppId(string appId);
     }
 }
