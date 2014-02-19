@@ -45,7 +45,7 @@ namespace set.locale.Controllers
         {
             var model = new AppModel();
             if ((await _appService.GetByUserId(User.Identity.GetId())).Any()) return View(model);
-            
+
             model.IsOk = true;
             model.Msg = "new_member_create_app_message".Localize();
             return View(model);
@@ -160,7 +160,7 @@ namespace set.locale.Controllers
             while (result != null)
             {
                 i++;
-                model.Msg = string.Format("{0}{1}", result.Name, i);
+                model.Msg = string.Format("{0}{1}", name, i);
                 result = await _appService.GetByName(model.Msg);
             }
 
