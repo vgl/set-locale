@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 using set.locale.Data.Entities;
 using set.locale.Helpers;
@@ -19,12 +20,6 @@ namespace set.locale.Data.Services
             }
 
             var slug = model.Key.ToUrlSlug();
-
-            // Farklı uygulamada aynı key ler olabilir diye kaldırıldı.
-            //if (Context.Words.Any(x => x.Key == slug))
-            //{
-            //    return null;
-            //}
 
             var items = model.Tag.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
             var tags = items.Select(item => new Tag { CreatedBy = model.CreatedBy, Name = item, UrlName = item.ToUrlSlug() }).ToList();
@@ -63,7 +58,7 @@ namespace set.locale.Data.Services
                 return null;
             }
 
-            var words = Context.Words.Include("Tags").Where(x => x.CreatedBy == userId).ToList();
+            var words = Context.Words.Include(x => x.Tags).Where(x => x.CreatedBy == userId).ToList();
 
             long totalCount = words.Count();
             var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
