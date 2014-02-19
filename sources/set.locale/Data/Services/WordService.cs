@@ -12,6 +12,13 @@ namespace set.locale.Data.Services
 {
     public class WordService : BaseService, IWordService
     {
+        private readonly IAppService _appService;
+
+        public WordService(IAppService appService)
+        {
+            _appService = appService;
+        }
+
         public Task<string> Create(WordModel model)
         {
             if (model.IsNotValid())
@@ -46,6 +53,23 @@ namespace set.locale.Data.Services
             return null;
         }
 
+        public async Task CreateList(List<WordModel> model, string appId, string userId)
+        {
+            foreach (var item in model)
+            {
+                var word = item;
+                var app = await _appService.Get(appId);
+                word.AppId = appId;
+                word.Tag = app.Name;
+                word.CreatedBy = userId;
+                string wordId = await Create(word);
+                foreach (var translation in word.Translations)
+                {
+                    await Translate(wordId, translation.Language.Key, translation.Value);
+                }
+            }
+        }
+
         public Task<bool> Delete(WordModel model)
         {
             if (model.IsNotValid())
@@ -61,6 +85,14 @@ namespace set.locale.Data.Services
             softDelete.DeletedBy = model.CreatedBy;
 
             return Task.FromResult(Context.SaveChanges() > 0);
+        }
+
+        public async Task DeleteList(List<WordModel> model)
+        {
+            foreach (var word in model)
+            {
+                await Delete(word);
+            }
         }
 
         public Task<string> Update(WordModel model)
@@ -274,8 +306,10 @@ namespace set.locale.Data.Services
     public interface IWordService
     {
         Task<string> Create(WordModel model);
+        Task CreateList(List<WordModel> model, string appId, string userId);
         Task<string> Update(WordModel model);
         Task<bool> Delete(WordModel model);
+        Task DeleteList(List<WordModel> model);
         Task<PagedList<Word>> GetByUserId(string userId, int pageNumber);
         Task<Word> GetByKey(string key);
         Task<Word> GetById(string id);

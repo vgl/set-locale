@@ -71,31 +71,12 @@ namespace set.locale.Controllers
             var fromWordsByTag = await _tagService.GetWords(copyFromTag);
             foreach (var appId in toAppIdList)
             {
+                var words = await _wordService.GetByAppId(appId);
                 if (force)
                 {
-                    var words = await _wordService.GetByAppId(appId);
-                    foreach (var word in words)
-                    {
-                        await _wordService.Delete(WordModel.Map(word));
-                    }
-                    foreach (var item in fromWordsByTag)
-                    {
-                        var word = WordModel.Map(item);
-                        var app = await _appService.Get(appId);
-                        word.AppId = appId;
-                        word.Tag = app.Name;
-                        word.CreatedBy = User.Identity.GetId();
-                        string wordId = await _wordService.Create(word);
-                        foreach (var translation in word.Translations)
-                        {
-                            await _wordService.Translate(wordId, translation.Language.Key, translation.Value);
-                        }
-                    }
+                    await _wordService.DeleteList(words.Select(WordModel.Map).ToList());
                 }
-                else
-                {
-
-                }
+                await _wordService.CreateList(fromWordsByTag.Select(WordModel.Map).ToList(), appId, User.Identity.GetId());
             }
             return true;
         }
