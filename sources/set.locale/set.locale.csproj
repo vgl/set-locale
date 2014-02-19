@@ -143,6 +143,9 @@
     <Content Include="Public\_plugin\bootstrap-tokenfield\docs-assets\js\scrollspy.js" />
     <Content Include="Public\_plugin\bootstrap-tokenfield\docs-assets\js\typeahead.js" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_pTablePager.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

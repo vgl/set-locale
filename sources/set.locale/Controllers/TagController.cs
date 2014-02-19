@@ -22,7 +22,7 @@ namespace set.locale.Controllers
         [HttpGet, AllowAnonymous]
         public async Task<ViewResult> Detail(string id = "set-locale", int page = 0)
         {
-            ViewBag.Key = id;
+            ViewBag.ID = id;
 
 
             var words = await _tagService.GetWords(id, page);

@@ -27,7 +27,7 @@
         </div>
 
         <div class="row">
-            @if (Model.Tokens.Any())
+            @if (Model.Tokens != null && Model.Tokens.Any())
             {
                 <div class="table-responsive">
                     <table class="table table-hover">

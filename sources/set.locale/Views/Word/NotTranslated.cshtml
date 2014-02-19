@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = Html.LocalizationString("words_not_translated_key_listing_title");
+    Model.PagerUrl = "/word/nottranslated/";
 }
 
 <div class="panel panel-info">
@@ -9,7 +10,7 @@
     <div class="panel-body">
 
         <div class="row">
-            @if (Model.Items.Any())
+            @if (Model.Items != null && Model.Items.Any())
             {
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -23,47 +24,24 @@
                         </thead>
                         <tbody>
                             @foreach (var item in Model.Items)
-                        {
-                        <tr>
-                            <td><a href="/word/detail/@item.Id">@item.Key</a></td>
-                            <td>@item.Description</td>
-                            <td>
-                                @foreach (var tag in item.Tags)
-                                    {
-                                    <a class="label label-warning" href="/tag/detail/@tag.UrlName">@tag.Name</a>
-                                    }
-                            </td>
-                            <td>
-                                @foreach (var lang in item.Languages)
-                                    { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
-                            </td>
-                        </tr>
-                        }
-
-
-                            @{
-                            if (Model.HasNextPage || Model.HasPreviousPage)
                             {
-                        <tr>
-                            <td colspan="4" align="center">
-                                <ul class="pagination">
-                                    @if (Model.HasPreviousPage)
-                                            {
-                                            <li><a href="~/word/nottranslated/@(Model.Number-1)">&laquo;</a></li>
-                                            }
-                                    <li><a href="~/word/nottranslated/@(Model.Number)">@(Model.Number)</a></li>
-                                    @if (Model.HasNextPage)
-                                            {
-                                            <li><a href="~/word/nottranslated/@(Model.Number+1)">&raquo;</a></li>
-                                            }
-                                </ul>
-                                <br />
-                                <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
-                            </td>
-                        </tr>
-                            }
+                                <tr>
+                                    <td><a href="/word/detail/@item.Id">@item.Key</a></td>
+                                    <td>@item.Description</td>
+                                    <td>
+                                        @foreach (var tag in item.Tags)
+                                        {
+                                            <a class="label label-warning" href="/tag/detail/@tag.UrlName">@tag.Name</a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @foreach (var lang in item.Languages)
+                                        { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
+                                    </td>
+                                </tr>
                             }
                         </tbody>
+                        @Html.Partial("_pTablePager")
                     </table>
                 </div>
             }

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = Html.LocalizationString("contactmessages_listing_title");
-    const string link = "/admin/contactmessages";
+    Model.PagerUrl = "/admin/contactmessages/";
 }
 
 <div class="panel panel-info">
@@ -10,7 +10,7 @@
     <div class="panel-body">
 
         <div class="row">
-            @if (Model.Items.Any())
+            @if (Model.Items != null && Model.Items.Any())
             {
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -31,32 +31,7 @@
                                 </tr>
                             }
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <td>
-                                    <div>
-                                        @{
-                if (Model.TotalPageCount > 1)
-                {
-                    <ul class="pagination">
-                        @if (Model.HasPreviousPage)
-                        {
-                            <li><a id="prevPage" href="@link/@(Model.Number-1)">&laquo;</a></li>
-                        }
-                        <li><a href="@link/@(Model.Number)">@(Model.Number)</a></li>
-                        @if (Model.HasNextPage)
-                        {
-                            <li><a id="nextPage" href="@link/@(Model.Number+1)">&raquo;</a></li>
-                        }
-                    </ul>
-                                            <br />
-                                            <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
-                }
-                                        }
-                                    </div>
-                                </td>
-                            </tr>
-                        </tfoot>
+                        @Html.Partial("_pTablePager")
                     </table>
                 </div>
             }

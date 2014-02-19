@@ -1,0 +1,22 @@
+﻿<tfoot>
+    @if (Model.HasNextPage || Model.HasPreviousPage)
+    {
+        <tr>
+            <td colspan="99" align="center">
+                <ul class="pagination">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <li><a href="@Model.PagerUrl@(Model.Number-1)">&laquo;</a></li>
+                    }
+                    <li><a href="@Model.PagerUrl@(Model.Number)">@(Model.Number)</a></li>
+                    @if (Model.HasNextPage)
+                    {
+                        <li><a href="@Model.PagerUrl@Model.PagerUrl@(Model.Number+1)">&raquo;</a></li>
+                    }
+                </ul>
+                <br />
+                <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
+            </td>
+        </tr>
+    }
+</tfoot>

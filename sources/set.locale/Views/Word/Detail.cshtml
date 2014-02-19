@@ -49,7 +49,7 @@
         </div>
 
         <div class="row">
-            @if (Model.Translations.Any())
+            @if (Model.Translations != null && Model.Translations.Any())
             {
                 <div class="table-responsive">
                     <table class="table table-hover">

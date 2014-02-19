@@ -75,7 +75,7 @@ namespace set.locale.Controllers
                 id = User.Identity.GetId();
             }
 
-            ViewBag.UserId = id;
+            ViewBag.ID = id;
 
             var words = await _wordService.GetByUserId(id, pageNumber);
             var list = words.Items.Select(WordModel.Map).ToList();

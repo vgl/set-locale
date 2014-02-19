@@ -1,6 +1,7 @@
 ﻿@model PageModel<AppModel>
 @{
     ViewBag.Title = Html.LocalizationString("all_apps_title");
+    Model.PagerUrl = "/admin/apps/";
 }
 
 <div class="panel panel-info">
@@ -8,7 +9,7 @@
     <div class="panel-body">
 
         <div class="row">
-            @if (Model.Items.Any())
+            @if (Model.Items != null && Model.Items.Any())
             {
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -24,43 +25,22 @@
                         </thead>
                         <tbody>
                             @foreach (var item in Model.Items)
-                        {
-                            var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
-                            var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
-                        <tr>
-                            <td>
-                                <a class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
-                            </td>
-                            <td>@item.Email</td>
-                            <td><a href="/app/detail/@item.Id">@item.Name</a></td>
-                            <td>@item.Description</td>
-                            <td><a href="@item.Url">@item.Url</a></td>
-                            <td>@item.UsageCountToken</td>
-                        </tr>
-                        }
-                            @{
-                            if (Model.HasNextPage || Model.HasPreviousPage)
                             {
-                        <tr>
-                            <td colspan="6" align="center">
-                                <ul class="pagination">
-                                    @if (Model.HasPreviousPage)
-                                            {
-                                            <li><a href="~/admin/apps/@(Model.Number-1)">&laquo;</a></li>
-                                            }
-                                    <li><a href="~/admin/apps/@(Model.Number)">@(Model.Number)</a></li>
-                                    @if (Model.HasNextPage)
-                                            {
-                                            <li><a href="~/admin/apps/@(Model.Number+1)">&raquo;</a></li>
-                                            }
-                                </ul>
-                                <br />
-                                <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
-                            </td>
-                        </tr>
-                            }
+                                var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
+                                var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
+                                    </td>
+                                    <td>@item.Email</td>
+                                    <td><a href="/app/detail/@item.Id">@item.Name</a></td>
+                                    <td>@item.Description</td>
+                                    <td><a href="@item.Url">@item.Url</a></td>
+                                    <td>@item.UsageCountToken</td>
+                                </tr>
                             }
                         </tbody>
+                        @Html.Partial("_pTablePager")
                     </table>
                     @Html.AntiForgeryToken()
                 </div>

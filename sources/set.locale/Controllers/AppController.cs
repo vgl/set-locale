@@ -121,14 +121,16 @@ namespace set.locale.Controllers
         }
 
         [HttpGet]
-        public async Task<ViewResult> Words(string id, int p = 0)
+        public async Task<ViewResult> Words(string id, int page = 0)
         {
-            if (p < 1)
+            if (page < 1)
             {
-                p = 1;
+                page = 1;
             }
 
-            var items = await _wordService.GetWords(id, p);
+            ViewBag.ID = id;
+
+            var items = await _wordService.GetWords(id, page);
             var list = items.Items.Select(WordModel.Map).ToList();
 
             var model = new PageModel<WordModel>

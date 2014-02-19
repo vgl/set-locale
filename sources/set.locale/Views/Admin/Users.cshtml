@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = Html.LocalizationString("all_users_title");
-    const string link = "/admin/users";
+    Model.PagerUrl = "/admin/users/";
 }
 
 <div class="panel panel-info">
@@ -10,7 +10,7 @@
     <div class="panel-body">
 
         <div class="row">
-            @if (Model.Items.Any())
+            @if (Model.Items != null && Model.Items.Any())
             {
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -24,50 +24,23 @@
                         </thead>
                         <tbody>
                             @foreach (var item in Model.Items)
-                        {
-                            var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
-                            var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
-                        <tr>
-                            <td>
-                                @if (User.Identity.GetId() != item.Id)
-                                    {
-                                <button class="btn btn-sm @buttonCss btnAction" data-toggle="modal" data-target="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</button>
-                                    }
-                            </td>
-                            <td>@item.Name</td>
-                            <td>@item.Email</td>
-                            <td>@item.RoleName</td>
-                        </tr>
-                        }
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td>
-                                    <div>
-                                        @{
-                                        if (Model.TotalPageCount > 1)
+                            {
+                                var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
+                                var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
+                                <tr>
+                                    <td>
+                                        @if (User.Identity.GetId() != item.Id)
                                         {
-                                    <ul class="pagination">
-                                        @if (Model.HasPreviousPage)
-                                                {
-                                        <li><a href="@link/@(Model.Number-1)">&laquo;</a></li>
-                                                }
-
-                                        <li><a href="@link/@(Model.Number)">@(Model.Number)</a></li>
-
-                                        @if (Model.HasNextPage)
-                                                {
-                                        <li><a href="@link/@(Model.Number+1)">&raquo;</a></li>
-                                                }
-                                    </ul>
-                                    <br />
-                                    <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
+                                            <button class="btn btn-sm @buttonCss btnAction" data-toggle="modal" data-target="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</button>
                                         }
-                                        }
-                                    </div>
-                                </td>
-                            </tr>
-                        </tfoot>
+                                    </td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.RoleName</td>
+                                </tr>
+                            }
+                        </tbody>
+                        @Html.Partial("_pTablePager")
                     </table>
                     @Html.AntiForgeryToken()
                 </div>

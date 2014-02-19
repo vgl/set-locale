@@ -1,17 +1,16 @@
 ﻿@model PageModel<WordModel>
 
-
 @{
     ViewBag.Title = Html.LocalizationString("words_my_key_listing_title");
+    Model.PagerUrl = "/user/words/" + ViewBag.ID + "?page=";
 }
-
 
 <div class="panel panel-info">
     <div class="panel-heading">@ViewBag.Title</div>
     <div class="panel-body">
 
         <div class="row">
-            @if (Model.Items.Any())
+            @if (Model.Items != null && Model.Items.Any())
             {
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -41,35 +40,8 @@
                                     </td>
                                 </tr>
                             }
-
-
-                            @{
-                if (Model.HasNextPage || Model.HasPreviousPage)
-                {
-                    <tr>
-                        <td colspan="4" align="center">
-                            <ul class="pagination">
-                                @if (Model.HasPreviousPage)
-                                {
-                                    <li><a href="~/user/words/@ViewBag.UserId?page=@(Model.Number-1)">&laquo;</a></li>
-                                }
-
-
-                                <li><a href="~/user/words/@ViewBag.UserId?page=@(Model.Number)">@(Model.Number)</a></li>
-
-
-                                @if (Model.HasNextPage)
-                                {
-                                    <li><a href="~/user/words/@ViewBag.UserId?page=@(Model.Number+1)">&raquo;</a></li>
-                                }
-                            </ul>
-                            <br />
-                            <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
-                        </td>
-                    </tr>
-                }
-                            }
                         </tbody>
+                        @Html.Partial("_pTablePager")
                     </table>
                 </div>
             }
