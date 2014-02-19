@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -28,6 +29,11 @@ namespace set.locale.Data.Services
 
             var slug = model.Key.ToUrlSlug();
 
+            if (Context.Words.Any(x => x.Key == slug && (x.IsActive && !x.IsDeleted) && (x.AppId == model.AppId || x.Tags.Any(y => y.Name == model.Tag))))
+            {
+                return null;
+            }
+
             var items = model.Tag.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
             var tags = items.Select(item => new Tag { CreatedBy = model.CreatedBy, Name = item, UrlName = item.ToUrlSlug() }).ToList();
 
@@ -55,17 +61,20 @@ namespace set.locale.Data.Services
 
         public async Task CreateList(List<WordModel> model, string appId, string userId)
         {
-            foreach (var item in model)
+            var app = await _appService.Get(appId);
+            foreach (var word in model)
             {
-                var word = item;
-                var app = await _appService.Get(appId);
                 word.AppId = appId;
                 word.Tag = app.Name;
                 word.CreatedBy = userId;
-                string wordId = await Create(word);
+
+                var task = Create(word);
+
+                if (task == null) continue;
+
                 foreach (var translation in word.Translations)
                 {
-                    await Translate(wordId, translation.Language.Key, translation.Value);
+                    await Translate(task.Result, translation.Language.Key, translation.Value);
                 }
             }
         }

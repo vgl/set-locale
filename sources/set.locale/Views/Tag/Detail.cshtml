@@ -92,6 +92,7 @@
             </div>
             <div class="modal-footer">
                 @Html.AntiForgeryToken()
+                <label class="pull-left"><input type="checkbox" id="force" /> @Html.LocalizationString("deletes_old_data")</label>
                 <img src="/public/img/select2-spinner.gif" alt="loading" style="margin-right: 10px; display: none" />
                 <input type="button" class="btn btn-danger" data-dismiss="modal" value="@Html.LocalizationString("btn_cancel")" />
                 <input type="button" class="btn btn-success" value="@Html.LocalizationString("btn_ok")" id="btnCopyToMyApp" />
@@ -131,8 +132,9 @@
 
             $('#btnCopyToMyApp').click(function () {
                 mFooter.find('img').show();
-                mFooter.find('input').prop('disabled', true);
-                $.post('/Tag/Copy/', { copyFromTag: '@ViewBag.ID', appIds: JSON.stringify(apps), force: true, __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() }, function (result) {
+                mFooter.find('input.btn').prop('disabled', true);
+                var force = mFooter.find('#force');
+                $.post('/Tag/Copy/', { copyFromTag: '@ViewBag.ID', appIds: JSON.stringify(apps), force: force.is(':checked'), __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() }, function (result) {
                     mFooter.find('img').hide();
                     if (result) {
                         apps = new Array();
@@ -140,6 +142,7 @@
                         copyReturnMessage.html('<div class="alert alert-success"><span>@Html.LocalizationString("tag_copy_success")</span></div>');
                         setTimeout(function () {
                             listGroup.find('.list-group-item-heading input').prop('checked', false);
+                            force.prop('checked', false);
                             mFooter.find('input.btn-danger').prop('disabled', false);
                             $("#CopyToMyAppModal").modal('hide');
                             copyReturnMessage.html(null);
