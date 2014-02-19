@@ -7,7 +7,7 @@
 <div class="panel panel-info">
     <div class="panel-heading">@ViewBag.Title</div>
     <div class="panel-body">
-        
+
         @Html.Partial("_Msg")
 
         <div class="row">
@@ -17,6 +17,7 @@
                     <div class="form-group">
                         <label for="name">@Html.LocalizationString("app_name")</label>
                         <input id="name" name="name" type="text" class="form-control" value="@Model.Name" required />
+                        <div id="name_previously_used"></div>
                     </div>
 
                     <div class="form-group">
@@ -26,7 +27,7 @@
 
                     <div class="form-group">
                         <label for="description">@Html.LocalizationString("description")</label>
-                        <input id ="description" name="description" type="text" class="form-control" value="@Model.Description" />
+                        <input id="description" name="description" type="text" class="form-control" value="@Model.Description" />
                     </div>
 
                     @Html.AntiForgeryToken()
@@ -39,3 +40,30 @@
 
     </div>
 </div>
+
+@section Script
+{
+    <script>
+        $(function () {
+            $('#name').blur(function () {
+                // loading
+                var name = $(this);
+                $.get('/app/namecontrol/', { name: name.val() }, function (result) {
+                    if (!result.IsOk) {
+                        $(':submit').prop('disabled', true);
+                        $('#name_previously_used').html('<p class="text-danger">@Html.LocalizationString("name_previously_used")</p>' +
+                                   '<p class="text-success">@Html.LocalizationString("this_name_available") <span class="label label-info" style="cursor:pointer">' + result.Msg + '</span></p>');
+                    } else {
+                        $(':submit').prop('disabled', false);
+                        $('#name_previously_used').html(null);
+                    }
+                });
+            });
+            $('#name_previously_used').click(function () {
+                $('#name').val($(this).find('span.label-info').html());
+                $('#name_previously_used').html(null);
+                $(':submit').prop('disabled', false);
+            });
+        });
+    </script>
+}

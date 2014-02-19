@@ -57,7 +57,7 @@ namespace set.locale.Controllers
         {
             SetPleaseTryAgain(model);
 
-            if (!model.IsValid())
+            if (model.IsNotValid())
             {
                 return View(model);
             }
@@ -145,5 +145,29 @@ namespace set.locale.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<JsonResult> NameControl(string name)
+        {
+            var model = new ResponseModel { IsOk = true };
+            if (string.IsNullOrEmpty(name))
+            {
+                return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            var result = await _appService.GetByName(name);
+
+            if (result == null) return Json(model, JsonRequestBehavior.AllowGet);
+
+            int i = 0;
+            while (result != null)
+            {
+                i++;
+                model.Msg = string.Format("{0}{1}", result.Name, i);
+                result = await _appService.GetByName(model.Msg);
+            }
+
+            model.IsOk = false;
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
     }
 }

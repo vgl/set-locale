@@ -14,7 +14,7 @@ namespace set.locale.Data.Services
     {
         public async Task<string> Create(AppModel model)
         {
-            if (model.IsNotValid())
+            if (model.IsNotValid() || (await GetByName(model.Name)) != null)
             {
                 return null;
             }
@@ -40,6 +40,17 @@ namespace set.locale.Data.Services
             }
 
             return null;
+        }
+
+        public Task<App> GetByName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+
+            var app = Context.Apps.Include(x => x.Tokens).FirstOrDefault(x => x.Name == name);
+            return Task.FromResult(app);
         }
 
         public Task<bool> CreateToken(TokenModel model)
@@ -166,10 +177,10 @@ namespace set.locale.Data.Services
         Task<PagedList<App>> GetApps(int pageNumber);
         Task<List<App>> GetByUserId(string userId);
         Task<App> Get(string appId);
+        Task<App> GetByName(string name);
         Task<bool> CreateToken(TokenModel token);
         Task<bool> ChangeStatus(string appId, bool isActive);
         Task<bool> DeleteToken(string token, string deletedBy);
-
         Task<bool> IsTokenValid(string token);
     }
 }
