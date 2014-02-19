@@ -187,15 +187,15 @@ namespace set.locale.Data.Services
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words));
         }
 
-        public Task<bool> Translate(string key, string language, string translation)
+        public Task<bool> Translate(string id, string language, string translation)
         {
-            if (string.IsNullOrEmpty(key)
+            if (string.IsNullOrEmpty(id)
                || string.IsNullOrEmpty(language))
             {
                 return Task.FromResult(false);
             }
 
-            var word = Context.Words.FirstOrDefault(x => x.Key == key);
+            var word = Context.Words.FirstOrDefault(x => x.Id == id);
             if (word == null)
             {
                 return Task.FromResult(false);
@@ -282,7 +282,7 @@ namespace set.locale.Data.Services
         Task<PagedList<Word>> GetWords(int pageNumber);
         Task<PagedList<Word>> GetWords(string appId, int pageNumber);
         Task<PagedList<Word>> GetNotTranslated(int pageNumber);
-        Task<bool> Translate(string key, string language, string translation);
+        Task<bool> Translate(string id, string language, string translation);
         Task<bool> Tag(string key, string tag);
         Task<List<Word>> GetByAppId(string appId);
         Task<List<Word>> GetByAppName(string appName);

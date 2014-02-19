@@ -130,19 +130,19 @@ namespace set.locale.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<JsonResult> Translate(string key, string language, string translation)
+        public async Task<JsonResult> Translate(string id, string language, string translation)
         {
             var model = new ResponseModel { IsOk = false };
 
 
-            if (string.IsNullOrEmpty(key)
+            if (string.IsNullOrEmpty(id)
                 || string.IsNullOrEmpty(language))
             {
                 return Json(model, JsonRequestBehavior.DenyGet);
             }
 
 
-            model.IsOk = await _wordService.Translate(key, language, translation);
+            model.IsOk = await _wordService.Translate(id, language, translation);
             return Json(model, JsonRequestBehavior.DenyGet);
         }
 
