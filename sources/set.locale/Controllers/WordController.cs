@@ -123,7 +123,7 @@ namespace set.locale.Controllers
             var id = await _wordService.Create(model);
             if (id != null)
             {
-                return RedirectToAction("detail", "word", new { id = id });
+                return Redirect("/word/detail/" + id);
             }
 
             return View(model);

@@ -67,7 +67,7 @@ namespace set.locale.Controllers
 
             var appId = await _appService.Create(model);
 
-            if (appId != null) return RedirectToAction("detail", "app", new { id = appId }); //Redirect("/app/detail/" + appId);
+            if (appId != null) return Redirect("/app/detail/" + appId);
 
             return View(model);
         }
