@@ -41,14 +41,13 @@ namespace set.locale.Controllers
         }
 
         [HttpGet]
-        public ActionResult New()
+        public async Task<ViewResult> New()
         {
             var model = new AppModel();
-            if (TempData["newMember"] != null)
-            {
-                model.IsOk = true;
-                model.Msg = TempData["newMember"].ToString();
-            }
+            if ((await _appService.GetByUserId(User.Identity.GetId())).Any()) return View(model);
+            
+            model.IsOk = true;
+            model.Msg = "new_member_create_app_message".Localize();
             return View(model);
         }
 

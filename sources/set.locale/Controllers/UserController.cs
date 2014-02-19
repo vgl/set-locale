@@ -120,8 +120,6 @@ namespace set.locale.Controllers
 
             _authService.SignIn(model.Id, model.Name, model.Email, ConstHelper.User, true);
 
-            TempData["newMember"] = "new_member_create_app_message".Localize();
-
             return Redirect("/app/new");
         }
 
