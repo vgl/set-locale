@@ -53,16 +53,18 @@
                         $(':submit').prop('disabled', true);
                         $('#name_previously_used').html('<p class="text-danger">@Html.LocalizationString("name_previously_used")</p>' +
                                    '<p class="text-success">@Html.LocalizationString("this_name_available") <span class="label label-info" style="cursor:pointer">' + result.Msg + '</span></p>');
+
+                        $('span.label-info').click(function () {
+                            $('#name').val($(this).html());
+                            $('#name_previously_used').html(null);
+                            $(':submit').prop('disabled', false);
+                        });
+
                     } else {
                         $(':submit').prop('disabled', false);
                         $('#name_previously_used').html(null);
                     }
                 });
-            });
-            $('#name_previously_used').click(function () {
-                $('#name').val($(this).find('span.label-info').html());
-                $('#name_previously_used').html(null);
-                $(':submit').prop('disabled', false);
             });
         });
     </script>

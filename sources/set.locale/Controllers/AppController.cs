@@ -156,11 +156,9 @@ namespace set.locale.Controllers
 
             if (result == null) return Json(model, JsonRequestBehavior.AllowGet);
 
-            int i = 0;
             while (result != null)
             {
-                i++;
-                model.Msg = string.Format("{0}{1}", name, i);
+                model.Msg = string.Format("{0}{1}", name, new Random().Next(1, 10));
                 result = await _appService.GetByName(model.Msg);
             }
 
