@@ -69,7 +69,6 @@
     <Compile Include="Shared\Builders\FeedbackControllerBuilder.cs" />
     <Compile Include="Shared\Builders\HomeControllerBuilder.cs" />
     <Compile Include="Shared\Builders\LangControllerBuilder.cs" />
-    <Compile Include="Shared\Builders\DomainObjectControllerBuilder.cs" />
     <Compile Include="Shared\Builders\SearchControllerBuilder.cs" />
     <Compile Include="Shared\Builders\UserControllerBuilder.cs" />
     <Compile Include="Shared\ControllerTestHelper.cs" />

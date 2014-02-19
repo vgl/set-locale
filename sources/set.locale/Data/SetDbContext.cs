@@ -19,7 +19,6 @@ namespace set.locale.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<ContactMessage> ContactMessages { get; set; }
-        public DbSet<DomainObject> DomainObjects { get; set; }
         public DbSet<App> Apps { get; set; }
         public DbSet<Token> Tokens { get; set; }
         public DbSet<Word> Words { get; set; }
