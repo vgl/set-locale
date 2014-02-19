@@ -9,36 +9,45 @@
     <div class="panel-body">
 
         <div class="row">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>@Html.LocalizationString("app_name")</th>
-                            <th>@Html.LocalizationString("description")</th>
-                            <th>@Html.LocalizationString("url")</th>
-                            <th>@Html.LocalizationString("usage_count")</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
-                            var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
-                        <tr>
-                            <td>
-                                <a class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
-                            </td>
-                            <td><a href="/app/detail/@item.Id">@item.Name</a></td>
-                            <td>@item.Description</td>
-                            <td><a href="@item.Url">@item.Url</a></td>
-                            <td>@item.UsageCountToken</td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-                @Html.AntiForgeryToken()
-            </div>
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>@Html.LocalizationString("app_name")</th>
+                                <th>@Html.LocalizationString("description")</th>
+                                <th>@Html.LocalizationString("url")</th>
+                                <th>@Html.LocalizationString("usage_count")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
+                                var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
+                                <tr>
+                                    <td>
+                                        <a class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
+                                    </td>
+                                    <td><a href="/app/detail/@item.Id">@item.Name</a></td>
+                                    <td>@item.Description</td>
+                                    <td><a href="@item.Url">@item.Url</a></td>
+                                    <td>@item.UsageCountToken</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @Html.AntiForgeryToken()
+                </div>
+            }
+            else
+            {
+                Model.First().Msg = "list_item_not_found".Localize();
+                Model.First().IsOk = false;
+                @Html.Partial("_Msg")
+            }
         </div>
 
 

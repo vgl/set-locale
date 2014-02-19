@@ -27,37 +27,46 @@
         </div>
 
         <div class="row">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            @if (ViewBag.IsActive)
-                            {
-                                <th></th>
-                            }
-                            <th>@Html.LocalizationString("token")</th>
-                            <th>@Html.LocalizationString("creation_date")</th>
-                            <th>@Html.LocalizationString("usage_count")</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Tokens)
-                        {
+            @if (Model.Tokens.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
                             <tr>
                                 @if (ViewBag.IsActive)
                                 {
-                                    <td>
-                                        <a class="btn btn-sm btn-warning btnAct" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@Html.LocalizationString("btn_delete")</a>
-                                    </td>
+                                    <th></th>
                                 }
-                                <td>@item.Token</td>
-                                <td>@item.CreationDate.ToString("f")</td>
-                                <td>@item.UsageCount</td>
+                                <th>@Html.LocalizationString("token")</th>
+                                <th>@Html.LocalizationString("creation_date")</th>
+                                <th>@Html.LocalizationString("usage_count")</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Tokens)
+                            {
+                                <tr>
+                                    @if (ViewBag.IsActive)
+                                    {
+                                        <td>
+                                            <a class="btn btn-sm btn-warning btnAct" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@Html.LocalizationString("btn_delete")</a>
+                                        </td>
+                                    }
+                                    <td>@item.Token</td>
+                                    <td>@item.CreationDate.ToString("f")</td>
+                                    <td>@item.UsageCount</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                Model.Msg = "list_item_not_found".Localize();
+                Model.IsOk = false;
+                @Html.Partial("_Msg")
+            }
         </div>
 
     </div>

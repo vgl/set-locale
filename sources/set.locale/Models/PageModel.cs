@@ -11,6 +11,10 @@ namespace set.locale.Models
         public bool HasNextPage { get; set; }
 
         public List<T> Items { get; set; }
+
+        public string Msg { get; set; }
+        public bool IsOk { get; set; }
+
     }
 
 }

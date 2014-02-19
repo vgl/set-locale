@@ -9,63 +9,72 @@
     <div class="panel-body">
 
         <div class="row">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>@Html.LocalizationString("word_key")</th>
-                            <th>@Html.LocalizationString("description")</th>
-                            <th>@Html.LocalizationString("tag")</th>
-                            <th>@Html.LocalizationString("translated_language")</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.Items != null
+            @if (Model.Items.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>@Html.LocalizationString("word_key")</th>
+                                <th>@Html.LocalizationString("description")</th>
+                                <th>@Html.LocalizationString("tag")</th>
+                                <th>@Html.LocalizationString("translated_language")</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Items != null
                  && Model.Items.Any())
                         {
                             foreach (var item in Model.Items)
                             {
-                                <tr>
-                                    <td><a href="/word/detail/@item.Id">@item.Key</a></td>
-                                    <td>@item.Description</td>
-                                    <td>
-                                        @foreach (var tag in item.Tags)
+                        <tr>
+                            <td><a href="/word/detail/@item.Id">@item.Key</a></td>
+                            <td>@item.Description</td>
+                            <td>
+                                @foreach (var tag in item.Tags)
                                         {
-                                            <a class="label label-warning" href="/tag/detail/@tag.UrlName">@tag.Name</a>
+                                        <a class="label label-warning" href="/tag/detail/@tag.UrlName">@tag.Name</a>
                                         }
-                                    </td>
-                                    <td>
-                                        @foreach (var lang in item.Languages)
+                            </td>
+                            <td>
+                                @foreach (var lang in item.Languages)
                                         { <img src="@lang.ImageUrl" alt="@lang.Name" />  }
-                                    </td>
-                                </tr>
+                            </td>
+                        </tr>
                             }
                         }
-                        @{
+                            @{
                             if (Model.HasNextPage || Model.HasPreviousPage)
                             {
-                                <tr>
-                                    <td colspan="4" align="center">
-                                        <ul class="pagination">
-                                            @if (Model.HasPreviousPage)
+                        <tr>
+                            <td colspan="4" align="center">
+                                <ul class="pagination">
+                                    @if (Model.HasPreviousPage)
                                             {
-                                                <li><a href="~/tag/detail/@ViewBag.Key?page=@(Model.Number-1)">&laquo;</a></li>
+                                            <li><a href="~/tag/detail/@ViewBag.Key?page=@(Model.Number-1)">&laquo;</a></li>
                                             }
-                                            <li><a href="~/tag/detail/@ViewBag.Key?page=@(Model.Number)">@(Model.Number)</a></li>
-                                            @if (Model.HasNextPage)
+                                    <li><a href="~/tag/detail/@ViewBag.Key?page=@(Model.Number)">@(Model.Number)</a></li>
+                                    @if (Model.HasNextPage)
                                             {
-                                                <li><a href="~/tag/detail/@ViewBag.Key?page=@(Model.Number+1)">&raquo;</a></li>
+                                            <li><a href="~/tag/detail/@ViewBag.Key?page=@(Model.Number+1)">&raquo;</a></li>
                                             }
-                                        </ul>
-                                        <br />
-                                        <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
-                                    </td>
-                                </tr>
+                                </ul>
+                                <br />
+                                <span class="label label-primary">@Html.LocalizationString("total_page_count") : @Model.TotalPageCount</span>
+                            </td>
+                        </tr>
                             }
-                        }
-                    </tbody>
-                </table>
-            </div>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                Model.Msg = "list_item_not_found".Localize();
+                Model.IsOk = false;
+                @Html.Partial("_Msg")
+            }
         </div>
 
     </div>
