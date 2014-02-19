@@ -76,7 +76,7 @@ namespace set.locale.Controllers
                     var words = await _wordService.GetByAppId(appId);
                     foreach (var word in words)
                     {
-                        _wordService.Delete(WordModel.Map(word));
+                        await _wordService.Delete(WordModel.Map(word));
                     }
                     foreach (var item in fromWordsByTag)
                     {
@@ -85,7 +85,11 @@ namespace set.locale.Controllers
                         word.AppId = appId;
                         word.Tag = app.Name;
                         word.CreatedBy = User.Identity.GetId();
-                        _wordService.Create(word);
+                        string wordId = await _wordService.Create(word);
+                        foreach (var translation in word.Translations)
+                        {
+                            await _wordService.Translate(wordId, translation.Language.Key, translation.Value);
+                        }
                     }
                 }
                 else

@@ -150,7 +150,7 @@ namespace set.locale.Data.Services
                 pageNumber = 1;
             }
 
-            var items = Context.Words.Where(x => x.AppId == appId);
+            var items = Context.Words.Where(x => x.IsActive && !x.IsDeleted && x.AppId == appId);
 
             long totalCount = items.Count();
             var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
