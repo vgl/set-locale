@@ -31,8 +31,13 @@
     padding-right: 10px;
 }
 
+.table tbody tr td {
+    border-bottom: solid 1px #2B3E50!important;
+}
+
+
 .table thead {
-    background: #5BC0DE;
+    background: #2B3E50;
     font-weight: bold;
 }
 
@@ -77,6 +82,10 @@
 
 .label {
     font-size: 13px;
+}
+
+.label-warning {
+    color: #333;
 }
 
 .panel-heading {

@@ -19,7 +19,9 @@ namespace set.locale.Controllers
 
         public UserController(
             IAuthService authService,
-            IUserService userService, IAppService appService, IWordService wordService)
+            IUserService userService, 
+            IAppService appService, 
+            IWordService wordService)
         {
             _authService = authService;
             _userService = userService;
@@ -39,14 +41,8 @@ namespace set.locale.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Apps(string id, int page = 1)
+        public async Task<ActionResult> Apps(string id)
         {
-            var pageNumber = page;
-            if (pageNumber < 1)
-            {
-                pageNumber = 1;
-            }
-
             if (string.IsNullOrEmpty(id))
             {
                 id = User.Identity.GetId();
@@ -74,19 +70,15 @@ namespace set.locale.Controllers
                 pageNumber = 1;
             }
 
-
             if (string.IsNullOrEmpty(id))
             {
                 id = User.Identity.GetId();
             }
 
-
             ViewBag.UserId = id;
-
 
             var words = await _wordService.GetByUserId(id, pageNumber);
             var list = words.Items.Select(WordModel.Map).ToList();
-
 
             var model = new PageModel<WordModel>
             {
@@ -98,11 +90,8 @@ namespace set.locale.Controllers
                 TotalPageCount = words.TotalPageCount
             };
 
-
             return View(model);
         }
-
-
 
         #region Membership
         [HttpGet, AllowAnonymous]
