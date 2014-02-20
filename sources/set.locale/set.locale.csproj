@@ -129,19 +129,6 @@
     <Content Include="Public\img\select2x2.png" />
     <Content Include="Public\img\word.png" />
     <Content Include="Public\js\select2.js" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\bootstrap-tokenfield.js" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\bootstrap-tokenfield.min.js" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\css\bootstrap-tokenfield.css" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\css\bootstrap-tokenfield.min.css" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\css\tokenfield-typeahead.css" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\css\tokenfield-typeahead.min.css" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\docs-assets\css\docs.css" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\docs-assets\css\pygments-manni.css" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\docs-assets\js\affix.js" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\docs-assets\js\docs.js" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\docs-assets\js\docs.min.js" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\docs-assets\js\scrollspy.js" />
-    <Content Include="Public\_plugin\bootstrap-tokenfield\docs-assets\js\typeahead.js" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_pTablePager.cshtml">
       <SubType>Code</SubType>
