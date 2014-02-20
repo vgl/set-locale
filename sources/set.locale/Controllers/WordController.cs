@@ -34,11 +34,13 @@ namespace set.locale.Controllers
 
             var entity = await _wordService.GetById(id);
             if (entity == null) return RedirectToHome();
+            var model = WordModel.Map(entity);
+
+            if (!User.Identity.IsAuthenticated) return View(model);
 
             var apps = await _appService.GetByUserId(User.Identity.GetId());
             ViewBag.Apps = apps.Select(AppModel.Map);
-
-            var model = WordModel.Map(entity);
+            
             return View(model);
         }
 
