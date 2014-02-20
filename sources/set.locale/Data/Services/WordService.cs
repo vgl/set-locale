@@ -29,7 +29,7 @@ namespace set.locale.Data.Services
 
             var slug = model.Key.ToUrlSlug();
 
-            if (Context.Words.Any(x => x.Key == slug && (x.IsActive && !x.IsDeleted) && (x.AppId == model.AppId || x.Tags.Any(y => y.Name == model.Tag))))
+            if (IsDuplicateKey(model))
             {
                 return null;
             }
@@ -72,10 +72,7 @@ namespace set.locale.Data.Services
 
                 if (task == null) continue;
 
-                foreach (var translation in word.Translations)
-                {
-                    await Translate(task.Result, translation.Language.Key, translation.Value);
-                }
+                await AddTranslateList(word.Translations, word.Id);
             }
         }
 
@@ -150,9 +147,13 @@ namespace set.locale.Data.Services
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words));
         }
 
-        public Task<Word> GetByKey(string key)
+        public Task<Word> GetByKey(string key, string appId)
         {
-            var word = Context.Words.FirstOrDefault(x => x.Key == key);
+            key = key.ToUrlSlug();
+            var word = Context.Words.FirstOrDefault(x =>
+                                                    x.Key == key
+                                                 && x.IsActive && !x.IsDeleted
+                                                 && x.AppId == appId);
             return Task.FromResult(word);
         }
 
@@ -228,7 +229,7 @@ namespace set.locale.Data.Services
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words));
         }
 
-        public Task<bool> Translate(string id, string language, string translation)
+        public Task<bool> AddTranslate(string id, string language, string translation)
         {
             if (string.IsNullOrEmpty(id)
                || string.IsNullOrEmpty(language))
@@ -267,6 +268,11 @@ namespace set.locale.Data.Services
             }
 
             return Task.FromResult(Context.SaveChanges() > 0);
+        }
+
+        public async Task AddTranslateList(List<TranslationModel> model, string id)
+        {
+            foreach (var item in model) await AddTranslate(id, item.Language.Key, item.Value);
         }
 
         public Task<bool> Tag(string key, string tagName)
@@ -310,6 +316,16 @@ namespace set.locale.Data.Services
             var words = Context.Words.ToList();
             return Task.FromResult(words);
         }
+
+        public bool IsDuplicateKey(WordModel model)
+        {
+            model.Key = model.Key.ToUrlSlug();
+            return Context.Words.Any(
+                        x =>
+                                x.Key == model.Key 
+                            && (x.IsActive && !x.IsDeleted)
+                            && (x.AppId == model.AppId || x.Tags.Any(y => y.Name == model.Tag)));
+        }
     }
 
     public interface IWordService
@@ -320,15 +336,17 @@ namespace set.locale.Data.Services
         Task<bool> Delete(WordModel model);
         Task DeleteList(List<WordModel> model);
         Task<PagedList<Word>> GetByUserId(string userId, int pageNumber);
-        Task<Word> GetByKey(string key);
+        Task<Word> GetByKey(string key, string appId);
         Task<Word> GetById(string id);
         Task<PagedList<Word>> GetWords(int pageNumber);
         Task<PagedList<Word>> GetWords(string appId, int pageNumber);
         Task<PagedList<Word>> GetNotTranslated(int pageNumber);
-        Task<bool> Translate(string id, string language, string translation);
+        Task<bool> AddTranslate(string id, string language, string translation);
+        Task AddTranslateList(List<TranslationModel> model, string id);
         Task<bool> Tag(string key, string tag);
         Task<List<Word>> GetByAppId(string appId);
         Task<List<Word>> GetByAppName(string appName);
         Task<List<Word>> GetAll();
+        bool IsDuplicateKey(WordModel model);
     }
 }

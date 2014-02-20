@@ -69,10 +69,9 @@ namespace set.locale.Controllers
             foreach (var appId in toAppIdList)
             {
                 var words = await _wordService.GetByAppId(appId);
-                if (force)
-                {
-                    await _wordService.DeleteList(words.Select(WordModel.Map).ToList());
-                }
+
+                if (force) await _wordService.DeleteList(words.Select(WordModel.Map).ToList());
+
                 await _wordService.CreateList(fromWordsByTag.Select(WordModel.Map).ToList(), appId, User.Identity.GetId());
             }
             return true;

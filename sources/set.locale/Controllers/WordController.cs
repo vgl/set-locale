@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
-
+using ServiceStack.Text;
 using set.locale.Helpers;
 using set.locale.Data.Entities;
 using set.locale.Data.Services;
@@ -19,7 +19,7 @@ namespace set.locale.Controllers
         private readonly IWordService _wordService;
         private readonly IAppService _appService;
         public WordController(
-            IWordService wordService, 
+            IWordService wordService,
             IAppService appService)
         {
             _wordService = wordService;
@@ -30,9 +30,13 @@ namespace set.locale.Controllers
         public async Task<ActionResult> Detail(string id)
         {
             if (string.IsNullOrEmpty(id)) return RedirectToHome();
+            ViewBag.ID = id;
 
             var entity = await _wordService.GetById(id);
             if (entity == null) return RedirectToHome();
+
+            var apps = await _appService.GetByUserId(User.Identity.GetId());
+            ViewBag.Apps = apps.Select(AppModel.Map);
 
             var model = WordModel.Map(entity);
             return View(model);
@@ -131,7 +135,7 @@ namespace set.locale.Controllers
                 return Json(model, JsonRequestBehavior.DenyGet);
             }
 
-            model.IsOk = await _wordService.Translate(id, language, translation);
+            model.IsOk = await _wordService.AddTranslate(id, language, translation);
             return Json(model, JsonRequestBehavior.DenyGet);
         }
 
@@ -176,7 +180,7 @@ namespace set.locale.Controllers
                 workSheet.Cells[1, 13].Value = "column_header_translation_ru".Localize();
                 workSheet.Cells[1, 14].Value = "column_header_translation_sp".Localize();
                 workSheet.Cells[1, 15].Value = "column_header_translation_tk".Localize();
-                
+
                 //set styling of header
                 workSheet.Cells[1, 1, 1, 15].Style.Font.Bold = true;
                 workSheet.Cells[1, 1, 1, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -238,7 +242,7 @@ namespace set.locale.Controllers
                 var fileName = string.Format("{0}-{1}.xlsx", tagName, DateTime.Now.ToString("s").Replace(':', '-').Replace("T", "-"));
                 var filePath = string.Format("/public/files/{0}", fileName);
                 var mapPath = Server.MapPath(filePath);
-                
+
                 System.IO.File.WriteAllBytes(mapPath, p.GetAsByteArray());
 
                 return fileName;
@@ -256,5 +260,43 @@ namespace set.locale.Controllers
 
             return Json(model, JsonRequestBehavior.DenyGet);
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<bool> Copy(string copyFromWordId, string appIds, bool force)
+        {
+            try
+            {
+                var toAppIdList = JsonSerializer.DeserializeFromString<List<string>>(appIds);
+                var fromWord = WordModel.Map(await _wordService.GetById(copyFromWordId));
+
+                foreach (var appId in toAppIdList)
+                {
+                    var app = await _appService.Get(appId);
+                   
+                    fromWord.AppId = appId;
+                    fromWord.CreatedBy = User.Identity.GetId();
+                    fromWord.Tag = app.Name;
+
+                    if (!_wordService.IsDuplicateKey(fromWord))
+                    {
+                        var wordId = await _wordService.Create(fromWord);
+                        await _wordService.AddTranslateList(fromWord.Translations, wordId);
+                        continue;
+                    }
+
+                    if (force)
+                    {
+                        var toWord = WordModel.Map(await _wordService.GetByKey(fromWord.Key, appId));
+                        await _wordService.AddTranslateList(fromWord.Translations, toWord.Id);
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
     }
 }

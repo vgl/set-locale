@@ -83,11 +83,11 @@
                         <div class="list-group">
                             @foreach (var item in apps)
                             {
-                                <a class="list-group-item" style="cursor: pointer;">
-                                    <span class="list-group-item-heading">
-                                        <input type="checkbox" value="@item.Id" /> @item.Name
-                                    </span>
-                                </a>
+                            <a class="list-group-item" style="cursor: pointer;">
+                                <span class="list-group-item-heading">
+                                    <input type="checkbox" value="@item.Id" /> @item.Name
+                                </span>
+                            </a>
                             }
                         </div>
                     </div>
@@ -105,7 +105,7 @@
     </div>
 
     @section script
-{
+    {
         <script>
             var apps = new Array();
             $(function () {
