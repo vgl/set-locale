@@ -158,6 +158,7 @@
     <Content Include="Views\Admin\Apps.cshtml" />
     <Content Include="Views\App\Words.cshtml" />
     <Content Include="Views\Tag\Detail.cshtml" />
+    <Content Include="Views\Shared\_pCopyByModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

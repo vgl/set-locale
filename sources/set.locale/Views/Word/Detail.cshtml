@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = Html.LocalizeString("words_key_detail_page_title");
-    var apps = (IEnumerable<AppModel>)ViewBag.Apps;
 }
 
 <div class="panel panel-info">
@@ -91,99 +90,9 @@
     </div>
 </div>
 
-<div class="modal fade" id="CopyToMyAppModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">@Html.LocalizeString("modal_title_copy_to_my_apps")</h4>
-            </div>
-            <div class="modal-body">
-                @Html.LocalizeString("modal_body_copy_to_my_apps")
-
-                <div class="row">
-                    <div class="list-group">
-                        @foreach (var item in apps)
-                        {
-                            <a class="list-group-item" style="cursor: pointer;">
-                                <span class="list-group-item-heading">
-                                    <input type="checkbox" value="@item.Id" /> @item.Name
-                                </span>
-                            </a>
-                        }
-                    </div>
-                </div>
-                <div id="copyReturnMessage"></div>
-            </div>
-            <div class="modal-footer">
-                @Html.AntiForgeryToken()
-                <label class="pull-left"><input type="checkbox" id="force" /> @Html.LocalizeString("override_my_translations")</label>
-                <img src="/public/img/select2-spinner.gif" alt="loading" style="margin-right: 10px; display: none" />
-                <input type="button" class="btn btn-danger" data-dismiss="modal" value="@Html.LocalizeString("btn_cancel")" />
-                <input type="button" class="btn btn-success" value="@Html.LocalizeString("btn_ok")" id="btnCopyToMyApp" />
-            </div>
-        </div>
-    </div>
-</div>
-
 @section script{
-    <script>
-            var apps = new Array();
-            $(function () {
-                $('.list-group-item-heading input').prop('checked', false);
-                var mFooter = $('#CopyToMyAppModal .modal-content .modal-footer');
-                var copyReturnMessage = $('#copyReturnMessage');
-                mFooter.find('input.btn-danger').prop('disabled', false);
-                mFooter.find('input.btn-success').prop('disabled', true);
-                var listGroup = $('#CopyToMyAppModal .list-group-item');
-
-                listGroup.click(function () {
-                    var $this = $(this);
-                    $this.toggleClass('successBG');
-
-                    var cb = $this.find('.list-group-item-heading input');
-                    if (cb.is(':checked')) {
-                        cb.prop('checked', false);
-                        apps.splice($.inArray(cb.val(), apps), 1);
-                    } else {
-                        cb.prop('checked', true);
-                        apps.push(cb.val());
-                    }
-
-                    if (apps.length > 0) mFooter.find('input.btn-success').prop('disabled', false);
-                    else mFooter.find('input.btn-success').prop('disabled', true);
-                });
-
-                $('#btnCopyToMyApp').click(function () {
-                    mFooter.find('img').show();
-                    mFooter.find('input.btn').prop('disabled', true);
-                    var force = mFooter.find('#force');
-                    $.post('/Word/Copy/', { copyFrom: '@ViewBag.ID', appIds: JSON.stringify(apps), force: force.is(':checked'), __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() },
-                        function (result) {
-                        mFooter.find('img').hide();
-                        if (result) {
-                            apps = new Array();
-                            $('#CopyToMyAppModal .list-group-item').removeClass('successBG');
-                            copyReturnMessage.html('<div class="alert alert-success"><span>@Html.LocalizeString("copy_success")</span></div>');
-                            setTimeout(function () {
-                                listGroup.find('.list-group-item-heading input').prop('checked', false);
-                                force.prop('checked', false);
-                                mFooter.find('input.btn-danger').prop('disabled', false);
-                                $("#CopyToMyAppModal").modal('hide');
-                                copyReturnMessage.html(null);
-                            }, 2500);
-                        } else {
-                            copyReturnMessage.html('<div class="alert alert-danger"><span>@Html.LocalizeString("copy_error")</span></div>');
-                        }
-                    });
-                });
-            });
-    </script>
-
     <link href="/public/css/select2.css" rel="stylesheet" />
     <script src="/public/js/select2.js"></script>
-
-
     <script>
         $(function () {
             var translatedLanguages = [@Html.Raw(Model.LanguagesStr)];
@@ -432,5 +341,16 @@
             $("input.btnEdit").click(fnEdit);
 
         });
+    </script>
+
+
+
+    <script>
+        var Action = '/Word/Copy/';
+    </script>
+    @Html.Partial("_pCopyByModal")
+    <script>
+        var forceMsg = $('#CopyToMyAppModal .modal-content .modal-footer label');
+        forceMsg.append('@Html.LocalizeString("override_my_translations")');
     </script>
 }

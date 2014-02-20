@@ -289,6 +289,10 @@ namespace set.locale.Controllers
                         var toWord = WordModel.Map(await _wordService.GetByKey(fromWord.Key, appId));
                         await _wordService.AddTranslateList(fromWord.Translations, toWord.Id);
                     }
+                    else
+                    {
+                        
+                    }
                 }
                 return true;
             }
