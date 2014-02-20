@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
 using Castle.Windsor;
 using Castle.Windsor.Installer;
-using ServiceStack.Text;
 
 using set.locale.Configurations;
 using set.locale.Helpers;
-using set.locale.Models;
 
 namespace set.locale
 {
