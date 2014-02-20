@@ -1,7 +1,7 @@
 ﻿@model PageModel<ContactMessageModel>
 
 @{
-    ViewBag.Title = Html.LocalizationString("contactmessages_listing_title");
+    ViewBag.Title = Html.LocalizeString("contactmessages_listing_title");
     Model.PagerUrl = "/admin/contactmessages/";
 }
 
@@ -16,9 +16,9 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>@Html.LocalizationString("email")</th>
-                                <th>@Html.LocalizationString("subject")</th>
-                                <th>@Html.LocalizationString("message")</th>
+                                <th>@Html.LocalizeString("email")</th>
+                                <th>@Html.LocalizeString("subject")</th>
+                                <th>@Html.LocalizeString("message")</th>
                             </tr>
                         </thead>
                         <tbody id="tbodyModelItems">

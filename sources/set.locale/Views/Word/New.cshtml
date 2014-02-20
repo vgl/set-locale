@@ -1,7 +1,7 @@
 ﻿@model WordModel
 
 @{
-    ViewBag.Title = Html.LocalizationString("word_new_key_title");
+    ViewBag.Title = Html.LocalizeString("word_new_key_title");
     var appList = ((IEnumerable<AppModel>)ViewBag.Apps).ToList();
 }
 
@@ -18,7 +18,7 @@
                     @if (appList.Count() > 1)
                     {
                         <div class="form-group">
-                            <label for="AppId">@Html.LocalizationString("application")</label>
+                            <label for="AppId">@Html.LocalizeString("application")</label>
                             <br />
                             <select id="AppId" name="AppId">
                                 @foreach (AppModel app in appList)
@@ -34,18 +34,18 @@
                     }
 
                     <div class="form-group">
-                        <label for="key">@Html.LocalizationString("word_key")</label>
+                        <label for="key">@Html.LocalizeString("word_key")</label>
                         <input id="key" name="key" type="text" class="form-control" value="@Model.Key" required />
                     </div>
 
                     <div class="form-group">
-                        <label for="description">@Html.LocalizationString("description")</label>
+                        <label for="description">@Html.LocalizeString("description")</label>
                         <input id="description" name="description" type="text" class="form-control" value="@Model.Description" />
                     </div>
 
                     @Html.AntiForgeryToken()
 
-                    <input type="submit" value="@Html.LocalizationString("btn_save")" class="btn btn-primary" />
+                    <input type="submit" value="@Html.LocalizeString("btn_save")" class="btn btn-primary" />
                 </form>
             </div>
         </div>

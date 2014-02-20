@@ -1,7 +1,7 @@
 ﻿@model ContactMessageModel
 
 @{
-    ViewBag.Title = Html.LocalizationString("contact_view_title");
+    ViewBag.Title = Html.LocalizeString("contact_view_title");
 }
 
 <div class="panel panel-info">
@@ -19,23 +19,23 @@
                     <form method="POST">
 
                         <div class="form-group">
-                            <label for="Email">@Html.LocalizationString("email")</label>
+                            <label for="Email">@Html.LocalizeString("email")</label>
                             <input id="Email" name="Email" type="email" class="form-control" value="@Model.Email" required />
                         </div>
 
                         <div class="form-group">
-                            <label for="Subject">@Html.LocalizationString("subject")</label>
+                            <label for="Subject">@Html.LocalizeString("subject")</label>
                             <input id="Subject" name="Subject" type="text" class="form-control" value="@Model.Subject" />
                         </div>
 
                         <div class="form-group">
-                            <label for="Message">@Html.LocalizationString("message")</label>
+                            <label for="Message">@Html.LocalizeString("message")</label>
                             <textarea id="Message" name="Message" rows="6" class="form-control" required>@Model.Message</textarea>
                         </div>
 
                         @Html.AntiForgeryToken()
 
-                        <button type="submit" class="btn btn-primary">@Html.LocalizationString("btn_send")</button>
+                        <button type="submit" class="btn btn-primary">@Html.LocalizeString("btn_send")</button>
                     </form>
                 }
             </div>

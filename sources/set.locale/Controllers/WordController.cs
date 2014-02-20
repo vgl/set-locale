@@ -1,17 +1,16 @@
-﻿using System.Web.Routing;
-using set.locale.Data.Entities;
-using set.locale.Data.Services;
-using set.locale.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using set.locale.Helpers;
+
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 
+using set.locale.Helpers;
+using set.locale.Data.Entities;
+using set.locale.Data.Services;
+using set.locale.Models;
 
 namespace set.locale.Controllers
 {
@@ -19,7 +18,9 @@ namespace set.locale.Controllers
     {
         private readonly IWordService _wordService;
         private readonly IAppService _appService;
-        public WordController(IWordService wordService, IAppService appService)
+        public WordController(
+            IWordService wordService, 
+            IAppService appService)
         {
             _wordService = wordService;
             _appService = appService;
@@ -30,10 +31,8 @@ namespace set.locale.Controllers
         {
             if (string.IsNullOrEmpty(id)) return RedirectToHome();
 
-
             var entity = await _wordService.GetById(id);
             if (entity == null) return RedirectToHome();
-
 
             var model = WordModel.Map(entity);
             return View(model);
@@ -48,11 +47,8 @@ namespace set.locale.Controllers
                 pageNumber = 1;
             }
 
-
             var items = await _wordService.GetWords(pageNumber);
             var list = items.Items.Select(WordModel.Map).ToList();
-
-
             var model = new PageModel<WordModel>
             {
                 Items = list,
@@ -62,7 +58,6 @@ namespace set.locale.Controllers
                 TotalCount = items.TotalCount,
                 TotalPageCount = items.TotalPageCount
             };
-
 
             return View(model);
         }
@@ -76,11 +71,8 @@ namespace set.locale.Controllers
                 pageNumber = 1;
             }
 
-
             var words = await _wordService.GetNotTranslated(pageNumber);
             var list = words.Items.Select(WordModel.Map).ToList();
-
-
             var model = new PageModel<WordModel>
             {
                 Items = list,
@@ -90,7 +82,6 @@ namespace set.locale.Controllers
                 TotalCount = words.TotalCount,
                 TotalPageCount = words.TotalPageCount
             };
-
 
             return View(model);
         }
@@ -134,13 +125,11 @@ namespace set.locale.Controllers
         {
             var model = new ResponseModel { IsOk = false };
 
-
             if (string.IsNullOrEmpty(id)
                 || string.IsNullOrEmpty(language))
             {
                 return Json(model, JsonRequestBehavior.DenyGet);
             }
-
 
             model.IsOk = await _wordService.Translate(id, language, translation);
             return Json(model, JsonRequestBehavior.DenyGet);
@@ -151,13 +140,11 @@ namespace set.locale.Controllers
         {
             var model = new ResponseModel { IsOk = false };
 
-
             if (string.IsNullOrEmpty(key)
                 || string.IsNullOrEmpty(tag))
             {
                 return Json(model, JsonRequestBehavior.DenyGet);
             }
-
 
             model.IsOk = await _wordService.Tag(key, tag);
             return Json(model, JsonRequestBehavior.DenyGet);
@@ -166,16 +153,12 @@ namespace set.locale.Controllers
         private async Task<string> ExportWordsToExcel()
         {
             var words = await _wordService.GetAll();
-
-
             using (var p = new ExcelPackage())
             {
                 p.Workbook.Properties.Title = "exported_words".Localize();
 
-
                 p.Workbook.Worksheets.Add("exported_words_sheet_name".Localize());
                 var workSheet = p.Workbook.Worksheets[1];
-
 
                 //display table header
                 workSheet.Cells[1, 1].Value = "key".Localize();
@@ -193,12 +176,10 @@ namespace set.locale.Controllers
                 workSheet.Cells[1, 13].Value = "column_header_translation_ru".Localize();
                 workSheet.Cells[1, 14].Value = "column_header_translation_sp".Localize();
                 workSheet.Cells[1, 15].Value = "column_header_translation_tk".Localize();
-
-
+                
                 //set styling of header
                 workSheet.Cells[1, 1, 1, 15].Style.Font.Bold = true;
                 workSheet.Cells[1, 1, 1, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
 
                 //fill table data
                 Func<ICollection<Tag>, string> tagsToString = (tags) =>
@@ -225,17 +206,14 @@ namespace set.locale.Controllers
                     var row = i + 2;
                     var word = words[i];
 
-
                     workSheet.Cells[row, 1].Value = word.Key;
                     workSheet.Cells[row, 2].Value = word.Description;
-
 
                     var tags = tagsToString(word.Tags);
                     if (string.IsNullOrEmpty(tagName))
                     {
                         tagName = tags;
                     }
-
 
                     workSheet.Cells[row, 3].Value = tags;
                     workSheet.Cells[row, 4].Value = word.TranslationCount;
@@ -252,20 +230,16 @@ namespace set.locale.Controllers
                     workSheet.Cells[row, 15].Value = word.Translation_TK;
                 }
 
-
                 for (var i = 1; i <= 15; i++)
                 {
                     workSheet.Column(i).AutoFit();
                 }
 
-
                 var fileName = string.Format("{0}-{1}.xlsx", tagName, DateTime.Now.ToString("s").Replace(':', '-').Replace("T", "-"));
                 var filePath = string.Format("/public/files/{0}", fileName);
                 var mapPath = Server.MapPath(filePath);
-
-
+                
                 System.IO.File.WriteAllBytes(mapPath, p.GetAsByteArray());
-
 
                 return fileName;
             }
@@ -277,15 +251,10 @@ namespace set.locale.Controllers
             var model = new ResponseModel { IsOk = false };
             var fileName = await ExportWordsToExcel();
 
-
             model.IsOk = true;
             model.Result = fileName;
 
-
             return Json(model, JsonRequestBehavior.DenyGet);
         }
-
-
-
     }
 }

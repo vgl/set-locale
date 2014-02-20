@@ -1,7 +1,7 @@
 ﻿@model WordModel
 
 @{
-    ViewBag.Title = Html.LocalizationString("words_key_detail_page_title");
+    ViewBag.Title = Html.LocalizeString("words_key_detail_page_title");
 }
 
 <div class="panel panel-info">
@@ -38,7 +38,7 @@
                         <div>
                             @if (Model.Translations.Count < ConstHelper.MaxLanguageCount)
                             {
-                                <input type="button" id="btnNewTranslate" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizationString("btn_new_translate")" data-id="@Model.Key" />
+                                <input type="button" id="btnNewTranslate" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizeString("btn_new_translate")" data-id="@Model.Key" />
                             }
                         </div>
 
@@ -57,8 +57,8 @@
                             {
                                 <th></th>
                             }
-                            <th>@Html.LocalizationString("language")</th>
-                            <th>@Html.LocalizationString("translation")</th>
+                            <th>@Html.LocalizeString("language")</th>
+                            <th>@Html.LocalizeString("translation")</th>
                         </tr>
                     </thead>
                     <tbody id="tbodyLanguage">
@@ -68,7 +68,7 @@
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <td>
-                                        <input type="button" class="btn btn-sm btn-warning btnEdit" value="@Html.LocalizationString("btn_edit")" data-lang="@item.Language.Key" />
+                                        <input type="button" class="btn btn-sm btn-warning btnEdit" value="@Html.LocalizeString("btn_edit")" data-lang="@item.Language.Key" />
                                     </td>
                                 }
                                 <td> <img src="@item.Language.ImageUrl" alt="@item.Language.Name" /> @item.Language.Name</td>
@@ -102,7 +102,7 @@
 
             function addNewTranslationRow() {
                 var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
-                btnCancel.val('@Html.Raw(Html.LocalizationString("btn_cancel"))');
+                btnCancel.val('@Html.Raw(Html.LocalizeString("btn_cancel"))');
 
 
                 btnCancel.click(function () {
@@ -117,7 +117,7 @@
 
 
                 var btnSave = $('<input type="button" id="btnSave" />').addClass('btn btn-sm btn-success');
-                btnSave.val('@Html.Raw(Html.LocalizationString("btn_save"))');
+                btnSave.val('@Html.Raw(Html.LocalizeString("btn_save"))');
                 btnSave.data('id', '@Model.Key');
 
 
@@ -144,7 +144,7 @@
                                 var tdTranslation = $('<td />');
 
 
-                                var btnEdit = $('<input type="button" class="btn btn-sm btn-warning btnEdit" data-lang="' + lang + '" value="@Html.LocalizationString("btn_edit")" />');
+                                var btnEdit = $('<input type="button" class="btn btn-sm btn-warning btnEdit" data-lang="' + lang + '" value="@Html.LocalizeString("btn_edit")" />');
                                 btnEdit.click(fnEdit);
                                 tdBtn.append(btnEdit);
                                 tdFlag.append($("<img class='flag' style='margin:5px;margin-left: 0;margin-top: 0;' alt='flag' src='/public/img/flag/" + lang + ".png'/>"));
@@ -220,7 +220,7 @@
                 dv4.append(btnCancel);
 
 
-                $("h3#hdForm").html('@Html.LocalizationString("title_new_translation")');
+                $("h3#hdForm").html('@Html.LocalizeString("title_new_translation")');
                 $("div#dvForm").append(dv1).append(dv2).append('<br style="display:block;clear:both;"/>').append(dv3).append(dv4);
             }
 
@@ -305,11 +305,11 @@
 
                 if ($(this).hasClass("btn-warning")) {
                     $(this).removeClass("btn-warning").addClass("btn-primary");
-                    $(this).val("@Html.Raw(Html.LocalizationString("btn_save"))");
+                    $(this).val("@Html.Raw(Html.LocalizeString("btn_save"))");
 
 
                     var btnCancel = $('<input type="button" style ="margin-left:5px" />').addClass('btn btn-sm btn-danger');
-                    btnCancel.val('@Html.Raw(Html.LocalizationString("btn_cancel"))');
+                    btnCancel.val('@Html.Raw(Html.LocalizeString("btn_cancel"))');
 
 
                     $(this).parent().append(btnCancel);
@@ -319,7 +319,7 @@
                     btnCancel.click(function (r) {
                         var btn = $(this).parent().children(":first");
                         $(btn).removeClass("btn-primary").addClass("btn-warning");
-                        $(btn).val("@Html.Raw(Html.LocalizationString("btn_edit"))");
+                        $(btn).val("@Html.Raw(Html.LocalizeString("btn_edit"))");
 
 
                         $(this).remove();
@@ -332,7 +332,7 @@
                     });
                 } else if ($(this).hasClass("btn-primary")) {
                     $(this).removeClass("btn-primary").addClass("btn-warning");
-                    $(this).val("@Html.Raw(Html.LocalizationString("btn_edit"))");
+                    $(this).val("@Html.Raw(Html.LocalizeString("btn_edit"))");
 
 
                     prepareDataShowingRow($(this));

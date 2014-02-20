@@ -33,13 +33,8 @@ namespace set.locale.Controllers
         {
             ViewBag.ID = id;
 
-
             var words = await _tagService.GetWords(id, page);
-
-
             var list = words.Items.Select(WordModel.Map).ToList();
-
-
             var model = new PageModel<WordModel>
             {
                 Items = list,
@@ -49,6 +44,8 @@ namespace set.locale.Controllers
                 TotalCount = words.TotalCount,
                 TotalPageCount = words.TotalPageCount
             };
+
+            if (!User.Identity.IsAuthenticated) return View(model);
 
             var apps = await _appService.GetByUserId(User.Identity.GetId());
             ViewBag.Apps = apps.Select(AppModel.Map);

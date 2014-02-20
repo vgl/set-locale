@@ -231,7 +231,7 @@ namespace set.locale.Data
                 Translation_TR = tr,
                 Translation_RU = ru,
                 CreatedBy = usrId,
-                TranslationCount = 2,
+                TranslationCount = 3,
                 Tags = new List<Tag>
                 {
                     new Tag

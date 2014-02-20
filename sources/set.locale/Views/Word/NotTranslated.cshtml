@@ -1,7 +1,7 @@
 ﻿@model PageModel<WordModel>
 
 @{
-    ViewBag.Title = Html.LocalizationString("words_not_translated_key_listing_title");
+    ViewBag.Title = Html.LocalizeString("words_not_translated_key_listing_title");
     Model.PagerUrl = "/word/nottranslated/";
 }
 
@@ -16,10 +16,10 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>@Html.LocalizationString("word_key")</th>
-                                <th>@Html.LocalizationString("description")</th>
-                                <th>@Html.LocalizationString("tag")</th>
-                                <th>@Html.LocalizationString("translated_language")</th>
+                                <th>@Html.LocalizeString("word_key")</th>
+                                <th>@Html.LocalizeString("description")</th>
+                                <th>@Html.LocalizeString("tag")</th>
+                                <th>@Html.LocalizeString("translated_language")</th>
                             </tr>
                         </thead>
                         <tbody>

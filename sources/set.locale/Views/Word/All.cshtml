@@ -1,7 +1,7 @@
 ﻿@model PageModel<WordModel>
 
 @{
-    ViewBag.Title = Html.LocalizationString("words_key_listing_title");
+    ViewBag.Title = Html.LocalizeString("words_key_listing_title");
     Model.PagerUrl = "/word/all/";
 }
 
@@ -15,7 +15,7 @@
                 <div class="col-md-12">
                     <iframe id="downloadFrame" style="display:none"></iframe>
                     <img id="waitSpinner" class="pull-right" src="/public/img/select2-spinner.gif" alt="loading" style="display: none" />
-                    <input type="button" id="btnExport" value="@Html.LocalizationString("btn_export_to_excel")" class="btn btn-success btn-sm pull-right" />
+                    <input type="button" id="btnExport" value="@Html.LocalizeString("btn_export_to_excel")" class="btn btn-success btn-sm pull-right" />
                     @Html.AntiForgeryToken()
                 </div>
             }
@@ -28,10 +28,10 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>@Html.LocalizationString("word_key")</th>
-                                <th>@Html.LocalizationString("description")</th>
-                                <th>@Html.LocalizationString("tag")</th>
-                                <th>@Html.LocalizationString("translated_language")</th>
+                                <th>@Html.LocalizeString("word_key")</th>
+                                <th>@Html.LocalizeString("description")</th>
+                                <th>@Html.LocalizeString("tag")</th>
+                                <th>@Html.LocalizeString("translated_language")</th>
                             </tr>
                         </thead>
                         <tbody id="tbodyModelItems">

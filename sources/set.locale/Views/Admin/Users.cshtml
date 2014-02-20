@@ -1,7 +1,7 @@
 ﻿@model PageModel<UserModel>
 
 @{
-    ViewBag.Title = Html.LocalizationString("all_users_title");
+    ViewBag.Title = Html.LocalizeString("all_users_title");
     Model.PagerUrl = "/admin/users/";
 }
 
@@ -17,15 +17,15 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>@Html.LocalizationString("name")</th>
-                                <th>@Html.LocalizationString("email")</th>
-                                <th>@Html.LocalizationString("user_role")</th>
+                                <th>@Html.LocalizeString("name")</th>
+                                <th>@Html.LocalizeString("email")</th>
+                                <th>@Html.LocalizeString("user_role")</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model.Items)
                             {
-                                var val = item.IsActive ? Html.LocalizationString("btn_deactivate") : Html.LocalizationString("btn_activate");
+                                var val = item.IsActive ? Html.LocalizeString("btn_deactivate") : Html.LocalizeString("btn_activate");
                                 var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
                                 <tr>
                                     <td>
@@ -61,14 +61,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <input type="button" class="close" data-dismiss="modal" aria-hidden="true" value="&times;" />
-                <h4 class="modal-title">@Html.LocalizationString("modal_title_users")</h4>
+                <h4 class="modal-title">@Html.LocalizeString("modal_title_users")</h4>
             </div>
             <div class="modal-body">
-                @Html.LocalizationString("modal_body_users")
+                @Html.LocalizeString("modal_body_users")
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-danger" data-dismiss="modal" value="@Html.LocalizationString("btn_cancel")" />
-                <input type="button" class="btn btn-success" value="@Html.LocalizationString("btn_ok")" id="btnModalAction" data-id="" data-isactive="" />
+                <input type="button" class="btn btn-danger" data-dismiss="modal" value="@Html.LocalizeString("btn_cancel")" />
+                <input type="button" class="btn btn-success" value="@Html.LocalizeString("btn_ok")" id="btnModalAction" data-id="" data-isactive="" />
             </div>
         </div>
     </div>
@@ -78,8 +78,8 @@
 {
     <script>
         $(function () {
-            var textActivate = "@Html.LocalizationString("btn_activate")";
-            var textDeactivate = "@Html.LocalizationString("btn_deactivate")";
+            var textActivate = "@Html.LocalizeString("btn_activate")";
+            var textDeactivate = "@Html.LocalizeString("btn_deactivate")";
 
             var textBtnDanger = "btn-danger";
             var textBtnSuccess = "btn-success";
