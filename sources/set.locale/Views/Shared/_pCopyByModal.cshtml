@@ -71,7 +71,7 @@
             $.post(Action, { copyFrom: '@ViewBag.ID', appIds: JSON.stringify(apps), force: force.is(':checked'), __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() },
                 function (result) {
                     mFooter.find('img').hide();
-                    if (result) {
+                    if (result == 'True') {
                         apps = new Array();
                         $('#CopyToMyAppModal .list-group-item').removeClass('successBG');
                         copyReturnMessage.html('<div class="alert alert-success"><span>@Html.LocalizeString("copy_success")</span></div>');

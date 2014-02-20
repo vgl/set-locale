@@ -99,18 +99,18 @@ $(function () {
         } else {
             queryString = $(this).val();
             if (queryString.length > 1) {
-                $('.popover-content:visible').html("");
+                $('.popover-content:visible').html(null);
                 $('#txtSearch').popover({ content: window.textPleaseWait, title: "", placement: "bottom", container: "body", html: "true" }).popover('show');
 
                 $.get('/search/query', { text: queryString }, function (r) {
-                    $('.popover-content:visible').html("");
+                    $('.popover-content:visible').html(null);
                     if (r && r.IsOk) {
                         if (r.Result.length == 0) {
                             showNoResultForSearch();
                         } else {
                             $.each(r.Result, function () {
-                                var row = $('<div class="row" style="padding:5px;margin-left:-5px;margin-right:-5px;"></div>');
-                                var li = $('<div class="col-sm-12"></div>').append('<a href="' + this.Url + '"><img style="padding-right:5px;" alt="" src="' + this.ImgUrl + '" />' + this.Name + '</a>');
+                                var row = $('<div class="row" onclick="location.href=' + "'" + this.Url + "'" + '" style="padding:5px;margin-left:-5px;margin-right:-5px;margin-top:-8px;cursor:pointer;border-bottom: solid 1px #2B3E50;"></div>');
+                                var li = $('<div class="col-sm-12"></div>').append('<a href="' + this.Url + '"><span class="label label-warning">' + this.Tag + '</span></br> ' + this.Name + '</a>');
                                 row.append(li);
 
                                 $('.popover-content:visible').append(row);

@@ -24,36 +24,36 @@ namespace set.locale.Data.Services
             }
 
             var items = Context.Words.Where(x => !x.IsDeleted);
-            foreach (var key in keys)
-            {
-                var _key = key;
-                items = items.Where(x => x.Name.Contains(_key)
-                                      || x.Key.Contains(_key)
-                                      || x.Description.Contains(_key)
-                                      || x.Translation_AZ.Contains(_key)
-                                      || x.Translation_CN.Contains(_key)
-                                      || x.Translation_EN.Contains(_key)
-                                      || x.Translation_FR.Contains(_key)
-                                      || x.Translation_GR.Contains(_key)
-                                      || x.Translation_IT.Contains(_key)
-                                      || x.Translation_KZ.Contains(_key)
-                                      || x.Translation_RU.Contains(_key)
-                                      || x.Translation_SP.Contains(_key)
-                                      || x.Translation_TK.Contains(_key)
-                                      || x.Translation_TR.Contains(_key)
-                     );
-            }
+
+            items = keys.Aggregate(items, (current, key) =>
+                    current.Where(x => x.Name.Contains(key)
+                               || x.Key.Contains(key)
+                               || x.Description.Contains(key)
+                               || x.Translation_AZ.Contains(key)
+                               || x.Translation_CN.Contains(key)
+                               || x.Translation_EN.Contains(key)
+                               || x.Translation_FR.Contains(key)
+                               || x.Translation_GR.Contains(key)
+                               || x.Translation_IT.Contains(key)
+                               || x.Translation_KZ.Contains(key)
+                               || x.Translation_RU.Contains(key)
+                               || x.Translation_SP.Contains(key)
+                               || x.Translation_TK.Contains(key)
+                               || x.Translation_TR.Contains(key)
+                            ));
 
             var list = items.OrderByDescending(x => x.CreatedAt).Skip(0).Take(10).ToList();
-            foreach (var item in list)
+
+            result.AddRange(list.Select(item =>
             {
-                result.Add(new SearchResult
-                {
-                    Name = string.Format("{0}, {1}", item.Key, item.Key.Localize()),
-                    Url = string.Format("/word/detail/{0}", item.Id),
-                    ImgUrl = string.Empty
-                });
-            }
+                var tag = item.Tags.FirstOrDefault();
+                return tag != null ? new SearchResult
+                       {
+                           Name = string.Format("{0}, {1}", item.Key, item.Key.Localize()),
+                           Url = string.Format("/word/detail/{0}", item.Id),
+                           Tag = tag.Name
+                       } : null;
+            }));
 
             return Task.FromResult(result);
         }
