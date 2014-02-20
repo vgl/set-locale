@@ -268,11 +268,12 @@ namespace set.locale.Controllers
             {
                 var toAppIdList = JsonSerializer.DeserializeFromString<List<string>>(appIds);
                 var fromWord = WordModel.Map(await _wordService.GetById(copyFrom));
+                var translations = fromWord.Translations;
 
                 foreach (var appId in toAppIdList)
                 {
                     var app = await _appService.Get(appId);
-                   
+
                     fromWord.AppId = appId;
                     fromWord.CreatedBy = User.Identity.GetId();
                     fromWord.Tag = app.Name;
@@ -280,19 +281,21 @@ namespace set.locale.Controllers
                     if (!_wordService.IsDuplicateKey(fromWord))
                     {
                         var wordId = await _wordService.Create(fromWord);
-                        await _wordService.AddTranslateList(fromWord.Translations, wordId);
+                        await _wordService.AddTranslateList(translations, wordId);
                         continue;
                     }
 
-                    if (force)
+                    var toWord = WordModel.Map(await _wordService.GetByKey(fromWord.Key, appId));
+
+                    if (!force)
                     {
-                        var toWord = WordModel.Map(await _wordService.GetByKey(fromWord.Key, appId));
-                        await _wordService.AddTranslateList(fromWord.Translations, toWord.Id);
+                        ILookup<string, TranslationModel> fromWordTranslates = fromWord.Translations.ToLookup(x => x.Language.Key, x => x);
+                        ILookup<string, TranslationModel> toWordTranslates = toWord.Translations.ToLookup(x => x.Language.Key, x => x);
+                        var exceptLangs = fromWordTranslates.Select(x => x.Key).Except(toWordTranslates.Select(x => x.Key));
+                        translations = fromWordTranslates.Where(x => exceptLangs.Contains(x.Key)).Select(x => x.First()).ToList();
                     }
-                    else
-                    {
-                        
-                    }
+
+                    await _wordService.AddTranslateList(translations, toWord.Id);
                 }
                 return true;
             }
