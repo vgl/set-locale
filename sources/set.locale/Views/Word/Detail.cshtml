@@ -41,7 +41,7 @@
                             {
                                 <input type="button" id="btnNewTranslate" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizeString("btn_new_translate")" data-id="@Model.Key" />
                             }
-                            <input type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#CopyToMyAppModal" value="@Html.LocalizeString("btn_copy_words_to_my_app")" />
+                            <input type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#CopyToMyAppModal" value="@Html.LocalizeString("btn_copy_translate_to_my_app")" />
                         </div>
 
                         @Html.AntiForgeryToken()
@@ -158,12 +158,13 @@
                     mFooter.find('img').show();
                     mFooter.find('input.btn').prop('disabled', true);
                     var force = mFooter.find('#force');
-                    $.post('/Word/Copy/', { copyFromWordId: '@ViewBag.ID', appIds: JSON.stringify(apps), force: force.is(':checked'), __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() }, function (result) {
+                    $.post('/Word/Copy/', { copyFrom: '@ViewBag.ID', appIds: JSON.stringify(apps), force: force.is(':checked'), __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() },
+                        function (result) {
                         mFooter.find('img').hide();
                         if (result) {
                             apps = new Array();
                             $('#CopyToMyAppModal .list-group-item').removeClass('successBG');
-                            copyReturnMessage.html('<div class="alert alert-success"><span>@Html.LocalizeString("tag_copy_success")</span></div>');
+                            copyReturnMessage.html('<div class="alert alert-success"><span>@Html.LocalizeString("copy_success")</span></div>');
                             setTimeout(function () {
                                 listGroup.find('.list-group-item-heading input').prop('checked', false);
                                 force.prop('checked', false);
@@ -172,7 +173,7 @@
                                 copyReturnMessage.html(null);
                             }, 2500);
                         } else {
-                            copyReturnMessage.html('<div class="alert alert-danger"><span>@Html.LocalizeString("tag_copy_success")</span></div>');
+                            copyReturnMessage.html('<div class="alert alert-danger"><span>@Html.LocalizeString("copy_error")</span></div>');
                         }
                     });
                 });

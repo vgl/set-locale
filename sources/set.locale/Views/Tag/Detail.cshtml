@@ -137,12 +137,13 @@
                     mFooter.find('img').show();
                     mFooter.find('input.btn').prop('disabled', true);
                     var force = mFooter.find('#force');
-                    $.post('/Tag/Copy/', { copyFromTag: '@ViewBag.ID', appIds: JSON.stringify(apps), force: force.is(':checked'), __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() }, function (result) {
+                    $.post('/Tag/Copy/', { copyFrom: '@ViewBag.ID', appIds: JSON.stringify(apps), force: force.is(':checked'), __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() },
+                        function (result) {
                         mFooter.find('img').hide();
                         if (result) {
                             apps = new Array();
                             $('#CopyToMyAppModal .list-group-item').removeClass('successBG');
-                            copyReturnMessage.html('<div class="alert alert-success"><span>@Html.LocalizeString("tag_copy_success")</span></div>');
+                            copyReturnMessage.html('<div class="alert alert-success"><span>@Html.LocalizeString("copy_success")</span></div>');
                             setTimeout(function () {
                                 listGroup.find('.list-group-item-heading input').prop('checked', false);
                                 force.prop('checked', false);
@@ -151,7 +152,7 @@
                                 copyReturnMessage.html(null);
                             }, 2500);
                         } else {
-                            copyReturnMessage.html('<div class="alert alert-danger"><span>@Html.LocalizeString("tag_copy_success")</span></div>');
+                            copyReturnMessage.html('<div class="alert alert-danger"><span>@Html.LocalizeString("copy_error")</span></div>');
                         }
                     });
                 });

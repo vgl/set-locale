@@ -62,10 +62,10 @@ namespace set.locale.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<bool> Copy(string copyFromTag, string appIds, bool force)
+        public async Task<bool> Copy(string copyFrom, string appIds, bool force)
         {
             var toAppIdList = JsonSerializer.DeserializeFromString<List<string>>(appIds);
-            var fromWordsByTag = await _tagService.GetWords(copyFromTag);
+            var fromWordsByTag = await _tagService.GetWords(copyFrom);
             foreach (var appId in toAppIdList)
             {
                 var words = await _wordService.GetByAppId(appId);

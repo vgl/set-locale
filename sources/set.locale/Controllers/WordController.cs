@@ -262,12 +262,12 @@ namespace set.locale.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<bool> Copy(string copyFromWordId, string appIds, bool force)
+        public async Task<bool> Copy(string copyFrom, string appIds, bool force)
         {
             try
             {
                 var toAppIdList = JsonSerializer.DeserializeFromString<List<string>>(appIds);
-                var fromWord = WordModel.Map(await _wordService.GetById(copyFromWordId));
+                var fromWord = WordModel.Map(await _wordService.GetById(copyFrom));
 
                 foreach (var appId in toAppIdList)
                 {
