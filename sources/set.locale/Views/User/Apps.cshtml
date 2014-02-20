@@ -44,9 +44,15 @@
             }
             else
             {
-                Model.First().Msg = "list_item_not_found".Localize();
-                Model.First().IsOk = false;
-                @Html.Partial("_Msg")
+                <div class="row">
+                    <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <p>
+                            <a href="/app/new" class="btn btn-warning btn-sm pull-right">@Html.LocalizeString("new_app")</a>
+                            <span>@Html.LocalizeString("list_item_not_found")</span>
+                        </p>
+                    </div>
+                </div>
             }
         </div>
 
@@ -79,8 +85,8 @@
             var textDeactivate = "@Html.LocalizeString("btn_deactivate")";
 
             $("input#btnModalAction").click(function () {
-                var id = $(this).data("id");
-                var isActive = $(this).data("isactive");
+                var id = $(this).data(textId);
+                var isActive = $(this).data(textIsActive);
                 $.ajax({
                     url: "/App/ChangeStatus",
                     type: "POST",

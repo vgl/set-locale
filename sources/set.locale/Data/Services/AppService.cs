@@ -131,8 +131,9 @@ namespace set.locale.Data.Services
             var user = Context.Users.FirstOrDefault(x => x.Id == updatedBy);
             if (user == null) return Task.FromResult(false);
 
+            int roleId = ConstHelper.BasicRoles[ConstHelper.Admin];
             var app = Context.Apps.Include(x => x.Tokens).FirstOrDefault(x => x.Id == appId && (x.CreatedBy == updatedBy 
-                                                                                                || user.RoleId == ConstHelper.BasicRoles[ConstHelper.Admin]));
+                                                                                                || user.RoleId == roleId) );
             if (app == null) return Task.FromResult(false);
 
             foreach (var token in app.Tokens)

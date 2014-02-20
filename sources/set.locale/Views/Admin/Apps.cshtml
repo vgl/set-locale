@@ -85,30 +85,24 @@
             $("input#btnModalAction").click(function () {
                 var id = $(this).data(textId);
                 var isActive = $(this).data(textIsActive);
-
                 $.ajax({
                     url: "/App/ChangeStatus",
                     type: "POST",
                     data: "id=" + id + "&isActive=" + isActive + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
-                    success: function (r) {
-                        if (r && r.Ok) {
-                            if (isActive) {
-                                $("a[data-id='" + id + "']").removeClass("btn-danger")
-                                                            .addClass("btn-success")
-                                                            .data("isactive", false)
-                                                            .html(textActivate);
-                            } else {
-                                $("a[data-id='" + id + "']").removeClass("btn-success")
-                                                            .addClass("btn-danger")
-                                                            .data("isactive", true)
-                                                            .html(textDeactivate);
-                            }
+                }).done(function (r) {
+                    if (r && r.IsOk) {
 
-                            $("#DeactivateModal").modal('hide');
-
-                        } else {
-                            //warning
+                        if (isActive) {
+                            $("a[data-id='" + id + "']").removeClass("btn-danger").addClass("btn-success").data("isactive", false).html(textActivate);
                         }
+                        else {
+                            $("a[data-id='" + id + "']").removeClass("btn-success").addClass("btn-danger").data("isactive", true).html(textDeactivate);
+                        }
+
+                        $("#DeactivateModal").modal('hide');
+
+                    } else {
+                        //warning
                     }
                 });
             });
