@@ -304,7 +304,7 @@
 
 
                 if ($(this).hasClass("btn-warning")) {
-                    $(this).removeClass("btn-warning").addClass("btn-primary");
+                    $(this).removeClass("btn-warning").addClass("btn-success");
                     $(this).val("@Html.Raw(Html.LocalizeString("btn_save"))");
 
 
@@ -318,7 +318,7 @@
 
                     btnCancel.click(function (r) {
                         var btn = $(this).parent().children(":first");
-                        $(btn).removeClass("btn-primary").addClass("btn-warning");
+                        $(btn).removeClass("btn-success").addClass("btn-warning");
                         $(btn).val("@Html.Raw(Html.LocalizeString("btn_edit"))");
 
 
@@ -330,8 +330,8 @@
 
 
                     });
-                } else if ($(this).hasClass("btn-primary")) {
-                    $(this).removeClass("btn-primary").addClass("btn-warning");
+                } else if ($(this).hasClass("btn-success")) {
+                    $(this).removeClass("btn-success").addClass("btn-warning");
                     $(this).val("@Html.Raw(Html.LocalizeString("btn_edit"))");
 
 

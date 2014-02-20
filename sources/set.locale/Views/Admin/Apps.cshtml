@@ -27,7 +27,7 @@
                             @foreach (var item in Model.Items)
                             {
                                 var val = item.IsActive ? Html.LocalizeString("btn_deactivate") : Html.LocalizeString("btn_activate");
-                                var buttonCss = item.IsActive ? "btn-warning" : "btn-success";
+                                var buttonCss = item.IsActive ? "btn-danger" : "btn-success";
                                 <tr>
                                     <td>
                                         <a class="btn btn-sm @buttonCss btnAction" data-toggle="modal" href="#DeactivateModal" data-id="@item.Id" data-isactive="@item.IsActive">@val</a>
@@ -93,13 +93,13 @@
                     success: function (r) {
                         if (r && r.Ok) {
                             if (isActive) {
-                                $("a[data-id='" + id + "']").removeClass("btn-warning")
+                                $("a[data-id='" + id + "']").removeClass("btn-danger")
                                                             .addClass("btn-success")
                                                             .data("isactive", false)
                                                             .html(textActivate);
                             } else {
                                 $("a[data-id='" + id + "']").removeClass("btn-success")
-                                                            .addClass("btn-warning")
+                                                            .addClass("btn-danger")
                                                             .data("isactive", true)
                                                             .html(textDeactivate);
                             }

@@ -22,7 +22,7 @@
                 <form method="post" action="/user/passwordreset">
                     <input type="hidden" id="Email" name="Email" value="@Model.Email" required />
                     @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-primary">@Html.LocalizeString("btn_send_password_reset_link")</button>
+                    <button type="submit" class="btn btn-success">@Html.LocalizeString("btn_send_password_reset_link")</button>
                 </form>
             </div>
         </div>
