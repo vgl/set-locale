@@ -9,7 +9,7 @@ namespace set.locale.Data
         public SetDbContext(string connectionStringOrName)
             : base(connectionStringOrName)
         {
-            Configuration.AutoDetectChangesEnabled = false;
+            //Configuration.AutoDetectChangesEnabled = false;
             Database.SetInitializer(new SetDbInitializer());
         }
 

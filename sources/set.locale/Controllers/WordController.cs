@@ -11,6 +11,7 @@ using set.locale.Helpers;
 using set.locale.Data.Entities;
 using set.locale.Data.Services;
 using set.locale.Models;
+using System.Text;
 
 namespace set.locale.Controllers
 {
@@ -40,7 +41,7 @@ namespace set.locale.Controllers
 
             var apps = await _appService.GetByUserId(User.Identity.GetId());
             ViewBag.Apps = apps.Select(AppModel.Map);
-            
+
             return View(model);
         }
 
@@ -264,10 +265,13 @@ namespace set.locale.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<bool> Copy(string copyFrom, string appIds, bool force)
+        public async Task<string> Copy(string copyFrom, string appIds, bool force)
         {
             try
             {
+                int addedCount = 0;
+                int createCount = 0;
+                StringBuilder result = new StringBuilder();
                 var toAppIdList = JsonSerializer.DeserializeFromString<List<string>>(appIds);
                 var fromWord = WordModel.Map(await _wordService.GetById(copyFrom));
                 var translations = fromWord.Translations;
@@ -275,6 +279,7 @@ namespace set.locale.Controllers
                 foreach (var appId in toAppIdList)
                 {
                     var app = await _appService.Get(appId);
+                    var toWord = WordModel.Map(await _wordService.GetByKey(fromWord.Key, appId));
 
                     fromWord.AppId = appId;
                     fromWord.CreatedBy = User.Identity.GetId();
@@ -283,27 +288,30 @@ namespace set.locale.Controllers
                     if (!_wordService.IsDuplicateKey(fromWord))
                     {
                         var wordId = await _wordService.Create(fromWord);
-                        await _wordService.AddTranslateList(translations, wordId);
-                        continue;
+                        createCount = await _wordService.AddTranslateList(translations, wordId);
                     }
-
-                    var toWord = WordModel.Map(await _wordService.GetByKey(fromWord.Key, appId));
-
-                    if (!force)
+                    else if (!force)
                     {
                         ILookup<string, TranslationModel> fromWordTranslates = fromWord.Translations.ToLookup(x => x.Language.Key, x => x);
                         ILookup<string, TranslationModel> toWordTranslates = toWord.Translations.ToLookup(x => x.Language.Key, x => x);
                         var exceptLangs = fromWordTranslates.Select(x => x.Key).Except(toWordTranslates.Select(x => x.Key));
                         translations = fromWordTranslates.Where(x => exceptLangs.Contains(x.Key)).Select(x => x.First()).ToList();
+                        createCount = translations.Count;
                     }
 
-                    await _wordService.AddTranslateList(translations, toWord.Id);
+                    addedCount = await _wordService.AddTranslateList(translations, toWord.Id);
+
+
+                    result.AppendFormat("<h4>{0}</h4>", app.Name);
+                    result.AppendFormat("{0}: <span class='label label-info'>{1}</span>, ", "existing_translates".Localize(), toWord.Translations.Count);
+                    result.AppendFormat("{0}: <span class='label label-danger'>{1}</span>, ", "added_translates".Localize(), addedCount - toWord.Translations.Count);
+                    result.AppendFormat("{0}: <span class='label label-success'>{1}</span> ", "created_translates".Localize(), createCount);
                 }
-                return true;
+                return result.ToString();
             }
             catch (Exception)
             {
-                return false;
+                return string.Empty;
             }
         }
 

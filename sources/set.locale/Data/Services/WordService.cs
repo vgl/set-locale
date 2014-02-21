@@ -283,9 +283,14 @@ namespace set.locale.Data.Services
             return Task.FromResult(Context.SaveChanges() > 0);
         }
 
-        public async Task AddTranslateList(List<TranslationModel> model, string id)
+        public async Task<int> AddTranslateList(List<TranslationModel> model, string id)
         {
-            foreach (var item in model) await AddTranslate(id, item.Language.Key, item.Value);
+            int result = 0;
+            foreach (var item in model)
+            {
+                if (await AddTranslate(id, item.Language.Key, item.Value)) result++;
+            }
+            return await Task.FromResult(result);
         }
 
         public Task<bool> Tag(string key, string tagName)
@@ -355,7 +360,7 @@ namespace set.locale.Data.Services
         Task<PagedList<Word>> GetWords(string appId, int pageNumber);
         Task<PagedList<Word>> GetNotTranslated(int pageNumber);
         Task<bool> AddTranslate(string id, string language, string translation);
-        Task AddTranslateList(List<TranslationModel> model, string id);
+        Task<int> AddTranslateList(List<TranslationModel> model, string id);
         Task<bool> Tag(string key, string tag);
         Task<List<Word>> GetByAppId(string appId);
         Task<List<Word>> GetByAppName(string appName);
