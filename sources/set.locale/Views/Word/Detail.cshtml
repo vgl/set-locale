@@ -97,27 +97,19 @@
         $(function () {
             var translatedLanguages = [@Html.Raw(Model.LanguagesStr)];
 
-
             function addNewTranslationRow() {
                 var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
                 btnCancel.val('@Html.Raw(Html.LocalizeString("btn_cancel"))');
 
-
                 btnCancel.click(function () {
-
-
                     $("h3#hdForm").html('');
                     $("div#dvForm").html('');
                     $("input.btnNewTranslate").show();
-
-
                 });
-
 
                 var btnSave = $('<input type="button" id="btnSave" />').addClass('btn btn-sm btn-success');
                 btnSave.val('@Html.Raw(Html.LocalizeString("btn_save"))');
                 btnSave.data('id', '@Model.Key');
-
 
                 btnSave.click(function () {
                     var lang = $("select#selLanguages").val();
@@ -132,15 +124,10 @@
                         data: "id=@Model.Id&language=" + lang + "&translation=" + translation + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
                         success: function (r) {
                             if (r && r.IsOk) {
-
-
                                 var tr = $('<tr />');
-
-
                                 var tdBtn = $('<td />');
                                 var tdFlag = $('<td />');
                                 var tdTranslation = $('<td />');
-
 
                                 var btnEdit = $('<input type="button" class="btn btn-sm btn-warning btnEdit" data-lang="' + lang + '" value="@Html.LocalizeString("btn_edit")" />');
                                 btnEdit.click(fnEdit);
@@ -186,8 +173,6 @@
 
                 var inputLanguages = $('<select id="selLanguages" name="selLanguages" />');
                 $.each(allLanguages, function (i, lang) {
-
-
                     var isExisting = false;
                     $.each(translatedLanguages, function (j, l) {
                         if (lang.id === l.id) {
@@ -195,7 +180,6 @@
                             return;
                         }
                     });
-
 
                     if (!isExisting) {
                         inputLanguages.append('<option value="' + lang.id + '">' + lang.text + '</opiton>');
@@ -227,10 +211,8 @@
                 var lang = btn.data("lang");
                 var td = btn.parent().parent().children(":last");
 
-
                 var inputTranslation = $('<input type="text" id="txtEdit" name="txtEdit" class="form-control col-4" data-lang="' + lang + '" />');
                 inputTranslation.val(td.html());
-
 
                 td.html("");
                 td.append(inputTranslation);
@@ -241,28 +223,20 @@
                 var lang = btn.data("lang");
                 var translations = $("input#txtEdit");
 
-
                 btn.parent().children(":last-child").remove();
-
 
                 var translation = "";
                 $.each(translations, function (i, txt) {
                     if ($(txt).data("lang") == lang) {
                         translation = $(txt).val();
-
-
                         if (translation == "") {
                             $(txt).parent().parent().remove();
                         }
-
-
                         return;
                     }
                 });
 
-
                 var td = btn.parent().parent().children(":last");
-
 
                 $.ajax({
                     url: "/Word/Translate",
@@ -282,15 +256,12 @@
             $("input.btnNewTranslate").click(function () {
                 $(this).hide();
 
-
                 addNewTranslationRow();
-
 
                 function format(state) {
                     if (!state.id) return state.text;
                     return "<img class='flag' alt='flag' style='margin:5px;' src='/public/img/flag/" + state.id.toLowerCase() + ".png'/>" + state.text;
                 }
-
 
                 $("select#selLanguages").select2({ formatResult: format, formatSelection: format, escapeMarkup: function (m) { return m; } });
             });
@@ -300,54 +271,42 @@
                 var td = $(this).parent().parent().children(":last");
                 var oldText = td.html();
 
-
                 if ($(this).hasClass("btn-warning")) {
                     $(this).removeClass("btn-warning").addClass("btn-success");
                     $(this).val("@Html.Raw(Html.LocalizeString("btn_save"))");
 
-
                     var btnCancel = $('<input type="button" style ="margin-left:5px" />').addClass('btn btn-sm btn-danger');
                     btnCancel.val('@Html.Raw(Html.LocalizeString("btn_cancel"))');
 
-
                     $(this).parent().append(btnCancel);
                     prepareEditRow($(this));
-
 
                     btnCancel.click(function (r) {
                         var btn = $(this).parent().children(":first");
                         $(btn).removeClass("btn-success").addClass("btn-warning");
                         $(btn).val("@Html.Raw(Html.LocalizeString("btn_edit"))");
-
+                        
+                        var translationTd = $(this).parent().parent().children(":last");
+                        translationTd.html(oldText);
 
                         $(this).remove();
-
-
-                        var lastTd = $("input#txtEdit").parent();
-                        $(lastTd).html(oldText);
-
-
                     });
                 } else if ($(this).hasClass("btn-success")) {
                     $(this).removeClass("btn-success").addClass("btn-warning");
                     $(this).val("@Html.Raw(Html.LocalizeString("btn_edit"))");
 
-
                     prepareDataShowingRow($(this));
                 }
             };
 
-
             $("input.btnEdit").click(fnEdit);
-
         });
     </script>
-
-
 
     <script>
         var Action = '/Word/Copy/';
     </script>
+
     @Html.Partial("_pCopyByModal")
     <script>
         var forceMsg = $('#CopyToMyAppModal .modal-content .modal-footer label');

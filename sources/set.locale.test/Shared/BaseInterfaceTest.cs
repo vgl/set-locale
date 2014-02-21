@@ -5,7 +5,7 @@ namespace set.locale.test.Shared
 {
     public class BaseInterfaceTest
     {
-        public const string BASE_URL = "http://localhost:8011";
+        public const string BASE_URL = "http://localhost:8033";
 
         public const string ACTION_HOME = "/";
         public const string ACTION_CONTACT = "/home/contact";
