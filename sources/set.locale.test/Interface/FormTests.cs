@@ -10,6 +10,11 @@ namespace set.locale.test.Interface
     [TestFixture]
     public class FormTests : BaseInterfaceTest
     {
+        private void WaitHack()
+        {
+            Browser.GetScreenshot().SaveAsFile(string.Format("{0}.png", Guid.NewGuid()), ImageFormat.Png);
+        }
+
         [Test]
         public void should_save_new_feedback_via_popup_form()
         {
@@ -27,44 +32,21 @@ namespace set.locale.test.Interface
             CloseBrowser();
         }
 
-        private void WaitHack()
-        {
-            Browser.GetScreenshot().SaveAsFile(string.Format("{0}.png", Guid.NewGuid()), ImageFormat.Png);
-        }
-
         [Test]
-        public void should_save_domainobject_and_new_one_after()
+        public void should_save_new_user()
         {
-            LoginAsUser();
-
-            var url = string.Format("{0}{1}", BASE_URL, ACTION_NEW_DOMAIN_OBJECT);
+            var url = string.Format("{0}{1}", BASE_URL, ACTION_SIGNUP);
+            var returnUrl = string.Format("{0}{1}", BASE_URL, ACTION_NEW_APP);
 
             GoTo(url);
 
-            Browser.FindElementById("Name").SendKeys("test domain obj with save and new");
-            Browser.FindElementById("btnSaveAndNew").Click();
+            Browser.FindElementById("Name").SendKeys("John Doe");
+            Browser.FindElementById("Email").SendKeys("john@doe.com");
+            Browser.FindElementById("Password").SendKeys("123456");
+            Browser.FindElementByClassName("btn-primary").Click();
 
             Assert.IsNotNull(Browser);
-            Assert.AreEqual(Browser.Url, url);
-
-            CloseBrowser();
-        }
-
-        [Test]
-        public void should_save_domainobject_and_redirect_to_list()
-        {
-            LoginAsUser();
-
-            var url = string.Format("{0}{1}", BASE_URL, ACTION_NEW_DOMAIN_OBJECT);
-            var domainObjListUrl = string.Format("{0}{1}", BASE_URL, ACTION_LIST_DOMAIN_OBJECTS);
-
-            GoTo(url);
-
-            Browser.FindElementById("Name").SendKeys("test domain obj");
-            Browser.FindElementById("btnSave").Click();
-
-            Assert.IsNotNull(Browser);
-            Assert.AreEqual(Browser.Url, domainObjListUrl);
+            Assert.AreEqual(Browser.Url, returnUrl);
 
             CloseBrowser();
         }
