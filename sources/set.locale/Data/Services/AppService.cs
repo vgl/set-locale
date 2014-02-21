@@ -142,7 +142,7 @@ namespace set.locale.Data.Services
             }
 
             app.IsActive = !isActive;
-            Context.Entry(app).State = EntityState.Modified;
+            //Context.Entry(app).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
@@ -165,7 +165,7 @@ namespace set.locale.Data.Services
                 item.DeletedAt = DateTime.Now;
                 item.IsDeleted = true;
                 item.DeletedBy = deletedBy;
-                Context.Entry(item).State = EntityState.Modified;
+                //Context.Entry(item).State = EntityState.Modified;
                 return Task.FromResult(Context.SaveChanges() > 0);
             }
 

@@ -10,9 +10,9 @@ namespace set.locale.Data
 {
     public class SetDbMigrationConfiguration : DbMigrationsConfiguration<SetDbContext>
     {
+        private static string usrId;
 
-        public static string usrId { get; set; }
-        public static string appId { get; set; }
+        private static string appId;
 
         public SetDbMigrationConfiguration()
         {

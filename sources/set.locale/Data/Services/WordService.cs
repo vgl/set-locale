@@ -35,7 +35,7 @@ namespace set.locale.Data.Services
             }
 
             var items = model.Tag.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-            var tags = items.Select(item => new Tag { CreatedBy = model.CreatedBy, Name = item, UrlName = item.ToUrlSlug() }).ToList();
+            var tags = items.Select(item => new Tag { CreatedBy = model.CreatedBy, Name = item, UrlName = item.ToUrlSlug(), AppId = model.AppId }).ToList();
 
             var word = new Word
             {
@@ -51,12 +51,7 @@ namespace set.locale.Data.Services
 
             Context.Words.Add(word);
 
-            if (Context.SaveChanges() > 0)
-            {
-                return Task.FromResult(word.Id);
-            }
-
-            return null;
+            return Context.SaveChanges() > 0 ? Task.FromResult(word.Id) : null;
         }
 
         public async Task<int> CreateList(List<WordModel> model, string appId, string userId)
@@ -66,15 +61,17 @@ namespace set.locale.Data.Services
             foreach (var word in model)
             {
                 word.AppId = appId;
-                word.Tag = app.Name;
+                word.Tag = app.Name.ToUrlSlug();
                 word.CreatedBy = userId;
 
                 var task = Create(word);
 
                 if (task == null) continue;
 
+                var newWordId = task.Result;
+
                 result++;
-                await AddTranslateList(word.Translations, word.Id);
+                await AddTranslateList(word.Translations, newWordId);
             }
             return await Task.FromResult(result);
         }
@@ -92,7 +89,7 @@ namespace set.locale.Data.Services
             item.DeletedAt = DateTime.Now;
             item.IsDeleted = true;
             item.DeletedBy = model.CreatedBy;
-            Context.Entry(item).State = EntityState.Modified;
+            //Context.Entry(item).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
@@ -110,7 +107,7 @@ namespace set.locale.Data.Services
                 item.DeletedAt = DateTime.Now;
                 item.IsDeleted = true;
                 item.DeletedBy = createdBy;
-                Context.Entry(item).State = EntityState.Modified;
+                //Context.Entry(item).State = EntityState.Modified;
             }
             return Task.FromResult(Context.SaveChanges());
         }
@@ -128,7 +125,7 @@ namespace set.locale.Data.Services
             item.DeletedAt = DateTime.Now;
             item.IsDeleted = true;
             item.DeletedBy = model.CreatedBy;
-            Context.Entry(item).State = EntityState.Modified;
+            //Context.Entry(item).State = EntityState.Modified;
 
             Context.SaveChanges();
 
@@ -273,7 +270,6 @@ namespace set.locale.Data.Services
                 word.IsTranslated = word.TranslationCount > 0;
 
                 propInfo.SetValue(word, null);
-
             }
             else
             {
@@ -281,7 +277,7 @@ namespace set.locale.Data.Services
                 word.TranslationCount++;
                 word.IsTranslated = true;
             }
-            Context.Entry(word).State = EntityState.Modified;
+            //Context.Entry(word).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
@@ -317,7 +313,7 @@ namespace set.locale.Data.Services
             };
 
             word.Tags = new List<Tag> { tag };
-            Context.Entry(word).State = EntityState.Modified;
+            //Context.Entry(word).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
