@@ -125,7 +125,6 @@ namespace set.locale.test.Interface
             CloseBrowser();
         }
 
-
         [Test]
         public void should_user_reset_password()
         {
@@ -138,6 +137,17 @@ namespace set.locale.test.Interface
 
             SubmitIsSuccessAlert();
 
+            CloseBrowser();
+        }
+
+        [Test]
+        public void should_write_search_query()
+        {
+            var url = string.Format("{0}{1}", BASE_URL, ACTION_HOME);
+
+            GoTo(url);
+
+            Browser.FindElementById("txtSearch").SendKeys("btn_ca");
             CloseBrowser();
         }
 
