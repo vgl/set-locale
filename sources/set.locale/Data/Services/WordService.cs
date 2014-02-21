@@ -159,7 +159,7 @@ namespace set.locale.Data.Services
 
         public Task<Word> GetById(string id)
         {
-            var word = Context.Words.FirstOrDefault(x => x.Id == id);
+            var word = Context.Words.FirstOrDefault(x => x.Id == id && (x.IsActive && !x.IsDeleted));
             return Task.FromResult(word);
         }
 
@@ -214,7 +214,7 @@ namespace set.locale.Data.Services
                 pageNumber = 1;
             }
 
-            var words = Context.Words.Where(x => x.IsTranslated == false).ToList();
+            var words = Context.Words.Where(x => !x.IsTranslated && (x.IsActive && !x.IsDeleted)).ToList();
 
             long totalCount = words.Count();
             var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
@@ -237,7 +237,7 @@ namespace set.locale.Data.Services
                 return Task.FromResult(false);
             }
 
-            var word = Context.Words.FirstOrDefault(x => x.Id == id);
+            var word = Context.Words.FirstOrDefault(x => x.Id == id && (x.IsActive && !x.IsDeleted));
             if (word == null)
             {
                 return Task.FromResult(false);
@@ -283,7 +283,7 @@ namespace set.locale.Data.Services
                 return Task.FromResult(false);
             }
 
-            var word = Context.Words.FirstOrDefault(x => x.Key == key && x.Tags.Count(y => y.Name == tagName) == 0);
+            var word = Context.Words.FirstOrDefault(x => x.Key == key && (x.IsActive && !x.IsDeleted) && x.Tags.Count(y => y.Name == tagName) == 0);
             if (word == null)
             {
                 return Task.FromResult(false);
@@ -302,18 +302,18 @@ namespace set.locale.Data.Services
 
         public Task<List<Word>> GetByAppId(string appId)
         {
-            var words = Context.Words.Where(x => x.AppId == appId).ToList();
+            var words = Context.Words.Where(x => x.AppId == appId && (x.IsActive && !x.IsDeleted)).ToList();
             return Task.FromResult(words);
         }
 
         public Task<List<Word>> GetByAppName(string appName)
         {
-            var words = Context.Words.Where(x => x.App.Name == appName).ToList();
+            var words = Context.Words.Where(x => x.App.Name == appName && (x.IsActive && !x.IsDeleted)).ToList();
             return Task.FromResult(words);
         }
         public Task<List<Word>> GetAll()
         {
-            var words = Context.Words.ToList();
+            var words = Context.Words.Where(x => x.IsActive && !x.IsDeleted).ToList();
             return Task.FromResult(words);
         }
 
