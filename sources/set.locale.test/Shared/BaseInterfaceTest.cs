@@ -27,7 +27,7 @@ namespace set.locale.test.Shared
         public const string ACTION_NEW_APP = "/app/new";
         public const string ACTION_LIST_USER_APP = "/user/apps";
 
-        public const string ACTION_NEW_TRANSLATOR = "admin/newtranslator";
+        public const string ACTION_NEW_TRANSLATOR = "/admin/newtranslator";
         public const string ACTION_LIST_ADMIN_APPS = "/admin/apps";
         public const string ACTION_ADMIN_EXCEL_IMPORT = "/admin/import";
 
@@ -65,7 +65,7 @@ namespace set.locale.test.Shared
 
             Browser.FindElementById("Email").SendKeys("admin@test.com");
             Browser.FindElementById("Password").SendKeys("password");
-            Browser.FindElementById("frm").Submit();
+            Browser.FindElementByClassName("btn-success").Submit();
         }
 
         public void LogOut()
@@ -82,6 +82,12 @@ namespace set.locale.test.Shared
         {
             Assert.IsNotNull(Browser);
             Assert.AreEqual(Browser.Url, url);
+        }
+
+        public void AssertNotUrl(string url)
+        {
+            Assert.IsNotNull(Browser);
+            Assert.AreNotEqual(Browser.Url, url);
         }
 
         public void CloseBrowser()

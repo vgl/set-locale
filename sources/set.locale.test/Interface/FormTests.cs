@@ -99,12 +99,30 @@ namespace set.locale.test.Interface
             GoTo(url);
 
             Browser.FindElementById("key").SendKeys("test_word");
-            Browser.FindElementById("tag").SendKeys("test, tag");
             Browser.FindElementById("description").SendKeys("test desc");
-            Browser.FindElementById("btn_save").Click();
+            Browser.FindElementByClassName("btn-success").Click();
 
-            Assert.IsNotNull(Browser);
-            Assert.AreNotEqual(Browser.Url, url);
+            AssertNotUrl(url);
+
+            CloseBrowser();
+        }
+
+
+        [Test]
+        public void should_save_new_translator()
+        {
+            LoginAsAdmin();
+
+            var url = string.Format("{0}{1}", BASE_URL, ACTION_NEW_TRANSLATOR);
+            var returnUrl = string.Format("{0}{1}", BASE_URL, ACTION_ADMIN_USER_LISTING);
+
+            GoTo(url);
+
+            Browser.FindElementById("name").SendKeys("John Doe");
+            Browser.FindElementById("email").SendKeys("john@doe.com");
+            Browser.FindElementByClassName("btn-success").Click();
+
+            AssertUrl(returnUrl);
 
             CloseBrowser();
         }
