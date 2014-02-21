@@ -132,7 +132,7 @@ namespace set.locale.Data.Services
                 return null;
             }
 
-            var words = Context.Words.Include(x => x.Tags).Where(x => x.CreatedBy == userId).ToList();
+            var words = Context.Words.Include(x => x.Tags).Where(x => x.CreatedBy == userId && (x.IsActive && !x.IsDeleted)).ToList();
 
             long totalCount = words.Count();
             var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
