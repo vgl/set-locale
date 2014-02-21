@@ -113,21 +113,26 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
+    <Content Include="Public\css\index.html" />
     <Content Include="Public\css\select2.css" />
+    <Content Include="Public\files\index.html" />
     <Content Include="Public\img\favicon.ico" />
     <Content Include="Public\img\flag\az.png" />
     <Content Include="Public\img\flag\cn.png" />
     <Content Include="Public\img\flag\fr.png" />
     <Content Include="Public\img\flag\gr.png" />
+    <Content Include="Public\img\flag\index.html" />
     <Content Include="Public\img\flag\it.png" />
     <Content Include="Public\img\flag\kz.png" />
     <Content Include="Public\img\flag\ru.png" />
     <Content Include="Public\img\flag\sp.png" />
     <Content Include="Public\img\flag\tk.png" />
+    <Content Include="Public\img\index.html" />
     <Content Include="Public\img\select2-spinner.gif" />
     <Content Include="Public\img\select2.png" />
     <Content Include="Public\img\select2x2.png" />
     <Content Include="Public\img\word.png" />
+    <Content Include="Public\js\index.html" />
     <Content Include="Public\js\select2.js" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_pTablePager.cshtml">

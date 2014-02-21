@@ -83,7 +83,7 @@
                     type: "POST",
                     data: "token=" + token + "&__RequestVerificationToken=" + $('input[name="__RequestVerificationToken"]').val(),
                     success: function (r) {
-                        if (r && r.Ok) {
+                        if (r && r.IsOk) {
                             $('#waitSpinner').hide();
                             $('#btnExport').show();
                             var iframe = document.getElementById("downloadFrame");

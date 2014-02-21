@@ -241,7 +241,7 @@ namespace set.locale.Controllers
                     workSheet.Column(i).AutoFit();
                 }
 
-                var fileName = string.Format("{0}-{1}.xlsx", tagName, DateTime.Now.ToString("s").Replace(':', '-').Replace("T", "-"));
+                var fileName = string.Format("{0}-{1}.xls", tagName, DateTime.Now.ToString("s").Replace(':', '-').Replace("T", "-"));
                 var filePath = string.Format("/public/files/{0}", fileName);
                 var mapPath = Server.MapPath(filePath);
 
