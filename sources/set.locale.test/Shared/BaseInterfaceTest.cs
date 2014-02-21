@@ -54,7 +54,7 @@ namespace set.locale.test.Shared
 
             Browser.FindElementById("Email").SendKeys("user@test.com");
             Browser.FindElementById("Password").SendKeys("password");
-            Browser.FindElementById("frm").Submit();
+            Browser.FindElementByClassName("btn-success").Submit();
         }
 
         public void LoginAsAdmin()

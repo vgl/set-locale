@@ -52,6 +52,26 @@ namespace set.locale.test.Interface
         }
 
         [Test]
+        public void should_save_new_app()
+        {
+            LoginAsUser();
+
+            var url = string.Format("{0}{1}", BASE_URL, ACTION_NEW_APP);
+
+            GoTo(url);
+
+            Browser.FindElementById("name").SendKeys("New App");
+            Browser.FindElementById("url").SendKeys("testapp.com");
+            Browser.FindElementById("description").SendKeys("test app");
+            Browser.FindElementByClassName("btn-success").Click();
+
+            Assert.IsNotNull(Browser);
+            Assert.AreNotEqual(Browser.Url, url);
+
+            CloseBrowser();
+        }
+
+        [Test]
         public void should_save_new_word()
         {
             LoginAsAdmin();
