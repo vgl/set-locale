@@ -33,6 +33,24 @@ namespace set.locale.test.Interface
         }
 
         [Test]
+        public void should_save_contact_form()
+        {
+            var url = string.Format("{0}{1}", BASE_URL, ACTION_CONTACT);
+
+            GoTo(url);
+
+            Browser.FindElementById("Email").SendKeys("john@doe.com");
+            Browser.FindElementById("Subject").SendKeys("Message from John Doe");
+            Browser.FindElementById("Message").SendKeys("Hi, this is test message.");
+            Browser.FindElementByClassName("btn-success").Click();
+
+            Assert.IsNotNull(Browser);
+            Assert.AreEqual(Browser.PageSource.Contains("alert-success"), true);
+
+            CloseBrowser();
+        }
+
+        [Test]
         public void should_save_new_user()
         {
             var url = string.Format("{0}{1}", BASE_URL, ACTION_SIGNUP);
@@ -43,7 +61,7 @@ namespace set.locale.test.Interface
             Browser.FindElementById("Name").SendKeys("John Doe");
             Browser.FindElementById("Email").SendKeys("john@doe.com");
             Browser.FindElementById("Password").SendKeys("123456");
-            Browser.FindElementByClassName("btn-primary").Click();
+            Browser.FindElementByClassName("btn-success").Click();
 
             Assert.IsNotNull(Browser);
             Assert.AreEqual(Browser.Url, returnUrl);
@@ -77,7 +95,6 @@ namespace set.locale.test.Interface
             LoginAsAdmin();
 
             var url = string.Format("{0}{1}", BASE_URL, ACTION_NEW_WORD);
-            var returnUrl = string.Format("{0}{1}", BASE_URL, ACTION_NEW_WORD);
 
             GoTo(url);
 
@@ -87,8 +104,7 @@ namespace set.locale.test.Interface
             Browser.FindElementById("btn_save").Click();
 
             Assert.IsNotNull(Browser);
-            // todo: detail id ile yapay test
-            //Assert.Contains(returnUrl);
+            Assert.AreNotEqual(Browser.Url, url);
 
             CloseBrowser();
         }
