@@ -19,8 +19,8 @@ namespace set.locale.Controllers
 
         public UserController(
             IAuthService authService,
-            IUserService userService, 
-            IAppService appService, 
+            IUserService userService,
+            IAppService appService,
             IWordService wordService)
         {
             _authService = authService;
@@ -145,8 +145,8 @@ namespace set.locale.Controllers
                 return View(model);
             }
 
-            var isOk = await _userService.RequestPasswordReset(model.Email);
-            if (isOk)
+            model.IsOk = await _userService.RequestPasswordReset(model.Email);
+            if (model.IsOk)
             {
                 model.Msg = "password_reset_request_successful".Localize();
             }
