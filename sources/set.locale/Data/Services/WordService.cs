@@ -170,7 +170,7 @@ namespace set.locale.Data.Services
                 pageNumber = 1;
             }
 
-            var items = Context.Words;
+            var items = Context.Words.Where(x => x.IsActive && !x.IsDeleted);
 
             long totalCount = items.Count();
             var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
@@ -322,7 +322,7 @@ namespace set.locale.Data.Services
             model.Key = model.Key.ToUrlSlug();
             return Context.Words.Any(
                         x =>
-                                x.Key == model.Key 
+                                x.Key == model.Key
                             && (x.IsActive && !x.IsDeleted)
                             && (x.AppId == model.AppId || x.Tags.Any(y => y.Name == model.Tag)));
         }
