@@ -44,8 +44,7 @@ namespace set.locale.test.Interface
             Browser.FindElementById("Message").SendKeys("Hi, this is test message.");
             Browser.FindElementByClassName("btn-success").Click();
 
-            Assert.IsNotNull(Browser);
-            Assert.AreEqual(Browser.PageSource.Contains("alert-success"), true);
+            SubmitIsSuccessAlert();
 
             CloseBrowser();
         }
@@ -107,7 +106,6 @@ namespace set.locale.test.Interface
             CloseBrowser();
         }
 
-
         [Test]
         public void should_save_new_translator()
         {
@@ -123,6 +121,22 @@ namespace set.locale.test.Interface
             Browser.FindElementByClassName("btn-success").Click();
 
             AssertUrl(returnUrl);
+
+            CloseBrowser();
+        }
+
+
+        [Test]
+        public void should_user_reset_password()
+        {
+            var url = string.Format("{0}{1}", BASE_URL, ACTION_PASSWORD_RESET);
+
+            GoTo(url);
+
+            Browser.FindElementById("Email").SendKeys("admin@test.com");
+            Browser.FindElementByClassName("btn-success").Click();
+
+            SubmitIsSuccessAlert();
 
             CloseBrowser();
         }

@@ -84,6 +84,17 @@ namespace set.locale.test.Shared
             Assert.AreEqual(Browser.Url, url);
         }
 
+        public void SubmitIsSuccessAlert()
+        {
+            Assert.IsNotNull(Browser);
+            Assert.AreEqual(Browser.PageSource.Contains("alert-success"), true);
+        }
+        public void SubmitIsNotSuccessAlert()
+        {
+            Assert.IsNotNull(Browser);
+            Assert.AreEqual(Browser.PageSource.Contains("alert-success"), false);
+        }
+
         public void AssertNotUrl(string url)
         {
             Assert.IsNotNull(Browser);
