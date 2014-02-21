@@ -86,12 +86,13 @@ namespace set.locale.Data.Services
                 return null;
             }
 
-            var softDelete = Context.Words.FirstOrDefault(x => x.Id == model.Id);
-            if (softDelete == null) return Task.FromResult(false);
+            var item = Context.Words.FirstOrDefault(x => x.Id == model.Id);
+            if (item == null) return Task.FromResult(false);
 
-            softDelete.DeletedAt = DateTime.Now;
-            softDelete.IsDeleted = true;
-            softDelete.DeletedBy = model.CreatedBy;
+            item.DeletedAt = DateTime.Now;
+            item.IsDeleted = true;
+            item.DeletedBy = model.CreatedBy;
+            Context.Entry(item).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
@@ -121,12 +122,13 @@ namespace set.locale.Data.Services
                 return null;
             }
 
-            var softDelete = Context.Words.FirstOrDefault(x => x.Id == model.Id);
-            if (softDelete == null) return Create(model);
+            var item = Context.Words.FirstOrDefault(x => x.Id == model.Id);
+            if (item == null) return Create(model);
 
-            softDelete.DeletedAt = DateTime.Now;
-            softDelete.IsDeleted = true;
-            softDelete.DeletedBy = model.CreatedBy;
+            item.DeletedAt = DateTime.Now;
+            item.IsDeleted = true;
+            item.DeletedBy = model.CreatedBy;
+            Context.Entry(item).State = EntityState.Modified;
 
             Context.SaveChanges();
 
@@ -279,6 +281,7 @@ namespace set.locale.Data.Services
                 word.TranslationCount++;
                 word.IsTranslated = true;
             }
+            Context.Entry(word).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
@@ -314,6 +317,7 @@ namespace set.locale.Data.Services
             };
 
             word.Tags = new List<Tag> { tag };
+            Context.Entry(word).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }

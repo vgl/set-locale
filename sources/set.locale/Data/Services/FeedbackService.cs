@@ -23,13 +23,13 @@ namespace set.locale.Data.Services
                 Email = email
             };
 
-            var user = Context.Set<User>().FirstOrDefault(x => x.Email == email);
+            var user = Context.Users.FirstOrDefault(x => x.Email == email);
             if (user != null)
             {
                 feedback.CreatedBy = user.Id;
             }
 
-            Context.Set<Feedback>().Add(feedback);
+            Context.Feedbacks.Add(feedback);
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
@@ -43,13 +43,13 @@ namespace set.locale.Data.Services
                 Message = message
             };
 
-            var user = Context.Set<User>().FirstOrDefault(x => x.Email == email);
+            var user = Context.Users.FirstOrDefault(x => x.Email == email);
             if (user != null)
             {
                 contact.CreatedBy = user.Id;
             }
 
-            Context.Set<ContactMessage>().Add(contact);
+            Context.ContactMessages.Add(contact);
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }

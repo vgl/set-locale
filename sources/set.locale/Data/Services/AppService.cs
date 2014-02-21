@@ -132,8 +132,8 @@ namespace set.locale.Data.Services
             if (user == null) return Task.FromResult(false);
 
             int roleId = ConstHelper.BasicRoles[ConstHelper.Admin];
-            var app = Context.Apps.Include(x => x.Tokens).FirstOrDefault(x => x.Id == appId && (x.CreatedBy == updatedBy 
-                                                                                                || user.RoleId == roleId) );
+            var app = Context.Apps.Include(x => x.Tokens).FirstOrDefault(x => x.Id == appId && (x.CreatedBy == updatedBy
+                                                                                                || user.RoleId == roleId));
             if (app == null) return Task.FromResult(false);
 
             foreach (var token in app.Tokens)
@@ -142,6 +142,7 @@ namespace set.locale.Data.Services
             }
 
             app.IsActive = !isActive;
+            Context.Entry(app).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
@@ -158,12 +159,13 @@ namespace set.locale.Data.Services
                 return Task.FromResult(false);
             }
 
-            var softDelete = Context.Tokens.FirstOrDefault(x => x.Key == token);
-            if (softDelete != null)
+            var item = Context.Tokens.FirstOrDefault(x => x.Key == token);
+            if (item != null)
             {
-                softDelete.DeletedAt = DateTime.Now;
-                softDelete.IsDeleted = true;
-                softDelete.DeletedBy = deletedBy;
+                item.DeletedAt = DateTime.Now;
+                item.IsDeleted = true;
+                item.DeletedBy = deletedBy;
+                Context.Entry(item).State = EntityState.Modified;
                 return Task.FromResult(Context.SaveChanges() > 0);
             }
 

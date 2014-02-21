@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using set.locale.Data.Entities;
 using set.locale.Helpers;
 using set.locale.Models;
+using System.Data.Entity;
 
 namespace set.locale.Data.Services
 {
@@ -112,6 +113,7 @@ namespace set.locale.Data.Services
             user.UpdatedBy = user.Id;
             user.PasswordResetToken = token;
             user.PasswordResetRequestedAt = user.UpdatedAt;
+            Context.Entry(user).State = EntityState.Modified;
 
             var saved = Context.SaveChanges() > 0;
 
@@ -150,6 +152,7 @@ namespace set.locale.Data.Services
             user.PasswordResetRequestedAt = null;
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password, 15);
             user.LoginTryCount = 0;
+            Context.Entry(user).State = EntityState.Modified;
 
             return await Task.FromResult(Context.SaveChanges() > 0);
         }
@@ -168,6 +171,7 @@ namespace set.locale.Data.Services
             }
 
             user.IsActive = !isActive;
+            Context.Entry(user).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
