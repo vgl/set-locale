@@ -77,11 +77,12 @@ namespace set.locale.Controllers
                     var words = await _wordService.GetByAppId(appId);
                     int wordsCount = words.Count;
 
+                    var createdBy = User.Identity.GetId();
                     if (force)
                     {
-                        deletedCount = await _wordService.DeleteByAppId(appId, User.Identity.GetId());
+                        deletedCount = await _wordService.DeleteByAppId(appId, createdBy);
                     }
-                    int createCount = await _wordService.CreateList(fromWordsByTag.Select(WordModel.Map).ToList(), appId, User.Identity.GetId());
+                    int createCount = await _wordService.CreateList(fromWordsByTag.Select(WordModel.Map).ToList(), appId, createdBy);
 
                     result.AppendFormat("<h4>{0}</h4>", app.Name);
                     result.AppendFormat("{0}: <span class='label label-info'>{1}</span>, ", "existing_words".Localize(), wordsCount);
