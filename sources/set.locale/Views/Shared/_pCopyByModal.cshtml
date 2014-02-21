@@ -12,8 +12,9 @@
                     <h4 class="modal-title" id="myModalLabel">@Html.LocalizeString("modal_title_copy_to_my_apps")</h4>
                 </div>
                 <div class="modal-body">
-                    @Html.LocalizeString("modal_body_copy_to_my_apps")
-
+                    <div class="row">
+                        @Html.LocalizeString("modal_body_copy_to_my_apps")
+                    </div>
                     <div class="row">
                         <div class="list-group">
                             @foreach (var item in apps)
@@ -73,17 +74,21 @@
                 $.post(Action, { copyFrom: '@ViewBag.ID', appIds: JSON.stringify(apps), force: force.is(':checked'), __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val() },
                     function (result) {
                         mFooter.find('img').hide();
-                        if (result) {
+                        if (result.length > 0) {
                             apps = new Array();
+                            mFooter.find('input.btn-danger').prop('disabled', false);
+                            mFooter.find('label').hide();
                             $('#CopyToMyAppModal .list-group-item').removeClass('successBG');
+                            $('#CopyToMyAppModal .modal-body .row').hide();
                             copyReturnMessage.html('<div class="alert alert-success"><span>@Html.LocalizeString("copy_success")</span></div>');
-                            setTimeout(function () {
+                            copyReturnMessage.append(result);
+                            $('#CopyToMyAppModal').on('hidden.bs.modal', function () {
+                                $('#CopyToMyAppModal .modal-body .row').show();
                                 listGroup.find('.list-group-item-heading input').prop('checked', false);
+                                mFooter.find('label').show();
                                 force.prop('checked', false);
-                                mFooter.find('input.btn-danger').prop('disabled', false);
-                                $("#CopyToMyAppModal").modal('hide');
                                 copyReturnMessage.html(null);
-                            }, 2500);
+                            });
                         } else {
                             copyReturnMessage.html('<div class="alert alert-danger"><span>@Html.LocalizeString("copy_error")</span></div>');
                         }

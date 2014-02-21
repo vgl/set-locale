@@ -59,8 +59,9 @@ namespace set.locale.Data.Services
             return null;
         }
 
-        public async Task CreateList(List<WordModel> model, string appId, string userId)
+        public async Task<int> CreateList(List<WordModel> model, string appId, string userId)
         {
+            int result = 0;
             var app = await _appService.Get(appId);
             foreach (var word in model)
             {
@@ -72,8 +73,10 @@ namespace set.locale.Data.Services
 
                 if (task == null) continue;
 
+                result++;
                 await AddTranslateList(word.Translations, word.Id);
             }
+            return await Task.FromResult(result);
         }
 
         public Task<bool> Delete(WordModel model)
@@ -93,12 +96,22 @@ namespace set.locale.Data.Services
             return Task.FromResult(Context.SaveChanges() > 0);
         }
 
-        public async Task DeleteList(List<WordModel> model)
+        public Task<int> DeleteByAppId(string appId, string createdBy)
         {
-            foreach (var word in model)
+            if (string.IsNullOrWhiteSpace(appId) || string.IsNullOrWhiteSpace(createdBy))
             {
-                await Delete(word);
+                return null;
             }
+
+            var items = Context.Words.Where(x => x.AppId == appId);
+            foreach (var item in items)
+            {
+                item.DeletedAt = DateTime.Now;
+                item.IsDeleted = true;
+                item.DeletedBy = createdBy;
+                Context.Entry(item).State = EntityState.Modified;
+            }
+            return Task.FromResult(Context.SaveChanges());
         }
 
         public Task<string> Update(WordModel model)
@@ -331,10 +344,10 @@ namespace set.locale.Data.Services
     public interface IWordService
     {
         Task<string> Create(WordModel model);
-        Task CreateList(List<WordModel> model, string appId, string userId);
+        Task<int> CreateList(List<WordModel> model, string appId, string userId);
         Task<string> Update(WordModel model);
         Task<bool> Delete(WordModel model);
-        Task DeleteList(List<WordModel> model);
+        Task<int> DeleteByAppId(string appId, string createdBy);
         Task<PagedList<Word>> GetByUserId(string userId, int pageNumber);
         Task<Word> GetByKey(string key, string appId);
         Task<Word> GetById(string id);

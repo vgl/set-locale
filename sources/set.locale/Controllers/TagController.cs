@@ -1,4 +1,5 @@
-﻿using ServiceStack.Text;
+﻿using System.Text;
+using ServiceStack.Text;
 using set.locale.Data.Entities;
 using set.locale.Data.Services;
 using set.locale.Helpers;
@@ -62,19 +63,37 @@ namespace set.locale.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<bool> Copy(string copyFrom, string appIds, bool force)
+        public async Task<string> Copy(string copyFrom, string appIds, bool force)
         {
-            var toAppIdList = JsonSerializer.DeserializeFromString<List<string>>(appIds);
-            var fromWordsByTag = await _tagService.GetWords(copyFrom);
-            foreach (var appId in toAppIdList)
+            try
             {
-                var words = await _wordService.GetByAppId(appId);
+                int deletedCount = 0;
+                StringBuilder result = new StringBuilder();
+                var toAppIdList = JsonSerializer.DeserializeFromString<List<string>>(appIds);
+                var fromWordsByTag = await _tagService.GetWords(copyFrom);
+                foreach (var appId in toAppIdList)
+                {
+                    var app = await _appService.Get(appId);
+                    var words = await _wordService.GetByAppId(appId);
+                    int wordsCount = words.Count;
 
-                if (force) await _wordService.DeleteList(words.Select(WordModel.Map).ToList());
+                    if (force)
+                    {
+                        deletedCount = await _wordService.DeleteByAppId(appId, User.Identity.GetId());
+                    }
+                    int createCount = await _wordService.CreateList(fromWordsByTag.Select(WordModel.Map).ToList(), appId, User.Identity.GetId());
 
-                await _wordService.CreateList(fromWordsByTag.Select(WordModel.Map).ToList(), appId, User.Identity.GetId());
+                    result.AppendFormat("<h4>{0}</h4>", app.Name);
+                    result.AppendFormat("{0}: <span class='label label-info'>{1}</span>, ", "existing_words".Localize(), wordsCount);
+                    result.AppendFormat("{0}: <span class='label label-danger'>{1}</span>, ", "deleted_words".Localize(), deletedCount);
+                    result.AppendFormat("{0}: <span class='label label-success'>{1}</span> </br>", "created_words".Localize(), createCount);
+                }
+                return result.ToString();
             }
-            return true;
+            catch (Exception)
+            {
+                return string.Empty;
+            }
         }
     }
 }
