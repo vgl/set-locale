@@ -6,8 +6,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 
-using GravatarHelper;
-
 namespace set.locale.Helpers
 {
     public static class StringHelper
@@ -28,7 +26,7 @@ namespace set.locale.Helpers
 
         public static string ToGravatar(this string email, int size = 35)
         {
-            return GravatarHelper.GravatarHelper.CreateGravatarUrl(email, size, string.Empty, GravatarRating.PG, false, false);
+            return GravatarHelper.GetGravatarURL(email, size);
         }
 
         public static string ToUrlSlug(this string text)
