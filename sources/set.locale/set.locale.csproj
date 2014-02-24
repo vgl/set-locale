@@ -183,6 +183,7 @@
     <Compile Include="Configurations\IocConfig.cs" />
     <Compile Include="Configurations\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\WordController.cs" />
     <Compile Include="Data\Entities\App.cs" />
+    <Compile Include="Data\Entities\RequestLog.cs" />
     <Compile Include="Data\Entities\SetLocaleRole.cs" />
     <Compile Include="Data\Entities\Tag.cs" />
     <Compile Include="Data\Entities\Token.cs" />
@@ -200,6 +202,7 @@
     <Compile Include="Data\Services\AuthService.cs" />
     <Compile Include="Data\Services\MsgService.cs" />
     <Compile Include="Data\Services\ReportService.cs" />
+    <Compile Include="Data\Services\RequestLogService.cs" />
     <Compile Include="Data\Services\SearchService.cs" />
     <Compile Include="Data\Services\TagService.cs" />
     <Compile Include="Data\Services\WordService.cs" />
@@ -207,6 +210,7 @@
     <Compile Include="Models\FeedbackModel.cs" />
     <Compile Include="Models\HomeStatsModel.cs" />
     <Compile Include="Models\LanguageModel.cs" />
+    <Compile Include="Models\LocaleModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data\Entities\ContactMessage.cs" />
@@ -221,6 +225,7 @@
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\ContactMessageModel.cs" />
     <Compile Include="Models\NameValue.cs" />
+    <Compile Include="Models\NameValueModel.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\PasswordChangeModel.cs" />
     <Compile Include="Models\PasswordResetModel.cs" />

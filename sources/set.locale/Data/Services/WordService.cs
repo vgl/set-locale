@@ -161,13 +161,23 @@ namespace set.locale.Data.Services
             return Task.FromResult(new PagedList<Word>(pageNumber, ConstHelper.PageSize, totalCount, words));
         }
 
-        public Task<Word> GetByKey(string key, string appId)
+        public Task<Word> GetByKeyAndAppId(string key, string appId)
         {
             key = key.ToUrlSlug();
             var word = Context.Words.FirstOrDefault(x =>
                                                     x.Key == key
                                                  && x.IsActive && !x.IsDeleted
                                                  && x.AppId == appId);
+            return Task.FromResult(word);
+        }
+
+        public Task<Word> GetByKeyAndAppName(string key, string appUrl)
+        {
+            key = key.ToUrlSlug();
+            var word = Context.Words.FirstOrDefault(x =>
+                                                    x.Key == key
+                                                 && x.IsActive && !x.IsDeleted
+                                                 && x.Name.ToUrlSlug() == appUrl);
             return Task.FromResult(word);
         }
 
@@ -364,7 +374,7 @@ namespace set.locale.Data.Services
                 fromWord.CreatedBy = createdBy;
                 fromWord.Tag = app.Name;
 
-                var toWord = WordModel.Map(await GetByKey(fromWord.Key, appId));
+                var toWord = WordModel.Map(await GetByKeyAndAppId(fromWord.Key, appId));
 
                 if (toWord == null)
                 {
@@ -405,7 +415,8 @@ namespace set.locale.Data.Services
         Task<bool> Delete(WordModel model);
         Task<int> DeleteByAppId(string appId, string createdBy);
         Task<PagedList<Word>> GetByUserId(string userId, int pageNumber);
-        Task<Word> GetByKey(string key, string appId);
+        Task<Word> GetByKeyAndAppId(string key, string appId);
+        Task<Word> GetByKeyAndAppName(string key, string appUrl);
         Task<Word> GetById(string id);
         Task<PagedList<Word>> GetWords(int pageNumber);
         Task<PagedList<Word>> GetWords(string appId, int pageNumber);

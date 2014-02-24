@@ -24,5 +24,6 @@ namespace set.locale.Data
         public DbSet<Token> Tokens { get; set; }
         public DbSet<Word> Words { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<RequestLog> RequestLogs { get; set; }
     }
 }
