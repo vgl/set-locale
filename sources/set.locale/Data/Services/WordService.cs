@@ -351,6 +351,7 @@ namespace set.locale.Data.Services
         {
             int addedCount = 0;
             int createCount = 0;
+            int extCount = 0;
             StringBuilder result = new StringBuilder();
             var toAppIdList = JsonSerializer.DeserializeFromString<List<string>>(appIds);
             var fromWord = WordModel.Map(await GetById(copyFromWord));
@@ -359,30 +360,35 @@ namespace set.locale.Data.Services
             foreach (var appId in toAppIdList)
             {
                 var app = await _appService.Get(appId);
-                var toWord = WordModel.Map(await GetByKey(fromWord.Key, appId));
-
                 fromWord.AppId = appId;
                 fromWord.CreatedBy = createdBy;
                 fromWord.Tag = app.Name;
 
-                if (!IsDuplicateKey(fromWord))
+                var toWord = WordModel.Map(await GetByKey(fromWord.Key, appId));
+
+                if (toWord == null)
                 {
                     var wordId = await Create(fromWord);
                     createCount = await AddTranslateList(translations, wordId);
                 }
                 else if (!force)
                 {
-                    ILookup<string, TranslationModel> fromWordTranslates = fromWord.Translations.ToLookup(x => x.Language.Key, x => x);
-                    ILookup<string, TranslationModel> toWordTranslates = toWord.Translations.ToLookup(x => x.Language.Key, x => x);
+                    ILookup<string, TranslationModel> fromWordTranslates =
+                        fromWord.Translations.ToLookup(x => x.Language.Key, x => x);
+                    ILookup<string, TranslationModel> toWordTranslates =
+                        toWord.Translations.ToLookup(x => x.Language.Key, x => x);
                     var exceptLangs = fromWordTranslates.Select(x => x.Key).Except(toWordTranslates.Select(x => x.Key));
-                    translations = fromWordTranslates.Where(x => exceptLangs.Contains(x.Key)).Select(x => x.First()).ToList();
+                    translations =
+                        fromWordTranslates.Where(x => exceptLangs.Contains(x.Key)).Select(x => x.First()).ToList();
                     createCount = translations.Count;
                 }
-
-                addedCount = await AddTranslateList(translations, toWord.Id);
+                else
+                {
+                    extCount = toWord.Translations.Count;
+                    addedCount = await AddTranslateList(translations, toWord.Id);
+                }
 
                 result.AppendFormat("<h4>{0}</h4>", app.Name);
-                int extCount = toWord.Translations.Count;
                 result.AppendFormat("{0}: <span class='label label-info'>{1}</span>, ", "existing_translates".Localize(), extCount);
                 result.AppendFormat("{0}: <span class='label label-danger'>{1}</span>, ", "added_translates".Localize(), addedCount - extCount);
                 result.AppendFormat("{0}: <span class='label label-success'>{1}</span>, ", "created_translates".Localize(), createCount);

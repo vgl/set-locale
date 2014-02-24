@@ -53,6 +53,11 @@ namespace set.locale.Models
 
         public static WordModel Map(Word entity)
         {
+            if (entity == null)
+            {
+                return null;
+            }
+
             var model = new WordModel
             {
                 Id = entity.Id,
@@ -201,7 +206,7 @@ namespace set.locale.Models
                     Value = entity.Translation_RU,
                     Language = LanguageModel.RU()
                 });
-                
+
                 model.Languages.Add(LanguageModel.RU());
             }
 
@@ -213,7 +218,7 @@ namespace set.locale.Models
                     Value = entity.Translation_TK,
                     Language = LanguageModel.TK()
                 });
-                
+
                 model.Languages.Add(LanguageModel.TK());
             }
 
