@@ -269,45 +269,7 @@ namespace set.locale.Controllers
         {
             try
             {
-                int addedCount = 0;
-                int createCount = 0;
-                StringBuilder result = new StringBuilder();
-                var toAppIdList = JsonSerializer.DeserializeFromString<List<string>>(appIds);
-                var fromWord = WordModel.Map(await _wordService.GetById(copyFrom));
-                var translations = fromWord.Translations;
-
-                foreach (var appId in toAppIdList)
-                {
-                    var app = await _appService.Get(appId);
-                    var toWord = WordModel.Map(await _wordService.GetByKey(fromWord.Key, appId));
-
-                    fromWord.AppId = appId;
-                    fromWord.CreatedBy = User.Identity.GetId();
-                    fromWord.Tag = app.Name;
-
-                    if (!_wordService.IsDuplicateKey(fromWord))
-                    {
-                        var wordId = await _wordService.Create(fromWord);
-                        createCount = await _wordService.AddTranslateList(translations, wordId);
-                    }
-                    else if (!force)
-                    {
-                        ILookup<string, TranslationModel> fromWordTranslates = fromWord.Translations.ToLookup(x => x.Language.Key, x => x);
-                        ILookup<string, TranslationModel> toWordTranslates = toWord.Translations.ToLookup(x => x.Language.Key, x => x);
-                        var exceptLangs = fromWordTranslates.Select(x => x.Key).Except(toWordTranslates.Select(x => x.Key));
-                        translations = fromWordTranslates.Where(x => exceptLangs.Contains(x.Key)).Select(x => x.First()).ToList();
-                        createCount = translations.Count;
-                    }
-
-                    addedCount = await _wordService.AddTranslateList(translations, toWord.Id);
-
-
-                    result.AppendFormat("<h4>{0}</h4>", app.Name);
-                    result.AppendFormat("{0}: <span class='label label-info'>{1}</span>, ", "existing_translates".Localize(), toWord.Translations.Count);
-                    result.AppendFormat("{0}: <span class='label label-danger'>{1}</span>, ", "added_translates".Localize(), addedCount - toWord.Translations.Count);
-                    result.AppendFormat("{0}: <span class='label label-success'>{1}</span> ", "created_translates".Localize(), createCount);
-                }
-                return result.ToString();
+                return await _wordService.Copy(copyFrom, appIds, User.Identity.GetId(), force);
             }
             catch (Exception)
             {
