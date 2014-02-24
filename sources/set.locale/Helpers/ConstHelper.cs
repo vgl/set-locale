@@ -7,7 +7,8 @@ namespace set.locale.Helpers
     {
         public const string __Lang = "__Lang";
         public const string LocaleApiKey = "LocaleApiKey";
-
+        public const string MessagingApiKey = "MessagingApiKey";
+        
 
         public const string tr = "tr";
         public const string en = "en";
