@@ -8,12 +8,20 @@ using Castle.Windsor;
 using Castle.Windsor.Installer;
 
 using set.locale.Configurations;
+using set.locale.Data.Services;
 using set.locale.Helpers;
 
 namespace set.locale
 {
     public class Global : HttpApplication
     {
+        //private readonly IWordService _wordService;
+
+        //public Global(IWordService wordService)
+        //{
+        //    _wordService = wordService;
+        //}
+
         protected void Application_Start(object sender, EventArgs e)
         {
             MvcHandler.DisableMvcResponseHeader = true;
@@ -32,12 +40,17 @@ namespace set.locale
             ControllerBuilder.Current.SetControllerFactory(new WindsorControllerFactory(container.Kernel));
         }
 
-        private void PrepareLocalizationStrings()
+        private async void PrepareLocalizationStrings()
         {
             var enTexts = new Dictionary<string, string>();
             var trTexts = new Dictionary<string, string>();
 
-
+            //var langLib = await _wordService.GetByAppName("set-locale");
+            //foreach (var item in langLib)
+            //{
+            //    enTexts.Add(item.Key, item.Translation_EN);
+            //    trTexts.Add(item.Key, item.Translation_TR);
+            //}
 
             Application.Add(ConstHelper.CultureNameTR, trTexts);
             Application.Add(ConstHelper.CultureNameEN, enTexts);

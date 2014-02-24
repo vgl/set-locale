@@ -115,6 +115,8 @@
     <Content Include="packages.config" />
     <Content Include="Public\css\index.html" />
     <Content Include="Public\css\select2.css" />
+    <Content Include="Public\email\basic-en.html" />
+    <Content Include="Public\email\basic-tr.html" />
     <Content Include="Public\files\index.html" />
     <Content Include="Public\img\favicon.ico" />
     <Content Include="Public\img\flag\az.png" />
@@ -206,6 +208,7 @@
     <Compile Include="Data\Services\SearchService.cs" />
     <Compile Include="Data\Services\TagService.cs" />
     <Compile Include="Data\Services\WordService.cs" />
+    <Compile Include="Helpers\Stream.cs" />
     <Compile Include="Models\AppModel.cs" />
     <Compile Include="Models\FeedbackModel.cs" />
     <Compile Include="Models\HomeStatsModel.cs" />
