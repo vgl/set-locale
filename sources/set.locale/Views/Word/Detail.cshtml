@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = Html.LocalizeString("words_key_detail_page_title");
+    var apps = (IEnumerable<AppModel>)ViewBag.Apps;
 }
 
 <div class="panel panel-info">
@@ -40,8 +41,10 @@
                             {
                                 <input type="button" id="btnNewTranslate" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizeString("btn_new_translate")" data-id="@Model.Key" />
                             }
-                            
-                            <input type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#CopyToMyAppModal" value="@Html.LocalizeString("btn_copy_translate_to_my_app")" />
+                            @if (Model.Translations.Any() && apps.Any())
+                            {
+                                <input type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#CopyToMyAppModal" value="@Html.LocalizeString("btn_copy_translate_to_my_app")" />
+                            }
                         </div>
 
                         @Html.AntiForgeryToken()
@@ -288,7 +291,7 @@
                         var btn = $(this).parent().children(":first");
                         $(btn).removeClass("btn-success").addClass("btn-warning");
                         $(btn).val("@Html.Raw(Html.LocalizeString("btn_edit"))");
-                        
+
                         var translationTd = $(this).parent().parent().children(":last");
                         translationTd.html(oldText);
 

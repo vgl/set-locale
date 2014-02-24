@@ -1,6 +1,5 @@
 ﻿@{
     var apps = (IEnumerable<AppModel>)ViewBag.Apps;
-    string CurrentAppId = ViewBag.CurrentAppId;
 }
 
 @if (User.Identity.IsAuthenticated)
@@ -18,7 +17,7 @@
                     </div>
                     <div class="row">
                         <div class="list-group">
-                            @foreach (var item in apps.Where(x => x.Id != CurrentAppId))
+                            @foreach (var item in apps)
                             {
                                 <a class="list-group-item" style="cursor: pointer;">
                                     <span class="list-group-item-heading">

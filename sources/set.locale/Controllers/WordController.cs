@@ -36,12 +36,11 @@ namespace set.locale.Controllers
             var entity = await _wordService.GetById(id);
             if (entity == null) return RedirectToHome();
             var model = WordModel.Map(entity);
-            ViewBag.CurrentAppId = model.AppId;
 
             if (!User.Identity.IsAuthenticated) return View(model);
 
             var apps = await _appService.GetByUserId(User.Identity.GetId());
-            ViewBag.Apps = apps.Select(AppModel.Map);
+            ViewBag.Apps = apps.Select(AppModel.Map).Where(x => x.Id != model.AppId);
 
             return View(model);
         }

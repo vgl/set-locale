@@ -33,7 +33,6 @@ namespace set.locale.Controllers
 
             var words = await _tagService.GetWords(id, page);
             var list = words.Items.Select(WordModel.Map).ToList();
-            ViewBag.CurrentAppId = list.First().AppId;
             var model = new PageModel<WordModel>
             {
                 Items = list,
@@ -47,7 +46,7 @@ namespace set.locale.Controllers
             if (!User.Identity.IsAuthenticated) return View(model);
 
             var apps = await _appService.GetByUserId(User.Identity.GetId());
-            ViewBag.Apps = apps.Select(AppModel.Map);
+            ViewBag.Apps = apps.Select(AppModel.Map).Where(x => x.Id != list.First().AppId);
 
             return View(model);
         }
