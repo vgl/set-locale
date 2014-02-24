@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
+using System.IO;
 using System.Linq;
-
+using System.Web;
 using set.locale.Data.Entities;
 using set.locale.Helpers;
+using Stream = set.locale.Helpers.Stream;
 
 namespace set.locale.Data
 {
@@ -119,7 +121,10 @@ namespace set.locale.Data
             AddWord(context, "modal_title_users", "Kullanıcı Durumu", "User Status", "Статус Пользователя", "set-locale");
             AddWord(context, "modal_body_users", "Durumu Değiştirmek İstediğinize Emin misiniz?", "Are You Sure You Want To Change The User's Status?", "Вы Уверены Что Хотите Изменить Статус Пользователя?", "set-locale");
 
-            AddWord(context, "password_reset_email_body", Stream.Read(@"\Public\email\basic-tr.html"), Stream.Read(@"\public\email\basic-en.html"), "", "set-locale");
+            AddWord(context, "password_reset_email_body", 
+                File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\Public\email\password-reset-request-tr.html")),
+                File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\Public\email\password-reset-request-en.html")), 
+                "", "set-locale");
 
 
             AddApplication(context, "info@set-web.com", "set-web", "a brand new crm application.", "set-web.com");

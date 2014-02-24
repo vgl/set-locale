@@ -115,8 +115,6 @@
     <Content Include="packages.config" />
     <Content Include="Public\css\index.html" />
     <Content Include="Public\css\select2.css" />
-    <Content Include="Public\email\basic-en.html" />
-    <Content Include="Public\email\basic-tr.html" />
     <Content Include="Public\email\password-reset-request-en.html" />
     <Content Include="Public\email\password-reset-request-tr.html" />
     <Content Include="Public\files\index.html" />
