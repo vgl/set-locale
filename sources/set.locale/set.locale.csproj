@@ -208,7 +208,6 @@
     <Compile Include="Data\Services\SearchService.cs" />
     <Compile Include="Data\Services\TagService.cs" />
     <Compile Include="Data\Services\WordService.cs" />
-    <Compile Include="Helpers\Stream.cs" />
     <Compile Include="Models\AppModel.cs" />
     <Compile Include="Models\FeedbackModel.cs" />
     <Compile Include="Models\HomeStatsModel.cs" />
