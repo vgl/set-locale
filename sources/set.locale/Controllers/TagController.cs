@@ -87,7 +87,8 @@ namespace set.locale.Controllers
                     result.AppendFormat("<h4>{0}</h4>", app.Name);
                     result.AppendFormat("{0}: <span class='label label-info'>{1}</span>, ", "existing_words".Localize(), wordsCount);
                     result.AppendFormat("{0}: <span class='label label-danger'>{1}</span>, ", "deleted_words".Localize(), deletedCount);
-                    result.AppendFormat("{0}: <span class='label label-success'>{1}</span> </br>", "created_words".Localize(), createCount);
+                    result.AppendFormat("{0}: <span class='label label-success'>{1}</span>, ", "created_words".Localize(), createCount);
+                    result.AppendFormat("{0}: <span class='label label-success'>{1}</span> </br>", "new_total".Localize(), (wordsCount - deletedCount) + createCount);
                 }
                 return result.ToString();
             }
