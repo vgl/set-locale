@@ -122,7 +122,7 @@ namespace set.locale.Data.Services
                 _msgService.SendEMail(
                                 user.Email,
                                 "password_reset_email_subject".Localize(),
-                                string.Format("password_reset_email_body".Localize(), user.Name, user.Email, token)
+                                string.Format("password_reset_email_body".Localize(), "password_reset_email_subject".Localize(), user.Name, user.Email, token)
                             );
             }
 
