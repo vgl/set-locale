@@ -37,6 +37,8 @@ namespace set.locale
             var enTexts = new Dictionary<string, string>();
             var trTexts = new Dictionary<string, string>();
 
+
+
             Application.Add(ConstHelper.CultureNameTR, trTexts);
             Application.Add(ConstHelper.CultureNameEN, enTexts);
         }
