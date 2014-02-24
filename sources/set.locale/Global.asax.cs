@@ -15,13 +15,6 @@ namespace set.locale
 {
     public class Global : HttpApplication
     {
-        //private readonly IWordService _wordService;
-
-        //public Global(IWordService wordService)
-        //{
-        //    _wordService = wordService;
-        //}
-
         protected void Application_Start(object sender, EventArgs e)
         {
             MvcHandler.DisableMvcResponseHeader = true;
@@ -45,12 +38,13 @@ namespace set.locale
             var enTexts = new Dictionary<string, string>();
             var trTexts = new Dictionary<string, string>();
 
-            //var langLib = await _wordService.GetByAppName("set-locale");
-            //foreach (var item in langLib)
-            //{
-            //    enTexts.Add(item.Key, item.Translation_EN);
-            //    trTexts.Add(item.Key, item.Translation_TR);
-            //}
+            var wordService = new WordService(new AppService());
+            var translations = await wordService.GetByAppName("set-locale");
+            foreach (var item in translations)
+            {
+                enTexts.Add(item.Key, item.Translation_EN);
+                trTexts.Add(item.Key, item.Translation_TR);
+            }
 
             Application.Add(ConstHelper.CultureNameTR, trTexts);
             Application.Add(ConstHelper.CultureNameEN, enTexts);

@@ -119,7 +119,6 @@ namespace set.locale.Data
             AddWord(context, "modal_title_users", "Kullanıcı Durumu", "User Status", "Статус Пользователя", "set-locale");
             AddWord(context, "modal_body_users", "Durumu Değiştirmek İstediğinize Emin misiniz?", "Are You Sure You Want To Change The User's Status?", "Вы Уверены Что Хотите Изменить Статус Пользователя?", "set-locale");
 
-
             AddWord(context, "password_reset_email_body", Stream.Read(@"\Public\email\basic-tr.html"), Stream.Read(@"\public\email\basic-en.html"), "", "set-locale");
 
 
