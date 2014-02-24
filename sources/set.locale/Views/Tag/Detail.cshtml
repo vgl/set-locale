@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = string.Format("{0} {1}", Html.LocalizeString("tag_keys_title"), ViewBag.Key);
     Model.PagerUrl = "/tag/detail/" + ViewBag.ID + "?page=";
-    var apps = (IEnumerable<AppModel>)ViewBag.Apps;
 }
 
 <div class="panel panel-info">

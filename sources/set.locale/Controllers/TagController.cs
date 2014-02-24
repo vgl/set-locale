@@ -17,16 +17,13 @@ namespace set.locale.Controllers
     {
         private readonly ITagService _tagService;
         private readonly IAppService _appService;
-        private readonly IWordService _wordService;
 
         public TagController(
             ITagService tagService,
-            IAppService appService,
-            IWordService wordService)
+            IAppService appService)
         {
             _tagService = tagService;
             _appService = appService;
-            _wordService = wordService;
         }
 
         [HttpGet, AllowAnonymous]
@@ -36,6 +33,7 @@ namespace set.locale.Controllers
 
             var words = await _tagService.GetWords(id, page);
             var list = words.Items.Select(WordModel.Map).ToList();
+            ViewBag.CurrentAppId = list.First().AppId;
             var model = new PageModel<WordModel>
             {
                 Items = list,

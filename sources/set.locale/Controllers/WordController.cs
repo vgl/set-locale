@@ -36,6 +36,7 @@ namespace set.locale.Controllers
             var entity = await _wordService.GetById(id);
             if (entity == null) return RedirectToHome();
             var model = WordModel.Map(entity);
+            ViewBag.CurrentAppId = model.AppId;
 
             if (!User.Identity.IsAuthenticated) return View(model);
 
