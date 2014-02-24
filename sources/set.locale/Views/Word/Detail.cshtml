@@ -103,8 +103,8 @@
                 btnCancel.val('@Html.Raw(Html.LocalizeString("btn_cancel"))');
 
                 btnCancel.click(function () {
-                    $("h3#hdForm").html('');
-                    $("div#dvForm").html('');
+                    $("h3#hdForm").html(null);
+                    $("div#dvForm").html(null);
                     $("input.btnNewTranslate").show();
                 });
 
@@ -161,8 +161,10 @@
                                 }
 
 
-                                $("div#dvForm").html('');
-                                $("#hdForm").html('');
+                                $("div#dvForm").html(null);
+                                $("#hdForm").html(null);
+
+                                $("#_Msg").remove();
 
                             } else {
                                 //todo:warning
