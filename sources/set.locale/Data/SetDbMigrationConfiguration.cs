@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using set.locale.Data.Entities;
 using set.locale.Helpers;
@@ -179,8 +180,8 @@ namespace set.locale.Data
 
             var httpServerUtility = HttpContext.Current.Server;
             AddWord(context, "password_reset_email_body",
-                File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-tr.html")),
-                File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-en.html")),
+                File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-tr.html"), Encoding.UTF8),
+                File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-en.html"), Encoding.UTF8),
                 "", "set-locale");
 
             AddApplication(context, "info@set-web.com", "set-web", "a brand new crm application.", "set-web.com");

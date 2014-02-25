@@ -118,9 +118,10 @@ namespace set.locale.Data.Services
             var saved = Context.SaveChanges() > 0;
             if (saved)
             {
-                var subject = "password_reset_email_subject".Localize();
-                _msgService.SendEMail(user.Email, subject,
-                                      string.Format("password_reset_email_body".Localize(), subject, user.Name, user.Email, token));
+                string subject = "password_reset_email_subject".Localize();
+                string format = "password_reset_email_body".Localize().Trim();
+                string mailBody = string.Format(@format, subject, user.Name, user.Email, token);
+                _msgService.SendEMail(user.Email, subject, mailBody);
             }
 
             return Task.FromResult(saved);
