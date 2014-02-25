@@ -140,7 +140,7 @@ namespace set.locale.Data
             AddWord(context, "exported_words_sheet_name", "", "", "", "set-locale");
             AddWord(context, "feedback_popup_title", "Geri Bildirim", "Feedback", "", "set-locale");
             AddWord(context, "feedbacks_listing_title", "Geri Bildirimler", "Feedbacks", "", "set-locale");
-            //AddWord(context, "btn_open_feedback_popup", "Geri bildirimde bulunun", "Of feedback", "", "set-locale");
+            AddWord(context, "btn_open_feedback_popup", "Geri bildirim", "Feedback", "", "set-locale");
             AddWord(context, "menu_feedbacks", "Geri Bildirimler", "Feedbacks", "", "set-locale");
             AddWord(context, "head_office", "Merkez Ofis", "Head Office", "", "set-locale");
             AddWord(context, "key", "Anahtar", "Key", "", "set-locale");
