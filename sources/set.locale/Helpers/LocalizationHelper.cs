@@ -11,7 +11,8 @@ namespace set.locale.Helpers
         {
             try
             {
-                return ((Dictionary<string, string>)HttpContext.Current.Application[Thread.CurrentThread.CurrentUICulture.Name])[key];
+                var localize = ((Dictionary<string, string>)HttpContext.Current.Application[Thread.CurrentThread.CurrentUICulture.Name])[key];
+                return string.IsNullOrEmpty(localize) ? key : localize;
             }
             catch { return key; }
         }
