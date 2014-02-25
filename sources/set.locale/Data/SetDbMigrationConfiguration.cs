@@ -139,7 +139,7 @@ namespace set.locale.Data
             AddWord(context, "exported_words", "Çıkartılan kelimeler", "", "", "set-locale");
             AddWord(context, "exported_words_sheet_name", "", "", "", "set-locale");
             AddWord(context, "feedbacks_listing_title", "Geribildirimler", "", "", "set-locale");
-            AddWord(context, "btn_open_feedback_popup", "", "", "", "set-locale");
+            AddWord(context, "btn_open_feedback_popup", "Geri bildirim", "Feedback", "", "set-locale");
             AddWord(context, "head_office", "Merkez Ofis", "Head Office", "", "set-locale");
             AddWord(context, "key", "Anahtar", "Key", "", "set-locale");
             AddWord(context, "list_item_not_found", "Kayıt bulunamadı", "", "", "set-locale");
@@ -157,7 +157,7 @@ namespace set.locale.Data
             AddWord(context, "new_total", "Toplam", "", "", "set-locale");
             AddWord(context, "override_my_translations", "Mevcut çevirilerimin üzerine yaz", "", "", "set-locale");
             AddWord(context, "password_change_title", "Parola sıfırlama", "", "", "set-locale");
-            AddWord(context, "password_reset_email_subject", "Parola Sıfırlama", "", "", "set-locale");
+            AddWord(context, "password_reset_email_subject", "Parola Sıfırlama", "Reset Password", "", "set-locale");
             AddWord(context, "password_reset_request_successful", "Parola sıfırlama isteği başarılı", "", "", "set-locale");
             AddWord(context, "please_check_the_fields_and_try_again", "Tüm alanları kontrol ederek tekrar deneyiniz.", "", "", "set-locale");
             AddWord(context, "search", "Arama", "Search", "", "set-locale");
@@ -196,7 +196,7 @@ namespace set.locale.Data
             AddWord(context, "btn_save", "Kaydet", "Save", "", "set-web");
             AddWord(context, "btn_save_and_new", "", "", "", "set-web");
             AddWord(context, "btn_send", "Gönder", "Send", "", "set-web");
-            AddWord(context, "btn_send_password_reset_link", "", "", "", "set-web");
+            AddWord(context, "btn_send_password_reset_link", "Reset bağlantısı gönder", "Send reset link", "", "set-web");
             AddWord(context, "btn_sign_up", "", "", "", "set-web");
             AddWord(context, "contact_view_title", "İletişim", "Contact", "", "set-web");
             AddWord(context, "contactmessages_listing_title", "İletişimler", "", "", "set-web");

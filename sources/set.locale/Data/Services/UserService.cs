@@ -119,7 +119,7 @@ namespace set.locale.Data.Services
             if (saved)
             {
                 var subject = "password_reset_email_subject".Localize();
-                _msgService.SendEMail(user.Email,subject,
+                _msgService.SendEMail(user.Email, subject,
                                       string.Format("password_reset_email_body".Localize(), subject, user.Name, user.Email, token));
             }
 
