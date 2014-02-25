@@ -8,6 +8,7 @@ using Castle.Windsor;
 using Castle.Windsor.Installer;
 
 using set.locale.Configurations;
+using set.locale.Controllers;
 using set.locale.Data.Services;
 using set.locale.Helpers;
 
@@ -34,7 +35,7 @@ namespace set.locale
         }
 
         private async void PrepareLocalizationStrings()
-        {
+        { 
             var enTexts = new Dictionary<string, string>();
             var trTexts = new Dictionary<string, string>();
 
