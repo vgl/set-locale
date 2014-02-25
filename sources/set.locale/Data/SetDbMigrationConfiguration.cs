@@ -130,7 +130,7 @@ namespace set.locale.Data
             AddWord(context, "created_translates", "Oluşturulan çeviri", "", "", "set-locale");
             AddWord(context, "created_words", "Oluşturulan kelimeler", "", "", "set-locale");
             AddWord(context, "creation_date", "Oluşturulma tarihi", "", "", "set-locale");
-            AddWord(context, "data_saved_successfully_msg", "Kayıt işlemi başarılı", "", "", "set-locale");
+            AddWord(context, "data_saved_successfully_msg", "Kayıt işlemi başarılı", "Data saved successfully", "", "set-locale");
             AddWord(context, "deleted_words", "Silinen kelimeler", "", "", "set-locale");
             AddWord(context, "deletes_old_data", "Eski verileri sil", "", "", "set-locale");
             AddWord(context, "feedback_popup_title", "Geribildirim", "Feedback", "", "set-locale");

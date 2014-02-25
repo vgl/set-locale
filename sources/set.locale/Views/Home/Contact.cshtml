@@ -8,11 +8,10 @@
     <div class="panel-heading">@ViewBag.Title</div>
     <div class="panel-body">
 
-        @Html.Partial("_Msg")
-
         <div class="row">
             <div class="col-md-6">
 
+                @Html.Partial("_Msg")
 
                 @if (!Model.IsOk)
                 {
