@@ -159,7 +159,7 @@ namespace set.locale.Data
             AddWord(context, "override_my_translations", "Mevcut çevirilerimin üzerine yaz", "", "", "set-locale");
             AddWord(context, "password_change_title", "Parola sıfırlama", "", "", "set-locale");
             AddWord(context, "password_reset_email_subject", "Parola Sıfırlama", "Reset Password", "", "set-locale");
-            AddWord(context, "password_reset_request_successful", "Parola sıfırlama isteği başarılı", "", "", "set-locale");
+            AddWord(context, "password_reset_request_successful", "Parola sıfırlama isteği başarılı", "Password reset request successful", "", "set-locale");
             AddWord(context, "please_check_the_fields_and_try_again", "Tüm alanları kontrol ederek tekrar deneyiniz.", "", "", "set-locale");
             AddWord(context, "search", "Arama", "Search", "", "set-locale");
             AddWord(context, "tags", "Etiketler", "", "", "set-locale");
