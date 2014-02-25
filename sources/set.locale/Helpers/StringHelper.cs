@@ -17,11 +17,7 @@ namespace set.locale.Helpers
 
         public static string Localize(this string key)
         {
-            try
-            {
-                return ((Dictionary<string, string>)HttpContext.Current.Application[Thread.CurrentThread.CurrentUICulture.Name])[key];
-            }
-            catch { return key; }
+            return LocalizationHelper.Localize(key);
         }
 
         public static string ToGravatar(this string email, int size = 35)
