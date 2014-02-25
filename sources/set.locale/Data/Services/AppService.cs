@@ -33,7 +33,9 @@ namespace set.locale.Data.Services
                 }
             };
 
+           
             Context.Apps.Add(app);
+            Context.Entry(app).State = EntityState.Added;
             if (Context.SaveChanges() > 0)
             {
                 return await Task.FromResult(app.Id);
@@ -74,7 +76,7 @@ namespace set.locale.Data.Services
                 IsAppActive = true
             };
             Context.Tokens.Add(entity);
-
+            Context.Entry(entity).State = EntityState.Added;
             if (Context.SaveChanges() > 0) Task.FromResult(true);
 
             return Task.FromResult(true);
@@ -142,8 +144,7 @@ namespace set.locale.Data.Services
             }
 
             app.IsActive = !isActive;
-            //Context.Entry(app).State = EntityState.Modified;
-
+            Context.Entry(app).State = EntityState.Modified;
             return Task.FromResult(Context.SaveChanges() > 0);
         }
 
@@ -165,7 +166,7 @@ namespace set.locale.Data.Services
                 item.DeletedAt = DateTime.Now;
                 item.IsDeleted = true;
                 item.DeletedBy = deletedBy;
-                //Context.Entry(item).State = EntityState.Modified;
+                Context.Entry(item).State = EntityState.Modified;
                 return Task.FromResult(Context.SaveChanges() > 0);
             }
 

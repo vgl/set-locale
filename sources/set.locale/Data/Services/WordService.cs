@@ -52,7 +52,7 @@ namespace set.locale.Data.Services
             };
 
             Context.Words.Add(word);
-
+            Context.Entry(word).State = EntityState.Added;
             return Context.SaveChanges() > 0 ? Task.FromResult(word.Id) : null;
         }
 
@@ -91,7 +91,7 @@ namespace set.locale.Data.Services
             item.DeletedAt = DateTime.Now;
             item.IsDeleted = true;
             item.DeletedBy = model.CreatedBy;
-            //Context.Entry(item).State = EntityState.Modified;
+            Context.Entry(item).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
@@ -109,7 +109,7 @@ namespace set.locale.Data.Services
                 item.DeletedAt = DateTime.Now;
                 item.IsDeleted = true;
                 item.DeletedBy = createdBy;
-                //Context.Entry(item).State = EntityState.Modified;
+                Context.Entry(item).State = EntityState.Modified;
             }
             return Task.FromResult(Context.SaveChanges());
         }
@@ -127,7 +127,7 @@ namespace set.locale.Data.Services
             item.DeletedAt = DateTime.Now;
             item.IsDeleted = true;
             item.DeletedBy = model.CreatedBy;
-            //Context.Entry(item).State = EntityState.Modified;
+            Context.Entry(item).State = EntityState.Modified;
 
             Context.SaveChanges();
 
@@ -289,7 +289,7 @@ namespace set.locale.Data.Services
                 word.TranslationCount++;
                 word.IsTranslated = true;
             }
-            //Context.Entry(word).State = EntityState.Modified;
+            Context.Entry(word).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
@@ -325,7 +325,7 @@ namespace set.locale.Data.Services
             };
 
             word.Tags = new List<Tag> { tag };
-            //Context.Entry(word).State = EntityState.Modified;
+            Context.Entry(word).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 using set.locale.Data.Entities;
@@ -30,7 +31,7 @@ namespace set.locale.Data.Services
             }
 
             Context.Feedbacks.Add(feedback);
-
+            Context.Entry(feedback).State = EntityState.Added;
             return Task.FromResult(Context.SaveChanges() > 0);
         }
 
@@ -50,7 +51,7 @@ namespace set.locale.Data.Services
             }
 
             Context.ContactMessages.Add(contact);
-
+            Context.Entry(contact).State = EntityState.Added;
             return Task.FromResult(Context.SaveChanges() > 0);
         }
 
