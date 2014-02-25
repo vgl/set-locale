@@ -120,10 +120,60 @@ namespace set.locale.Data
             AddWord(context, "modal_title_users", "Kullanıcı Durumu", "User Status", "Статус Пользователя", "set-locale");
             AddWord(context, "modal_body_users", "Durumu Değiştirmek İstediğinize Emin misiniz?", "Are You Sure You Want To Change The User's Status?", "Вы Уверены Что Хотите Изменить Статус Пользователя?", "set-locale");
 
+            AddWord(context, "added_translates", "Eklenen çeviriler", "Added translates", "", "set-locale");
+            AddWord(context, "branch", "Şube", "Branch", "", "set-locale");
+            AddWord(context, "btn_copy_translate_to_my_app", "Çeviriyi uygulamama kopyala", "", "", "set-locale");
+            AddWord(context, "btn_copy_words_to_my_app", "Kelimeleri uygulamama kopyala", "", "", "set-locale");
+            AddWord(context, "copy_error", "Kopyalama hatası", "", "", "set-locale");
+            AddWord(context, "copy_success", "Kopyalama başarılı", "", "", "set-locale");
+            AddWord(context, "created_translates", "Oluşturulan çeviri", "", "", "set-locale");
+            AddWord(context, "created_words", "Oluşturulan kelimeler", "", "", "set-locale");
+            AddWord(context, "creation_date", "Oluşturulma tarihi", "", "", "set-locale");
+            AddWord(context, "data_saved_successfully_msg", "Kayıt işlemi başarılı", "", "", "set-locale");
+            AddWord(context, "deleted_words", "Silinen kelimeler", "", "", "set-locale");
+            AddWord(context, "deletes_old_data", "Eski verileri sil", "", "", "set-locale");
+            AddWord(context, "email", "E-Posta", "E-Mail", "", "set-locale");
+            AddWord(context, "existing_translates", "Mevcut çeviriler", "", "", "set-locale");
+            AddWord(context, "existing_words", "Mevcut kelimeler", "", "", "set-locale");
+            AddWord(context, "exported_words", "Çıkartılan kelimeler", "", "", "set-locale");
+            AddWord(context, "exported_words_sheet_name", "", "", "", "set-locale");
+            AddWord(context, "feedbacks_listing_title", "Geribildirimler", "", "", "set-locale");
+            AddWord(context, "head_office", "Merkez Ofis", "", "", "set-locale");
+            AddWord(context, "key", "Anahtar", "Key", "", "set-locale");
+            AddWord(context, "list_item_not_found", "Kayıt bulunamadı", "", "", "set-locale");
+            AddWord(context, "menu_apps", "Uygulamalar", "", "", "set-locale");
+            AddWord(context, "menu_apps_new_app", "Yeni Uygulama", "", "", "set-locale");
+            AddWord(context, "menu_contactmessages", "Bize ulaşanlar", "", "", "set-locale");
+            AddWord(context, "menu_login", "Giriş", "Login", "", "set-locale");
+            AddWord(context, "menu_settings_import", "", "", "", "set-locale");
+            AddWord(context, "menu_signup", "Kayıt", "Signup", "", "set-locale");
+            AddWord(context, "menu_user_profile", "Profil", "", "", "set-locale");
+            AddWord(context, "modal_body_copy_to_my_apps", "Kopyalamak için uygulama seçiniz.", "", "", "set-locale");
+            AddWord(context, "modal_title_copy_to_my_apps", "İçerik kopyalama", "", "", "set-locale");
+            AddWord(context, "name_previously_used", "Bu isim daha önce kullanılmış", "", "", "set-locale");
+            AddWord(context, "new_member_create_app_message", "İlk uygulamanızı oluşturun.", "", "", "set-locale");
+            AddWord(context, "new_total", "Toplam", "", "", "set-locale");
+            AddWord(context, "override_my_translations", "Mevcut çevirilerimin üzerine yaz", "", "", "set-locale");
+            AddWord(context, "password_change_title", "Parola sıfırlama", "", "", "set-locale");
+            AddWord(context, "password_reset_email_subject", "Parola Sıfırlama", "", "", "set-locale");
+            AddWord(context, "password_reset_request_successful", "Parola sıfırlama isteği başarılı", "", "", "set-locale");
+            AddWord(context, "please_check_the_fields_and_try_again", "Tüm alanları kontrol ederek tekrar deneyiniz.", "", "", "set-locale");
+            AddWord(context, "search", "Arama", "Search", "", "set-locale");
+            AddWord(context, "tag", "Etiket", "", "", "set-locale");
+            AddWord(context, "tags", "Wtiketler", "", "", "set-locale");
+            AddWord(context, "this_name_available", "Bu isim müsait", "This name available", "", "set-locale");
+            AddWord(context, "title_new_translation", "Yeni çeviri ekle", "", "", "set-locale");
+            AddWord(context, "translation_count", "Çeviri sayısı", "", "", "set-locale");
+            AddWord(context, "url", "Url", "Url", "", "set-locale");
+            AddWord(context, "word_count", "Kelime sayısı", "", "", "set-locale");
+            AddWord(context, "words_key_detail_page_title", "Detay", "", "", "set-locale");
+            AddWord(context, "words_my_key_listing_title", "Benim kelimelerim", "", "", "set-locale");
+            AddWord(context, "words_not_translated_key_listing_title", "Çevirisi olmayan kelimeler", "", "", "set-locale");
+
             var httpServerUtility = HttpContext.Current.Server;
-            AddWord(context, "password_reset_email_body", 
+            AddWord(context, "password_reset_email_body",
                 File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-tr.html")),
-                File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-en.html")), 
+                File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-en.html")),
                 "", "set-locale");
 
             AddApplication(context, "info@set-web.com", "set-web", "a brand new crm application.", "set-web.com");
@@ -141,13 +191,12 @@ namespace set.locale.Data
             AddWord(context, "btn_send", "", "", "", "set-web");
             AddWord(context, "btn_send_password_reset_link", "", "", "", "set-web");
             AddWord(context, "btn_sign_up", "", "", "", "set-web");
-            AddWord(context, "contact_view_title", "", "", "", "set-web");
-            AddWord(context, "contactmessages_listing_title", "", "", "", "set-web");
+            AddWord(context, "contact_view_title", "İletişim", "Contact", "", "set-web");
+            AddWord(context, "contactmessages_listing_title", "İletişimler", "", "", "set-web");
             AddWord(context, "domainobject_detail_view_title", "", "", "", "set-web");
             AddWord(context, "domainobject_listing_title", "", "", "", "set-web");
-            AddWord(context, "email", "", "", "", "set-web");
-            AddWord(context, "feedback_popup_title", "", "", "", "set-web");
-            AddWord(context, "feedbacks_listing_title", "", "", "", "set-web");
+            AddWord(context, "feedback_popup_title", "Geribildirim", "Feedback", "", "set-web");
+            AddWord(context, "feedbacks_listing_title", "Geribildirimler", "Feedbacks", "", "set-web");
             AddWord(context, "forgot_your_password", "", "", "", "set-web");
             AddWord(context, "login_view_title", "", "", "", "set-web");
             AddWord(context, "menu_contact", "", "", "", "set-web");
