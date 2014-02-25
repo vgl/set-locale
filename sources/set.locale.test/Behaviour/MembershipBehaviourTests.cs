@@ -44,8 +44,8 @@ namespace set.locale.test.Behaviour
             userService.Verify(x => x.GetByEmail(ValidLoginModel.Email), Times.Once);
             authService.Verify(x => x.SignIn(ValidUserEntity.Id, ValidUserEntity.Name, ValidUserEntity.Email, ConstHelper.User, true), Times.Once);
 
-            sut.AssertPostAttribute(ACTION_LOGIN, new[] { typeof(LoginModel) });
             sut.AssertAllowAnonymousAttribute(ACTION_LOGIN, new[] { typeof(LoginModel) });
+            sut.AssertPostAttribute(ACTION_LOGIN, new[] { typeof(LoginModel) });
         }
 
         [Test]
