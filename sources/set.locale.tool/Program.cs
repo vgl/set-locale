@@ -18,7 +18,8 @@ namespace set.locale.tool
         static void Main(string[] args)
         {
             var path = @"C:\Work\set-locale\sources\set.locale";
-            if (!string.IsNullOrWhiteSpace(args[0]))
+            if (args.Any()
+                && !string.IsNullOrWhiteSpace(args[0]))
             {
                 if (!Directory.Exists(args[0]))
                 {
@@ -29,7 +30,8 @@ namespace set.locale.tool
             }
 
             var tag = "set-locale";
-            if (!string.IsNullOrWhiteSpace(args[1]))
+            if (args.Any()
+                && !string.IsNullOrWhiteSpace(args[1]))
             {
                 tag = args[1];
             }
@@ -41,11 +43,11 @@ namespace set.locale.tool
             var keyList = new List<string>();
 
             var viewFiles = new DirectoryInfo(string.Format(@"{0}\Views", path)).GetFiles("*.cshtml", SearchOption.AllDirectories).ToList();
-            var controllerFiles = new DirectoryInfo(string.Format(@"{0}\Controllers", path)).GetFiles("*.cs", SearchOption.AllDirectories).ToList();
+            var csFiles = new DirectoryInfo(string.Format(@"{0}\", path)).GetFiles("*.cs", SearchOption.AllDirectories).ToList();
 
             GetStrings(viewFiles, localizationstring, regexCsHtml, keyList);
 
-            GetStrings(controllerFiles, localizationstring, regexCs, keyList);
+            GetStrings(csFiles, localizationstring, regexCs, keyList);
 
             //var newKeyList = PrepareLocalizationStrings(keyList, tag);
 
@@ -86,6 +88,12 @@ namespace set.locale.tool
                             else if (item.StartsWith("\""))
                             {
                                 var theKey = item.Replace("\"", string.Empty).Replace(".", string.Empty);
+                                if (theKey.Contains(","))
+                                {
+                                    var keyItems = theKey.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
+                                    theKey = keyItems.Last().Trim();
+                                }
+
                                 if (!keyList.Contains(theKey))
                                 {
                                     keyList.Add(theKey);

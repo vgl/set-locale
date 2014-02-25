@@ -120,7 +120,7 @@ namespace set.locale.Data
             AddWord(context, "modal_title_users", "Kullanıcı Durumu", "User Status", "Статус Пользователя", "set-locale");
             AddWord(context, "modal_body_users", "Durumu Değiştirmek İstediğinize Emin misiniz?", "Are You Sure You Want To Change The User's Status?", "Вы Уверены Что Хотите Изменить Статус Пользователя?", "set-locale");
 
-            HttpServerUtility httpServerUtility = HttpContext.Current.Server;
+            var httpServerUtility = HttpContext.Current.Server;
             AddWord(context, "password_reset_email_body", 
                 File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-tr.html")),
                 File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-en.html")), 

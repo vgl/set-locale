@@ -87,10 +87,16 @@ namespace set.locale.Data.Services
                 int createCount = await _wordService.CreateList(fromWordsByTag.Select(WordModel.Map).ToList(), appId, createdBy);
 
                 result.AppendFormat("<h4>{0}</h4>", app.Name);
-                result.AppendFormat("{0}: <span class='label label-info'>{1}</span>, ", "existing_words".Localize(), wordsCount);
-                result.AppendFormat("{0}: <span class='label label-danger'>{1}</span>, ", "deleted_words".Localize(), deletedCount);
-                result.AppendFormat("{0}: <span class='label label-success'>{1}</span>, ", "created_words".Localize(), createCount);
-                result.AppendFormat("{0}: <span class='label label-success'>{1}</span> </br>", "new_total".Localize(), (wordsCount - deletedCount) + createCount);
+                
+                var existing = "existing_words".Localize();
+                var deleted = "deleted_words".Localize();
+                var created= "created_words".Localize();
+                var newTotal = "new_total".Localize();
+
+                result.AppendFormat("{0}: <span class='label label-info'>{1}</span>, ", existing, wordsCount);
+                result.AppendFormat("{0}: <span class='label label-danger'>{1}</span>, ", deleted, deletedCount);
+                result.AppendFormat("{0}: <span class='label label-success'>{1}</span>, ", created, createCount);
+                result.AppendFormat("{0}: <span class='label label-success'>{1}</span> </br>", newTotal, (wordsCount - deletedCount) + createCount);
             }
             return await Task.FromResult(result.ToString());
         }
