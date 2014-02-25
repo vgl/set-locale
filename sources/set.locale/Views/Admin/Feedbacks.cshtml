@@ -1,7 +1,7 @@
 ﻿@model PageModel<FeedbackModel>
 
 @{
-    ViewBag.Title = Html.LocalizeString("feedbacks_listing_title");
+    ViewBag.Title = Html.Localize("feedbacks_listing_title");
     Model.PagerUrl = "/admin/feedbacks/";
 }
 
@@ -16,8 +16,8 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>@Html.LocalizeString("email")</th>
-                                <th>@Html.LocalizeString("message")</th>
+                                <th>@Html.Localize("email")</th>
+                                <th>@Html.Localize("message")</th>
                             </tr>
                         </thead>
                         <tbody id="tbodyModelItems">

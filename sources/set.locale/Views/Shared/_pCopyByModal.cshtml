@@ -9,11 +9,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">@Html.LocalizeString("modal_title_copy_to_my_apps")</h4>
+                    <h4 class="modal-title" id="myModalLabel">@Html.Localize("modal_title_copy_to_my_apps")</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        @Html.LocalizeString("modal_body_copy_to_my_apps")
+                        @Html.Localize("modal_body_copy_to_my_apps")
                     </div>
                     <div class="row">
                         <div class="list-group">
@@ -33,8 +33,8 @@
                     @Html.AntiForgeryToken()
                     <label class="pull-left"><input type="checkbox" id="force" /></label>
                     <img src="/public/img/select2-spinner.gif" alt="loading" style="margin-right: 10px; display: none" />
-                    <input type="button" class="btn btn-danger" data-dismiss="modal" value="@Html.LocalizeString("btn_cancel")" />
-                    <input type="button" class="btn btn-success" value="@Html.LocalizeString("btn_ok")" id="btnCopyToMyApp" />
+                    <input type="button" class="btn btn-danger" data-dismiss="modal" value="@Html.Localize("btn_cancel")" />
+                    <input type="button" class="btn btn-success" value="@Html.Localize("btn_ok")" id="btnCopyToMyApp" />
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
                             mFooter.find('label').hide();
                             $('#CopyToMyAppModal .list-group-item').removeClass('successBG');
                             $('#CopyToMyAppModal .modal-body .row').hide();
-                            copyReturnMessage.html('<div class="alert alert-success"><span>@Html.LocalizeString("copy_success")</span></div>');
+                            copyReturnMessage.html('<div class="alert alert-success"><span>@Html.Localize("copy_success")</span></div>');
                             copyReturnMessage.append(result);
                             $('#CopyToMyAppModal').on('hidden.bs.modal', function () {
                                 $('#CopyToMyAppModal .modal-body .row').show();
@@ -90,7 +90,7 @@
                                 copyReturnMessage.html(null);
                             });
                         } else {
-                            copyReturnMessage.html('<div class="alert alert-danger"><span>@Html.LocalizeString("copy_error")</span></div>');
+                            copyReturnMessage.html('<div class="alert alert-danger"><span>@Html.Localize("copy_error")</span></div>');
                         }
                     });
             });

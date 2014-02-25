@@ -1,7 +1,7 @@
 ﻿@model AppModel
 
 @{
-    ViewBag.Title = Html.LocalizeString("new_app_title");
+    ViewBag.Title = Html.Localize("new_app_title");
 }
 
 <div class="panel panel-info">
@@ -15,24 +15,24 @@
 
                 <form method="post">
                     <div class="form-group">
-                        <label for="name">@Html.LocalizeString("app_name")</label>
+                        <label for="name">@Html.Localize("app_name")</label>
                         <input id="name" name="name" type="text" class="form-control" value="@Model.Name" required />
                         <div id="name_previously_used"></div>
                     </div>
 
                     <div class="form-group">
-                        <label for="url">@Html.LocalizeString("url")</label>
+                        <label for="url">@Html.Localize("url")</label>
                         <input id="url" name="url" type="text" class="form-control" value="@Model.Url" required />
                     </div>
 
                     <div class="form-group">
-                        <label for="description">@Html.LocalizeString("description")</label>
+                        <label for="description">@Html.Localize("description")</label>
                         <input id="description" name="description" type="text" class="form-control" value="@Model.Description" />
                     </div>
 
                     @Html.AntiForgeryToken()
 
-                    <input type="submit" value="@Html.LocalizeString("btn_save")" class="btn btn-success" />
+                    <input type="submit" value="@Html.Localize("btn_save")" class="btn btn-success" />
 
                 </form>
             </div>
@@ -51,8 +51,8 @@
                 $.get('/app/namecontrol/', { name: name.val() }, function (result) {
                     if (!result.IsOk) {
                         $(':submit').prop('disabled', true);
-                        $('#name_previously_used').html('<p class="text-danger">@Html.LocalizeString("name_previously_used")</p>' +
-                                   '<p class="text-success">@Html.LocalizeString("this_name_available") <span class="label label-info" style="cursor:pointer">' + result.Msg + '</span></p>');
+                        $('#name_previously_used').html('<p class="text-danger">@Html.Localize("name_previously_used")</p>' +
+                                   '<p class="text-success">@Html.Localize("this_name_available") <span class="label label-info" style="cursor:pointer">' + result.Msg + '</span></p>');
 
                         $('span.label-info').click(function () {
                             $('#name').val($(this).html());

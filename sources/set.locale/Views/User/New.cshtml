@@ -1,7 +1,7 @@
 ﻿@model UserModel
 
 @{
-    ViewBag.Title = Html.LocalizeString("new_user_title");
+    ViewBag.Title = Html.Localize("new_user_title");
 }
 
 <div class="panel panel-info">
@@ -15,23 +15,23 @@
 
                 <form method="post">
                     <div class="form-group">
-                        <label for="Name">@Html.LocalizeString("name")</label>
+                        <label for="Name">@Html.Localize("name")</label>
                         <input type="text" id="Name" name="Name" class="form-control" value="@Model.Name" required />
                     </div>
 
                     <div class="form-group">
-                        <label for="Email">@Html.LocalizeString("email")</label>
+                        <label for="Email">@Html.Localize("email")</label>
                         <input type="email" id="Email" name="Email" class="form-control" value="@Model.Email" required />
                     </div>
 
                     <div class="form-group">
-                        <label for="Password">@Html.LocalizeString("password")</label>
+                        <label for="Password">@Html.Localize("password")</label>
                         <input type="password" id="Password" name="Password" class="form-control" value="@Model.Password" required />
                     </div>
 
                     @Html.AntiForgeryToken()
 
-                    <button type="submit" class="btn btn-success">@Html.LocalizeString("btn_sign_up")</button>
+                    <button type="submit" class="btn btn-success">@Html.Localize("btn_sign_up")</button>
 
                 </form>
 

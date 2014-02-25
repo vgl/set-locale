@@ -1,6 +1,6 @@
 ﻿@model AppModel
 @{
-    ViewBag.Title = string.Format("{0} - {1}", Html.LocalizeString("user_apps_title"), Model.Name);
+    ViewBag.Title = string.Format("{0} - {1}", Html.Localize("user_apps_title"), Model.Name);
 }
 
 <div class="panel panel-info">
@@ -14,14 +14,14 @@
                 @Model.Description
             </p>
             <p>
-                @Html.LocalizeString("word_count"): <a href="/app/words/@Model.Id">@Model.UsageCountWord</a>
+                @Html.Localize("word_count"): <a href="/app/words/@Model.Id">@Model.UsageCountWord</a>
             </p>
         </div>
 
         <div class="row">
             @if (Model.IsActive)
             {
-                <input type="button" id="btnNewToken" class="btn btn-sm btn-primary pull-right" value="@Html.LocalizeString("btn_create_new_token")" data-id="@Model.Id" required />
+                <input type="button" id="btnNewToken" class="btn btn-sm btn-primary pull-right" value="@Html.Localize("btn_create_new_token")" data-id="@Model.Id" required />
                 @Html.AntiForgeryToken()
             }
         </div>
@@ -37,9 +37,9 @@
                                 {
                                     <th></th>
                                 }
-                                <th>@Html.LocalizeString("token")</th>
-                                <th>@Html.LocalizeString("creation_date")</th>
-                                <th>@Html.LocalizeString("usage_count")</th>
+                                <th>@Html.Localize("token")</th>
+                                <th>@Html.Localize("creation_date")</th>
+                                <th>@Html.Localize("usage_count")</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,7 +49,7 @@
                                     @if (ViewBag.IsActive)
                                     {
                                         <td>
-                                            <a class="btn btn-sm btn-danger btnAct" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@Html.LocalizeString("btn_delete")</a>
+                                            <a class="btn btn-sm btn-danger btnAct" data-toggle="modal" href="#DeleteModal" data-id="@item.Token">@Html.Localize("btn_delete")</a>
                                         </td>
                                     }
                                     <td>@item.Token</td>
@@ -77,14 +77,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">@Html.LocalizeString("modal_title_delete_token")</h4>
+                <h4 class="modal-title">@Html.Localize("modal_title_delete_token")</h4>
             </div>
             <div class="modal-body">
-                @Html.LocalizeString("modal_body_delete_token")
+                @Html.Localize("modal_body_delete_token")
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-danger" data-dismiss="modal" value="@Html.LocalizeString("btn_cancel")" />
-                <input type="button" class="btn btn-success" value="@Html.LocalizeString("btn_ok")" id="btnDelete" data-id="" />
+                <input type="button" class="btn btn-danger" data-dismiss="modal" value="@Html.Localize("btn_cancel")" />
+                <input type="button" class="btn btn-success" value="@Html.Localize("btn_ok")" id="btnDelete" data-id="" />
             </div>
         </div>
     </div>
@@ -141,7 +141,7 @@
                         aDeleteButton.attr("data-toggle", "modal");
                         aDeleteButton.attr("data-id", r.Result.Token);
                         aDeleteButton.attr("href", url);
-                        aDeleteButton.html('@Html.LocalizeString("btn_delete")');
+                        aDeleteButton.html('@Html.Localize("btn_delete")');
                         aDeleteButton.click(fnBtnActionClick);
 
                         var tdDeleteButton = $("<td />");

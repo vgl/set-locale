@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<AppModel>
 
 @{
-    ViewBag.Title = Html.LocalizeString("user_apps_title");
+    ViewBag.Title = Html.Localize("user_apps_title");
 }
 
 <div class="panel panel-info">
@@ -16,16 +16,16 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>@Html.LocalizeString("app_name")</th>
-                                <th>@Html.LocalizeString("description")</th>
-                                <th>@Html.LocalizeString("url")</th>
-                                <th>@Html.LocalizeString("usage_count")</th>
+                                <th>@Html.Localize("app_name")</th>
+                                <th>@Html.Localize("description")</th>
+                                <th>@Html.Localize("url")</th>
+                                <th>@Html.Localize("usage_count")</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                var val = item.IsActive ? Html.LocalizeString("btn_deactivate") : Html.LocalizeString("btn_activate");
+                                var val = item.IsActive ? Html.Localize("btn_deactivate") : Html.Localize("btn_activate");
                                 var buttonCss = item.IsActive ? "btn-danger" : "btn-success";
                                 <tr>
                                     <td>
@@ -48,8 +48,8 @@
                     <div class="alert alert-danger alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <p>
-                            <a href="/app/new" class="btn btn-warning btn-sm pull-right">@Html.LocalizeString("new_app")</a>
-                            <span>@Html.LocalizeString("list_item_not_found")</span>
+                            <a href="/app/new" class="btn btn-warning btn-sm pull-right">@Html.Localize("new_app")</a>
+                            <span>@Html.Localize("list_item_not_found")</span>
                         </p>
                     </div>
                 </div>
@@ -64,14 +64,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">@Html.LocalizeString("modal_title_apps")</h4>
+                <h4 class="modal-title">@Html.Localize("modal_title_apps")</h4>
             </div>
             <div class="modal-body">
-                @Html.LocalizeString("modal_body_apps")
+                @Html.Localize("modal_body_apps")
             </div>
             <div class="modal-footer">
-                <input type="button" class="btn btn-danger" data-dismiss="modal" value="@Html.LocalizeString("btn_cancel")" />
-                <input type="button" class="btn btn-success" value="@Html.LocalizeString("btn_ok")" id="btnModalAction" data-id="" data-isactive="" />
+                <input type="button" class="btn btn-danger" data-dismiss="modal" value="@Html.Localize("btn_cancel")" />
+                <input type="button" class="btn btn-success" value="@Html.Localize("btn_ok")" id="btnModalAction" data-id="" data-isactive="" />
             </div>
         </div>
     </div>
@@ -81,8 +81,8 @@
 {
     <script>
         $(function () {
-            var textActivate = "@Html.LocalizeString("btn_activate")";
-            var textDeactivate = "@Html.LocalizeString("btn_deactivate")";
+            var textActivate = "@Html.Localize("btn_activate")";
+            var textDeactivate = "@Html.Localize("btn_deactivate")";
 
             $("input#btnModalAction").click(function () {
                 var id = $(this).data(textId);

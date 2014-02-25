@@ -1,7 +1,7 @@
 ﻿@model WordModel
 
 @{
-    ViewBag.Title = Html.LocalizeString("words_key_detail_page_title");
+    ViewBag.Title = Html.Localize("words_key_detail_page_title");
     var apps = (IEnumerable<AppModel>)ViewBag.Apps;
 }
 
@@ -39,11 +39,11 @@
                         <div>
                             @if (Model.Translations.Count < ConstHelper.MaxLanguageCount)
                             {
-                                <input type="button" id="btnNewTranslate" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.LocalizeString("btn_new_translate")" data-id="@Model.Key" />
+                                <input type="button" id="btnNewTranslate" class="btn btn-sm btn-primary btnNewTranslate pull-right" style="margin-left: 5px;" value="@Html.Localize("btn_new_translate")" data-id="@Model.Key" />
                             }
                             @if (Model.Translations.Any() && apps.Any())
                             {
-                                <input type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#CopyToMyAppModal" value="@Html.LocalizeString("btn_copy_translate_to_my_app")" />
+                                <input type="button" class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#CopyToMyAppModal" value="@Html.Localize("btn_copy_translate_to_my_app")" />
                             }
                         </div>
 
@@ -62,8 +62,8 @@
                             {
                                 <th></th>
                             }
-                            <th>@Html.LocalizeString("language")</th>
-                            <th>@Html.LocalizeString("translation")</th>
+                            <th>@Html.Localize("language")</th>
+                            <th>@Html.Localize("translation")</th>
                         </tr>
                     </thead>
                     <tbody id="tbodyLanguage">
@@ -73,7 +73,7 @@
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <td>
-                                        <input type="button" class="btn btn-sm btn-warning btnEdit" value="@Html.LocalizeString("btn_edit")" data-lang="@item.Language.Key" />
+                                        <input type="button" class="btn btn-sm btn-warning btnEdit" value="@Html.Localize("btn_edit")" data-lang="@item.Language.Key" />
                                     </td>
                                 }
                                 <td> <img src="@item.Language.ImageUrl" alt="@item.Language.Name" /> @item.Language.Name</td>
@@ -103,7 +103,7 @@
 
             function addNewTranslationRow() {
                 var btnCancel = $('<input type="button" />').addClass('btn btn-sm btn-danger');
-                btnCancel.val('@Html.Raw(Html.LocalizeString("btn_cancel"))');
+                btnCancel.val('@Html.Raw(Html.Localize("btn_cancel"))');
 
                 btnCancel.click(function () {
                     $("h3#hdForm").html(null);
@@ -112,7 +112,7 @@
                 });
 
                 var btnSave = $('<input type="button" id="btnSave" />').addClass('btn btn-sm btn-success');
-                btnSave.val('@Html.Raw(Html.LocalizeString("btn_save"))');
+                btnSave.val('@Html.Raw(Html.Localize("btn_save"))');
                 btnSave.data('id', '@Model.Key');
 
                 btnSave.click(function () {
@@ -133,7 +133,7 @@
                                 var tdFlag = $('<td />');
                                 var tdTranslation = $('<td />');
 
-                                var btnEdit = $('<input type="button" class="btn btn-sm btn-warning btnEdit" data-lang="' + lang + '" value="@Html.LocalizeString("btn_edit")" />');
+                                var btnEdit = $('<input type="button" class="btn btn-sm btn-warning btnEdit" data-lang="' + lang + '" value="@Html.Localize("btn_edit")" />');
                                 btnEdit.click(fnEdit);
                                 tdBtn.append(btnEdit);
                                 tdFlag.append($("<img class='flag' style='margin:5px;margin-left: 0;margin-top: 0;' alt='flag' src='/public/img/flag/" + lang + ".png'/>"));
@@ -208,7 +208,7 @@
                 dv4.append(btnCancel);
 
 
-                $("h3#hdForm").html('@Html.LocalizeString("title_new_translation")');
+                $("h3#hdForm").html('@Html.Localize("title_new_translation")');
                 $("div#dvForm").append(dv1).append(dv2).append('<br style="display:block;clear:both;"/>').append(dv3).append(dv4);
             }
 
@@ -279,10 +279,10 @@
 
                 if ($(this).hasClass("btn-warning")) {
                     $(this).removeClass("btn-warning").addClass("btn-success");
-                    $(this).val("@Html.Raw(Html.LocalizeString("btn_save"))");
+                    $(this).val("@Html.Raw(Html.Localize("btn_save"))");
 
                     var btnCancel = $('<input type="button" style ="margin-left:5px" />').addClass('btn btn-sm btn-danger');
-                    btnCancel.val('@Html.Raw(Html.LocalizeString("btn_cancel"))');
+                    btnCancel.val('@Html.Raw(Html.Localize("btn_cancel"))');
 
                     $(this).parent().append(btnCancel);
                     prepareEditRow($(this));
@@ -290,7 +290,7 @@
                     btnCancel.click(function (r) {
                         var btn = $(this).parent().children(":first");
                         $(btn).removeClass("btn-success").addClass("btn-warning");
-                        $(btn).val("@Html.Raw(Html.LocalizeString("btn_edit"))");
+                        $(btn).val("@Html.Raw(Html.Localize("btn_edit"))");
 
                         var translationTd = $(this).parent().parent().children(":last");
                         translationTd.html(oldText);
@@ -299,7 +299,7 @@
                     });
                 } else if ($(this).hasClass("btn-success")) {
                     $(this).removeClass("btn-success").addClass("btn-warning");
-                    $(this).val("@Html.Raw(Html.LocalizeString("btn_edit"))");
+                    $(this).val("@Html.Raw(Html.Localize("btn_edit"))");
 
                     prepareDataShowingRow($(this));
                 }
@@ -316,6 +316,6 @@
     @Html.Partial("_pCopyByModal")
     <script>
         var forceMsg = $('#CopyToMyAppModal .modal-content .modal-footer label');
-        forceMsg.append('@Html.LocalizeString("override_my_translations")');
+        forceMsg.append('@Html.Localize("override_my_translations")');
     </script>
 }

@@ -7,7 +7,7 @@ namespace set.locale.Helpers
 {
     public static class LocalizationHelper
     {
-        public static string LocalizeString(this HtmlHelper helper, string key)
+        public static string Localize(this HtmlHelper helper, string key)
         {
             try
             {
@@ -16,9 +16,9 @@ namespace set.locale.Helpers
             catch { return key; }
         }
 
-        public static string LocalizeString(string key)
+        public static string Localize(string key)
         {
-            return LocalizeString(null, key);
+            return Localize(null, key);
         }
     }
 }
