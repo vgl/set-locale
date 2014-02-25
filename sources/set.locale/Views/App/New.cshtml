@@ -55,7 +55,7 @@
                                    '<p class="text-success">@Html.Localize("this_name_available") <span class="label label-info" style="cursor:pointer">' + result.Msg + '</span></p>');
 
                         $('span.label-info').click(function () {
-                            $('#name').val($(this).html());
+                            name.val($(this).html());
                             $('#name_previously_used').html(null);
                             $(':submit').prop('disabled', false);
                         });
