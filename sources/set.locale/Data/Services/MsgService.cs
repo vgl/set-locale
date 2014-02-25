@@ -14,7 +14,10 @@ namespace set.locale.Data.Services
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(ConstHelper.MediaTypeJson));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(ConfigurationManager.AppSettings[ConstHelper.MessagingApiKey]);
+                string appSetting = ConfigurationManager.AppSettings[ConstHelper.MessagingApiKey];
+                if (string.IsNullOrEmpty(appSetting)) return;
+
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(appSetting);
                 client.BaseAddress = new Uri("http://msg.setcrm.com/");
 
                 var content = new FormUrlEncodedContent(new[]
