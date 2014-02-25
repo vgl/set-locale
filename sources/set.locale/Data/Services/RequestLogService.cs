@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using set.locale.Data.Entities;
 
@@ -28,7 +29,7 @@ namespace set.locale.Data.Services
                 Url = url
             };
             Context.RequestLogs.Add(log);
-
+            Context.Entry(log).State = EntityState.Added;
             return Task.FromResult(Context.SaveChanges() > 0);
         }
     }

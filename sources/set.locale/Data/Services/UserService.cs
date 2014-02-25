@@ -34,7 +34,7 @@ namespace set.locale.Data.Services
                 Language = model.Language
             };
             Context.Users.Add(user);
-
+            Context.Entry(user).State = EntityState.Added;
             return Task.FromResult(Context.SaveChanges() > 0);
         }
 
@@ -89,7 +89,7 @@ namespace set.locale.Data.Services
             {
                 user.LoginTryCount += 1;
             }
-
+            Context.Entry(user).State = EntityState.Modified;
             Context.SaveChanges();
 
             return Task.FromResult(result);
@@ -113,7 +113,7 @@ namespace set.locale.Data.Services
             user.UpdatedBy = user.Id;
             user.PasswordResetToken = token;
             user.PasswordResetRequestedAt = user.UpdatedAt;
-            //Context.Entry(user).State = EntityState.Modified;
+            Context.Entry(user).State = EntityState.Modified;
 
             var saved = Context.SaveChanges() > 0;
             if (saved)
@@ -153,7 +153,7 @@ namespace set.locale.Data.Services
             user.PasswordResetRequestedAt = null;
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password, 15);
             user.LoginTryCount = 0;
-            //Context.Entry(user).State = EntityState.Modified;
+            Context.Entry(user).State = EntityState.Modified;
 
             return await Task.FromResult(Context.SaveChanges() > 0);
         }
@@ -172,7 +172,7 @@ namespace set.locale.Data.Services
             }
 
             user.IsActive = !isActive;
-            //Context.Entry(user).State = EntityState.Modified;
+            Context.Entry(user).State = EntityState.Modified;
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
