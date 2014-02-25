@@ -22,9 +22,15 @@ namespace set.locale.Data.Services
         {
             if (model.IsNotValid()) return Task.FromResult(false);
 
+            if (GetByEmail(model.Email) != null)
+            {
+                return Task.FromResult(false);
+            }
+
             var img = model.Email.ToGravatar();
             var user = new User
             {
+                Id = model.Id,
                 Email = model.Email,
                 Name = model.Name,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password, 15),
@@ -33,6 +39,7 @@ namespace set.locale.Data.Services
                 RoleName = roleName,
                 Language = model.Language
             };
+
             Context.Users.Add(user);
             Context.Entry(user).State = EntityState.Added;
             return Task.FromResult(Context.SaveChanges() > 0);

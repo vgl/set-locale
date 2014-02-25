@@ -102,7 +102,7 @@ namespace set.locale.Data
 
             AddWord(context, "home_title", "Set-locale Servisine Hoş Geldiniz.", "Welcome To Set-locale.", "Добро Пожаловать В Set-locale.", "set-locale");
             AddWord(context, "words_key_listing_title", "Anahtar Listesi", "Name Listing", "Список Ключей", "set-locale");
-            AddWord(context, "login_view_title", "Sisteme Giriş", "İnto The System", "Вход В Систему", "set-locale");
+            AddWord(context, "login_view_title", "Sisteme Giriş", "Into The System", "Вход В Систему", "set-locale");
             AddWord(context, "new_user_title", "Yeni Kullanıcı", "New User", "Новый пользователь", "set-locale");
             AddWord(context, "password_reset_title", "Şifre Sıfırla", "Reset Password", "Сбросить Пароль", "set-locale");
             AddWord(context, "user_apps_title", "Uygulamalarım", "My Applications", "Мои приложения", "set-locale");
@@ -161,7 +161,7 @@ namespace set.locale.Data
             AddWord(context, "password_change_title", "Parola sıfırlama", "", "", "set-locale");
             AddWord(context, "password_reset_email_subject", "Parola Sıfırlama", "Reset Password", "", "set-locale");
             AddWord(context, "password_reset_request_successful", "Parola sıfırlama isteği başarılı", "Password reset request successful", "", "set-locale");
-            AddWord(context, "please_check_the_fields_and_try_again", "Tüm alanları kontrol ederek tekrar deneyiniz.", "", "", "set-locale");
+            AddWord(context, "please_check_the_fields_and_try_again", "Tüm alanları kontrol ederek tekrar deneyiniz.", "By checking all the fields and try again.", "", "set-locale");
             AddWord(context, "search", "Arama", "Search", "", "set-locale");
             AddWord(context, "tags", "Etiketler", "", "", "set-locale");
             AddWord(context, "this_name_available", "Bu isim müsait", "This name available", "", "set-locale");
