@@ -123,8 +123,8 @@ namespace set.locale.Data
 
             AddWord(context, "added_translates", "Eklenen çeviriler", "Added translates", "", "set-locale");
             AddWord(context, "branch", "Şube", "Branch", "", "set-locale");
-            AddWord(context, "btn_copy_translate_to_my_app", "Çeviriyi uygulamama kopyala", "", "", "set-locale");
-            AddWord(context, "btn_copy_words_to_my_app", "Kelimeleri uygulamama kopyala", "", "", "set-locale");
+            AddWord(context, "btn_copy_translate_to_my_app", "Çeviriyi uygulamama kopyala", "Copy translations to my app", "", "set-locale");
+            AddWord(context, "btn_copy_words_to_my_app", "Kelimeleri uygulamama kopyala", "Copy words to my app", "", "set-locale");
             AddWord(context, "btn_send", "Gönder", "Send", "", "set-locale");
             AddWord(context, "copy_error", "Kopyalama hatası", "", "", "set-locale");
             AddWord(context, "copy_success", "Kopyalama başarılı", "", "", "set-locale");
@@ -153,8 +153,8 @@ namespace set.locale.Data
             AddWord(context, "menu_user_profile", "Profil", "", "", "set-locale");
             AddWord(context, "modal_body_copy_to_my_apps", "Kopyalamak için uygulama seçiniz.", "", "", "set-locale");
             AddWord(context, "modal_title_copy_to_my_apps", "İçerik kopyalama", "", "", "set-locale");
-            AddWord(context, "name_previously_used", "Bu isim daha önce kullanılmış", "", "", "set-locale");
-            AddWord(context, "new_member_create_app_message", "İlk uygulamanızı oluşturun.", "", "", "set-locale");
+            AddWord(context, "name_previously_used", "Bu isim daha önce kullanılmış", "This name used before", "", "set-locale");
+            AddWord(context, "new_member_create_app_message", "İlk uygulamanızı oluşturun.", "Create your first application", "", "set-locale");
             AddWord(context, "new_total", "Toplam", "", "", "set-locale");
             AddWord(context, "override_my_translations", "Mevcut çevirilerimin üzerine yaz", "", "", "set-locale");
             AddWord(context, "password_change_title", "Parola sıfırlama", "", "", "set-locale");
