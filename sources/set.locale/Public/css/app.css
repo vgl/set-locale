@@ -18,22 +18,23 @@ footer {
 }
 
 #feedback {
-    position: fixed;
+    /*position: fixed;
     top: 35%;
     left: 0;
     height: 0;
     text-align: right;
     z-index: 9999;
-    margin-left: -85px;
+    margin-left: -85px;*/
+    float: right;
 }
 
     #feedback button {
-        transform: rotate(-90deg);
+        /*transform: rotate(-90deg);
         -webkit-transform: rotate(-90deg);
         -moz-transform: rotate(-90deg);
         -o-transform: rotate(-90deg);
         filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-        display: block;
+        display: block;*/
     }
 
 #frm input {

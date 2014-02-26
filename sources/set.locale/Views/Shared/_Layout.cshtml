@@ -101,10 +101,17 @@
         </div>
         <div class="col-lg-1"></div>
         <div class="clearfix"></div>
-        <footer><hr /><p>&copy; Argeset Yazılım</p></footer>
+        <footer class="row">
+            <hr />
+            <div class="col-md-6">
+                <p>&copy; Argeset Yazılım</p>
+            </div>
+            <div class="col-md-6">
+                <div id="feedback"><button class="btn btn-sm btn-warning" id="btnOpenFeedBack" data-toggle="modal" data-target="#modalFeedback">@Html.Localize("btn_open_feedback_popup")</button></div>
+            </div>
+        </footer>
     </div>
 
-    <div id="feedback"><button class="btn btn-warning" id="btnOpenFeedBack" data-toggle="modal" data-target="#modalFeedback">@Html.Localize("btn_open_feedback_popup")</button></div>
     <div class="modal fade" id="modalFeedback">
         <div class="modal-dialog">
             <div class="modal-content">

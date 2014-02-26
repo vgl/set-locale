@@ -102,7 +102,7 @@ namespace set.locale.Data
 
             AddWord(context, "home_title", "Set-locale Servisine Hoş Geldiniz.", "Welcome To Set-locale.", "Добро Пожаловать В Set-locale.", "set-locale");
             AddWord(context, "words_key_listing_title", "Anahtar Listesi", "Name Listing", "Список Ключей", "set-locale");
-            AddWord(context, "login_view_title", "Sisteme Giriş", "İnto The System", "Вход В Систему", "set-locale");
+            AddWord(context, "login_view_title", "Sisteme Giriş", "Into The System", "Вход В Систему", "set-locale");
             AddWord(context, "new_user_title", "Yeni Kullanıcı", "New User", "Новый пользователь", "set-locale");
             AddWord(context, "password_reset_title", "Şifre Sıfırla", "Reset Password", "Сбросить Пароль", "set-locale");
             AddWord(context, "user_apps_title", "Uygulamalarım", "My Applications", "Мои приложения", "set-locale");
@@ -134,13 +134,14 @@ namespace set.locale.Data
             AddWord(context, "data_saved_successfully_msg", "Kayıt işlemi başarılı", "Data saved successfully", "", "set-locale");
             AddWord(context, "deleted_words", "Silinen kelimeler", "", "", "set-locale");
             AddWord(context, "deletes_old_data", "Eski verileri sil", "", "", "set-locale");
-            AddWord(context, "feedback_popup_title", "Geribildirim", "Feedback", "", "set-locale");
             AddWord(context, "existing_translates", "Mevcut çeviriler", "", "", "set-locale");
             AddWord(context, "existing_words", "Mevcut kelimeler", "", "", "set-locale");
             AddWord(context, "exported_words", "Çıkartılan kelimeler", "", "", "set-locale");
             AddWord(context, "exported_words_sheet_name", "", "", "", "set-locale");
-            AddWord(context, "feedbacks_listing_title", "Geribildirimler", "", "", "set-locale");
+            AddWord(context, "feedback_popup_title", "Geri Bildirim", "Feedback", "", "set-locale");
+            AddWord(context, "feedbacks_listing_title", "Geri Bildirimler", "Feedbacks", "", "set-locale");
             AddWord(context, "btn_open_feedback_popup", "Geri bildirim", "Feedback", "", "set-locale");
+            AddWord(context, "menu_feedbacks", "Geri Bildirimler", "Feedbacks", "", "set-locale");
             AddWord(context, "head_office", "Merkez Ofis", "Head Office", "", "set-locale");
             AddWord(context, "key", "Anahtar", "Key", "", "set-locale");
             AddWord(context, "list_item_not_found", "Kayıt bulunamadı", "", "", "set-locale");
@@ -159,8 +160,8 @@ namespace set.locale.Data
             AddWord(context, "override_my_translations", "Mevcut çevirilerimin üzerine yaz", "", "", "set-locale");
             AddWord(context, "password_change_title", "Parola sıfırlama", "", "", "set-locale");
             AddWord(context, "password_reset_email_subject", "Parola Sıfırlama", "Reset Password", "", "set-locale");
-            AddWord(context, "password_reset_request_successful", "Parola sıfırlama isteği başarılı", "", "", "set-locale");
-            AddWord(context, "please_check_the_fields_and_try_again", "Tüm alanları kontrol ederek tekrar deneyiniz.", "", "", "set-locale");
+            AddWord(context, "password_reset_request_successful", "Parola sıfırlama isteği başarılı", "Password reset request successful", "", "set-locale");
+            AddWord(context, "please_check_the_fields_and_try_again", "Tüm alanları kontrol ederek tekrar deneyiniz.", "By checking all the fields and try again.", "", "set-locale");
             AddWord(context, "search", "Arama", "Search", "", "set-locale");
             AddWord(context, "tags", "Etiketler", "", "", "set-locale");
             AddWord(context, "this_name_available", "Bu isim müsait", "This name available", "", "set-locale");
@@ -172,7 +173,6 @@ namespace set.locale.Data
             AddWord(context, "words_not_translated_key_listing_title", "Çevirisi olmayan kelimeler", "", "", "set-locale");
             AddWord(context, "message", "Mesaj", "Message", "", "set-locale");
             AddWord(context, "subject", "Konu", "Subject", "", "set-locale");
-            AddWord(context, "menu_feedbacks", "Geri Bildirimler", "Feedbacks", "", "set-locale");
             AddWord(context, "menu_users", "Kullanıcılar", "Users", "", "set-locale");
             AddWord(context, "application", "Uygulama", "Application", "", "set-locale");
             AddWord(context, "admin", "Yönetici", "Admin", "", "set-locale");
@@ -193,7 +193,6 @@ namespace set.locale.Data
             AddWord(context, "btn_deactivate", "Pasif", "Deactive", "", "set-web");
             AddWord(context, "btn_login", "Giriş", "Login", "", "set-web");
             AddWord(context, "btn_ok", "Tamam", "OK", "", "set-web");
-            AddWord(context, "btn_open_feedback_popup", "", "", "", "set-web");
             AddWord(context, "btn_save", "Kaydet", "Save", "", "set-web");
             AddWord(context, "btn_save_and_new", "", "", "", "set-web");
             AddWord(context, "btn_send", "Gönder", "Send", "", "set-web");
@@ -203,8 +202,6 @@ namespace set.locale.Data
             AddWord(context, "contactmessages_listing_title", "İletişimler", "", "", "set-web");
             AddWord(context, "domainobject_detail_view_title", "", "", "", "set-web");
             AddWord(context, "domainobject_listing_title", "", "", "", "set-web");
-            AddWord(context, "feedback_popup_title", "Geribildirim", "Feedback", "", "set-web");
-            AddWord(context, "feedbacks_listing_title", "Geribildirimler", "Feedbacks", "", "set-web");
             AddWord(context, "forgot_your_password", "Şifremi Unuttum", "Forgot your password", "", "set-web");
             AddWord(context, "login_view_title", "Giriş", "Login", "", "set-web");
             AddWord(context, "menu_contact", "İletişim", "Contact", "", "set-web");
@@ -212,7 +209,6 @@ namespace set.locale.Data
             AddWord(context, "menu_domain_object", "", "", "", "set-web");
             AddWord(context, "menu_domain_object_list", "", "", "", "set-web");
             AddWord(context, "menu_domain_object_new", "", "", "", "set-web");
-            AddWord(context, "menu_feedbacks", "Geri Bildirimler", "Feedbacks", "", "set-web");
             AddWord(context, "menu_login", "Giriş", "Login", "", "set-web");
             AddWord(context, "menu_signup", "Kayıt Ol", "Sign Up", "", "set-web");
             AddWord(context, "menu_user_logout", "", "", "", "set-web");

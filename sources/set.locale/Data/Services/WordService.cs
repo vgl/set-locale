@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
-
+using System.Web;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using ServiceStack.Text;
 
 using set.locale.Data.Entities;
 using set.locale.Helpers;
 using set.locale.Models;
+using System.IO;
 
 namespace set.locale.Data.Services
 {
@@ -405,6 +408,74 @@ namespace set.locale.Data.Services
             }
             return await Task.FromResult(result.ToString());
         }
+
+        public async Task<string> ExportWordsToExcel(string prefixName)
+        {
+            var words = await GetAll();
+            using (var p = new ExcelPackage())
+            {
+                p.Workbook.Properties.Title = "exported_words".Localize();
+
+                p.Workbook.Worksheets.Add("exported_words_sheet_name".Localize());
+                var workSheet = p.Workbook.Worksheets[1];
+
+                //display table header
+                workSheet.Cells[1, 1].Value = "key".Localize();
+                workSheet.Cells[1, 2].Value = "description".Localize();
+                workSheet.Cells[1, 3].Value = "tags".Localize();
+                workSheet.Cells[1, 4].Value = "translation_count".Localize();
+                workSheet.Cells[1, 5].Value = "column_header_translation_tr".Localize();
+                workSheet.Cells[1, 6].Value = "column_header_translation_en".Localize();
+                workSheet.Cells[1, 7].Value = "column_header_translation_az".Localize();
+                workSheet.Cells[1, 8].Value = "column_header_translation_cn".Localize();
+                workSheet.Cells[1, 9].Value = "column_header_translation_fr".Localize();
+                workSheet.Cells[1, 10].Value = "column_header_translation_gr".Localize();
+                workSheet.Cells[1, 11].Value = "column_header_translation_it".Localize();
+                workSheet.Cells[1, 12].Value = "column_header_translation_kz".Localize();
+                workSheet.Cells[1, 13].Value = "column_header_translation_ru".Localize();
+                workSheet.Cells[1, 14].Value = "column_header_translation_sp".Localize();
+                workSheet.Cells[1, 15].Value = "column_header_translation_tk".Localize();
+
+                //set styling of header
+                workSheet.Cells[1, 1, 1, 15].Style.Font.Bold = true;
+                workSheet.Cells[1, 1, 1, 15].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                for (var i = 0; i < words.Count; i++)
+                {
+                    var row = i + 2;
+                    var word = words[i];
+
+                    workSheet.Cells[row, 1].Value = word.Key;
+                    workSheet.Cells[row, 2].Value = word.Description;
+                    workSheet.Cells[row, 3].Value = string.Join(", ", word.Tags);
+                    workSheet.Cells[row, 4].Value = word.TranslationCount;
+                    workSheet.Cells[row, 5].Value = word.Translation_TR;
+                    workSheet.Cells[row, 6].Value = word.Translation_EN;
+                    workSheet.Cells[row, 7].Value = word.Translation_AZ;
+                    workSheet.Cells[row, 8].Value = word.Translation_CN;
+                    workSheet.Cells[row, 9].Value = word.Translation_FR;
+                    workSheet.Cells[row, 10].Value = word.Translation_GR;
+                    workSheet.Cells[row, 11].Value = word.Translation_IT;
+                    workSheet.Cells[row, 12].Value = word.Translation_KZ;
+                    workSheet.Cells[row, 13].Value = word.Translation_RU;
+                    workSheet.Cells[row, 14].Value = word.Translation_SP;
+                    workSheet.Cells[row, 15].Value = word.Translation_TK;
+                }
+
+                for (var i = 1; i <= 15; i++)
+                {
+                    workSheet.Column(i).AutoFit();
+                }
+
+                var fileName = string.Format("{0}-{1}.xls", prefixName, DateTime.Now.ToString("s").Replace(':', '-').Replace("T", "-"));
+                var filePath = string.Format("/public/files/{0}", fileName);
+                var mapPath = HttpContext.Current.Server.MapPath(filePath);
+
+                File.WriteAllBytes(mapPath, p.GetAsByteArray());
+
+                return fileName;
+            }
+        }
     }
 
     public interface IWordService
@@ -429,5 +500,6 @@ namespace set.locale.Data.Services
         Task<List<Word>> GetAll();
         bool IsDuplicateKey(WordModel model);
         Task<string> Copy(string copyFromWord, string appIds, string createdBy, bool force);
+        Task<string> ExportWordsToExcel(string prefixName);
     }
 }
