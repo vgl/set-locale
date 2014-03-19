@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+
 using set.locale.Data.Entities;
 using set.locale.Helpers;
 
@@ -13,7 +14,6 @@ namespace set.locale.Data
     public class SetDbMigrationConfiguration : DbMigrationsConfiguration<SetDbContext>
     {
         private static string usrId;
-
         private static string appId;
 
         public SetDbMigrationConfiguration()
@@ -34,10 +34,10 @@ namespace set.locale.Data
 
             #endregion
 
-            #region Apps & Words
-
             AddApplication(context, "info@set-locale.com", "set-locale", "a brand new crm application.", "set-locale.com");
 
+            #region Words
+            
             AddWord(context, "menu_words", "Kelimeler", "Words", "Слова", "set-locale");
             AddWord(context, "menu_words_words", "Tüm Kelimeler", "All Words", "Все Слова", "set-locale");
             AddWord(context, "menu_words_my_words", "Kelimelerim", "My Words", "Мои Слова", "set-locale");
@@ -140,7 +140,7 @@ namespace set.locale.Data
             AddWord(context, "exported_words_sheet_name", "", "", "", "set-locale");
             AddWord(context, "feedback_popup_title", "Geri Bildirim", "Feedback", "", "set-locale");
             AddWord(context, "feedbacks_listing_title", "Geri Bildirimler", "Feedbacks", "", "set-locale");
-            AddWord(context, "btn_open_feedback_popup", "Geri bildirim", "Feedback", "", "set-locale");
+            AddWord(context, "btn_open_feedback_popup", "Geri Bildirim", "Feedback", "", "set-locale");
             AddWord(context, "menu_feedbacks", "Geri Bildirimler", "Feedbacks", "", "set-locale");
             AddWord(context, "head_office", "Merkez Ofis", "Head Office", "", "set-locale");
             AddWord(context, "key", "Anahtar", "Key", "", "set-locale");
@@ -161,13 +161,13 @@ namespace set.locale.Data
             AddWord(context, "password_change_title", "Parola sıfırlama", "", "", "set-locale");
             AddWord(context, "password_reset_email_subject", "Parola Sıfırlama", "Reset Password", "", "set-locale");
             AddWord(context, "password_reset_request_successful", "Parola sıfırlama isteği başarılı", "Password reset request successful", "", "set-locale");
-            AddWord(context, "please_check_the_fields_and_try_again", "Tüm alanları kontrol ederek tekrar deneyiniz.", "By checking all the fields and try again.", "", "set-locale");
+            AddWord(context, "please_check_the_fields_and_try_again", "Tüm alanları kontrol ederek tekrar deneyiniz.", "Please check all the fields and try again.", "", "set-locale");
             AddWord(context, "search", "Arama", "Search", "", "set-locale");
-            AddWord(context, "tags", "Etiketler", "", "", "set-locale");
+            AddWord(context, "tags", "Etiketler", "Tags", "", "set-locale");
             AddWord(context, "this_name_available", "Bu isim müsait", "This name available", "", "set-locale");
             AddWord(context, "title_new_translation", "Yeni çeviri ekle", "", "", "set-locale");
-            AddWord(context, "translation_count", "Çeviri sayısı", "", "", "set-locale");
-            AddWord(context, "word_count", "Kelime sayısı", "", "", "set-locale");
+            AddWord(context, "translation_count", "Çeviri sayısı", "Translation Count", "", "set-locale");
+            AddWord(context, "word_count", "Kelime sayısı", "Word Count", "", "set-locale");
             AddWord(context, "words_key_detail_page_title", "Detay", "", "", "set-locale");
             AddWord(context, "words_my_key_listing_title", "Benim kelimelerim", "", "", "set-locale");
             AddWord(context, "words_not_translated_key_listing_title", "Çevirisi olmayan kelimeler", "", "", "set-locale");
@@ -176,60 +176,16 @@ namespace set.locale.Data
             AddWord(context, "menu_users", "Kullanıcılar", "Users", "", "set-locale");
             AddWord(context, "application", "Uygulama", "Application", "", "set-locale");
             AddWord(context, "admin", "Yönetici", "Admin", "", "set-locale");
-
+            AddWord(context, "btn_send_password_reset_link", "Şifre Sıfırlama Linki Dönder", "Send Password Reset Link", "", "set-locale");
+            AddWord(context, "contact_us_about_anything", "Bize her konuda aşağıdaki formu kullanarak ulaşabilirsiniz", "Contact us about anything", "", "set-locale");
 
             var httpServerUtility = HttpContext.Current.Server;
             AddWord(context, "password_reset_email_body",
                 File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-tr.html"), Encoding.UTF8),
                 File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-en.html"), Encoding.UTF8),
-                "", "set-locale");
+                string.Empty, "set-locale");
 
-            AddApplication(context, "info@set-web.com", "set-web", "a brand new crm application.", "set-web.com");
-
-            AddWord(context, "admin", "Yönetici", "Admin", "", "set-web");
-            AddWord(context, "all_users_title", "Tüm Kullanıcılar", "All Users", "", "set-web");
-            AddWord(context, "btn_activate", "Aktif", "Active", "", "set-web");
-            AddWord(context, "btn_cancel", "İptal", "Cancel", "", "set-web");
-            AddWord(context, "btn_deactivate", "Pasif", "Deactive", "", "set-web");
-            AddWord(context, "btn_login", "Giriş", "Login", "", "set-web");
-            AddWord(context, "btn_ok", "Tamam", "OK", "", "set-web");
-            AddWord(context, "btn_save", "Kaydet", "Save", "", "set-web");
-            AddWord(context, "btn_save_and_new", "", "", "", "set-web");
-            AddWord(context, "btn_send", "Gönder", "Send", "", "set-web");
-            AddWord(context, "btn_send_password_reset_link", "Reset bağlantısı gönder", "Send reset link", "", "set-web");
-            AddWord(context, "btn_sign_up", "", "", "", "set-web");
-            AddWord(context, "contact_view_title", "İletişim", "Contact", "", "set-web");
-            AddWord(context, "contactmessages_listing_title", "İletişimler", "", "", "set-web");
-            AddWord(context, "domainobject_detail_view_title", "", "", "", "set-web");
-            AddWord(context, "domainobject_listing_title", "", "", "", "set-web");
-            AddWord(context, "forgot_your_password", "Şifremi Unuttum", "Forgot your password", "", "set-web");
-            AddWord(context, "login_view_title", "Giriş", "Login", "", "set-web");
-            AddWord(context, "menu_contact", "İletişim", "Contact", "", "set-web");
-            AddWord(context, "menu_contactmessages", "", "", "", "set-web");
-            AddWord(context, "menu_domain_object", "", "", "", "set-web");
-            AddWord(context, "menu_domain_object_list", "", "", "", "set-web");
-            AddWord(context, "menu_domain_object_new", "", "", "", "set-web");
-            AddWord(context, "menu_login", "Giriş", "Login", "", "set-web");
-            AddWord(context, "menu_signup", "Kayıt Ol", "Sign Up", "", "set-web");
-            AddWord(context, "menu_user_logout", "", "", "", "set-web");
-            AddWord(context, "menu_user_profile", "", "", "", "set-web");
-            AddWord(context, "menu_users", "Kullanıcılar", "Users", "", "set-web");
-            AddWord(context, "message", "Mesaj", "Message", "", "set-web");
-            AddWord(context, "modal_body_users", "", "", "", "set-web");
-            AddWord(context, "modal_title_users", "", "", "", "set-web");
-            AddWord(context, "name", "", "", "", "set-web");
-            AddWord(context, "new_domainobject_view_title", "", "", "", "set-web");
-            AddWord(context, "new_password", "", "", "", "set-web");
-            AddWord(context, "new_user_title", "", "", "", "set-web");
-            AddWord(context, "nothing_found", "", "", "", "set-web");
-            AddWord(context, "password", "", "", "", "set-web");
-            AddWord(context, "password_change_title", "", "", "", "set-web");
-            AddWord(context, "password_reset_title", "", "", "", "set-web");
-            AddWord(context, "please_wait", "", "", "", "set-web");
-            AddWord(context, "search", "Ara", "Search", "", "set-web");
-            AddWord(context, "subject", "Konu", "Subject", "", "set-web");
-            AddWord(context, "total_page_count", "", "", "", "set-web");
-            AddWord(context, "user_role", "", "", "", "set-web");
+            
             #endregion
 
             context.SaveChanges();

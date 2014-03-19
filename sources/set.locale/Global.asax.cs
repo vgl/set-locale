@@ -8,7 +8,6 @@ using Castle.Windsor;
 using Castle.Windsor.Installer;
 
 using set.locale.Configurations;
-using set.locale.Controllers;
 using set.locale.Data.Services;
 using set.locale.Helpers;
 

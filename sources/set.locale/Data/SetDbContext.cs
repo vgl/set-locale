@@ -14,7 +14,7 @@ namespace set.locale.Data
         }
 
         public SetDbContext()
-            : this("Name=SetWeb")
+            : this("Name=SetLocale")
         { }
 
         public DbSet<User> Users { get; set; }

@@ -10,6 +10,8 @@
 
         <div class="row">
             <div class="col-md-6">
+                
+                <h4>@Html.Localize("contact_us_about_anything")</h4>
 
                 @Html.Partial("_Msg")
 
@@ -41,28 +43,26 @@
 
             <div class="col-md-6">
 
-                <h4>ARGESET YAZILIM</h4>
-
+                <h4>Argeset</h4>
                 <div class="panel panel-default">
                     <div class="panel-heading">@Html.Localize("head_office")</div>
                     <div class="panel-body">
                         <address>
                             Libadiye Caddesi No:48/3 Küçük Çamlıca
-                            Üsküdar – İSTANBUL / TÜRKİYE
+                            Üsküdar - İstanbul
                         </address>
-                        Tel: +90 216 428 53 33
+                        <i class="fa fa-phone"></i> @Html.Localize("phone") : +90 216 428 53 33
                         <br />
-                        Faks: +90 216 428 73 33
+                        <i class="fa fa-phone"></i> @Html.Localize("fax") : +90 216 428 73 33
                     </div>
                 </div>
-
                 <div class="panel panel-default">
                     <div class="panel-heading">@Html.Localize("branch")</div>
                     <div class="panel-body">
                         <address>
-                            Zuhal Sok. No:10/12 Kadıköy - Istanbul
+                            Zuhal Sok. No:10/12 Kadıköy - İstanbul
                         </address>
-                        Tel : +90 216 336 33 31
+                        <i class="fa fa-phone"></i> @Html.Localize("phone") : +90 216 336 33 31
                     </div>
                 </div>
 

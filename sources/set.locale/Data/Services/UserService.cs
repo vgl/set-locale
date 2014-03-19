@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 using set.locale.Data.Entities;
 using set.locale.Helpers;
 using set.locale.Models;
-using System.Data.Entity;
 
 namespace set.locale.Data.Services
 {
@@ -18,13 +18,13 @@ namespace set.locale.Data.Services
             _msgService = msgService;
         }
 
-        public Task<bool> Create(UserModel model, string roleName)
+        public async Task<bool> Create(UserModel model, string roleName)
         {
-            if (model.IsNotValid()) return Task.FromResult(false);
+            if (model.IsNotValid()) return await Task.FromResult(false);
 
-            if (GetByEmail(model.Email) != null)
+            if (await GetByEmail(model.Email) != null)
             {
-                return Task.FromResult(false);
+                return await Task.FromResult(false);
             }
 
             var img = model.Email.ToGravatar();
@@ -42,7 +42,7 @@ namespace set.locale.Data.Services
 
             Context.Users.Add(user);
             Context.Entry(user).State = EntityState.Added;
-            return Task.FromResult(Context.SaveChanges() > 0);
+            return await Task.FromResult(Context.SaveChanges() > 0);
         }
 
         public Task<PagedList<User>> GetUsers(int pageNumber)
@@ -125,9 +125,9 @@ namespace set.locale.Data.Services
             var saved = Context.SaveChanges() > 0;
             if (saved)
             {
-                string subject = "password_reset_email_subject".Localize();
-                string format = "password_reset_email_body".Localize().Trim();
-                string mailBody = string.Format(@format, subject, user.Name, user.Email, token);
+                var subject = "password_reset_email_subject".Localize();
+                var format = "password_reset_email_body".Localize().Trim();
+                var mailBody = string.Format(@format, subject, user.Name, user.Email, token);
                 _msgService.SendEMail(user.Email, subject, mailBody);
             }
 
