@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -167,11 +168,28 @@ namespace set.locale.Controllers
                 throw new HttpException(400, "keys argument null");
             }
 
-            var returnValue = keys.Split(',');
+            var app = await _appService.GetByName(tag);
+            if (app == null)
+            {
+                throw new HttpException(400, "app is not found");
+            }
 
+            var returnValue = keys.Split(',');
             foreach (var key in returnValue)
             {
-                var item = _wordService.Create(new WordModel { Key = key, Tag = tag });
+                try
+                {
+                    await _wordService.Create(new WordModel
+                    {
+                        CreatedBy = app.CreatedBy,
+                        Key = key,
+                        Tag = tag,
+                        AppId = app.Id.ToString(CultureInfo.InvariantCulture)
+                    });
+                }
+                catch (Exception ex)
+                {
+                }
             }
 
             return Json(true, JsonRequestBehavior.DenyGet);

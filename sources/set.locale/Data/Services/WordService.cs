@@ -1,10 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity;
 using System.Web;
+
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using ServiceStack.Text;
@@ -12,14 +14,12 @@ using ServiceStack.Text;
 using set.locale.Data.Entities;
 using set.locale.Helpers;
 using set.locale.Models;
-using System.IO;
 
 namespace set.locale.Data.Services
 {
     public class WordService : BaseService, IWordService
     {
         private readonly IAppService _appService;
-
         public WordService(IAppService appService)
         {
             _appService = appService;
@@ -33,14 +33,21 @@ namespace set.locale.Data.Services
             }
 
             var slug = model.Key.ToUrlSlug();
-
             if (IsDuplicateKey(model))
             {
                 return null;
             }
 
             var items = model.Tag.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-            var tags = items.Select(item => new Tag { CreatedBy = model.CreatedBy, Name = item, UrlName = item.ToUrlSlug(), AppId = model.AppId }).ToList();
+            var tags = items.Select(item => new Tag
+            {
+                CreatedBy = model.CreatedBy,
+                AppId = model.AppId,
+
+                Name = item,
+                UrlName = item.ToUrlSlug()
+
+            }).ToList();
 
             var word = new Word
             {
@@ -51,17 +58,18 @@ namespace set.locale.Data.Services
                 CreatedBy = model.CreatedBy,
                 UpdatedBy = model.CreatedBy,
                 Tags = tags,
+
                 AppId = model.AppId
             };
-
             Context.Words.Add(word);
             Context.Entry(word).State = EntityState.Added;
+
             return Context.SaveChanges() > 0 ? Task.FromResult(word.Id) : null;
         }
 
         public async Task<int> CreateList(List<WordModel> model, string appId, string userId)
         {
-            int result = 0;
+            var result = 0;
             var app = await _appService.Get(appId);
             foreach (var word in model)
             {
@@ -340,8 +348,8 @@ namespace set.locale.Data.Services
         {
             model.Key = model.Key.ToUrlSlug();
             return Context.Words.Any(x => x.Key == model.Key
-                                          && (x.IsActive && !x.IsDeleted)
-                                          && (x.AppId == model.AppId || x.Tags.Any(y => y.Name == model.Tag)));
+                                          && x.IsActive && !x.IsDeleted
+                                          && x.AppId == model.AppId);
         }
 
         public async Task<string> Copy(string copyFromWord, string appIds, string createdBy, bool force)

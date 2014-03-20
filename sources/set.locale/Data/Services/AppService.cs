@@ -55,6 +55,17 @@ namespace set.locale.Data.Services
             return Task.FromResult(app);
         }
 
+        public Task<App> GetByUrlName(string tag)
+        {
+            if (string.IsNullOrEmpty(tag))
+            {
+                return null;
+            }
+
+            var app = Context.Apps.Include(x => x.Tokens).FirstOrDefault(x => string.Equals(x.Name, tag, StringComparison.InvariantCultureIgnoreCase));
+            return Task.FromResult(app);
+        }
+
         public Task<bool> CreateToken(TokenModel model)
         {
             if (model.IsNotValid())

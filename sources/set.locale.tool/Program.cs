@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -17,7 +18,7 @@ namespace set.locale.tool
     {
         static void Main(string[] args)
         {
-            var path = @"C:\Work\set-locale\sources\set.locale";
+            var path = @"C:\Work\set-crm\sources\set.crm.web";
             if (args.Any()
                 && !string.IsNullOrWhiteSpace(args[0]))
             {
@@ -29,7 +30,7 @@ namespace set.locale.tool
                 path = args[0];
             }
 
-            var tag = "set-locale";
+            var tag = "setcrm";
             if (args.Any()
                 && !string.IsNullOrWhiteSpace(args[1]))
             {
@@ -49,12 +50,11 @@ namespace set.locale.tool
 
             GetStrings(csFiles, localizationstring, regexCs, keyList);
 
-            //var newKeyList = PrepareLocalizationStrings(keyList, tag);
+            PrepareLocalizationStrings(keyList, tag);
 
             PrepareExcel(keyList, tag);
 
             Console.WriteLine("total localization strings count > " + keyList.Count);
-
         }
 
         private static void GetStrings(IEnumerable<FileInfo> viewFiles, string localizationstring, Regex regexCsHtml, List<string> keyList)
@@ -79,7 +79,7 @@ namespace set.locale.tool
                             {
                                 var theKey = item.Replace("(\"", string.Empty);
                                 theKey = theKey.Substring(0, theKey.IndexOf('"'));
-                                if (!keyList.Contains(theKey))
+                                if (!keyList.Contains(theKey) && !string.IsNullOrWhiteSpace(theKey))
                                 {
                                     keyList.Add(theKey);
                                     Console.WriteLine(theKey);
@@ -90,11 +90,11 @@ namespace set.locale.tool
                                 var theKey = item.Replace("\"", string.Empty).Replace(".", string.Empty);
                                 if (theKey.Contains(","))
                                 {
-                                    var keyItems = theKey.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
+                                    var keyItems = theKey.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                                     theKey = keyItems.Last().Trim();
                                 }
 
-                                if (!keyList.Contains(theKey))
+                                if (!keyList.Contains(theKey) && !string.IsNullOrWhiteSpace(theKey))
                                 {
                                     keyList.Add(theKey);
                                     Console.WriteLine(theKey);
@@ -106,7 +106,7 @@ namespace set.locale.tool
                     {
                         var theKey = key.Replace(localizationstring + "(\"", string.Empty);
                         theKey = theKey.Substring(0, theKey.IndexOf('"'));
-                        if (!keyList.Contains(theKey))
+                        if (!keyList.Contains(theKey) && !string.IsNullOrWhiteSpace(theKey))
                         {
                             keyList.Add(theKey);
                             Console.WriteLine(theKey);
@@ -156,17 +156,15 @@ namespace set.locale.tool
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("418001e2fb1d44e0acbe151dad8f1eca");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(ConfigurationManager.AppSettings["ApiKey"]);
 
                 return SetLocalizationStringsDictionary(client, keyList, tag);
             }
         }
-
-       
+        
         private static List<string> SetLocalizationStringsDictionary(HttpClient client, IEnumerable<string> keylList, string tag)
         {
             var currentKeyList = new List<string>();
-
             var items = new List<NameValue>();
 
             try
@@ -176,13 +174,11 @@ namespace set.locale.tool
 
                 while (page > 0)
                 {
-                    response = client.GetStringAsync(string.Format("http://locale.setcrm.com/api/locales?page={0}", page));
+                    response = client.GetStringAsync(string.Format("http://locale.setcrm.com/api/locales?app={0}page={1}", tag, page));
                     response.Wait();
 
                     var responseBody = response.Result;
-
                     var responseItems = JsonSerializer.DeserializeFromString<List<NameValue>>(responseBody);
-
                     if (responseItems == null || !responseItems.Any())
                     {
                         page = 0;
@@ -190,7 +186,6 @@ namespace set.locale.tool
                     }
 
                     items.AddRange(responseItems);
-
                     page++;
                 }
 
@@ -202,16 +197,14 @@ namespace set.locale.tool
                     }
                 }
 
-                var keys = "";
-
+                var keys = string.Empty;
                 foreach (var item in currentKeyList)
                 {
-                    keys = keys + item + ",";
+                    keys = string.Format("{0}{1},", keys, item);
                 }
 
-                response = client.GetStringAsync(string.Format("http://locale.setcrm.com/api/AddKeys?keys={0}&tag={1}", keys, tag));
+                response = client.GetStringAsync(string.Format("http://locale.setcrm.com/api/addkeys?keys={0}&tag={1}", keys, tag));
                 response.Wait();
-
             }
             catch (Exception ex)
             {
