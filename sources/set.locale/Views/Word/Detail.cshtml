@@ -1,7 +1,7 @@
 ﻿@model WordModel
 
 @{
-    ViewBag.Title = Html.Localize("words_key_detail_page_title");
+    ViewBag.Title = Model.Key;
     var apps = (IEnumerable<AppModel>)ViewBag.Apps;
 }
 
@@ -23,7 +23,6 @@
                     }
                 </div>
             </p>
-
 
             @if (User.Identity.IsAuthenticated)
             {

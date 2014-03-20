@@ -161,7 +161,7 @@ namespace set.locale.tool
                 return SetLocalizationStringsDictionary(client, keyList, tag);
             }
         }
-        
+
         private static List<string> SetLocalizationStringsDictionary(HttpClient client, IEnumerable<string> keylList, string tag)
         {
             var currentKeyList = new List<string>();
@@ -174,7 +174,7 @@ namespace set.locale.tool
 
                 while (page > 0)
                 {
-                    response = client.GetStringAsync(string.Format("http://locale.setcrm.com/api/locales?app={0}page={1}", tag, page));
+                    response = client.GetStringAsync(string.Format("http://locale.setcrm.com/api/locales?app={0}&page={1}", tag, page));
                     response.Wait();
 
                     var responseBody = response.Result;
@@ -189,7 +189,8 @@ namespace set.locale.tool
                     page++;
                 }
 
-                foreach (var key in keylList)
+                var values = keylList as IList<string> ?? keylList.ToList();
+                foreach (var key in values)
                 {
                     if (!items.Exists(value => value.Name == key))
                     {
@@ -197,14 +198,17 @@ namespace set.locale.tool
                     }
                 }
 
-                var keys = string.Empty;
-                foreach (var item in currentKeyList)
+                var keys = string.Join(",", values);
+                var pairs = new List<KeyValuePair<string,string>>
                 {
-                    keys = string.Format("{0}{1},", keys, item);
-                }
+                    new KeyValuePair<string, string>("keys", keys),
+                    new KeyValuePair<string, string>("tag", tag)
+                };
 
-                response = client.GetStringAsync(string.Format("http://locale.setcrm.com/api/addkeys?keys={0}&tag={1}", keys, tag));
-                response.Wait();
+                var data = new FormUrlEncodedContent(pairs);
+                var resp = client.PostAsync("http://locale.setcrm.com/api/addkeys", data);
+                resp.Wait();
+
             }
             catch (Exception ex)
             {

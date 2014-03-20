@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.ClientServices.Providers;
 using System.Web.Mvc;
 
 using set.locale.Data.Entities;
@@ -165,13 +166,21 @@ namespace set.locale.Controllers
         {
             if (string.IsNullOrEmpty(keys))
             {
-                throw new HttpException(400, "keys argument null");
+                return Json(new
+                {
+                    IsOK = false,
+                    Msg = "keys argument null"
+                }, JsonRequestBehavior.DenyGet);
             }
 
             var app = await _appService.GetByName(tag);
             if (app == null)
             {
-                throw new HttpException(400, "app is not found");
+                return Json(new
+                {
+                    IsOK = false,
+                    Msg = "app is not found"
+                }, JsonRequestBehavior.DenyGet);
             }
 
             var returnValue = keys.Split(',');
@@ -187,12 +196,14 @@ namespace set.locale.Controllers
                         AppId = app.Id.ToString(CultureInfo.InvariantCulture)
                     });
                 }
-                catch (Exception ex)
-                {
-                }
+                catch { }
             }
 
-            return Json(true, JsonRequestBehavior.DenyGet);
+            return Json(new
+            {
+                IsOK = true,
+                Msg = string.Format("Saved these keys > {0}", keys)
+            }, JsonRequestBehavior.DenyGet);
         }
     }
 }
