@@ -28,13 +28,11 @@ namespace set.locale.Data
 
             #region Users
 
-            AddUser(context, ConstHelper.User, "user@test.com", ConstHelper.User);
-            AddUser(context, ConstHelper.Translator, "translator@test.com", ConstHelper.Translator);
-            AddUser(context, ConstHelper.Admin, "admin@test.com", ConstHelper.Admin);
+            AddUser(context, ConstHelper.User, "info@setcrm.com", ConstHelper.User);
 
             #endregion
 
-            AddApplication(context, "info@set-locale.com", "set-locale", "a brand new crm application.", "set-locale.com");
+            AddApplication(context, "info@setcrm.com", "set-locale", "a localization as a service application.", "locale.setcrm.com");
 
             #region Words
             
@@ -50,6 +48,8 @@ namespace set.locale.Data
             AddWord(context, "menu_settings_apps", "Tüm Uygulamalar", "All Applications", "Все Приложения", "set-locale");
             AddWord(context, "menu_settings_users", "Tüm Kullanıcılar", "All Users", "Все Пользователи", "set-locale");
             AddWord(context, "menu_settings_new_translator", "Yeni Çevirmen", "New Translator", "Новый Переводчик", "set-locale");
+            AddWord(context, "menu_settings_import", "Excel ile Yükle", "Import", "", "set-locale");
+            AddWord(context, "menu_settings_contactmessages", "İletişim Mesajları", "Contact Messages", "", "set-locale");
             AddWord(context, "menu_user_login", "Giriş", "Login", "Вход", "set-locale");
             AddWord(context, "menu_user_logout", "Çıkış", "Logout", "Выход", "set-locale");
             AddWord(context, "menu_user_sign_up", "Kayıt Ol", "Sign Up", "Войти", "set-locale");
@@ -130,7 +130,7 @@ namespace set.locale.Data
             AddWord(context, "copy_success", "Kopyalama başarılı", "", "", "set-locale");
             AddWord(context, "created_translates", "Oluşturulan çeviri", "", "", "set-locale");
             AddWord(context, "created_words", "Oluşturulan kelimeler", "", "", "set-locale");
-            AddWord(context, "creation_date", "Oluşturulma tarihi", "", "", "set-locale");
+            AddWord(context, "creation_date", "Oluşturulma tarihi", "Creation Date", "", "set-locale");
             AddWord(context, "data_saved_successfully_msg", "Kayıt işlemi başarılı", "Data saved successfully", "", "set-locale");
             AddWord(context, "deleted_words", "Silinen kelimeler", "", "", "set-locale");
             AddWord(context, "deletes_old_data", "Eski verileri sil", "", "", "set-locale");
@@ -149,7 +149,6 @@ namespace set.locale.Data
             AddWord(context, "menu_contactmessages", "Bize ulaşanlar", "", "", "set-locale");
             AddWord(context, "contact_view_title", "İletişim", "Contact", "", "set-locale");
             AddWord(context, "menu_login", "Giriş", "Login", "", "set-locale");
-            AddWord(context, "menu_settings_import", "", "", "", "set-locale");
             AddWord(context, "menu_signup", "Kayıt", "Signup", "", "set-locale");
             AddWord(context, "menu_user_profile", "Profil", "", "", "set-locale");
             AddWord(context, "modal_body_copy_to_my_apps", "Kopyalamak için uygulama seçiniz.", "", "", "set-locale");
@@ -178,13 +177,13 @@ namespace set.locale.Data
             AddWord(context, "admin", "Yönetici", "Admin", "", "set-locale");
             AddWord(context, "btn_send_password_reset_link", "Şifre Sıfırlama Linki Dönder", "Send Password Reset Link", "", "set-locale");
             AddWord(context, "contact_us_about_anything", "Bize her konuda aşağıdaki formu kullanarak ulaşabilirsiniz", "Contact us about anything", "", "set-locale");
+            AddWord(context, "new_admin_title", "Admin Ekle", "Add The Admin", "", "set-locale");
 
             var httpServerUtility = HttpContext.Current.Server;
             AddWord(context, "password_reset_email_body",
                 File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-tr.html"), Encoding.UTF8),
                 File.ReadAllText(httpServerUtility.MapPath(@"~\Public\email\password-reset-request-en.html"), Encoding.UTF8),
                 string.Empty, "set-locale");
-
             
             #endregion
 

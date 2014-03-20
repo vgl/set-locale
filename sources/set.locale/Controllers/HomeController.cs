@@ -9,18 +9,29 @@ namespace set.locale.Controllers
 {
     public class HomeController : BaseController
     {
+        private readonly IUserService _userService;
         private readonly IFeedbackService _feedbackService;
         private readonly IReportService _reportService;
 
-        public HomeController(IFeedbackService feedbackService, IReportService reportService)
+        public HomeController(
+            IUserService userService,
+            IFeedbackService feedbackService, 
+            IReportService reportService)
         {
+            _userService = userService;
             _feedbackService = feedbackService;
             _reportService = reportService;
         }
 
         [HttpGet, AllowAnonymous]
-        public async Task<ViewResult> Index()
+        public async Task<ActionResult> Index()
         {
+            var isThereAnyUser = await _userService.IsThereAnyUser();
+            if (!isThereAnyUser)
+            {
+                return Redirect(User.Identity.IsAuthenticated ? "user/logout" : "user/newadmin");
+            }
+
             var model = await _reportService.GetHomeStats();
             model.Summary = string.Format("SetLocale's <strong>{2}</strong> translator provided <strong>{4}</strong> translation for <strong><a href='/word/all' id='aAllWords' style='text-decoration:underline;color:red;'>{3}</a></strong> keys and <strong>{0}</strong> developer is consuming this service with <strong>{1}</strong> application",
                 model.DeveloperCount,

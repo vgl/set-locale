@@ -93,6 +93,36 @@ namespace set.locale.Controllers
             return View(model);
         }
 
+        [HttpGet, AllowAnonymous]
+        public ActionResult NewAdmin()
+        {
+            return View(new UserModel());
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, AllowAnonymous]
+        public async Task<ActionResult> NewAdmin(UserModel model)
+        {
+            model.Name = ConstHelper.Admin;
+            if (!model.IsValid())
+            {
+                SetPleaseTryAgain(model);
+                return View(model);
+            }
+
+            model.Language = Thread.CurrentThread.CurrentUICulture.Name;
+            model.Id = Guid.NewGuid().ToNoDashString();
+            var status = await _userService.Create(model, model.Name);
+            if (!status)
+            {
+                SetPleaseTryAgain(model);
+                return View(model);
+            }
+
+            _authService.SignIn(model.Id, model.Name, model.Email, model.Name, true);
+
+            return RedirectToHome();
+        }
+
         #region Membership
         [HttpGet, AllowAnonymous]
         public ActionResult New()

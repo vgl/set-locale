@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+
 using set.locale.Data.Entities;
 using set.locale.Data.Services;
 using set.locale.Helpers;
@@ -35,7 +36,7 @@ namespace set.locale.Controllers
         {
             var headers = filterContext.RequestContext.HttpContext.Request.Headers;
 
-            var authHeader = headers["Authorization"];
+            var authHeader = headers[ConstHelper.Authorization];
             if (authHeader == null) ReturnNotAuthenticated(filterContext);
 
             var token = authHeader;

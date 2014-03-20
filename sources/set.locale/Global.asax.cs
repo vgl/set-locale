@@ -42,7 +42,10 @@ namespace set.locale
             var translations = await wordService.GetByAppName("set-locale");
             foreach (var item in translations)
             {
+                if (enTexts.ContainsKey(item.Key)) continue;
                 enTexts.Add(item.Key, item.Translation_EN);
+
+                if (trTexts.ContainsKey(item.Key)) continue;
                 trTexts.Add(item.Key, item.Translation_TR);
             }
 

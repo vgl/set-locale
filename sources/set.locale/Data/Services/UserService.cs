@@ -184,6 +184,11 @@ namespace set.locale.Data.Services
 
             return Task.FromResult(Context.SaveChanges() > 0);
         }
+
+        public Task<bool> IsThereAnyUser()
+        {
+            return Task.FromResult(Context.Users.Any(x => x.Name != ConstHelper.User));
+        }
     }
 
     public interface IUserService
@@ -202,5 +207,6 @@ namespace set.locale.Data.Services
         Task<bool> ChangePassword(string email, string token, string password);
 
         Task<bool> ChangeStatus(string id, bool isActive);
+        Task<bool> IsThereAnyUser();
     }
 }

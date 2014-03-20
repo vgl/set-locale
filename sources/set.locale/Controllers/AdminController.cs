@@ -167,6 +167,5 @@ namespace set.locale.Controllers
 
             return View(model);
         }
-
     }
 }
