@@ -220,14 +220,7 @@ namespace set.locale.Data.Services
             }
 
             var items = Context.Words.Where(x => x.IsActive && !x.IsDeleted && x.AppId == appId);
-
             long totalCount = items.Count();
-            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
-
-            if (pageNumber > totalPageCount)
-            {
-                pageNumber = 1;
-            }
 
             var model = items.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize);
 
@@ -242,14 +235,7 @@ namespace set.locale.Data.Services
             }
 
             var words = Context.Words.Where(x => !x.IsTranslated && (x.IsActive && !x.IsDeleted)).ToList();
-
             long totalCount = words.Count();
-            var totalPageCount = (int)Math.Ceiling(totalCount / (double)ConstHelper.PageSize);
-
-            if (pageNumber > totalPageCount)
-            {
-                pageNumber = 1;
-            }
 
             words = words.OrderByDescending(x => x.Id).Skip(ConstHelper.PageSize * (pageNumber - 1)).Take(ConstHelper.PageSize).ToList();
 
@@ -281,7 +267,6 @@ namespace set.locale.Data.Services
             if (string.IsNullOrEmpty(translation))
             {
                 word.TranslationCount--;
-
                 word.IsTranslated = word.TranslationCount > 0;
 
                 propInfo.SetValue(word, null);
@@ -299,11 +284,12 @@ namespace set.locale.Data.Services
 
         public async Task<int> AddTranslateList(List<TranslationModel> model, string id)
         {
-            int result = 0;
+            var result = 0;
             foreach (var item in model)
             {
                 if (await AddTranslate(id, item.Language.Key, item.Value)) result++;
             }
+
             return await Task.FromResult(result);
         }
 
@@ -353,19 +339,17 @@ namespace set.locale.Data.Services
         public bool IsDuplicateKey(WordModel model)
         {
             model.Key = model.Key.ToUrlSlug();
-            return Context.Words.Any(
-                        x =>
-                                x.Key == model.Key
-                            && (x.IsActive && !x.IsDeleted)
-                            && (x.AppId == model.AppId || x.Tags.Any(y => y.Name == model.Tag)));
+            return Context.Words.Any(x => x.Key == model.Key
+                                          && (x.IsActive && !x.IsDeleted)
+                                          && (x.AppId == model.AppId || x.Tags.Any(y => y.Name == model.Tag)));
         }
 
         public async Task<string> Copy(string copyFromWord, string appIds, string createdBy, bool force)
         {
-            int addedCount = 0;
-            int createCount = 0;
-            int extCount = 0;
-            StringBuilder result = new StringBuilder();
+            var addedCount = 0;
+            var createCount = 0;
+            var extCount = 0;
+            var result = new StringBuilder();
             var toAppIdList = JsonSerializer.DeserializeFromString<List<string>>(appIds);
             var fromWord = WordModel.Map(await GetById(copyFromWord));
             var translations = fromWord.Translations;
@@ -386,13 +370,10 @@ namespace set.locale.Data.Services
                 }
                 else if (!force)
                 {
-                    ILookup<string, TranslationModel> fromWordTranslates =
-                        fromWord.Translations.ToLookup(x => x.Language.Key, x => x);
-                    ILookup<string, TranslationModel> toWordTranslates =
-                        toWord.Translations.ToLookup(x => x.Language.Key, x => x);
+                    var fromWordTranslates = fromWord.Translations.ToLookup(x => x.Language.Key, x => x);
+                    var toWordTranslates = toWord.Translations.ToLookup(x => x.Language.Key, x => x);
                     var exceptLangs = fromWordTranslates.Select(x => x.Key).Except(toWordTranslates.Select(x => x.Key));
-                    translations =
-                        fromWordTranslates.Where(x => exceptLangs.Contains(x.Key)).Select(x => x.First()).ToList();
+                    translations = fromWordTranslates.Where(x => exceptLangs.Contains(x.Key)).Select(x => x.First()).ToList();
                     createCount = translations.Count;
                 }
                 else
