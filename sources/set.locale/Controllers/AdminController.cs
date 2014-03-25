@@ -123,10 +123,8 @@ namespace set.locale.Controllers
         public async Task<ActionResult> NewTranslator(UserModel model)
         {
             SetPleaseTryAgain(model);
-
-
+            
             model.Password = Guid.NewGuid().ToNoDashString();
-
             if (model.IsNotValid())
             {
                 return View(model);
