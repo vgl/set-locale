@@ -189,6 +189,38 @@ namespace set.locale.Data.Services
         {
             return Task.FromResult(Context.Users.Any(x => x.Name != ConstHelper.User));
         }
+
+        public Task<bool> NotifyTranslator(string email)
+        {
+            if (!email.IsEmail()) return Task.FromResult(false);
+
+            var user = Context.Users.FirstOrDefault(x => x.IsActive
+                                                         && !x.IsDeleted
+                                                         && x.Email == email);
+
+            if (user == null) return Task.FromResult(false);
+
+            if (user.PasswordResetRequestedAt != null
+               && user.PasswordResetRequestedAt.Value.AddMinutes(-1) > DateTime.Now) return Task.FromResult(false);
+
+            var token = Guid.NewGuid().ToNoDashString();
+            user.UpdatedAt = DateTime.Now;
+            user.UpdatedBy = user.Id;
+            user.PasswordResetToken = token;
+            user.PasswordResetRequestedAt = user.UpdatedAt;
+            Context.Entry(user).State = EntityState.Modified;
+
+            var saved = Context.SaveChanges() > 0;
+            if (saved)
+            {
+                var subject = "notify_translator_email_subject".Localize();
+                var format = "notify_translator_email_body".Localize().Trim();
+                var mailBody = string.Format(@format, subject, user.Name, user.Email, token);
+                _msgService.SendEMail(user.Email, subject, mailBody);
+            }
+
+            return Task.FromResult(saved);
+        }
     }
 
     public interface IUserService
@@ -208,5 +240,8 @@ namespace set.locale.Data.Services
 
         Task<bool> ChangeStatus(string id, bool isActive);
         Task<bool> IsThereAnyUser();
+
+        Task<bool> NotifyTranslator(string email);
+
     }
 }

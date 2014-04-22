@@ -135,7 +135,7 @@ namespace set.locale.Controllers
             var status = await _userService.Create(model, SetLocaleRole.Translator.ToString());
             if (status)
             {
-                //todo:send mail to translator to welcome and ask for reset password
+                await _userService.NotifyTranslator(model.Email);
                 return Redirect("/admin/users");
             }
 
