@@ -242,6 +242,5 @@ namespace set.locale.Data.Services
         Task<bool> IsThereAnyUser();
 
         Task<bool> NotifyTranslator(string email);
-
     }
 }
