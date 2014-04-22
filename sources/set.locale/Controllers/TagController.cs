@@ -46,7 +46,13 @@ namespace set.locale.Controllers
             if (!User.Identity.IsAuthenticated) return View(model);
 
             var apps = await _appService.GetByUserId(User.Identity.GetId());
-            ViewBag.Apps = apps.Select(AppModel.Map).Where(x => x.Id != list.First().AppId);
+
+
+            ViewBag.Apps = new List<AppModel>();
+            if (list.Any())
+            {
+                ViewBag.Apps = apps.Select(AppModel.Map).Where(x => x.Id != list.First().AppId);
+            }
 
             return View(model);
         }
