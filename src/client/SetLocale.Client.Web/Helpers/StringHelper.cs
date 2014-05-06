@@ -1,4 +1,5 @@
-﻿using System.Net.Mail;
+﻿using System;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -6,6 +7,11 @@ namespace SetLocale.Client.Web.Helpers
 {
     public static class StringHelper
     {
+        public static string ToNoDashString(this Guid guid)
+        {
+            return guid.ToString().Replace("-", string.Empty);
+        }
+
         public static string ToUrlSlug(this string text)
         {
             return Regex.Replace(
