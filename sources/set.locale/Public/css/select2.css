@@ -618,3 +618,6 @@ disabled look for disabled choices in the results dropdown
 .select2-container .select2-choice {
   height: 36px!important;
 }
+.select2-container {
+  width: 100%;
+}
