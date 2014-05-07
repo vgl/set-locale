@@ -88,9 +88,9 @@ namespace set.locale.Data.Services
             };
             Context.Tokens.Add(entity);
             Context.Entry(entity).State = EntityState.Added;
-            if (Context.SaveChanges() > 0) Task.FromResult(true);
 
-            return Task.FromResult(true);
+            var isAdded = Context.SaveChanges() > 0;
+            return Task.FromResult(isAdded);
         }
 
         public Task<PagedList<App>> GetApps(int pageNumber)
