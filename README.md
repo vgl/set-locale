@@ -91,22 +91,23 @@ a way to consume this service is getting all the strings on app start.
         {
             try
             {
+                const string tag = "setcrm"; //put your tag
                 var page = 1;
                 while (page > 0)
                 {
-                    var response = client.GetStringAsync(string.Format("http://locale.setcrm.com/api/locales?tag=set&lang={0}&page={1}", languageKey, page));
+                    var response = client.GetStringAsync(string.Format("http://locale.setcrm.com/api/locales?app={0}&lang={1}&page={2}", tag, languageKey, page));
                     response.Wait();
-    
+
                     var responseBody = response.Result;
                     var items = JsonSerializer.DeserializeFromString<List<NameValue>>(responseBody);
-    
+
                     if (items == null
                         || !items.Any())
                     {
                         page = 0;
                         continue;
                     }
-    
+
                     foreach (var item in items)
                     {
                         if (dictionary.ContainsKey(item.Name))
@@ -118,7 +119,7 @@ a way to consume this service is getting all the strings on app start.
                             dictionary.Add(item.Name, item.Value);
                         }
                     }
-    
+
                     page++;
                 }
             }
