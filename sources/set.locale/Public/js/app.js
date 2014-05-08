@@ -1,43 +1,42 @@
-﻿var textBtnDanger = "btn-danger";
-var textBtnSuccess = "btn-success";
-var textId = "id";
-var textIsActive = "isactive";
-
-var allLanguages = [{ id: 'tr', text: 'Türkçe' },
-    { id: 'en', text: 'English' },
-    { id: 'sp', text: 'Español' },
-    { id: 'cn', text: '中文 (zhōngwén)' },
-    { id: 'ru', text: 'Русский язык' },
-    { id: 'fr', text: 'Français' },
-    { id: 'gr', text: 'Deutsch' },
-    { id: 'it', text: 'Italiano' },
-    { id: 'az', text: 'Azərbaycan dili' },
-    { id: 'tk', text: 'түркmенче (türkmençe)' },
-    { id: 'kz', text: 'Қазақ тілі' }];
+﻿var textBtnDanger = "btn-danger",
+	textBtnSuccess = "btn-success",
+	textId = "id",
+	textIsActive = "isactive",
+	allLanguages = [{ id: 'tr', text: 'Türkçe' },
+		{ id: 'en', text: 'English' },
+		{ id: 'sp', text: 'Español' },
+		{ id: 'cn', text: '中文 (zhōngwén)' },
+		{ id: 'ru', text: 'Русский язык' },
+		{ id: 'fr', text: 'Français' },
+		{ id: 'gr', text: 'Deutsch' },
+		{ id: 'it', text: 'Italiano' },
+		{ id: 'az', text: 'Azərbaycan dili' },
+		{ id: 'tk', text: 'түркmенче (türkmençe)' },
+		{ id: 'kz', text: 'Қазақ тілі' }];
 
 $(function () {
     $("a.btnAction").click(function () {
-        var textBtn = "input#btnModalAction";
+        var $self = $(this),
+			id = $self.data(textId),
+			isActive = $self.data(textIsActive);
 
-        var id = $(this).data(textId);
-        var isActive = $(this).data(textIsActive);
-
-        $(textBtn).data(textId, id).data(textIsActive, isActive);
+        $("input#btnModalAction").data(textId, id).data(textIsActive, isActive);
     });
 });
 
 
 // FEEDBACK
 $(function () {
+	var fbRetMsg = $("#feedbackReturnMessage");
     $('#btnSaveFeedback').click(function () {
         var message = $("#FeedbackMessage").val();
-        var fbRetMsg = $("#feedbackReturnMessage");
+        
         if (message.length < 1) { fbRetMsg.html('<label class="error">*</label>'); return; }
 
         fbRetMsg.html(null);
 
         $.post('/Feedback/New', { message: message }, function (result) {
-            if (result && result.IsOk) {
+            if (result.IsOk) {
                 fbRetMsg.html('<div class="alert alert-success alert-dismissable"><span>Thanks for feedback.</span></div>');
                 setTimeout(function () {
                     $("#modalFeedback").modal('hide');
@@ -50,7 +49,7 @@ $(function () {
             }
         });
     });
-    $('#modalFeedback').on('hidden.bs.modal', function () { $("feedbackReturnMessage").html(null); $("#Feedback").val(''); $("label.error").remove(); });
+    $('#modalFeedback').on('hidden.bs.modal', function () { fbRetMsg.html(null); $("#Feedback").val(''); $("label.error").remove(); });
 });
 
 // SEARCH
@@ -104,7 +103,7 @@ $(function () {
 
                 $.get('/search/query', { text: queryString }, function (r) {
                     $('.popover-content:visible').html(null);
-                    if (r && r.IsOk) {
+                    if (r.IsOk) {
                         if (r.Result.length == 0) {
                             showNoResultForSearch();
                         } else {
