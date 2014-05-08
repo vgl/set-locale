@@ -27,10 +27,10 @@ namespace set.locale.Models
 
         public bool IsValid()
         {
-            return !string.IsNullOrEmpty(Name)
-                   && !string.IsNullOrEmpty(Url);
-
+            return !string.IsNullOrWhiteSpace(Name)
+                && !string.IsNullOrWhiteSpace(Url);
         }
+
         public bool IsNotValid()
         {
             return !IsValid();

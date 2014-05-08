@@ -6,5 +6,10 @@
         public virtual App App { get; set; }
 
         public string UrlName { get; set; }
+
+        public override string ToString()
+        {
+            return AppId;
+        }
     }
 }
