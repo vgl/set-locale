@@ -78,7 +78,7 @@ namespace SetLocale.Client.Web.Controllers
             {
                 CreationDate = DateTime.Now,
                 UsageCount = 0,
-                Token = Guid.NewGuid().ToString().Replace("-", ""),
+                Token = Guid.NewGuid().ToNoDashString(),
                 AppId = appId,
                 CreatedBy = User.Identity.GetUserId()
             };
